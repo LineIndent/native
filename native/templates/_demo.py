@@ -1,6 +1,5 @@
 import reflex as rx
 
-from components.accordion import accordion
 from native.templates._copy_btn import create_copy_button
 
 
@@ -34,5 +33,5 @@ def demo(component: rx.Component, source: str) -> rx.Component:
             ),
             class_name="border-t border-input/80 bg-secondary dark:bg-card relative overflow-hidden",
         ),
-        class_name="w-full border border-input/80 flex flex-col mb-8 !overflow-hidden",
+        class_name="w-full border border-input/80 flex flex-col my-8 !overflow-hidden",
     )

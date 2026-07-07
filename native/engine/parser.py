@@ -160,14 +160,11 @@ def render_token(cmd: str, raw_arg: str) -> rx.Component:
         )
 
     if cmd == "usage":
-        module_stem = ""
-        # module_stem = Path(inspect.getfile(obj)).stem
-        # Placeholder for usage_wrapper
         return rx.el.div(
             rx.el.pre(
                 rx.el.code(
-                    f"from components.{module_stem} import {preferred_name}",
-                    class_name="text-xs font-mono text-primary",
+                    f"from components.{preferred_name} import {preferred_name}",
+                    class_name="language-python !text-sm text-primary",
                 )
             ),
             class_name="not-prose my-4 p-3 bg-secondary/50 rounded-lg border border-input",
@@ -188,14 +185,15 @@ def render_token(cmd: str, raw_arg: str) -> rx.Component:
                 style={
                     "white-space": "pre",
                     "color": "var(--foreground)",
-                    "font-size": "13px",
+                    # "font-size": "13px",
                     "padding": "1rem 0.75rem",
                     "display": "block",
                 },
+                class_name="langauge-python !text-sm",
             ),
             class_name=(
                 "overflow-x-auto overflow-y-auto scrollbar-none w-full mt-4 mb-8 "
-                "rounded-[1rem] outline outline-input flex-1 min-h-0 flex flex-col "
+                "outline outline-input flex-1 min-h-0 flex flex-col "
                 "bg-secondary dark:bg-card"
             ),
         )
@@ -221,7 +219,7 @@ _PROSE_CLASS = (
     "prose-code:rounded-lg "
     "prose dark:prose-invert max-w-none w-full "
     "prose-h1:scroll-mt-14 prose-h2:scroll-mt-14 "
-    "prose-h1:text-3xl prose-h1:font-bold prose-h1:tracking-tight prose-h1:mb-4 "
+    "prose-h1:text-2xl prose-h1:font-bold prose-h1:tracking-tight prose-h1:mb-3 "
     "prose-h2:text-xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:mt-6 prose-h2:mb-3 "
     "prose-p:text-muted-foreground prose-p:leading-relaxed "
     "prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm "
