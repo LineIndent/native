@@ -1,0 +1,13 @@
+[project]
+name = "native"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "markdown>=3.10.2",
+]
+
+[dependency-groups]
+dev = [
+    "reflex==0.9.6post1",
+]

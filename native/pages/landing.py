@@ -1,0 +1,67 @@
+from reflex_components_core.el import Section, a, div, section
+
+from components.button import button
+from components.hugeicon import hi
+from native.lib.examples.card_01 import card_01
+from native.lib.examples.card_02 import card_02
+from native.lib.examples.card_03 import card_03
+from native.lib.examples.card_04 import card_04
+from native.lib.examples.card_05 import card_05
+from native.lib.examples.card_06 import card_06
+from native.lib.examples.card_07 import card_07
+from native.lib.examples.card_08 import card_08
+from native.lib.examples.card_09 import card_09
+from native.lib.examples.card_10 import card_10
+from native.lib.examples.card_11 import card_11
+from native.lib.examples.card_12 import card_12
+from native.lib.examples.card_13 import card_13
+from native.templates.layout import layout_decorator
+
+
+@layout_decorator(
+    title="Native HTML UI components you can copy, paste, and ship in minutes.",
+    description="Buridan UI gives you composable, themeable components designed for Reflex. Extend, override, and ship without fighting the framework.",
+    ctas=[
+        a(
+            button("Build Your Own", hi("ArrowRight02Icon", class_name="size-4")),
+            href="/create",
+        ),
+    ],
+)
+def landing_page() -> Section:
+
+    landing_desktop = div(
+        card_01(),
+        card_02(),
+        card_03(),
+        card_04(),
+        card_05(),
+        card_06(),
+        card_07(),
+        card_08(),
+        card_09(),
+        card_10(),
+        card_11(),
+        card_12(),
+        card_13(),
+        class_name=" ".join(
+            [
+                # -> main layout style
+                "max-w-[96rem]",
+                "mx-auto",
+                "columns-[320px]",
+                "px-7",
+                "gap-6",
+                "space-y-6",
+                # -> create masking fade-away at the bottom of the component
+                "sm:mask-[linear-gradient(to_bottom,black_65%,transparent_100%)]",
+                "sm:mask-size-[100%_100%]",
+                "sm:mask-repeat-no-repeat",
+            ]
+        ),
+    )
+
+    return section(
+        landing_desktop,
+        class_name="mx-auto w-full relative",
+    )

@@ -1,0 +1,155 @@
+from dataclasses import dataclass
+from typing import List
+
+import reflex as rx
+
+import native.registry.routes as routes
+from components.button import button
+
+HIGHLIGHT_SCRIPT = """
+    const currentPath = window.location.pathname.substring(1);
+    const activeElement = document.getElementById(currentPath);
+    if (activeElement) {
+        const sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.querySelectorAll('.bg-secondary').forEach(el => {
+                    el.classList.remove('bg-secondary');
+                });
+            }
+        // 2. Add highlight to the current one
+        activeElement.classList.add('bg-secondary');
+        // 3. Scroll into view
+        activeElement.scrollIntoView({
+            behavior: 'instant',
+            block: 'center'
+        });
+    }
+"""
+
+NEW_COMP = ["Attachment", "Bubble", "Marker", "Message", "Shimmer", "Scroll Fade"]
+
+
+@dataclass
+class SidebarSection:
+    """Configuration for a sidebar section."""
+
+    title: str
+    routes: list[dict]
+
+
+SIDEBAR_SECTIONS = [
+    SidebarSection(title="Getting Started", routes=routes.GET_STARTED_URLS),
+    SidebarSection(
+        title="@buridan/ui",
+        routes=[
+            {
+                "title": "pypi 0.1.19",
+                "url": "https://pypi.org/project/buridan-create/",
+            }
+        ],
+    ),
+    SidebarSection(title="Resources", routes=routes.RESOURCES_URLS),
+    SidebarSection(title="Utilities", routes=routes.UTILITIES),
+    SidebarSection(title="Charts", routes=routes.CHARTS_URLS),
+    SidebarSection(title="Components", routes=routes.BASE_UI_COMPONENTS),
+]
+
+
+def create_menu_item(data: dict):
+    """Create a single menu item."""
+
+    if data["title"].startswith("pypi"):
+        link = rx.el.a(
+            rx.el.p(data["title"], class_name="cursor-pointer"),
+            href=data["url"],
+            text_decoration="none",
+            reload_document=True,
+        )
+
+    elif data["url"] == "llms.txt":
+        link = rx.el.a(
+            rx.el.p(data["title"], class_name="cursor-pointer"),
+            href=f"/{data['url']}",
+            text_decoration="none",
+            reload_document=True,
+        )
+
+    else:
+        link = rx.el.a(
+            rx.el.p(data["title"], class_name="cursor-pointer"),
+            to=f"/{data['url']}",
+            text_decoration="none",
+        )
+
+    return button(
+        link,
+        rx.cond(
+            data["title"] in NEW_COMP,
+            rx.el.div(class_name="size-2 rounded-full bg-blue-500"),
+        ),
+        variant="ghost",
+        class_name="w-fit flex items-center",
+        id=data["url"],
+    )
+
+
+def create_sidebar_menu_items(routes: List[dict]):
+    """Create menu items from routes."""
+    return rx.el.div(
+        *[create_menu_item(route) for route in routes],
+        class_name="w-full flex flex-col gap-y-0 justify-start",
+    )
+
+
+def create_section_content(section: SidebarSection):
+    """Create content for a sidebar section."""
+    return rx.el.div(
+        rx.el.div(
+            create_sidebar_menu_items(section.routes),
+            class_name="flex flex-row h-full w-full gap-x-2",
+        ),
+        class_name="flex flex-col p-0 m-0",
+    )
+
+
+def sidebar_section(section: SidebarSection):
+    """Create a complete sidebar section with title and content."""
+    return rx.el.div(
+        rx.el.div(
+            rx.el.div(
+                rx.el.p(
+                    section.title,
+                    class_name="text-muted-foreground font-medium pl-2.5 text-xs",
+                ),
+                class_name="flex flex-row items-center gap-x-2",
+            ),
+            class_name="w-full flex flex-row justify-between align-center items-center",
+        ),
+        create_section_content(section),
+        class_name="flex flex-col w-full gap-y-2 py-4",
+    )
+
+
+def sidebar():
+    """Main sidebar component."""
+    content = rx.el.div(
+        rx.el.div(class_name="py-5"),
+        *[sidebar_section(section) for section in SIDEBAR_SECTIONS],
+        rx.el.div(class_name="py-5"),
+        class_name="flex flex-col max-w-[18rem] w-full h-full",
+    )
+
+    return rx.el.div(
+        rx.el.div(content, id="doc-sidebar"),
+        class_name=(
+            "hidden lg:flex flex-col "
+            "max-w-[18rem] w-full "
+            "sticky top-32 "
+            "h-[calc(100svh-16rem)] "
+            "overflow-y-auto scrollbar-none "
+            "sm:mask-[linear-gradient(to_bottom,transparent_0%,black_15%,black_85%,transparent_100%)] "
+            "sm:mask-size-[100%_100%] "
+            "sm:mask-repeat-no-repeat "
+        ),
+        on_mount=rx.call_script(HIGHLIGHT_SCRIPT),
+    )

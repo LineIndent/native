@@ -1,0 +1,45 @@
+import reflex as rx
+
+from components.accordion import accordion
+
+
+def accordion_basic():
+    return rx.el.div(
+        accordion.root(
+            accordion.item(
+                accordion.trigger("Models"),
+                accordion.panel(
+                    rx.el.p("- Genesis launched a new era of exploration."),
+                    rx.el.p("- Explorer uncovered new planets beyond our reach."),
+                    rx.el.p("- Voyager 1 ventured into interstellar space."),
+                    rx.el.p("- Apollo landed humans on the Moon."),
+                ),
+                name="single",
+            ),
+            accordion.item(
+                accordion.trigger("Spacecraft"),
+                accordion.panel(
+                    rx.el.p("- Curiosity sent back valuable data from Mars."),
+                    rx.el.p("- The Hubble Telescope captured distant galaxies."),
+                    rx.el.p("- James Webb will explore the universe's origins."),
+                    rx.el.p("- The ISS orbits Earth, conducting critical experiments."),
+                ),
+                open=True,
+                name="single",
+            ),
+            accordion.item(
+                accordion.trigger("Space Discoveries"),
+                accordion.panel(
+                    rx.el.p("- Saturn's rings have fascinated scientists for years."),
+                    rx.el.p("- The Mars Rover is studying the planet's surface."),
+                    rx.el.p(
+                        "- NASA's Artemis program aims to return humans to the Moon."
+                    ),
+                    rx.el.p("- Solar missions help us understand space weather."),
+                ),
+                name="single",
+            ),
+            class_name="w-full max-w-md mx-auto",
+        ),
+        class_name="h-[45vh] w-full justify-center pt-10 px-8",
+    )
