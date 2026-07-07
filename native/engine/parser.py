@@ -210,6 +210,7 @@ def render_token(cmd: str, raw_arg: str) -> rx.Component:
 # Markdown chunks: plain HTML + Tailwind `prose`, no rx.markdown involved.
 # --------------------------------------------------------------------------
 import markdown  # noqa: E402
+from bs4 import BeautifulSoup
 
 _MD_EXTENSIONS = ["fenced_code", "tables", "toc"]
 
@@ -257,7 +258,40 @@ _PROSE_CLASS = (
     "[&>pre>code]:py-4 "
     # "[&>pre>code]:text-[13px] "
     "[&>pre>code]:bg-transparent "
+    # Wrapper
+    "[&>div>table]:w-max "
+    "[&>div>table]:min-w-full "
+    # Table
+    "prose-table:border "
+    "prose-table:border-input "
+    "prose-table:rounded-[1rem] "
+    "prose-table:mb-4 "
+    # Header
+    "prose-thead:border-b "
+    "prose-thead:border-input "
+    "prose-th:px-4 prose-th:py-2 "
+    "prose-th:text-left prose-th:font-bold "
+    "prose-th:whitespace-nowrap "
+    # Body
+    "prose-tbody:divide-y "
+    "prose-tbody:divide-input "
+    # Cells
+    "prose-td:px-4 prose-td:py-2 "
+    "prose-td:whitespace-nowrap "
 )
+
+
+def wrap_tables(html: str) -> str:
+    """Wrap every table in a horizontally scrollable container."""
+    soup = BeautifulSoup(html, "html.parser")
+
+    for table in soup.find_all("table"):
+        wrapper = soup.new_tag("div")
+        wrapper["class"] = "w-full overflow-x-auto scrollbar-none"
+
+        table.wrap(wrapper)
+
+    return str(soup)
 
 
 def render_markdown_chunk(text: str) -> rx.Component:
@@ -266,7 +300,7 @@ def render_markdown_chunk(text: str) -> rx.Component:
         return rx.fragment()
 
     html = markdown.markdown(text, extensions=_MD_EXTENSIONS)
-
+    html = wrap_tables(html)
     return rx.html(html, class_name=_PROSE_CLASS)
 
 

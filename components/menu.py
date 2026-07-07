@@ -1,4 +1,5 @@
 import itertools
+import uuid
 
 import reflex as rx
 from reflex.components.component import ComponentNamespace
@@ -9,7 +10,12 @@ _menu_id_counter = itertools.count()
 
 
 class ClassNames:
-    TRIGGER = "list-none cursor-pointer [&::-webkit-details-marker]:hidden"
+    # Keep <summary> itself as inline-block (NOT flex/grid) — several browser
+    # engines tie the native click-to-toggle behavior on <summary> to its
+    # special internal `display: list-item` rendering. Overriding it to
+    # flex/grid directly can silently break the open/close toggle entirely.
+    TRIGGER = "inline-block list-none cursor-pointer [&::-webkit-details-marker]:hidden"
+    TRIGGER_INNER = "flex w-fit items-center"
     CONTENT = (
         "absolute z-50 min-w-32 rounded-lg bg-popover p-1 text-popover-foreground "
         "shadow-md ring-1 ring-foreground/10 outline-none"
@@ -42,6 +48,38 @@ class MenuRoot(CoreComponent):
         props["data-slot"] = "menu"
         cls.set_class_name("relative inline-block", props)
 
+        # Attach two document-level listeners exactly once, no matter how
+        # many MenuRoots get mounted:
+        #   - Escape closes any currently-open menu
+        #   - a click outside an open menu's bounds closes it
+        # Both query generically by data-slot="menu" rather than a specific
+        # id, so a single listener pair handles every menu on the page.
+        props["on_mount"] = rx.call_script(
+            """
+            if (!window.__menuGlobalHandlersAttached) {
+                window.__menuGlobalHandlersAttached = true;
+
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') {
+                        document
+                            .querySelectorAll('details[data-slot="menu"][open]')
+                            .forEach(function (el) { el.open = false; });
+                    }
+                });
+
+                document.addEventListener('click', function (e) {
+                    document
+                        .querySelectorAll('details[data-slot="menu"][open]')
+                        .forEach(function (el) {
+                            if (!el.contains(e.target)) {
+                                el.open = false;
+                            }
+                        });
+                });
+            }
+            """
+        )
+
         return rx.el.details(*children, **props)
 
 
@@ -50,7 +88,14 @@ class MenuTrigger(CoreComponent):
     def create(cls, *children, **props) -> rx.Component:
         props["data-slot"] = "menu-trigger"
         cls.set_class_name(ClassNames.TRIGGER, props)
-        return rx.el.summary(*children, **props)
+        # Children live in an inner flex wrapper rather than on <summary>
+        # itself, so <summary> can stay inline-block (safe for the native
+        # toggle) while still visually hugging/aligning its content (e.g.
+        # an avatar) with no dead click-zone underneath.
+        return rx.el.summary(
+            rx.el.div(*children, class_name=ClassNames.TRIGGER_INNER),
+            **props,
+        )
 
 
 class MenuContent(CoreComponent):
@@ -86,12 +131,20 @@ class MenuContent(CoreComponent):
 
 
 class MenuItem(CoreComponent):
+    """
+    Note: if rendered inside rx.foreach, the auto-generated uuid is baked in
+    once at template-build time and shared across all rendered items. Pass
+    an explicit `id` derived from your loop data in that case, e.g.
+    id=f"menu-item-{item.id}".
+    """
+
     @classmethod
-    def create(
-        cls, *children, menu_id: str | None = None, close_on_click: bool = True, **props
-    ) -> rx.Component:
+    def create(cls, *children, close_on_click: bool = True, **props) -> rx.Component:
         props["data-slot"] = "menu-item"
         cls.set_class_name(ClassNames.ITEM, props)
+
+        item_id = props.get("id") or f"menu-item-{uuid.uuid4().hex[:8]}"
+        props["id"] = item_id
 
         # 1. Pop out any existing user on_click triggers (can be None, an event, or a list)
         user_on_click = props.pop("on_click", None)
@@ -106,10 +159,16 @@ class MenuItem(CoreComponent):
             else:
                 click_events.append(user_on_click)
 
-        # 3. If close_on_click is active and a menu_id is given, append our fast client-side closer
-        if close_on_click and menu_id:
+        # 3. If close_on_click is active, append a script that walks up from
+        # this item to its nearest ancestor menu and closes it — no manual
+        # menu_id wiring required.
+        if close_on_click:
             close_script = rx.call_script(
-                f"const el = document.getElementById('{menu_id}'); if(el) el.open = false;"
+                f"""
+                const item = document.getElementById('{item_id}');
+                const root = item ? item.closest('[data-slot="menu"]') : null;
+                if (root) root.open = false;
+                """
             )
             click_events.append(close_script)
 
@@ -122,12 +181,19 @@ class MenuItem(CoreComponent):
 
 class MenuClose(CoreComponent):
     @classmethod
-    def create(cls, *children, menu_id: str, **props) -> rx.Component:
+    def create(cls, *children, **props) -> rx.Component:
         props["data-slot"] = "menu-close"
         props.setdefault("type", "button")
 
+        close_id = props.get("id") or f"menu-close-{uuid.uuid4().hex[:8]}"
+        props["id"] = close_id
+
         props["on_click"] = rx.call_script(
-            f"const el = document.getElementById('{menu_id}'); if(el) el.open = false;"
+            f"""
+            const btn = document.getElementById('{close_id}');
+            const root = btn ? btn.closest('[data-slot="menu"]') : null;
+            if (root) root.open = false;
+            """
         )
 
         cls.set_class_name(ClassNames.ITEM, props)

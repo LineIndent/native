@@ -1,3 +1,5 @@
+import uuid
+
 import reflex as rx
 from reflex.components.component import ComponentNamespace
 from reflex_components_core.el import Div, Span
@@ -52,16 +54,47 @@ class AvatarRoot(Div, CoreComponent):
 
 
 class AvatarImage(CoreComponent):
+    """
+    Renders an <img> and probes its `src` client-side on mount. If the image
+    fails to load, it hides itself and reveals the sibling AvatarFallback
+    (matched via the nearest ancestor with data-slot="avatar").
+
+    Note: if this is rendered inside rx.foreach, the auto-generated uuid will
+    be baked in once at template-build time and shared across all rendered
+    items. In that case pass an explicit `id` derived from your loop data,
+    e.g. id=f"avatar-img-{user.id}".
+    """
+
     @classmethod
-    def create(cls, *, fallback_id: str, **props) -> rx.Component:
+    def create(cls, **props) -> rx.Component:
         custom_classes = props.pop("class_name", "")
         props["data-slot"] = "avatar-image"
 
-        custom_attrs = props.setdefault("custom_attrs", {})
-        custom_attrs["onerror"] = (
-            f"this.style.display='none';"
-            f"document.getElementById('{fallback_id}').style.display='flex'"
-        )
+        img_id = props.get("id") or f"avatar-img-{uuid.uuid4().hex[:8]}"
+        props["id"] = img_id
+
+        src = props.get("src", "")
+
+        js = f"""
+        (function() {{
+            var img = document.getElementById('{img_id}');
+            if (!img) return;
+            var root = img.closest('[data-slot="avatar"]');
+            var fallback = root ? root.querySelector('[data-slot="avatar-fallback"]') : null;
+            var tester = new Image();
+            tester.onload = function() {{
+                img.style.display = '';
+                if (fallback) fallback.style.display = 'none';
+            }};
+            tester.onerror = function() {{
+                img.style.display = 'none';
+                if (fallback) fallback.style.display = 'flex';
+            }};
+            tester.src = '{src}';
+        }})()
+        """
+
+        props["on_mount"] = rx.call_script(js)
 
         cls.set_class_name(cn(ClassNames.IMAGE, custom_classes), props)
         return rx.el.img(**props)
@@ -69,10 +102,9 @@ class AvatarImage(CoreComponent):
 
 class AvatarFallback(Span, CoreComponent):
     @classmethod
-    def create(cls, *children, fallback_id: str, **props) -> Span:
+    def create(cls, *children, **props) -> Span:
         custom_classes = props.pop("class_name", "")
         props["data-slot"] = "avatar-fallback"
-        props["id"] = fallback_id
         props["style"] = {"display": "none", **props.get("style", {})}
         return super().create(
             *children, class_name=cn(ClassNames.FALLBACK, custom_classes), **props
