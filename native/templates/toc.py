@@ -82,8 +82,12 @@ def _create_external_tool_links(url: str):
     ):
         return rx.el.a(
             rx.el.image(
-                rx.color_mode_cond(icon_light, icon_dark),
-                class_name=icon_size,
+                icon_light,
+                class_name="flex dark:hidden size-4",
+            ),
+            rx.el.image(
+                icon_dark,
+                class_name="hidden dark:flex size-4",
             ),
             href=href,
             target="_blank",

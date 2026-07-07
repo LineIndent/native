@@ -1,4 +1,4 @@
-from reflex_components_core.el import Div, Header, div, header
+from reflex_components_core.el import Div, Header, a, div, header
 
 from components.button import button
 from native.templates.github import github
@@ -8,9 +8,9 @@ NAV_LIST = [
     {"name": "Home", "path": "/"},
     {"name": "Docs", "path": "/docs/getting-started/introduction"},
     {"name": "Components", "path": "/components"},
-    {"name": "Blocks", "path": "/blocks"},
-    {"name": "Charts", "path": "/charts"},
-    {"name": "Create", "path": "/create"},
+    # {"name": "Blocks", "path": "/blocks"},
+    # {"name": "Charts", "path": "/charts"},
+    # {"name": "Create", "path": "/create"},
 ]
 
 
@@ -22,7 +22,10 @@ def navbar() -> Header:
     return header(
         div(
             div(
-                *[button(nav["name"], variant="ghost") for nav in NAV_LIST],
+                *[
+                    a(button(nav["name"], variant="ghost"), href=nav["path"])
+                    for nav in NAV_LIST
+                ],
             ),
             div(
                 theme_toggle_button(),
