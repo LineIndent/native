@@ -39,9 +39,10 @@ Use the `avatar.badge` component to add a badge to the avatar. The badge is posi
 
 Use the `class_Name` prop to add custom styles to the badge such as custom colors, sizes, etc.
 
-```reflex
+```bash
 avatar.badge(class_name="bg-green-600 dark:bg-green-800")
 ```
+
 
 ## Badge with Icon
 
