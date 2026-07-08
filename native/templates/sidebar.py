@@ -4,7 +4,7 @@ from typing import List
 import reflex as rx
 
 import native.registry.routes as routes
-from components.button import button
+from components.ui.button import button
 
 HIGHLIGHT_SCRIPT = """
     const currentPath = window.location.pathname.substring(1);

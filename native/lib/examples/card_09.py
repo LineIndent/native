@@ -1,8 +1,8 @@
 import reflex as rx
 
-from components.button import button
-from components.card import card
-from components.hugeicon import hi
+from components.core.hugeicon import hi
+from components.ui.button import button
+from components.ui.card import card
 from native.templates.masonary import masonry_card
 
 

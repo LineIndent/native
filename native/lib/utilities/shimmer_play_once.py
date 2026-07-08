@@ -1,7 +1,7 @@
 import reflex as rx
 from reflex.experimental import ClientStateVar
 
-from components.button import button
+from components.ui.button import button
 
 shimmer_key = ClientStateVar.create("shimmer_key", 0)
 

@@ -4,8 +4,8 @@ from reflex.components.component import ComponentNamespace
 from reflex_components_core.el import Div as ElDiv
 from reflex_components_core.el import Span as ElSpan
 
+from ..core.core import CoreComponent, cn
 from .button import button
-from .core import CoreComponent, cn
 from .input import input
 from .textarea import textarea
 

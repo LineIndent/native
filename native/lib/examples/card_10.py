@@ -1,8 +1,8 @@
 import reflex as rx
 
-from components.button import button
-from components.card import card
-from components.checkbox import checkbox
+from components.ui.button import button
+from components.ui.card import card
+from components.ui.checkbox import checkbox
 from native.templates.masonary import masonry_card
 
 

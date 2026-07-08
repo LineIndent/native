@@ -1,7 +1,7 @@
 import reflex as rx
 
-from components.avatar import avatar
-from components.hugeicon import hi
+from components.core.hugeicon import hi
+from components.ui.avatar import avatar
 
 
 def avatar_group_count_icon() -> rx.Component:

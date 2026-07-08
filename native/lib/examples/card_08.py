@@ -1,7 +1,7 @@
 import reflex as rx
 
-from components.card import card
-from components.input_group import input_group
+from components.ui.card import card
+from components.ui.input_group import input_group
 from native.templates.masonary import masonry_card
 
 

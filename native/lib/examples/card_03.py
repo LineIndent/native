@@ -1,6 +1,6 @@
 import reflex as rx
 
-from components.card import card
+from components.ui.card import card
 from native.templates.masonary import masonry_card
 
 summary_rows = [

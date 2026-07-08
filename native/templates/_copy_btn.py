@@ -4,7 +4,7 @@ import string
 
 import reflex as rx
 
-from components.hugeicon import hi
+from components.core.hugeicon import hi
 
 
 def generate_component_id() -> str:

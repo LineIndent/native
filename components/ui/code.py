@@ -1,7 +1,7 @@
 import reflex as rx
 from reflex_components_core.el import Pre
 
-from .core import CoreComponent
+from ..core.core import CoreComponent
 
 
 class ClassNames:

@@ -3,7 +3,7 @@ from typing import Literal
 from reflex.vars.base import Var
 from reflex_components_core.el import Span
 
-from .core import CoreComponent, cn
+from ..core.core import CoreComponent, cn
 
 LiteralBadgeVariant = Literal[
     "default", "secondary", "destructive", "outline", "ghost", "link"

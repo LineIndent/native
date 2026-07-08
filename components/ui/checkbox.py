@@ -1,8 +1,8 @@
 import reflex as rx
 from reflex.components.component import ComponentNamespace
 
-from .core import CoreComponent, cn
-from .hugeicon import hi
+from ..core.core import CoreComponent, cn
+from ..core.hugeicon import hi
 
 
 class ClassNames:

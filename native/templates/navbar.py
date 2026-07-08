@@ -1,6 +1,6 @@
 from reflex_components_core.el import Div, Header, a, div, header
 
-from components.button import button
+from components.ui.button import button
 from native.templates.github import github
 from native.templates.theme import theme_toggle_button
 

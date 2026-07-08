@@ -2,7 +2,7 @@ from typing import Literal
 
 import reflex as rx
 
-from .core import CoreComponent
+from ..core.core import CoreComponent
 
 LiteralOrientation = Literal["horizontal", "vertical"]
 

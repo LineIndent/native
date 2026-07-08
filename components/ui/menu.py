@@ -4,7 +4,7 @@ import uuid
 import reflex as rx
 from reflex.components.component import ComponentNamespace
 
-from .core import CoreComponent, cn
+from ..core.core import CoreComponent, cn
 
 _menu_id_counter = itertools.count()
 

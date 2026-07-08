@@ -3,7 +3,7 @@ from typing import Literal
 from reflex.vars.base import Var
 from reflex_components_core.el import Button as BaseButton
 
-from .core import CoreComponent, cn
+from ..core.core import CoreComponent, cn
 
 LiteralButtonVariant = Literal[
     "default",

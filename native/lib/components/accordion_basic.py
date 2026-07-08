@@ -1,6 +1,6 @@
 import reflex as rx
 
-from components.accordion import accordion
+from components.ui.accordion import accordion
 
 
 def accordion_basic():

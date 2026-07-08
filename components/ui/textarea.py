@@ -1,6 +1,6 @@
 from reflex_components_core.el import Textarea
 
-from .core import CoreComponent
+from ..core.core import CoreComponent
 
 
 class ClassNames:

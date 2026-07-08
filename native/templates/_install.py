@@ -1,6 +1,6 @@
 import reflex as rx
 
-from components.accordion import accordion
+from components.ui.accordion import accordion
 from native.templates._copy_btn import create_copy_button, generate_component_id
 
 CODE_BLOCK_STYLE = {

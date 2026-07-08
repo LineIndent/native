@@ -4,7 +4,7 @@ import reflex as rx
 from reflex.components.component import ComponentNamespace
 from reflex_components_core.el import Div, Span
 
-from .core import CoreComponent, cn
+from ..core.core import CoreComponent, cn
 
 
 class ClassNames:

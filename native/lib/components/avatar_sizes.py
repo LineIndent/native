@@ -1,6 +1,6 @@
 import reflex as rx
 
-from components.avatar import avatar
+from components.ui.avatar import avatar
 
 
 def avatar_sizes() -> rx.Component:

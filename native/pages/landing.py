@@ -1,7 +1,7 @@
 from reflex_components_core.el import Section, a, div, section
 
-from components.button import button
-from components.hugeicon import hi
+from components.core.hugeicon import hi
+from components.ui.button import button
 from native.lib.examples.card_01 import card_01
 from native.lib.examples.card_02 import card_02
 from native.lib.examples.card_03 import card_03

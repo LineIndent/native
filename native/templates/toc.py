@@ -2,7 +2,7 @@ from typing import Dict, List
 
 import reflex as rx
 
-from components.hugeicon import hi
+from components.core.hugeicon import hi
 from native.templates._copy_btn import generate_component_id
 
 

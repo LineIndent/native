@@ -1,8 +1,8 @@
 import reflex as rx
 
-from components.avatar import avatar
-from components.button import button
-from components.menu import menu
+from components.ui.avatar import avatar
+from components.ui.button import button
+from components.ui.menu import menu
 
 
 def avatar_dropdown_menu() -> rx.Component:

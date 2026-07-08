@@ -1,7 +1,7 @@
 import reflex as rx
 
-from components.button import button
-from components.card import card
+from components.ui.button import button
+from components.ui.card import card
 from native.templates.masonary import masonry_card
 
 savings_goals = [

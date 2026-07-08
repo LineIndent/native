@@ -2,7 +2,7 @@ from reflex.components.component import Component
 from reflex.utils.imports import ImportVar
 from reflex.vars.base import Var, VarData
 
-from .core import CoreComponent
+from ..core.core import CoreComponent
 
 REACT_LIBRARY = "@hugeicons/react@1.1.6"
 CORE_ICONS_LIBRARY = "@hugeicons/core-free-icons@4.2.1"
