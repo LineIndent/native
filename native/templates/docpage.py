@@ -1,35 +1,58 @@
-import reflex as rx
+from reflex.event import call_script
+from reflex_components_core.el import div, section
 
-from native.templates.footer import footer
+from native.templates.footer import _footer
 from native.templates.navbar import navbar
-from native.templates.sidebar import sidebar
 
 
 def docpage(main_content, toc_content):
-    """The template for all documentation pages."""
-    return rx.el.div(
-        rx.el.header(navbar(), class_name="sticky top-0 z-50"),
-        rx.el.main(
-            rx.el.div(
-                sidebar(),
-                rx.el.div(
-                    rx.el.div(
-                        rx.el.div(
-                            main_content,
-                            class_name="mx-auto flex w-full max-w-[40rem] min-w-0 flex-1 px-2 py-6 md:px-0 lg:py-8",
-                        ),
-                        class_name="flex-1 min-w-0",
-                    ),
-                    toc_content,
-                    class_name="flex items-start w-full flex-1 min-w-0",
-                ),
-                class_name="flex w-full gap-x-0 xl:max-w-[96rem] 2xl:max-w-[96rem] mx-auto px-2 md:px-7",
-            ),
-            class_name="w-full",
+    return div(
+        section(
+            navbar(),
+            div(main_content, class_name="mx-auto flex w-full flex-col gap-8"),
+            _footer(),
+            class_name="flex min-h-screen flex-col gap-16",
         ),
-        rx.el.footer(
-            footer(),
-            class_name="w-full flex items-center justify-center py-8 text-muted-foreground !text-sm !text-center",
+        class_name="mx-auto min-h-screen max-w-5xl px-4",
+        on_mount=call_script(
+            """
+            const command = localStorage.getItem("buridan-command");
+
+            if (!command) {
+                localStorage.setItem(
+                    "buridan-command",
+                    "buridan add"
+                );
+            }
+
+            const activeCommand =
+                localStorage.getItem("buridan-command");
+
+            document
+              .querySelectorAll(".command-prefix")
+              .forEach(el => el.innerText = activeCommand);
+
+            document
+              .querySelectorAll(".command-check")
+              .forEach(el => el.innerText = "");
+
+            if (activeCommand === "buridan add") {
+                document
+                  .querySelector("#command-option-cli .command-check")
+                  .innerText = "✓";
+            }
+
+            if (activeCommand === "uv run buridan add") {
+                document
+                  .querySelector("#command-option-uv .command-check")
+                  .innerText = "✓";
+            }
+
+            if (activeCommand === "python -m buridan add") {
+                document
+                  .querySelector("#command-option-module .command-check")
+                  .innerText = "✓";
+            }
+            """
         ),
-        class_name="bg-background relative flex min-h-screen flex-col",
     )

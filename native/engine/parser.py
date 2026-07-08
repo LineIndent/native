@@ -29,6 +29,8 @@ import reflex as rx
 from native.registry.components import COMPONENT_REGISTRY
 from native.templates._demo import demo
 from native.templates._install import installation
+from native.templates._intro import intro
+from native.templates._usage import usage
 
 _PROJECT_ROOT = pathlib.Path(__file__).parent.parent.parent
 
@@ -95,7 +97,7 @@ def _clean_arg(raw_arg: str) -> str:
     return (raw_arg or "").strip().strip("'\"[]{}").lower()
 
 
-def _render_install(name: str) -> rx.Component:
+def _render_install(name: str):
     all_deps = get_all_dependencies(name)
     if not all_deps:
         return rx.el.p(f"Installation payload empty for {name}")
@@ -108,21 +110,23 @@ def _render_install(name: str) -> rx.Component:
             except OSError:
                 return rx.el.p(f"Error reading file dependency path: {f_path}")
 
-    return installation(name, files_data)
+    return name, files_data
+    # return installation(name, files_data)
 
 
 def render_token(cmd: str, raw_arg: str) -> rx.Component:
     name = _clean_arg(raw_arg)
 
-    if "tooltip" in cmd:
-        # Placeholder for tooltip_wrapper
-        return rx.el.span(
-            "💡 Tooltip Trigger Placeholder",
-            class_name="not-prose text-xs underline cursor-help text-primary",
-        )
-
     if cmd == "install":
         return _render_install(name)
+
+    if "intro" in cmd:
+        return intro(raw_arg)
+
+    if cmd == "usage":
+        name, files = _render_install(raw_arg)
+
+        return usage(raw_arg, files)
 
     entry = _LIVE_REGISTRY.get(name)
     if not entry:
@@ -159,16 +163,17 @@ def render_token(cmd: str, raw_arg: str) -> rx.Component:
             class_name="not-prose my-6 w-full",
         )
 
-    if cmd == "usage":
-        return rx.el.div(
-            rx.el.pre(
-                rx.el.code(
-                    f"from components.{preferred_name} import {preferred_name}",
-                    class_name="language-python !text-sm text-primary",
-                )
-            ),
-            class_name="not-prose my-4 p-3 bg-secondary/50 rounded-lg border border-input",
-        )
+    # if cmd == "usage":
+    #     return usage(raw_arg)
+    # return rx.el.div(
+    #     rx.el.pre(
+    #         rx.el.code(
+    #             f"from components.{preferred_name} import {preferred_name}",
+    #             class_name="language-python !text-sm text-primary",
+    #         )
+    #     ),
+    #     class_name="not-prose my-4 p-3 bg-secondary/50 rounded-lg border border-input",
+    # )
 
     if cmd == "anatomy":
         from native.registry.anatomy import ANATOMY
@@ -212,71 +217,73 @@ from bs4 import BeautifulSoup
 
 _MD_EXTENSIONS = ["fenced_code", "tables", "toc"]
 
-_PROSE_CLASS = (
-    "prose-li:marker:text-foreground "
-    "prose-code:before:content-none "
-    "prose-code:after:content-none "
-    "prose-code:rounded-lg "
-    "prose dark:prose-invert max-w-none w-full "
-    "prose-h1:scroll-mt-14 prose-h2:scroll-mt-14 "
-    "prose-h1:text-2xl prose-h1:font-bold prose-h1:tracking-tight prose-h1:mb-3 "
-    "prose-h2:text-xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:mt-6 prose-h2:mb-3 "
-    "prose-p:text-muted-foreground prose-p:leading-relaxed "
-    "prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm "
-    # --- BLOCKQUOTES ---
-    "prose-blockquote:w-full "
-    "[&>blockquote>p]:text-sm "
-    "[&>blockquote>p]:font-light "
-    "[&>blockquote>p]:text-foreground "
-    "prose-blockquote:bg-secondary dark:prose-blockquote:bg-card "
-    "prose-blockquote:flex "
-    "prose-blockquote:px-3 "
-    "prose-blockquote:not-italic "
-    "prose-blockquote:border-0 "
-    "prose-blockquote:before:content-none "
-    "prose-blockquote:after:content-none "
-    "[&>blockquote>p]:before:content-none "
-    "[&>blockquote>p]:after:content-none "
-    # Code blocks
-    "prose-pre:rounded-2xl "
-    "prose-pre:text-md "
-    "prose-pre:bg-secondary dark:prose-pre:bg-card "
-    "prose-pre:shadow-none "
-    "prose-pre:border-0 "
-    "prose-pre:p-0 "
-    "prose-pre:my-4 "
-    "prose-pre:overflow-x-auto "
-    # Remove Typography's backticks on code blocks
-    "prose-pre:before:content-none "
-    "prose-pre:after:content-none "
-    # Code inside <pre>
-    "prose-pre:font-normal "
-    "[&>pre>code]:block "
-    "[&>pre>code]:px-4 "
-    "[&>pre>code]:py-4 "
-    # "[&>pre>code]:text-[13px] "
-    "[&>pre>code]:bg-transparent "
-    # Wrapper
-    "[&>div>table]:w-max "
-    "[&>div>table]:min-w-full "
-    # Table
-    "prose-table:border "
-    "prose-table:border-input "
-    "prose-table:rounded-[1rem] "
-    "prose-table:mb-4 "
-    # Header
-    "prose-thead:border-b "
-    "prose-thead:border-input "
-    "prose-th:px-4 prose-th:py-2 "
-    "prose-th:text-left prose-th:font-bold "
-    "prose-th:whitespace-nowrap "
-    # Body
-    "prose-tbody:divide-y "
-    "prose-tbody:divide-input "
-    # Cells
-    "prose-td:px-4 prose-td:py-2 "
-    "prose-td:whitespace-nowrap "
-)
+_PROSE_CLASS = "docs-prose"
+
+# _PROSE_CLASS = (
+#     "prose-li:marker:text-foreground "
+#     "prose-code:before:content-none "
+#     "prose-code:after:content-none "
+#     "prose-code:rounded-lg "
+#     "prose dark:prose-invert max-w-none w-full "
+#     "prose-h1:scroll-mt-14 prose-h2:scroll-mt-14 "
+#     "prose-h1:text-2xl prose-h1:font-bold prose-h1:tracking-tight prose-h1:mb-3 "
+#     "prose-h2:text-xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:mt-6 prose-h2:mb-3 "
+#     "prose-p:text-muted-foreground prose-p:leading-relaxed "
+#     "prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm "
+#     # --- BLOCKQUOTES ---
+#     "prose-blockquote:w-full "
+#     "[&>blockquote>p]:text-sm "
+#     "[&>blockquote>p]:font-light "
+#     "[&>blockquote>p]:text-foreground "
+#     "prose-blockquote:bg-secondary dark:prose-blockquote:bg-card "
+#     "prose-blockquote:flex "
+#     "prose-blockquote:px-3 "
+#     "prose-blockquote:not-italic "
+#     "prose-blockquote:border-0 "
+#     "prose-blockquote:before:content-none "
+#     "prose-blockquote:after:content-none "
+#     "[&>blockquote>p]:before:content-none "
+#     "[&>blockquote>p]:after:content-none "
+#     # Code blocks
+#     "prose-pre:rounded-2xl "
+#     "prose-pre:text-md "
+#     "prose-pre:bg-secondary dark:prose-pre:bg-card "
+#     "prose-pre:shadow-none "
+#     "prose-pre:border-0 "
+#     "prose-pre:p-0 "
+#     "prose-pre:my-4 "
+#     "prose-pre:overflow-x-auto "
+#     # Remove Typography's backticks on code blocks
+#     "prose-pre:before:content-none "
+#     "prose-pre:after:content-none "
+#     # Code inside <pre>
+#     "prose-pre:font-normal "
+#     "[&>pre>code]:block "
+#     "[&>pre>code]:px-4 "
+#     "[&>pre>code]:py-4 "
+#     # "[&>pre>code]:text-[13px] "
+#     "[&>pre>code]:bg-transparent "
+#     # Wrapper
+#     "[&>div>table]:w-max "
+#     "[&>div>table]:min-w-full "
+#     # Table
+#     "prose-table:border "
+#     "prose-table:border-input "
+#     "prose-table:rounded-[1rem] "
+#     "prose-table:mb-4 "
+#     # Header
+#     "prose-thead:border-b "
+#     "prose-thead:border-input "
+#     "prose-th:px-4 prose-th:py-2 "
+#     "prose-th:text-left prose-th:font-bold "
+#     "prose-th:whitespace-nowrap "
+#     # Body
+#     "prose-tbody:divide-y "
+#     "prose-tbody:divide-input "
+#     # Cells
+#     "prose-td:px-4 prose-td:py-2 "
+#     "prose-td:whitespace-nowrap "
+# )
 
 
 def wrap_tables(html: str) -> str:

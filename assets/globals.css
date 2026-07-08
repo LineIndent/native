@@ -135,3 +135,108 @@
     color: var(--foreground);
     font-weight: 500;
 }
+
+@layer components {
+    .docs-prose {
+        /* 1. Base Typography Setup */
+        @apply prose
+    dark:prose-invert
+    max-w-none
+    w-full;
+
+        /* 2. List & Inline Code Modifiers */
+        @apply prose-li:marker:text-foreground
+    prose-code:before:content-none
+    prose-code:after:content-none
+    prose-code:rounded-lg
+    prose-code:bg-muted
+    prose-code:px-1.5
+    prose-code:py-0.5
+    prose-code:text-sm;
+
+        /* 3. Heading Modifiers */
+        @apply prose-h1:scroll-mt-14
+    prose-h2:scroll-mt-14
+    prose-h1:text-2xl
+    prose-h1:font-bold
+    prose-h1:tracking-tight
+    prose-h1:mb-3
+    prose-h2:text-xl
+    prose-h2:font-semibold
+    prose-h2:tracking-tight
+    prose-h2:mt-6
+    prose-h2:mb-3;
+
+        /* 4. Paragraph Modifiers */
+        @apply prose-p:text-muted-foreground
+    prose-p:leading-relaxed;
+
+        /* 5. Preformatted Code Block Modifiers (Cleaned of invalid text-md) */
+        @apply prose-pre:rounded-2xl
+    prose-pre:bg-secondary
+    prose-pre:shadow-none
+    prose-pre:border-0
+    prose-pre:p-0
+    prose-pre:my-4
+    prose-pre:overflow-x-auto
+    prose-pre:before:content-none
+    prose-pre:after:content-none;
+
+        /* 6. Table Modifiers (Cleaned of missing table/thead/tbody variants) */
+        @apply prose-table:border
+    prose-table:border-input
+    prose-table:mb-4
+    prose-th:px-4
+    prose-th:py-2
+    prose-th:text-left
+    prose-th:font-bold
+    prose-th:whitespace-nowrap
+    prose-td:px-4
+    prose-td:py-2
+    prose-td:whitespace-nowrap;
+    }
+
+    /* --- Native CSS Fixes for elements missing Tailwind Typography variants --- */
+
+    /* Fixed arbitrary values processing inside @apply */
+    .docs-prose table {
+        border-radius: 1rem;
+    }
+
+    /* Fixed non-existent prose-thead variant */
+    .docs-prose thead {
+        @apply border-b border-input;
+    }
+
+    /* Fixed non-existent prose-tbody variant */
+    .docs-prose tbody {
+        @apply divide-y divide-input;
+    }
+
+    /* Blockquote Style Blocks */
+    .docs-prose blockquote {
+        @apply w-full bg-secondary dark:bg-card flex px-3 not-italic border-0;
+    }
+    .docs-prose blockquote p {
+        @apply text-sm font-light text-foreground;
+    }
+    .docs-prose blockquote::before,
+    .docs-prose blockquote::after,
+    .docs-prose blockquote p::before,
+    .docs-prose blockquote p::after {
+        content: none;
+    }
+
+    /* Pre & Inner Code Styling overrides (using valid 'text-base' instead of 'text-md') */
+    .docs-prose > pre {
+        @apply rounded-2xl text-base bg-secondary dark:bg-card shadow-none border-0 p-0 my-4 overflow-x-auto font-normal;
+    }
+    .docs-prose > pre > code {
+        @apply block px-4 py-4 bg-transparent;
+    }
+
+    /* Custom responsive layout overrides for internal wrapper tables */
+    .docs-prose > div > table {
+        @apply w-max min-w-full;
+    }
+}

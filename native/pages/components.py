@@ -145,7 +145,7 @@ def no_results():
             class_name="flex w-full max-w-sm min-w-0 flex-col items-center gap-2.5 text-xs text-balance",
         ),
         id="no-results",
-        class_name="flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 rounded-none p-6 text-center text-balance border border-dashed border-border py-40",
+        class_name="!hidden flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 rounded-none p-6 text-center text-balance border border-dashed border-border py-40",
     )
 
 

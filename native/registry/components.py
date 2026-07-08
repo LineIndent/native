@@ -61,7 +61,7 @@ COMPONENT_REGISTRY = {
     },
     # --- components/icons ---
     "hugeicon": {
-        "files": ["components/hugeicon.py"],
+        "files": ["components/core/hugeicon.py"],
         "dependencies": [],
     },
     # --- components ---
@@ -78,7 +78,7 @@ COMPONENT_REGISTRY = {
         "dependencies": ["core"],
     },
     "avatar": {
-        "files": ["components/avatar.py"],
+        "files": ["components/ui/avatar.py"],
         "dependencies": ["core"],
     },
     "badge": {
@@ -118,7 +118,7 @@ COMPONENT_REGISTRY = {
         "dependencies": ["core", "hugeicon"],
     },
     "core": {
-        "files": ["components/core.py"],
+        "files": ["components/core/core.py"],
         "dependencies": [],
     },
     "dialog": {
