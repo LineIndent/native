@@ -52,6 +52,10 @@ COMPONENT_REGISTRY = {
         "files": ["components/ui/dialog.py"],
         "dependencies": ["core"],
     },
+    "field": {
+        "files": ["components/ui/field.py"],
+        "dependencies": ["separator"],
+    },
     "input": {
         "files": ["components/ui/input.py"],
         "dependencies": ["core"],
