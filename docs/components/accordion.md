@@ -4,17 +4,11 @@ description: "A vertically stacked set of interactive headings that each reveal 
 order: 0
 ---
 
-# Accordion
+--INTRO([Accordion, A vertically stacked set of interactive headings that each reveal a section of content.])--
 
-A set of collapsible panels with headings.
+--USAGE(accordion)--
 
-> This is a **call out** block Cop the [following]() into your project. Cop the following into your project. Cop the following into your project
-
-# Installation
-
-Cop the following into your project
-
---INSTALL(accordion)--
+--SOURCE(accordion)--
 
 # Examples
 

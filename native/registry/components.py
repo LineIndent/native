@@ -66,7 +66,7 @@ COMPONENT_REGISTRY = {
     },
     # --- components ---
     "accordion": {
-        "files": ["components/accordion.py"],
+        "files": ["components/ui/accordion.py"],
         "dependencies": ["core", "hugeicon"],
     },
     "attachment": {

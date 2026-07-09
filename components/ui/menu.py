@@ -10,10 +10,6 @@ _menu_id_counter = itertools.count()
 
 
 class ClassNames:
-    # Keep <summary> itself as inline-block (NOT flex/grid) — several browser
-    # engines tie the native click-to-toggle behavior on <summary> to its
-    # special internal `display: list-item` rendering. Overriding it to
-    # flex/grid directly can silently break the open/close toggle entirely.
     TRIGGER = "inline-block list-none cursor-pointer [&::-webkit-details-marker]:hidden"
     TRIGGER_INNER = "flex w-fit items-center"
     CONTENT = (
@@ -48,12 +44,6 @@ class MenuRoot(CoreComponent):
         props["data-slot"] = "menu"
         cls.set_class_name("relative inline-block", props)
 
-        # Attach two document-level listeners exactly once, no matter how
-        # many MenuRoots get mounted:
-        #   - Escape closes any currently-open menu
-        #   - a click outside an open menu's bounds closes it
-        # Both query generically by data-slot="menu" rather than a specific
-        # id, so a single listener pair handles every menu on the page.
         props["on_mount"] = rx.call_script(
             """
             if (!window.__menuGlobalHandlersAttached) {
@@ -88,10 +78,6 @@ class MenuTrigger(CoreComponent):
     def create(cls, *children, **props) -> rx.Component:
         props["data-slot"] = "menu-trigger"
         cls.set_class_name(ClassNames.TRIGGER, props)
-        # Children live in an inner flex wrapper rather than on <summary>
-        # itself, so <summary> can stay inline-block (safe for the native
-        # toggle) while still visually hugging/aligning its content (e.g.
-        # an avatar) with no dead click-zone underneath.
         return rx.el.summary(
             rx.el.div(*children, class_name=ClassNames.TRIGGER_INNER),
             **props,

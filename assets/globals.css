@@ -228,11 +228,30 @@
     }
 
     /* Pre & Inner Code Styling overrides (using valid 'text-base' instead of 'text-md') */
-    .docs-prose > pre {
+    /*.docs-prose > pre {
         @apply rounded-2xl text-base bg-secondary dark:bg-card shadow-none border-0 p-0 my-4 overflow-x-auto font-normal;
     }
     .docs-prose > pre > code {
         @apply block px-4 py-4 bg-transparent;
+    }*/
+    .docs-prose > pre {
+        @apply min-w-0
+            overflow-x-auto
+            border
+            border-border
+            !bg-muted/40
+            rounded-xl
+            px-3
+            py-3
+            font-mono
+            text-xs;
+    }
+
+    .docs-prose > pre > code {
+        @apply block
+            bg-transparent
+            p-0
+            text-inherit;
     }
 
     /* Custom responsive layout overrides for internal wrapper tables */

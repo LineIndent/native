@@ -12,7 +12,7 @@ def generate_component_id() -> str:
     return "".join(random.choices(string.ascii_letters + string.digits, k=10))
 
 
-def create_copy_button(content: str) -> rx.Component:
+def create_copy_button(content: str) -> tuple[rx.Component, str]:
     uid = generate_component_id()
     btn_id = f"btn-{uid}"
     icon_id = f"icon-{uid}"
@@ -21,10 +21,10 @@ def create_copy_button(content: str) -> rx.Component:
     tick_icon_svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7"/></svg>'
     safe_content = json.dumps(content)
 
-    return rx.el.button(
+    button = rx.el.button(
         hi("Copy01Icon", id=icon_id, class_name="size-4"),
         id=btn_id,
-        class_name="px-[0.75rem]",
+        # class_name="px-[0.75rem]",
         on_click=rx.call_script(
             f"""
                 const icon = document.getElementById('{icon_id}');
@@ -40,3 +40,5 @@ def create_copy_button(content: str) -> rx.Component:
             """
         ),
     )
+
+    return button, btn_id

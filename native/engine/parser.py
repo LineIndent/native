@@ -28,9 +28,10 @@ import reflex as rx
 
 from native.registry.components import COMPONENT_REGISTRY
 from native.templates._demo import demo
-from native.templates._install import installation
+
 from native.templates._intro import intro
 from native.templates._usage import usage
+
 
 _PROJECT_ROOT = pathlib.Path(__file__).parent.parent.parent
 
@@ -124,9 +125,15 @@ def render_token(cmd: str, raw_arg: str) -> rx.Component:
         return intro(raw_arg)
 
     if cmd == "usage":
+
+        return usage(raw_arg)
+
+    if "source" in cmd:
+        from native.templates._source import source
+
         name, files = _render_install(raw_arg)
 
-        return usage(raw_arg, files)
+        return source(files)
 
     entry = _LIVE_REGISTRY.get(name)
     if not entry:

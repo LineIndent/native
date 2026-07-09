@@ -7,13 +7,17 @@ from native.templates.navbar import navbar
 
 def docpage(main_content, toc_content):
     return div(
-        section(
+        div(
             navbar(),
-            div(main_content, class_name="mx-auto flex w-full flex-col gap-8"),
-            _footer(),
-            class_name="flex min-h-screen flex-col gap-16",
+            div(
+                section(
+                    div(main_content, class_name="mx-auto flex w-full flex-col gap-8"),
+                    _footer(),
+                    class_name="flex min-h-screen flex-col gap-16",
+                ),
+                class_name="mx-auto min-h-screen max-w-5xl px-4 pt-10",
+            ),
         ),
-        class_name="mx-auto min-h-screen max-w-5xl px-4",
         on_mount=call_script(
             """
             const command = localStorage.getItem("buridan-command");

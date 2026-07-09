@@ -51,9 +51,10 @@ def sub_layout_decorator(
                         class_name="flex flex-col w-full gap-8 px-2 lg:px-20",
                     ),
                     _footer(),
-                    class_name="flex min-h-screen flex-col gap-16",
+                    class_name="flex min-h-screen flex-col gap-16 px-2 sm:px-0",
                 ),
-                class_name="mx-auto min-h-screen max-w-[96rem] px-4",
+                # class_name="mx-auto min-h-screen max-w-[96rem] px-4",
+                class_name="mx-auto min-h-screen max-w-6xl",
             )
 
         return wrapper

@@ -4,14 +4,10 @@ description: "Utilities for adding a shimmer effect to text elements."
 order: 0
 ---
 
-# Shimmer
-
-Utilities for adding a shimmer effect to text elements.
+--INTRO([Shimmer, Utilities for adding a shimmer effect to text elements.])--
 
 >The **shimmer** utility is purely composed of CSS and is based on [shadcn/shimmer](https://ui.shadcn.com/docs/utils/shimmer). No extensions to **rxconfig.py** are needed as it uses **Tailwind v4** syntax. 
 
-
-# Installation 
 
 If your project was set up with `buridan init`, you already have shimmer. It ships with the `buridan` package, which the CLI imports in your global CSS file.
 
@@ -156,7 +152,7 @@ You can also copy paste the `shimmer` source directly into your `globals.css` fi
 
 Add shimmer to a text element.
 
-```reflex
+```python
 rx.el.p("Generating response", class_name="shimmer text-muted-foreground w-fit")
 ```
 
@@ -200,7 +196,7 @@ Use `shimmer-once` to play a single sweep instead of looping, useful as a reveal
 
 --DEMO(shimmer_once)--
 
-```reflex
+```python
 rx.el.p("Response Generated", class_name="shimmer shimmer-duration-1100 shimmer-once")
 ```
 

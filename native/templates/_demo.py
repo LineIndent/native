@@ -1,37 +1,84 @@
 import reflex as rx
 
-from native.templates._copy_btn import create_copy_button
+from native.templates._copy_btn import create_copy_button, generate_component_id
+from reflex_components_core.el import div
+from components.ui.button import button
+from components.core.hugeicon import hi
 
+def demo(component: rx.Component, source: str):
+    demo_id = generate_component_id()
+    copy_button, _ = create_copy_button(content=source)
 
-def demo(component: rx.Component, source: str) -> rx.Component:
+    return div(
+        div(
+            div(
+                div(
+                    button(
+                        hi("SearchIcon", class_name="size-3.5"),
+                        variant="outline",
+                        class_name=(
+                            "size-7 preview-btn bg-background "
+                            "group-data-[view=code]:bg-transparent "
+                            "group-data-[view=code]:border-transparent"
+                        ),
 
-    return rx.el.div(
-        rx.el.div(
-            component,
-            class_name="w-full min-h-[250px] flex items-center justify-center !p-2 !sm:p-6 my-10",
-        ),
-        rx.el.div(
-            rx.el.div(
-                create_copy_button(content=source),
-                class_name="absolute top-2 right-2 z-10 bg-secondary dark:bg-card",
+                        on_click=rx.call_script(
+                            f"""
+                            document.getElementById("demo-{demo_id}").dataset.view = "preview";
+                            """
+                        ),
+                    ),
+                    button(
+                        hi("CodeIcon", class_name="size-3.5"),
+                        variant="outline",
+                        class_name=(
+                            "size-7 code-btn border-transparent bg-transparent "
+                            "group-data-[view=code]:border-border "
+                            "group-data-[view=code]:bg-background"
+                        ),
+                        on_click=rx.call_script(
+                            f"""
+                            document.getElementById("demo-{demo_id}").dataset.view = "code";
+                            """
+                        ),
+                    ),
+                    class_name="flex items-center gap-1"
+                ),
+                class_name="flex items-center gap-2",
             ),
-            rx.el.div(
+            div(
+                copy_button,
+                class_name="flex items-center gap-1 px-2"),
+            class_name="flex items-stretch justify-between p-0.5 pb-0.5",
+        ),
+        div(
+            div(
+                component,
+                class_name=(
+                    "w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 "
+                    "group-data-[view=code]:hidden"
+                ),
+            ),
+            div(
                 rx.el.pre(
                     rx.el.code(
                         source,
-                        class_name="language-python !text-[15px]",
+                        class_name="language-python text-sm",
                         on_mount=rx.call_script("Prism.highlightAll()"),
                     ),
-                    style={
-                        "padding": "1rem 0.75rem",
-                        "white-space": "pre",
-                        "display": "block",
-                    },
-                    class_name="w-full h-full !bg-secondary dark:!bg-card",
                 ),
-                class_name="max-h-[150px] overflow-auto scrollbar-none",
+                class_name=(
+                    "size-full overflow-y-auto p-2 hidden "
+                    "group-data-[view=code]:flex"
+                ),
             ),
-            class_name="border-t border-input/80 bg-secondary dark:bg-card relative overflow-hidden",
+            class_name=(
+                "relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col "
+                "overflow-hidden border bg-background "
+                "dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]"
+            ),
         ),
-        class_name="w-full border border-input/80 flex flex-col my-8 !overflow-hidden",
+        id=f"demo-{demo_id}",
+        data_view="preview",
+        class_name="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh]",
     )

@@ -84,7 +84,7 @@ def section(title: str, description: str, links):
         ),
         div(
             *links,
-            class_name="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
+            class_name="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
         ),
         class_name="flex flex-col gap-4",
         custom_attrs={"data-section": "true"},
