@@ -47,9 +47,11 @@ def landing_page() -> Section:
         class_name=" ".join(
             [
                 # -> main layout style
-                "max-w-[96rem]",
                 "mx-auto",
-                "columns-[320px]",
+                "max-w-6xl",
+                "columns-[260px]",
+                # "max-w-[96rem]",
+                # "columns-[320px]",
                 "px-7",
                 "gap-6",
                 "space-y-6",

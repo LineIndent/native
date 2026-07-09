@@ -44,7 +44,8 @@ def layout_decorator(
                     _footer(),
                     class_name="flex min-h-screen flex-col gap-16",
                 ),
-                class_name="mx-auto min-h-screen max-w-[96rem] px-4",
+                # class_name="mx-auto min-h-screen max-w-[96rem] px-4",
+                class_name="mx-auto min-h-screen max-w-6xl px-4",
             )
 
         return wrapper
