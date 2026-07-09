@@ -9,7 +9,7 @@ from ..core.hugeicon import hi
 class ClassNames:
     ROOT = (
         "group relative inline-flex size-4 shrink-0 cursor-pointer items-center "
-        "justify-center rounded-[4px] border border-input transition-colors "
+        "justify-center rounded-[4px] border border-input "
         "has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 "
         "has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/50 "
         "has-[[aria-invalid=true]]:border-destructive has-[[aria-invalid=true]]:ring-3 "
@@ -25,7 +25,7 @@ class ClassNames:
 
     BOX = (
         "pointer-events-none flex size-4 shrink-0 items-center justify-center "
-        "rounded-[4px] border border-input transition-colors "
+        "rounded-[4px] border border-input "
         "peer-focus-visible:border-ring peer-focus-visible:ring-3 peer-focus-visible:ring-ring/50 "
         "peer-disabled:cursor-not-allowed peer-disabled:opacity-50 "
         "peer-aria-[invalid=true]:border-destructive peer-aria-[invalid=true]:ring-3 "

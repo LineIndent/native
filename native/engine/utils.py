@@ -1,4 +1,3 @@
-# --- Simple frontmatter parser. ---
 def parse_frontmatter(content: str) -> tuple[dict, str]:
     """A simple frontmatter parser."""
     metadata = {}
@@ -28,6 +27,5 @@ def parse_frontmatter(content: str) -> tuple[dict, str]:
 
             metadata[key] = value
 
-    # print(metadata)
 
     return metadata, rest_of_content.lstrip()

@@ -33,7 +33,7 @@ dependencies = ["buridan-create=={current version}"]
 After adding the package with the latest version, you can run the following command to install it. 
 
 
-```uv
+```bash
 uv sync
 ```
 

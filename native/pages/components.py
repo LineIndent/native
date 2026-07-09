@@ -38,7 +38,7 @@ def link_card(name: str, href: str, count: int):
         ),
         href=href,
         custom_attrs={"data-name": name.lower()},
-        class_name="group flex flex-col gap-3 border border-border bg-background p-4 transition-colors hover:bg-muted/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:outline-none",
+        class_name="group flex flex-col gap-3 border border-border bg-background p-4 hover:bg-muted/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:outline-none",
     )
 
 

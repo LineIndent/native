@@ -6,7 +6,7 @@ from native.templates.theme import theme_toggle_button
 
 NAV_LIST = [
     {"name": "Home", "path": "/"},
-    {"name": "Docs", "path": "/docs/getting-started/introduction"},
+    {"name": "Docs", "path": "/docs"},
     {"name": "Components", "path": "/components"},
     # {"name": "Blocks", "path": "/blocks"},
     # {"name": "Charts", "path": "/charts"},

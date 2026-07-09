@@ -6,6 +6,7 @@ from native.hooks.head_components import APP_HEAD_COMPONENTS
 from native.hooks.stylesheets import APP_STYLESHEETS
 from native.pages.components import components_page
 from native.pages.landing import landing_page
+from native.pages.docs import docs_page
 from native.templates.docpage import docpage
 from native.templates.toc import table_of_content
 
@@ -24,6 +25,11 @@ app.add_page(
 app.add_page(
     component=components_page(),
     route="/components",
+)
+
+app.add_page(
+    component=docs_page(),
+    route="/docs",
 )
 
 for doc in generate_docs_library():
