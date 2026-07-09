@@ -20,12 +20,20 @@ COMPONENT_REGISTRY = {
         "files": ["components/ui/accordion.py"],
         "dependencies": ["core", "hugeicon"],
     },
+    "attachment": {
+        "files": ["components/ui/attachment.py"],
+        "dependencies": ["button", "core"],
+    },
     "avatar": {
         "files": ["components/ui/avatar.py"],
         "dependencies": ["core"],
     },
     "badge": {
         "files": ["components/ui/badge.py"],
+        "dependencies": ["core"],
+    },
+    "bubble": {
+        "files": ["components/ui/bubble.py"],
         "dependencies": ["core"],
     },
     "button": {
@@ -56,6 +64,10 @@ COMPONENT_REGISTRY = {
         "files": ["components/ui/field.py"],
         "dependencies": ["separator"],
     },
+    "frame": {
+        "files": ["components/ui/frame.py"],
+        "dependencies": ["core"],
+    },
     "input": {
         "files": ["components/ui/input.py"],
         "dependencies": ["core"],
@@ -64,8 +76,16 @@ COMPONENT_REGISTRY = {
         "files": ["components/ui/input_group.py"],
         "dependencies": ["button", "core", "input", "textarea"],
     },
+    "marker": {
+        "files": ["components/ui/marker.py"],
+        "dependencies": ["core"],
+    },
     "menu": {
         "files": ["components/ui/menu.py"],
+        "dependencies": ["core"],
+    },
+    "message": {
+        "files": ["components/ui/message.py"],
         "dependencies": ["core"],
     },
     "select": {

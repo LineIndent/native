@@ -11,4 +11,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "reflex==0.9.6post1",
+    "pillow>=12.2.0",
+    "PyYAML>=6.0.3",
+    "questionary>=2.1.1",
 ]

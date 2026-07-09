@@ -23,6 +23,8 @@ import pathlib
 import re
 from pathlib import Path
 from typing import Dict, List, Tuple
+import markdown  # noqa: E402
+from bs4 import BeautifulSoup
 
 import reflex as rx
 
@@ -112,7 +114,6 @@ def _render_install(name: str):
                 return rx.el.p(f"Error reading file dependency path: {f_path}")
 
     return name, files_data
-    # return installation(name, files_data)
 
 
 def render_token(cmd: str, raw_arg: str) -> rx.Component:
@@ -136,12 +137,14 @@ def render_token(cmd: str, raw_arg: str) -> rx.Component:
         return source(files)
 
     entry = _LIVE_REGISTRY.get(name)
+
     if not entry:
         # Placeholder for render_parse_error
         return rx.el.div(
-            f"⚠️ Error: Reference Target '{name}' not found",
+            f"Error: Reference Target '{name}' not found",
             class_name="text-destructive font-mono text-sm my-2 p-2 border border-destructive/20 bg-destructive/5 rounded",
         )
+
     obj, preferred_name = entry
 
     if "demo" in cmd:
@@ -149,149 +152,14 @@ def render_token(cmd: str, raw_arg: str) -> rx.Component:
 
         return demo(obj(), source)
 
-    if "code" in cmd:
-        source = (
-            inspect.getsource(inspect.getmodule(obj))
-            if "_file" in cmd
-            else inspect.getsource(obj)
-        ).strip()
-        # Placeholder for chart_util_wrapper
-        return rx.el.div(
-            rx.el.p(
-                "📊 Source Utilities Code Inspector:",
-                class_name="text-xs font-mono mb-2 text-muted-foreground",
-            ),
-            rx.el.pre(
-                rx.el.code(
-                    source,
-                    class_name="text-xs font-mono block whitespace-pre p-4 bg-muted border rounded-xl overflow-auto max-h-80",
-                )
-            ),
-            class_name="not-prose my-6 w-full",
-        )
-
-    # if cmd == "usage":
-    #     return usage(raw_arg)
-    # return rx.el.div(
-    #     rx.el.pre(
-    #         rx.el.code(
-    #             f"from components.{preferred_name} import {preferred_name}",
-    #             class_name="language-python !text-sm text-primary",
-    #         )
-    #     ),
-    #     class_name="not-prose my-4 p-3 bg-secondary/50 rounded-lg border border-input",
-    # )
-
-    if cmd == "anatomy":
-        from native.registry.anatomy import ANATOMY
-
-        src = ANATOMY.get(name)
-        if not src:
-            return rx.el.div(
-                f"⚠️ Error: No anatomy structure mapped for '{name}'",
-                class_name="text-destructive font-mono text-xs my-2",
-            )
-        return rx.el.div(
-            rx.el.code(
-                src,
-                style={
-                    "white-space": "pre",
-                    "color": "var(--foreground)",
-                    # "font-size": "13px",
-                    "padding": "1rem 0.75rem",
-                    "display": "block",
-                },
-                class_name="langauge-python !text-sm",
-            ),
-            class_name=(
-                "overflow-x-auto overflow-y-auto scrollbar-none w-full mt-4 mb-8 "
-                "outline outline-input flex-1 min-h-0 flex flex-col "
-                "bg-secondary dark:bg-card"
-            ),
-        )
-
-    return rx.el.div(
-        f"⚠️ Error: Unknown parsing instruction sequence variant: {cmd}",
-        class_name="text-destructive font-mono text-xs my-2",
-    )
-
 
 # --------------------------------------------------------------------------
 # Markdown chunks: plain HTML + Tailwind `prose`, no rx.markdown involved.
 # --------------------------------------------------------------------------
-import markdown  # noqa: E402
-from bs4 import BeautifulSoup
 
 _MD_EXTENSIONS = ["fenced_code", "tables", "toc"]
 
 _PROSE_CLASS = "docs-prose"
-
-# _PROSE_CLASS = (
-#     "prose-li:marker:text-foreground "
-#     "prose-code:before:content-none "
-#     "prose-code:after:content-none "
-#     "prose-code:rounded-lg "
-#     "prose dark:prose-invert max-w-none w-full "
-#     "prose-h1:scroll-mt-14 prose-h2:scroll-mt-14 "
-#     "prose-h1:text-2xl prose-h1:font-bold prose-h1:tracking-tight prose-h1:mb-3 "
-#     "prose-h2:text-xl prose-h2:font-semibold prose-h2:tracking-tight prose-h2:mt-6 prose-h2:mb-3 "
-#     "prose-p:text-muted-foreground prose-p:leading-relaxed "
-#     "prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm "
-#     # --- BLOCKQUOTES ---
-#     "prose-blockquote:w-full "
-#     "[&>blockquote>p]:text-sm "
-#     "[&>blockquote>p]:font-light "
-#     "[&>blockquote>p]:text-foreground "
-#     "prose-blockquote:bg-secondary dark:prose-blockquote:bg-card "
-#     "prose-blockquote:flex "
-#     "prose-blockquote:px-3 "
-#     "prose-blockquote:not-italic "
-#     "prose-blockquote:border-0 "
-#     "prose-blockquote:before:content-none "
-#     "prose-blockquote:after:content-none "
-#     "[&>blockquote>p]:before:content-none "
-#     "[&>blockquote>p]:after:content-none "
-#     # Code blocks
-#     "prose-pre:rounded-2xl "
-#     "prose-pre:text-md "
-#     "prose-pre:bg-secondary dark:prose-pre:bg-card "
-#     "prose-pre:shadow-none "
-#     "prose-pre:border-0 "
-#     "prose-pre:p-0 "
-#     "prose-pre:my-4 "
-#     "prose-pre:overflow-x-auto "
-#     # Remove Typography's backticks on code blocks
-#     "prose-pre:before:content-none "
-#     "prose-pre:after:content-none "
-#     # Code inside <pre>
-#     "prose-pre:font-normal "
-#     "[&>pre>code]:block "
-#     "[&>pre>code]:px-4 "
-#     "[&>pre>code]:py-4 "
-#     # "[&>pre>code]:text-[13px] "
-#     "[&>pre>code]:bg-transparent "
-#     # Wrapper
-#     "[&>div>table]:w-max "
-#     "[&>div>table]:min-w-full "
-#     # Table
-#     "prose-table:border "
-#     "prose-table:border-input "
-#     "prose-table:rounded-[1rem] "
-#     "prose-table:mb-4 "
-#     # Header
-#     "prose-thead:border-b "
-#     "prose-thead:border-input "
-#     "prose-th:px-4 prose-th:py-2 "
-#     "prose-th:text-left prose-th:font-bold "
-#     "prose-th:whitespace-nowrap "
-#     # Body
-#     "prose-tbody:divide-y "
-#     "prose-tbody:divide-input "
-#     # Cells
-#     "prose-td:px-4 prose-td:py-2 "
-#     "prose-td:whitespace-nowrap "
-# )
-
 
 def wrap_tables(html: str) -> str:
     """Wrap every table in a horizontally scrollable container."""
@@ -313,6 +181,7 @@ def render_markdown_chunk(text: str) -> rx.Component:
 
     html = markdown.markdown(text, extensions=_MD_EXTENSIONS)
     html = wrap_tables(html)
+
     return rx.html(html, class_name=_PROSE_CLASS)
 
 
