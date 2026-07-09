@@ -5,6 +5,7 @@ from ..core.core import CoreComponent, cn
 from ..core.hugeicon import hi
 
 
+
 class ClassNames:
     ROOT = (
         "group relative inline-flex size-4 shrink-0 cursor-pointer items-center "
@@ -18,9 +19,9 @@ class ClassNames:
         "dark:has-[:checked]:bg-primary"
     )
 
-    INPUT = "sr-only"
+    INPUT = "peer sr-only"
 
-    INDICATOR = "hidden group-has-[:checked]:grid place-content-center text-current [&>svg]:size-3.5"
+    INDICATOR = "hidden peer-checked:grid place-content-center text-current [&>svg]:size-3.5"
 
     BOX = (
         "pointer-events-none flex size-4 shrink-0 items-center justify-center "
@@ -33,6 +34,7 @@ class ClassNames:
         "peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground "
         "dark:peer-checked:bg-primary"
     )
+
 
 
 class CheckboxRoot(CoreComponent):
@@ -49,6 +51,7 @@ class CheckboxRoot(CoreComponent):
             "name",
             "value",
             "on_change",
+            "id",
         ):
             if key in props:
                 input_props[key] = props.pop(key)
