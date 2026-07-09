@@ -1,0 +1,10 @@
+from components.core.hugeicon import hi
+from components.ui.button import button
+
+
+def button_icon():
+    return button(
+        hi("CircleArrowUp01Icon", class_name="size-4"),
+        variant="outline",
+        size="icon",
+    )

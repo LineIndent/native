@@ -5,224 +5,87 @@ Re-run the script after adding/moving/renaming component files.
 """
 
 COMPONENT_REGISTRY = {
-    # --- app/www/library/blocks ---
-    "area_chart_01": {
-        "files": ["app/www/library/blocks/area_chart_01.py"],
-        "dependencies": ["card", "chart_tooltip"],
-    },
-    "area_chart_02": {
-        "files": ["app/www/library/blocks/area_chart_02.py"],
-        "dependencies": ["card", "chart_tooltip"],
-    },
-    "bar_chart_01": {
-        "files": ["app/www/library/blocks/bar_chart_01.py"],
-        "dependencies": ["card", "chart_tooltip", "checkbox", "field"],
-    },
-    "bar_chart_02": {
-        "files": ["app/www/library/blocks/bar_chart_02.py"],
-        "dependencies": ["card", "chart_tooltip"],
-    },
-    "bar_chart_03": {
-        "files": ["app/www/library/blocks/bar_chart_03.py"],
-        "dependencies": ["card", "chart_tooltip"],
-    },
-    "bar_chart_04": {
-        "files": ["app/www/library/blocks/bar_chart_04.py"],
-        "dependencies": ["card", "chart_tooltip"],
-    },
-    "kpi_card_01": {
-        "files": ["app/www/library/blocks/kpi_card_01.py"],
-        "dependencies": ["card"],
-    },
-    "kpi_card_02": {
-        "files": ["app/www/library/blocks/kpi_card_02.py"],
-        "dependencies": ["card", "chart_tooltip"],
-    },
-    "line_chart_01": {
-        "files": ["app/www/library/blocks/line_chart_01.py"],
-        "dependencies": ["card", "chart_tooltip"],
-    },
-    "line_chart_02": {
-        "files": ["app/www/library/blocks/line_chart_02.py"],
-        "dependencies": ["card", "chart_tooltip"],
-    },
-    "line_chart_03": {
-        "files": ["app/www/library/blocks/line_chart_03.py"],
-        "dependencies": ["card", "chart_tooltip"],
-    },
-    "line_chart_04": {
-        "files": ["app/www/library/blocks/line_chart_04.py"],
-        "dependencies": ["card", "chart_tooltip"],
-    },
-    # --- components/charts ---
-    "chart_tooltip": {
-        "files": ["components/charts/chart_tooltip.py"],
+    # --- components/core ---
+    "core": {
+        "files": ["components/core/core.py"],
         "dependencies": [],
     },
-    # --- components/icons ---
     "hugeicon": {
         "files": ["components/core/hugeicon.py"],
-        "dependencies": [],
+        "dependencies": ["core"],
     },
-    # --- components ---
+
+    # --- components/ui ---
     "accordion": {
         "files": ["components/ui/accordion.py"],
         "dependencies": ["core", "hugeicon"],
-    },
-    "attachment": {
-        "files": ["components/attachment.py"],
-        "dependencies": ["button", "core"],
-    },
-    "autocomplete": {
-        "files": ["components/autocomplete.py"],
-        "dependencies": ["core"],
     },
     "avatar": {
         "files": ["components/ui/avatar.py"],
         "dependencies": ["core"],
     },
     "badge": {
-        "files": ["components/badge.py"],
-        "dependencies": ["core"],
-    },
-    "breadcrumb": {
-        "files": ["components/breadcrumb.py"],
-        "dependencies": ["core", "hugeicon"],
-    },
-    "bubble": {
-        "files": ["components/bubble.py"],
+        "files": ["components/ui/badge.py"],
         "dependencies": ["core"],
     },
     "button": {
-        "files": ["components/button.py"],
+        "files": ["components/ui/button.py"],
         "dependencies": ["core"],
     },
     "button_group": {
-        "files": ["components/button_group.py"],
+        "files": ["components/ui/button_group.py"],
         "dependencies": ["core", "separator"],
     },
     "card": {
-        "files": ["components/card.py"],
+        "files": ["components/ui/card.py"],
         "dependencies": ["core"],
     },
     "checkbox": {
-        "files": ["components/checkbox.py"],
+        "files": ["components/ui/checkbox.py"],
         "dependencies": ["core", "hugeicon"],
     },
-    "collapsible": {
-        "files": ["components/collapsible.py"],
+    "code": {
+        "files": ["components/ui/code.py"],
         "dependencies": ["core"],
-    },
-    "context_menu": {
-        "files": ["components/context_menu.py"],
-        "dependencies": ["core", "hugeicon"],
-    },
-    "core": {
-        "files": ["components/core/core.py"],
-        "dependencies": [],
     },
     "dialog": {
-        "files": ["components/dialog.py"],
-        "dependencies": ["core"],
-    },
-    "field": {
-        "files": ["components/field.py"],
-        "dependencies": ["separator"],
-    },
-    "frame": {
-        "files": ["components/frame.py"],
-        "dependencies": ["core"],
-    },
-    "heatmap": {
-        "files": ["components/heatmap.py"],
+        "files": ["components/ui/dialog.py"],
         "dependencies": ["core"],
     },
     "input": {
-        "files": ["components/input.py"],
+        "files": ["components/ui/input.py"],
         "dependencies": ["core"],
     },
     "input_group": {
-        "files": ["components/input_group.py"],
+        "files": ["components/ui/input_group.py"],
         "dependencies": ["button", "core", "input", "textarea"],
     },
-    "kbd": {
-        "files": ["components/kbd.py"],
-        "dependencies": ["core"],
-    },
-    "marker": {
-        "files": ["components/marker.py"],
-        "dependencies": ["core"],
-    },
     "menu": {
-        "files": ["components/menu.py"],
-        "dependencies": ["core", "hugeicon"],
-    },
-    "message": {
-        "files": ["components/message.py"],
-        "dependencies": ["core"],
-    },
-    "metric": {
-        "files": ["components/metric.py"],
-        "dependencies": ["core"],
-    },
-    "popover": {
-        "files": ["components/popover.py"],
-        "dependencies": ["core"],
-    },
-    "scroll_area": {
-        "files": ["components/scroll_area.py"],
+        "files": ["components/ui/menu.py"],
         "dependencies": ["core"],
     },
     "select": {
-        "files": ["components/select.py"],
+        "files": ["components/ui/select.py"],
         "dependencies": ["core", "hugeicon"],
     },
     "separator": {
-        "files": ["components/separator.py"],
-        "dependencies": ["core"],
-    },
-    "skeleton": {
-        "files": ["components/skeleton.py"],
+        "files": ["components/ui/separator.py"],
         "dependencies": ["core"],
     },
     "slider": {
-        "files": ["components/slider.py"],
+        "files": ["components/ui/slider.py"],
         "dependencies": ["core"],
     },
     "spinner": {
-        "files": ["components/spinner.py"],
+        "files": ["components/ui/spinner.py"],
         "dependencies": ["core"],
     },
     "switch": {
-        "files": ["components/switch.py"],
-        "dependencies": ["core"],
-    },
-    "table": {
-        "files": ["components/table.py"],
-        "dependencies": ["core"],
-    },
-    "tabs": {
-        "files": ["components/tabs.py"],
+        "files": ["components/ui/switch.py"],
         "dependencies": ["core"],
     },
     "textarea": {
-        "files": ["components/textarea.py"],
-        "dependencies": ["core"],
-    },
-    "timeline": {
-        "files": ["components/timeline.py"],
-        "dependencies": ["core"],
-    },
-    "toggle": {
-        "files": ["components/toggle.py"],
-        "dependencies": ["core"],
-    },
-    "toggle_group": {
-        "files": ["components/toggle_group.py"],
-        "dependencies": ["core"],
-    },
-    "tooltip": {
-        "files": ["components/tooltip.py"],
+        "files": ["components/ui/textarea.py"],
         "dependencies": ["core"],
     },
 }
