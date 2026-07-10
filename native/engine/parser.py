@@ -177,12 +177,22 @@ def wrap_tables(html: str) -> str:
 def render_markdown_chunk(text: str) -> rx.Component:
 
     if not text.strip():
-        return rx.fragment()
+        return rx.el.div()
 
     html = markdown.markdown(text, extensions=_MD_EXTENSIONS)
     html = wrap_tables(html)
 
-    return rx.html(html, class_name=_PROSE_CLASS)
+    return rx.html(html, class_name=_PROSE_CLASS,
+        # on_mount=rx.call_script(
+        #     """
+        #     requestAnimationFrame(() => {
+        #         Prism.highlightAll();
+        #     });
+        #     """
+        # ),
+    )
+
+
 
 
 def parse_and_render(content: str) -> List[rx.Component]:

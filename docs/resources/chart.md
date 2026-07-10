@@ -36,7 +36,6 @@ We do not wrap Recharts. This means you're not locked into an abstraction. When 
 
 buridan/ui provides a custom `chart_tooltip` that can be used to match the overall theme tokens generated. 
 
---INSTALL(chart_tooltip)--
 
 # Your First Chart
 
@@ -48,7 +47,7 @@ The following data represents the number of desktop and mobile users for each mo
 
 >**Note:** All of our examples use static data in a specific data structure. You are not limited to either static data or the structure. For dynamic data, use [rx.State](https://reflex.dev/docs/state/overview) instead.
 
-```example_chart.py
+```python
 data = [
     {"month": "Jan", "desktop": 186, "mobile": 80},
     {"month": "Feb", "desktop": 305, "mobile": 200},
@@ -69,7 +68,7 @@ You can now build your chart using Recharts components.
 
 Let's add a grid to the chart.
 
-```example_chart.py
+```python
 rx.recharts.cartesian_grid(
     horizontal=True, vertical=False, class_name="opacity-30"
 )
@@ -81,7 +80,7 @@ rx.recharts.cartesian_grid(
 
 To add an x-axis to the chart, we'll use the `rx.recharts.x_axis()` component.
 
-```example_chart.py
+```python
 rx.recharts.x_axis(
     data_key="month",
     axis_line=False,
@@ -114,7 +113,7 @@ from components.charts.chart_tooltip import (
 
 Add the component to your chart and pass in the props.
 
-```example_chart.py
+```python
 rx.recharts.bar_chart(
     ...,
     chart_tooltip(),
@@ -136,7 +135,7 @@ We'll do the same for the legend. Although there's no API for legends the way we
 
 Add the component to your chart.
 
-```example_chart.py
+```python
 rx.el.div(
     rx.foreach(
         ["Desktop", "Mobile"],
@@ -164,7 +163,7 @@ Charts have built-in support for theming. You can use css variables (recommended
 
 Define your colors in your CSS file.
 
-```assets/globals.css
+```css
 :root {
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -180,7 +179,7 @@ Define your colors in your CSS file.
 
 You can also define your colors directly in the chart component. Use the color format you prefer.
 
-```chart_example.py
+```python
 rx.recharts.bar(data_key="mobile", fill="var(--chart-2)")
 rx.recharts.bar(data_key="mobile", fill="#2563eb")
 rx.recharts.bar(data_key="mobile", fill="oklch(0.5 0.2 240)")
@@ -188,7 +187,7 @@ rx.recharts.bar(data_key="mobile", fill="oklch(0.5 0.2 240)")
 
 You can also include colors in your data structure and utlize `rx.foreach` for more concise codebase.
 
-```example_chart.py
+```python
 data = [
     {"month": "Jan", "desktop": 186, "mobile": 80, "fill": "#2563eb"},
     {"month": "Feb", "desktop": 305, "mobile": 200, "fill": "oklch(0.5 0.2 240)"},
@@ -199,7 +198,7 @@ data = [
 
 A chart tooltip contains a label and swatch type. You can use a combination of these to customize your tooltip.
 
-```chart_tooltip.py
+```python
 Display = Literal["show", "hide"]
 Swatch = Literal["square", "line", "border"]
 ```

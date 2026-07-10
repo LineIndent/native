@@ -234,21 +234,23 @@
     .docs-prose > pre > code {
         @apply block px-4 py-4 bg-transparent;
     }*/
-    .docs-prose > pre {
-        @apply min-w-0
-            overflow-x-auto
+    .docs-prose pre {
+        @apply
             border
+            min-w-0
+            overflow-x-auto
             border-border
-            !bg-muted/40
+            bg-muted/40
             rounded-xl
             px-3
             py-3
             font-mono
-            text-xs;
+            text-sm;
     }
 
-    .docs-prose > pre > code {
-        @apply block
+    .docs-prose pre > code {
+        @apply
+            block
             bg-transparent
             p-0
             text-inherit;

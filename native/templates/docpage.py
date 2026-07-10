@@ -18,45 +18,61 @@ def docpage(main_content, toc_content):
                 class_name="mx-auto min-h-screen max-w-5xl px-4 pt-10",
             ),
         ),
-        on_mount=call_script(
+        on_mount=[call_script(
             """
-            const command = localStorage.getItem("buridan-command");
+            (() => {
+                try {
+                    const DEFAULT_COMMAND = "buridan add";
 
-            if (!command) {
-                localStorage.setItem(
-                    "buridan-command",
-                    "buridan add"
-                );
-            }
+                    const get = (selector) => document.querySelector(selector);
 
-            const activeCommand =
-                localStorage.getItem("buridan-command");
+                    const setText = (selector, text) => {
+                        const el = get(selector);
+                        if (el) {
+                            el.innerText = text;
+                        }
+                    };
 
-            document
-              .querySelectorAll(".command-prefix")
-              .forEach(el => el.innerText = activeCommand);
+                    let activeCommand = localStorage.getItem("buridan-command");
 
-            document
-              .querySelectorAll(".command-check")
-              .forEach(el => el.innerText = "");
+                    if (!activeCommand) {
+                        activeCommand = DEFAULT_COMMAND;
+                        localStorage.setItem("buridan-command", activeCommand);
+                    }
 
-            if (activeCommand === "buridan add") {
-                document
-                  .querySelector("#command-option-cli .command-check")
-                  .innerText = "✓";
-            }
+                    document.querySelectorAll(".command-prefix").forEach(el => {
+                        el.innerText = activeCommand;
+                    });
 
-            if (activeCommand === "uv run buridan add") {
-                document
-                  .querySelector("#command-option-uv .command-check")
-                  .innerText = "✓";
-            }
+                    document.querySelectorAll(".command-check").forEach(el => {
+                        el.innerText = "";
+                    });
 
-            if (activeCommand === "python -m buridan add") {
-                document
-                  .querySelector("#command-option-module .command-check")
-                  .innerText = "✓";
-            }
+                    switch (activeCommand) {
+                        case "buridan add":
+                            setText("#command-option-cli .command-check", "✓");
+                            break;
+
+                        case "uv run buridan add":
+                            setText("#command-option-uv .command-check", "✓");
+                            break;
+
+                        case "python -m buridan add":
+                            setText("#command-option-module .command-check", "✓");
+                            break;
+                    }
+                } catch (err) {
+                    console.error("Failed to initialize command selector:", err);
+                }
+            })();
             """
         ),
+        call_script(
+            """
+            requestAnimationFrame(() => {
+                Prism.highlightAll();
+            });
+            """
+        ),
+        ]
     )
