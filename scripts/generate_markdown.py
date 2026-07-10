@@ -253,7 +253,7 @@ def main():
 
     MARKDOWN_OUTPUT_DIR.mkdir(
         parents=True,
-        exist_ok=True
+        exist_ok=True,
     )
 
     count = 0
@@ -266,24 +266,36 @@ def main():
 
         markdown = convert_to_markdown(content)
 
-        relative = md_file.relative_to(
+        # Preserve folder structure but normalize public URLs
+        # docs/getting_started/my_page.md
+        # becomes:
+        # assets/docs/getting-started/my-page.md
+
+        relative_path = md_file.relative_to(
             DOCS_SOURCE_DIR
         )
 
-        output = MARKDOWN_OUTPUT_DIR / relative
+        normalized_parts = [
+            part.replace("_", "-")
+            for part in relative_path.parts
+        ]
 
-        output.parent.mkdir(
-            parents=True,
-            exist_ok=True
+        output_path = MARKDOWN_OUTPUT_DIR / pathlib.Path(
+            *normalized_parts
         )
 
-        output.write_text(
+        output_path.parent.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+        output_path.write_text(
             markdown,
-            newline=""
+            newline="",
         )
 
         print(
-            f"{output}"
+            f"{output_path.relative_to(ROOT_DIR)}"
         )
 
     print(
