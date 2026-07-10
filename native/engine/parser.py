@@ -167,7 +167,7 @@ def wrap_tables(html: str) -> str:
 
     for table in soup.find_all("table"):
         wrapper = soup.new_tag("div")
-        wrapper["class"] = "w-full overflow-x-auto scrollbar-none"
+        wrapper["class"] = "w-full overflow-x-auto scrollbar-none !p-0"
 
         table.wrap(wrapper)
 
@@ -182,15 +182,7 @@ def render_markdown_chunk(text: str) -> rx.Component:
     html = markdown.markdown(text, extensions=_MD_EXTENSIONS)
     html = wrap_tables(html)
 
-    return rx.html(html, class_name=_PROSE_CLASS,
-        # on_mount=rx.call_script(
-        #     """
-        #     requestAnimationFrame(() => {
-        #         Prism.highlightAll();
-        #     });
-        #     """
-        # ),
-    )
+    return rx.html(html, class_name=_PROSE_CLASS)
 
 
 

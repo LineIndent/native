@@ -11,7 +11,7 @@ Using CSS variables and theme tokens.
 
 We use and recommend CSS variables for theming. This approach provides semantic design tokens such as `background`, `foreground`, and `primary`, which components rely on by default. You can customize the appearance of your application by overriding these tokens in your CSS, without needing to modify component-level classes.
 
-```reflex
+```python
 rx.el.div(class_name="bg-background text-foreground")
 ```
 
@@ -21,7 +21,7 @@ To use CSS variables for theming, make the following changes to your `rxconfig.p
 
 Import the tailwind plugin `TailwindConfig`, add it to the `plugins=[...]` list, define (or remove if unnecessary) `darkMode` or specific `plugins`, then finally set the `theme` and extend the colors based on the CSS tokens in your `globals.css` file in your assets folder.
 
-```rxconfig.py
+```python
 from reflex.plugins.shared_tailwind import TailwindConfig
 
 config = rx.Config(
@@ -50,7 +50,7 @@ config = rx.Config(
 
 Further extensions are possible, such as `fontFamily`, `borderRadius`, and `boxShadow` by further extending the `theme` dictionary as such, making sure each `var(...)` token is defined in a CSS file.
 
-```rxconfig.py
+```python
 theme={
     "extend": {
         "colors": {...},
@@ -69,7 +69,7 @@ theme={
 
 Make sure to pull your CSS files where your tokens are defined in your `rx.App` instance.
 
-```rx.App
+```python
 app = rx.App(stylesheets=["globals.css"])
 ```
 
@@ -106,7 +106,7 @@ These tokens live in your CSS file under `:root` and `.dark`.
 
 To add a new token, define it under `:root` and `.dark`, then expose it to Tailwind by appending `rxconfig.py`.
 
-```assets/globals.css
+```css
 :root {
   --warning: oklch(0.84 0.16 84);
   --warning-foreground: oklch(0.28 0.07 46);
@@ -120,7 +120,7 @@ To add a new token, define it under `:root` and `.dark`, then expose it to Tailw
 
 You can now use `bg-warning` and `text-warning-foreground` in your components.
 
-```reflex
+```python
 rx.el.div(class_name="bg-warning text-warning-foreground")
 ```
 
@@ -129,7 +129,7 @@ rx.el.div(class_name="bg-warning text-warning-foreground")
 The following is the full default `neutral` theme scaffold. Copy it into your global CSS file and adjust the tokens as needed.
 This scaffold also corresponds to preset `b0` in [buridan/create](/create?preset=b0).
 
-```assets/globals.css
+```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

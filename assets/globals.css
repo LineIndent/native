@@ -185,7 +185,7 @@
         /* 6. Table Modifiers (Cleaned of missing table/thead/tbody variants) */
         @apply prose-table:border
     prose-table:border-input
-    prose-table:mb-4
+    /*prose-table:mb-4*/
     prose-th:px-4
     prose-th:py-2
     prose-th:text-left
@@ -196,12 +196,6 @@
     prose-td:whitespace-nowrap;
     }
 
-    /* --- Native CSS Fixes for elements missing Tailwind Typography variants --- */
-
-    /* Fixed arbitrary values processing inside @apply */
-    .docs-prose table {
-        border-radius: 1rem;
-    }
 
     /* Fixed non-existent prose-thead variant */
     .docs-prose thead {
@@ -227,13 +221,6 @@
         content: none;
     }
 
-    /* Pre & Inner Code Styling overrides (using valid 'text-base' instead of 'text-md') */
-    /*.docs-prose > pre {
-        @apply rounded-2xl text-base bg-secondary dark:bg-card shadow-none border-0 p-0 my-4 overflow-x-auto font-normal;
-    }
-    .docs-prose > pre > code {
-        @apply block px-4 py-4 bg-transparent;
-    }*/
     .docs-prose pre {
         @apply
             border
@@ -256,8 +243,7 @@
             text-inherit;
     }
 
-    /* Custom responsive layout overrides for internal wrapper tables */
-    .docs-prose > div > table {
+    /*.docs-prose > div > table {
         @apply w-max min-w-full;
-    }
+    }*/
 }

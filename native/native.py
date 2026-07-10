@@ -34,7 +34,9 @@ app.add_page(
 
 for doc in generate_docs_library():
     main_content = rx.el.div(*doc.component, class_name="w-full")
-    toc_content = table_of_content(doc.url, doc.table_of_content)
+
+    toc_content = table_of_content(doc.url, doc.table_of_content) if not doc.url.startswith("docs/components/") else None
+
 
     app.add_page(
         component=docpage(main_content, toc_content),
