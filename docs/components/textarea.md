@@ -13,21 +13,55 @@ order: 23
 # Examples
 
 ## Basic
-A standard multiline text area for general text input.
+
+A standard multiline text input. Auto-grows with content via `field-sizing-content`.
+
+**Props used:** none required beyond default `textarea(...)`.
 
 --DEMO(textarea_basic_demo)--
 
 ## Field
-Use `field.root`, `field.label`, and `field.description` together with a form control (such as textarea) to build a structured field with a label and helper text.
+
+Pair with `field.root`, `field.label`, and `field.description` for a structured, labeled field.
+
+**Props used:** `id` on `textarea`; `html_for` on `field.label`.
 
 --DEMO(textarea_field)--
 
 ## Disabled
-Use the `disabled` prop on textarea to disable user input. Apply `data-disabled` on `field.root` to propagate disabled styling to all field-related elements and ensure consistent visual state handling.
+
+Use `disabled` on `textarea`. Add `data_invalid`/disabled state to `field.root` to propagate consistent visual styling across the label and description too.
+
+**Props used:** `disabled` on `textarea`.
 
 --DEMO(textarea_disabled)--
 
 ## Invalid
-Use the `aria-invalid` prop to mark the textarea as invalid. To style the invalid state, add the `data-invalid` attribute to the `field.root` component.
+
+Use `aria_invalid` on `textarea` to mark it invalid, and `data_invalid="true"` on `field.root` to style the whole field block accordingly.
+
+**Props used:** `aria_invalid` on `textarea`; `data_invalid` on `field.root`.
 
 --DEMO(textarea_invalid)--
+
+# API Reference
+
+## textarea
+
+Native browser autocomplete/spellcheck attributes are disabled by default (`autoComplete`, `autoCapitalize`, `autoCorrect`, `spellCheck`) — override via `custom_attrs` if you want them back for a specific field.
+
+```python
+textarea(id="comment", placeholder="Leave a comment...")
+```
+
+| Prop         | Type   | Default |
+| ------------ | ------ | ------- |
+| `disabled`   | `bool` | `False` |
+| `aria_invalid` | `bool` | `False` |
+| `value` / `default_value` | `str` |  |
+| `id`         | `str`  |         |
+| `name`       | `str`  |         |
+| `on_change`  | `EventHandler` |  |
+| `class_name` | `str`  | `""`    |
+
+Any other prop accepted by a native `<textarea>` is also passed straight through.

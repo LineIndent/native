@@ -21,6 +21,8 @@ For AI apps, you can render reasoning steps, tool calls and assistant messages u
 
 Use `message.avatar` to render an avatar next to the message. Set `align="end"` on the message to align the avatar to the end of the message.
 
+**Props used:** `align` on `message.root`.
+
 --DEMO(message_with_avatar)--
 
 | align   | Description                                         |
@@ -32,11 +34,15 @@ Use `message.avatar` to render an avatar next to the message. Set `align="end"` 
 
 Use `message.group` to stack consecutive messages from the same sender. Render an empty `message.avatar` on the earlier messages to keep them aligned with the avatar on the last one.
 
+**Props used:** none required beyond default `message.group` composition.
+
 --DEMO(message_with_group)--
 
 ## Header and Footer
 
 Use `message.header` for a sender name and `message.footer` for metadata such as a delivery or read status.
+
+**Props used:** none required beyond default `message.header`/`message.footer` composition.
 
 --DEMO(message_header_footer)--
 
@@ -44,11 +50,15 @@ Use `message.header` for a sender name and `message.footer` for metadata such as
 
 Place message-level actions in `message.footer`, such as copy, retry, or feedback buttons.
 
+**Props used:** none required — place `button(...)` inside `message.footer`.
+
 --DEMO(message_with_actions)--
 
 ## Attachment
 
 Use the [`Attachment`](/docs/components/attachment) with the messages to displays a file or image attachment with media, metadata, upload state, and actions.
+
+**Props used:** see the [Attachment](/docs/components/attachment) docs for attachment-specific props.
 
 --DEMO(message_with_attachment)--
 
@@ -96,8 +106,8 @@ The message row wrapper.
 
 | Prop        | Type               | Default   | Description                                       |
 | ----------- | ------------------ | --------- | ------------------------------------------------- |
-| `align`     | `"start" \| "end"` | `"start"` | The alignment of the message in the conversation. |
-| `class_name` | `string`           | -         | Additional classes to apply to the row.           |
+| `align`     | `Literal["start", "end"]` | `"start"` | The alignment of the message in the conversation. |
+| `class_name` | `str`           | -         | Additional classes to apply to the row.           |
 
 ## message.group
 
@@ -105,7 +115,7 @@ Groups consecutive messages from the same sender.
 
 | Prop        | Type     | Default | Description                                    |
 | ----------- | -------- | ------- | ---------------------------------------------- |
-| `class_name` | `string` | -       | Additional classes to apply to the group root. |
+| `class_name` | `str` | -       | Additional classes to apply to the group root. |
 
 ## message.avatar
 
@@ -113,7 +123,7 @@ The avatar slot, aligned to the bottom of the message. When the message has a `m
 
 | Prop        | Type     | Default | Description                                     |
 | ----------- | -------- | ------- | ----------------------------------------------- |
-| `class_name` | `string` | -       | Additional classes to apply to the avatar slot. |
+| `class_name` | `str` | -       | Additional classes to apply to the avatar slot. |
 
 ### message.content
 
@@ -121,7 +131,7 @@ Wraps the header, message surface, and footer.
 
 | Prop        | Type     | Default | Description                                      |
 | ----------- | -------- | ------- | ------------------------------------------------ |
-| `class_name` | `string` | -       | Additional classes to apply to the content slot. |
+| `class_name` | `str` | -       | Additional classes to apply to the content slot. |
 
 ### message.header
 
@@ -129,7 +139,7 @@ Displays content above the message, such as a sender name. Stays aligned to the 
 
 | Prop        | Type     | Default | Description                                |
 | ----------- | -------- | ------- | ------------------------------------------ |
-| `class_name` | `string` | -       | Additional classes to apply to the header. |
+| `class_name` | `str` | -       | Additional classes to apply to the header. |
 
 ### message.footer
 
@@ -137,4 +147,4 @@ Displays content below the message, such as status or actions. Aligns to the mes
 
 | Prop        | Type     | Default | Description                                |
 | ----------- | -------- | ------- | ------------------------------------------ |
-| `class_name` | `string` | -       | Additional classes to apply to the footer. |
+| `class_name` | `str` | -       | Additional classes to apply to the footer. |

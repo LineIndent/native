@@ -10,30 +10,37 @@ order: 0
 
 --SOURCE(frame)--
 
-
 # Examples
 
 ## Basic Panels
 
 A basic frame with a header and two panels.
 
+**Props used:** none required beyond default `frame.root` composition.
+
 --DEMO(frame_basic)--
 
 ## Stacked Panels
 
-Set the `stacked` prop to `True` to get the panels stacked. 
+Set `stacked=True` to merge panel borders into one continuous block.
+
+**Props used:** `stacked` on `frame.root`.
 
 --DEMO(frame_stacked)--
 
 ## Dense Panels
 
-Set the `dense` prop to `True` to get minimal frame padding. 
+Set `dense=True` for minimal frame padding, edge-to-edge.
+
+**Props used:** `dense` on `frame.root`.
 
 --DEMO(frame_dense)--
 
 ## Outer Border
 
-Set the `variant` prop to `ghost` to remove the frame outer border. 
+Set `variant="ghost"` to remove the frame's outer border.
+
+**Props used:** `variant` on `frame.root`.
 
 --DEMO(frame_no_border)--
 
@@ -41,39 +48,71 @@ Set the `variant` prop to `ghost` to remove the frame outer border.
 
 ## frame.root
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `variant` | `"default" \| "inverse" \| "ghost"` | `"default"` | Controls the visual style of the frame container. |
-| `spacing` | `"xs" \| "sm" \| "default" \| "lg"` | `"default"` | Controls the internal padding of panels, headers, and footers via CSS variables. |
-| `stacked` | `bool` | `False` | When `True`, removes gaps and merges panel borders so they appear as one continuous block. |
-| `dense` | `bool` | `False` | When `True`, removes all padding and gaps and pulls panels edge-to-edge with negative margins. |
-| `class_name` | `str` | `None` | Additional Tailwind classes merged onto the root wrapper. |
+```python
+frame.root(
+    frame.panel(
+        frame.header(frame.title("Overview")),
+        "Panel content",
+    ),
+    variant="default",
+    spacing="default",
+)
+```
+
+| Prop         | Type                                          | Default     | Description                                                                          |
+| ------------ | ----------------------------------------------- | ----------- | -------------------------------------------------------------------------------------- |
+| `variant`    | `Literal["default", "inverse", "ghost"]`       | `"default"` | Controls the visual style of the frame container.                                     |
+| `spacing`    | `Literal["xs", "sm", "default", "lg"]`         | `"default"` | Controls internal padding of panels, headers, and footers via CSS variables.          |
+| `stacked`    | `bool`                                          | `False`     | Removes gaps and merges panel borders so they appear as one continuous block.         |
+| `dense`      | `bool`                                          | `False`     | Removes all padding/gaps and pulls panels edge-to-edge with negative margins.          |
+| `class_name` | `str`                                            | `""`         | Additional classes merged onto the root wrapper.                                       |
 
 ## frame.panel
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `class_name` | `str` | `None` | Additional Tailwind classes merged onto the panel. Overrides default bg, border, and padding. |
+```python
+frame.panel("Panel content")
+```
+
+| Prop         | Type  | Default | Description                                                          |
+| ------------ | ----- | ------- | ------------------------------------------------------------------- |
+| `class_name` | `str` | `""`     | Additional classes merged onto the panel — overrides default bg/border/padding. |
 
 ## frame.header
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `class_name` | `str` | `None` | Additional Tailwind classes merged onto the header element. |
+```python
+frame.header(frame.title("Overview"))
+```
+
+| Prop         | Type  | Default | Description                                    |
+| ------------ | ----- | ------- | ----------------------------------------------- |
+| `class_name` | `str` | `""`     | Additional classes merged onto the header.       |
 
 ## frame.title
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `class_name` | `str` | `None` | Additional Tailwind classes merged onto the title element. |
+```python
+frame.title("Overview")
+```
+
+| Prop         | Type  | Default | Description                                   |
+| ------------ | ----- | ------- | ----------------------------------------------- |
+| `class_name` | `str` | `""`     | Additional classes merged onto the title.        |
 
 ## frame.description
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `class_name` | `str` | `None` | Additional Tailwind classes merged onto the description element. |
+```python
+frame.description("A summary of recent activity.")
+```
+
+| Prop         | Type  | Default | Description                                        |
+| ------------ | ----- | ------- | ----------------------------------------------------- |
+| `class_name` | `str` | `""`     | Additional classes merged onto the description.        |
 
 ## frame.footer
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `class_name` | `str` | `None` | Additional Tailwind classes merged onto the footer element. |
+
+```python
+frame.footer(button("View all", variant="ghost", size="sm"))
+```
+
+| Prop         | Type  | Default | Description                                    |
+| ------------ | ----- | ------- | ----------------------------------------------- |
+| `class_name` | `str` | `""`     | Additional classes merged onto the footer.        |

@@ -25,11 +25,15 @@ order: 0
 
 Set `variant="image"` on `attachment.media` and render an `rx.el.img()` inside it. Use `orientation="vertical"` to stack the media above the content.
 
+**Props used:** `variant` on `attachment.media`; `orientation` on `attachment.root`.
+
 --DEMO(attachment_image_demo)--
 
 ## States
 
 Set `state` to reflect the upload lifecycle. `uploading` and `processing` shimmer the title, and `error` switches to a destructive treatment.
+
+**Props used:** `state` on `attachment.root`.
 
 --DEMO(attachment_states_demo)--
 
@@ -38,17 +42,23 @@ Set `state` to reflect the upload lifecycle. `uploading` and `processing` shimme
 
 Use `size` to switch between `default`, `sm`, and `xs`.
 
+**Props used:** `size` on `attachment.root`.
+
 --DEMO(attachment_sizes_demo)--
 
 ## Group
 
 Wrap attachments in `attachment.group` to lay them out in a horizontally scrollable, snapping row with an edge fade.
 
+**Props used:** none required beyond default `attachment.group` composition.
+
 --DEMO(attachment_group_demo)--
 
 ## Trigger
 
 Add an `attachment.trigger` to make the whole card open a link or dialog. It fills the card behind the actions, so the actions stay clickable.
+
+**Props used:** `link`, `href`, `aria_label` on `attachment.trigger`.
 
 --DEMO(attachment_trigger_dialog_demo)--
 
@@ -113,10 +123,10 @@ The root attachment container.
 
 | Prop          | Type                                                         | Default        | Description                                       |
 | ------------- | ------------------------------------------------------------ | -------------- | ------------------------------------------------- |
-| `state`       | `"idle" \| "uploading" \| "processing" \| "error" \| "done"` | `"done"`       | The upload state. Drives styling and the shimmer. |
-| `size`        | `"default" \| "sm" \| "xs"`                                  | `"default"`    | The attachment size.                              |
-| `orientation` | `"horizontal" \| "vertical"`                                 | `"horizontal"` | Lay the media beside or above the content.        |
-| `class_name`   | `string`                                                     | -              | Additional classes to apply to the root element.  |
+| `state`       | `Literal["idle", "uploading", "processing", "error", "done"]` | `"done"`       | The upload state. Drives styling and the shimmer. |
+| `size`        | `Literal["default", "sm", "xs"]`                                  | `"default"`    | The attachment size.                              |
+| `orientation` | `Literal["horizontal", "vertical"]`                                 | `"horizontal"` | Lay the media beside or above the content.        |
+| `class_name`   | `str`                                                     | -              | Additional classes to apply to the root element.  |
 
 ## attachment.media
 
@@ -124,8 +134,8 @@ The media slot for an icon or image preview.
 
 | Prop        | Type                | Default  | Description                                    |
 | ----------- | ------------------- | -------- | ---------------------------------------------- |
-| `variant`   | `"icon" \| "image"` | `"icon"` | Whether the media holds an icon or an `<img>`. |
-| `class_name` | `string`            | -        | Additional classes to apply to the media slot. |
+| `variant`   | `Literal["icon", "image"]` | `"icon"` | Whether the media holds an icon or an `<img>`. |
+| `class_name` | `str`            | -        | Additional classes to apply to the media slot. |
 
 ## attachment.content
 
@@ -133,7 +143,7 @@ Wraps the title and description.
 
 | Prop        | Type     | Default | Description                                      |
 | ----------- | -------- | ------- | ------------------------------------------------ |
-| `class_name` | `string` | -       | Additional classes to apply to the content slot. |
+| `class_name` | `str` | -       | Additional classes to apply to the content slot. |
 
 ## attachment.title
 
@@ -141,7 +151,7 @@ The attachment name. Shimmers while the attachment is `uploading` or `processing
 
 | Prop        | Type     | Default | Description                               |
 | ----------- | -------- | ------- | ----------------------------------------- |
-| `class_name` | `string` | -       | Additional classes to apply to the title. |
+| `class_name` | `str` | -       | Additional classes to apply to the title. |
 
 ## attachment.description
 
@@ -149,7 +159,7 @@ Secondary metadata such as the file type, size, or upload status.
 
 | Prop        | Type     | Default | Description                                     |
 | ----------- | -------- | ------- | ----------------------------------------------- |
-| `class_name` | `string` | -       | Additional classes to apply to the description. |
+| `class_name` | `str` | -       | Additional classes to apply to the description. |
 
 ## attachment.actions
 
@@ -157,7 +167,7 @@ A container for one or more actions, aligned to the end of the attachment.
 
 | Prop        | Type     | Default | Description                                 |
 | ----------- | -------- | ------- | ------------------------------------------- |
-| `class_name` | `string` | -       | Additional classes to apply to the actions. |
+| `class_name` | `str` | -       | Additional classes to apply to the actions. |
 
 ## attachment.action
 
@@ -165,8 +175,8 @@ An action button. Renders a [`Button`](/docs/components/button) and accepts all 
 
 | Prop       | Type                                  | Default     | Description                              |
 | ---------- | ------------------------------------- | ----------- | ---------------------------------------- |
-| `size`     | `Button["size"]`                      | `"icon-xs"` | The button size.                         |
-| `class_name` | `string` | -       | Additional classes to apply to the actions. |
+| `size`     | `Literal["default", "xs", "sm", "lg", "icon", "icon-xs", "icon-sm", "icon-lg"]`                      | `"icon-xs"` | The button size.                         |
+| `class_name` | `str` | -       | Additional classes to apply to the actions. |
 
 ## attachment.trigger
 
@@ -175,7 +185,7 @@ A full-card overlay that activates the attachment. Renders a `rx.el.button` by d
 | Prop         | Type                  | Default | Description                                                                   |
 | ------------ | --------------------- | ------- | ----------------------------------------------------------------------------- |
 | `link`       | `bool`         | `False`  | If set, renders an anchor (`rx.el.a`) instead of a button.                        |
-| `aria_label` | `str \| None`         | `None`  | Accessibility label for screen readers. Required when no visible text exists. |
+| `aria_label` | `str | None`         | `None`  | Accessibility label for screen readers. Required when no visible text exists. |
 | `class_name` | `str`                 | `""`    | Additional CSS classes applied to the trigger.                                |
 
 
@@ -185,4 +195,4 @@ Lays out attachments in a horizontally scrollable, snapping row.
 
 | Prop        | Type     | Default | Description                               |
 | ----------- | -------- | ------- | ----------------------------------------- |
-| `class_name` | `string` | -       | Additional classes to apply to the group. |
+| `class_name` | `str` | -       | Additional classes to apply to the group. |

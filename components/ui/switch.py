@@ -8,19 +8,21 @@ class ClassNames:
     # Root container layout
     ROOT = "inline-flex items-center gap-3 cursor-pointer select-none group/switch"
 
-    INPUT = "sr-only"
+    INPUT = "peer sr-only"
 
     # TRACK locks down the background color state changes perfectly
     TRACK = (
-        "relative rounded-full transition-colors duration-200 ease-in-out bg-muted "
+        "relative rounded-full bg-muted "
         "outline-none "
         # Explicit sizes driven by data-size
         "group-data-[size=default]/switch:h-[18.4px] group-data-[size=default]/switch:w-[32px] "
         "group-data-[size=sm]/switch:h-[14px] group-data-[size=sm]/switch:w-[24px] "
         # Checks for the exact input child tag state for lighting up colors
         "group-has-[input:checked]/switch:bg-primary "
-        # Focus rings
-        # "group-focus-within/switch:ring-2 group-focus-within/switch:ring-ring group-focus-within/switch:ring-offset-2 "
+        # Focus ring — visible on keyboard focus (peer-focus-visible, since
+        # the input is the peer this actually reacts to its focus state,
+        # unlike focus-within which fires on any descendant focus)
+        "peer-focus-visible:ring-3 peer-focus-visible:ring-ring/50 peer-focus-visible:outline-1 peer-focus-visible:outline-ring "
         # Aria-invalid error layouts
         "group-aria-[invalid=true]/switch:border-destructive group-aria-[invalid=true]/switch:ring-3 group-aria-[invalid=true]/switch:ring-destructive/20 "
         # Disabled control states
@@ -46,14 +48,6 @@ class ClassNames:
 
 
 class NativeSwitch(CoreComponent):
-    # Explicitly registering this on our component class hooks it right into Reflex's build cycle
-    @classmethod
-    def get_event_triggers(cls) -> dict[str, any]:
-        return {
-            **super().get_event_triggers(),
-            "on_change": lambda checked: [checked],
-        }
-
     @classmethod
     def create(cls, label_text: str = "", **props) -> rx.Component:
         props["data-slot"] = "switch"
@@ -69,26 +63,33 @@ class NativeSwitch(CoreComponent):
         track_class_name = props.pop("track_class_name", "")
         thumb_class_name = props.pop("thumb_class_name", "")
 
-        on_change = props.pop("on_change", None)
-        default_checked = props.pop("default_checked", False)
-        disabled = props.pop("disabled", False)
-        name = props.pop("name", None)
-
+        # 2. Everything a real <input type="checkbox"> can take goes to the
+        # actual input, not the outer label — anything left in **props
+        # (spread onto the label at the end) never reaches the input, so
+        # this whitelist has to be complete. id in particular matters: an
+        # external field.label(html_for=...) needs it on the *input*, not
+        # the label, or the association silently fails.
         input_props = {}
-        if default_checked:
-            input_props["default_checked"] = True
-        if disabled:
-            input_props["disabled"] = True
-        if name:
-            input_props["name"] = name
-
-        if on_change:
-            input_props["on_change"] = on_change
+        for key in (
+            "id",
+            "checked",
+            "default_checked",
+            "disabled",
+            "required",
+            "name",
+            "value",
+            "on_change",
+            "custom_attrs",
+        ):
+            if key in props:
+                input_props[key] = props.pop(key)
 
         cls.set_class_name(ClassNames.ROOT, props)
 
         return rx.el.label(
-            rx.el.input(type="checkbox", class_name=ClassNames.INPUT, **input_props),
+            rx.el.input(
+                type="checkbox", class_name=ClassNames.INPUT, **input_props
+            ),
             rx.el.div(
                 rx.el.span(
                     # Dynamically merge custom thumb classes
@@ -109,4 +110,4 @@ class SwitchNamespace(ComponentNamespace):
     class_names = ClassNames
 
 
-native_switch = SwitchNamespace()
+switch = SwitchNamespace()

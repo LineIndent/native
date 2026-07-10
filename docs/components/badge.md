@@ -14,42 +14,55 @@ order: 2
 
 ## Variants
 
-Use the `variant` prop to change the variant of the badge.
+Use the `variant` prop to change the badge's style.
+
+**Props used:** `variant` on `badge`.
 
 --DEMO(badge_with_variants)--
 
 ## With Icons
 
-You can render an icon inside the badge. Use `data-icon="inline-start"` to render the icon on the left and `data-icon="inline-end"` to render the icon on the right.
+Render an icon inside the badge. Add `data-icon="inline-start"` or `data-icon="inline-end"` to the icon to position it correctly (adjusts padding automatically).
+
+**Props used:** `data_icon` on the icon child.
 
 --DEMO(badge_with_icon)--
 
 ## With Spinner
 
-You can render a spinner inside the badge. Remember to add the `data-icon="inline-start"` or `data-icon="inline-end"` prop to the spinner.
+Render a `spinner` inside the badge — same `data-icon` positioning convention as icons.
+
+**Props used:** `data_icon` on the spinner child.
 
 --DEMO(badge_with_spinner)--
 
 ## Link
 
-You can pass in `rx.el.a` to turn a badge into a link. The `badge` component accepts `*children` so any interactive element can be passed to it. 
+Pass `rx.el.a` as the badge's child to turn it into a link. `badge` accepts `*children`, so any interactive element works.
+
+**Props used:** none required — pass `rx.el.a(...)` as a child.
 
 --DEMO(badge_as_link)--
 
 ## Custom Colors
 
-You can customize the colors of a badge by adding custom classes such as `bg-green-50 dark:bg-green-800` to the `badge` component.
+Override colors by passing extra classes via `class_name`.
+
+**Props used:** `class_name` on `badge`.
 
 --DEMO(badge_custom_colors)--
-
 
 # API Reference
 
 ## badge
 
-The `badge` component displays a badge or a component that looks like a badge.
+```python
+badge("New", variant="secondary")
+```
 
-| Prop        | Type                                                                          | Default     |
-| ----------- | ----------------------------------------------------------------------------- | ----------- |
-| `variant`   | `"default" \| "secondary" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"default"` |
-| `class_name` | `string`                                                                      | -           |
+| Prop         | Type                                                                                   | Default     |
+| ------------ | --------------------------------------------------------------------------------------- | ----------- |
+| `variant`    | `Literal["default", "secondary", "destructive", "outline", "ghost", "link"]`           | `"default"` |
+| `class_name` | `str`                                                                                    | `""`        |
+
+Any other prop accepted by a native `<span>` is also passed straight through.

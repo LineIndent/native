@@ -1,4 +1,5 @@
 import reflex as rx
+
 from components.ui.slider import slider
 
 
@@ -10,6 +11,7 @@ def slider_vertical():
                 min=0,
                 max=100,
                 step=1,
+                orientation="vertical",
             ),
             orientation="vertical",
             class_name="h-40",
@@ -20,6 +22,7 @@ def slider_vertical():
                 min=0,
                 max=100,
                 step=1,
+                orientation="vertical",
             ),
             orientation="vertical",
             class_name="h-40",

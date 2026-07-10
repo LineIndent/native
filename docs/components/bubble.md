@@ -32,6 +32,8 @@ For full-featured chat interfaces, use the [`Message`](/docs/components/message)
 
 Use `variant` to change the visual treatment of the bubble.
 
+**Props used:** `variant` on `bubble.root`.
+
 --DEMO(bubble_with_variants)--
 
 
@@ -50,6 +52,8 @@ A bubble sizes to its content, up to 80% of the container width. The `ghost` var
 ## Alignment
 
 Use `align` on `bubble.root` to align the bubble to the start or end of the conversation.
+
+**Props used:** `align` on `bubble.root`.
 
 --DEMO(bubble_alignment_demo)--
 
@@ -72,17 +76,23 @@ bubble.group
     └── bubble.content
 ```
 
+**Props used:** `align` on `bubble.root` (set per-bubble, not on `bubble.group`).
+
 --DEMO(bubble_group_demo)--
 
 ## Links and Buttons
 
 You can turn a bubble into a link or button by using the passing the interactive elements directly into the `bubble.content` slot. The `bubble.content` accepts `*children` so simply placing a button or link will render that component. 
 
+**Props used:** none required — pass a `button`/`rx.el.a` as a child of `bubble.content`.
+
 --DEMO(bubble_link_button_demo)--
 
 ## Reactions
 
 Use `bubble.reactions` for bubble reactions. You can use it to display reactions or quick action buttons. Use `side` and `align` to position the row — `side="top"` anchors it to the upper edge. Reactions overlap the bubble edge, so leave vertical space between rows — the examples below use a larger `gap` for this reason.
+
+**Props used:** `side`, `align` on `bubble.reactions`.
 
 --DEMO(bubble_reactions_demo)--
 
@@ -144,9 +154,9 @@ The root bubble wrapper.
 
 | Prop        | Type                                                                                       | Default     | Description                                      |
 | ----------- | ------------------------------------------------------------------------------------------ | ----------- | ------------------------------------------------ |
-| `variant`   | `"default" \| "secondary" \| "muted" \| "tinted" \| "outline" \| "ghost" \| "destructive"` | `"default"` | The bubble visual treatment.                     |
-| `align`     | `"start" \| "end"`                                                                         | `"start"`   | The inline alignment of the bubble.              |
-| `class_name` | `string`                                                                                   | -           | Additional classes to apply to the root element. |
+| `variant`   | `Literal["default", "secondary", "muted", "tinted", "outline", "ghost", "destructive"]` | `"default"` | The bubble visual treatment.                     |
+| `align`     | `Literal["start", "end"]`                                                                         | `"start"`   | The inline alignment of the bubble.              |
+| `class_name` | `str`                                                                                   | -           | Additional classes to apply to the root element. |
 
 ## bubble.content
 
@@ -154,8 +164,8 @@ The bubble content wrapper.
 
 | Prop        | Type                       | Default | Description                                               |
 | ----------- | -------------------------- | ------- | --------------------------------------------------------- |
-| `*children`    | `rx.Component` | -       | Render the content as a different element such as a link. |
-| `class_name` | `string`                   | -       | Additional classes to apply to the content element.       |
+| `*children`    | `*rx.Component` | -       | Render the content as a different element such as a link. |
+| `class_name` | `str`                   | -       | Additional classes to apply to the content element.       |
 
 ## bubble.reactions
 
@@ -163,9 +173,9 @@ Displays overlapped reactions for a bubble.
 
 | Prop        | Type                | Default    | Description                                      |
 | ----------- | ------------------- | ---------- | ------------------------------------------------ |
-| `side`      | `"top" \| "bottom"` | `"bottom"` | The side of the bubble to anchor the reactions.  |
-| `align`     | `"start" \| "end"`  | `"end"`    | The inline alignment of the reactions.           |
-| `class_name` | `string`            | -          | Additional classes to apply to the reaction row. |
+| `side`      | `Literal["top", "bottom"]` | `"bottom"` | The side of the bubble to anchor the reactions.  |
+| `align`     | `Literal["start", "end"]`  | `"end"`    | The inline alignment of the reactions.           |
+| `class_name` | `str`            | -          | Additional classes to apply to the reaction row. |
 
 ## bubble.group
 
@@ -173,4 +183,4 @@ Groups consecutive bubbles from the same sender.
 
 | Prop        | Type     | Default | Description                                    |
 | ----------- | -------- | ------- | ---------------------------------------------- |
-| `class_name` | `string` | -       | Additional classes to apply to the group root. |
+| `class_name` | `str` | -       | Additional classes to apply to the group root. |
