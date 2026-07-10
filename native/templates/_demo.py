@@ -64,7 +64,6 @@ def demo(component: rx.Component, source: str):
                     rx.el.code(
                         source,
                         class_name="language-python text-sm",
-                        # on_mount=rx.call_script("Prism.highlightAll()"),
                     ),
                 ),
                 class_name=(
