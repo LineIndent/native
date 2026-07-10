@@ -48,10 +48,10 @@ def landing_page() -> Section:
             [
                 # -> main layout style
                 "mx-auto",
-                "max-w-6xl",
-                "columns-[260px]",
-                # "max-w-[96rem]",
-                # "columns-[320px]",
+                # "max-w-6xl",
+                # "columns-[260px]",
+                "max-w-[96rem]",
+                "columns-[320px]",
                 "px-7",
                 "gap-6",
                 "space-y-6",

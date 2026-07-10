@@ -52,7 +52,7 @@ def link_card(name: str, href: str, description: str = ""):
             div(
                 h4(
                     name,
-                    class_name="truncate text-sm font-semibold tracking-tight text-foreground group-hover:text-primary transition-colors",
+                    class_name="truncate text-sm font-semibold tracking-tight text-foreground group-hover:text-primary",
                 ),
                 class_name="flex min-w-0 items-center gap-1.5",
             ),
@@ -68,7 +68,7 @@ def link_card(name: str, href: str, description: str = ""):
         ),
         href=href,
         custom_attrs={"data-name": name.lower()},
-        class_name="group flex flex-col gap-3 border border-border bg-background p-4 hover:bg-muted/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:outline-none transition-all rounded-md",
+        class_name="group flex flex-col gap-3 border border-border bg-background p-4 hover:bg-muted/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:outline-none rounded-md",
     )
 
 
