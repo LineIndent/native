@@ -87,4 +87,4 @@ class NativeSelect(ComponentNamespace):
     class_names = ClassNames
 
 
-native_select = NativeSelect()
+select = NativeSelect()
