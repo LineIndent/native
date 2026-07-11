@@ -10,7 +10,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "accordion.root(\n    accordion.item(...),\n    accordion.item(...),\n)"
+      "example": "accordion.root(\n    accordion.item(...),\n    accordion.item(...),\n)",
+      "category": "components"
     },
     {
       "component": "accordion.item",
@@ -27,7 +28,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "accordion.item(\n    accordion.trigger(\"Is it accessible?\"),\n    accordion.panel(\"Yes, built on native semantics.\"),\n    name=\"faq\",\n)"
+      "example": "accordion.item(\n    accordion.trigger(\"Is it accessible?\"),\n    accordion.panel(\"Yes, built on native semantics.\"),\n    name=\"faq\",\n)",
+      "category": "components"
     },
     {
       "component": "accordion.trigger",
@@ -39,7 +41,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "accordion.trigger(\"Is it accessible?\")"
+      "example": "accordion.trigger(\"Is it accessible?\")",
+      "category": "components"
     },
     {
       "component": "accordion.panel",
@@ -51,7 +54,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "accordion.panel(\"Yes. It adheres to the WAI-ARIA design pattern.\")"
+      "example": "accordion.panel(\"Yes. It adheres to the WAI-ARIA design pattern.\")",
+      "category": "components"
     },
     {
       "component": "attachment.root",
@@ -78,7 +82,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "attachment.media",
@@ -95,7 +100,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "attachment.content",
@@ -107,7 +113,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "attachment.title",
@@ -119,7 +126,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "attachment.description",
@@ -131,7 +139,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "attachment.actions",
@@ -143,7 +152,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "attachment.action",
@@ -160,7 +170,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "attachment.trigger",
@@ -182,7 +193,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "attachment.group",
@@ -194,7 +206,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "avatar.root",
@@ -211,7 +224,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "avatar.root(\n    avatar.image(src=\"/avatars/01.png\"),\n    avatar.fallback(\"RD\"),\n)"
+      "example": "avatar.root(\n    avatar.image(src=\"/avatars/01.png\"),\n    avatar.fallback(\"RD\"),\n)",
+      "category": "components"
     },
     {
       "component": "avatar.image",
@@ -233,7 +247,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "avatar.image(src=\"/avatars/01.png\", custom_attrs={\"alt\": \"@shadcn\"})"
+      "example": "avatar.image(src=\"/avatars/01.png\", custom_attrs={\"alt\": \"@shadcn\"})",
+      "category": "components"
     },
     {
       "component": "avatar.fallback",
@@ -245,7 +260,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "avatar.fallback(\"RD\")"
+      "example": "avatar.fallback(\"RD\")",
+      "category": "components"
     },
     {
       "component": "avatar.badge",
@@ -257,7 +273,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "avatar.badge(hi(\"BadgeCheck01Icon\"))"
+      "example": "avatar.badge(hi(\"BadgeCheck01Icon\"))",
+      "category": "components"
     },
     {
       "component": "avatar.group",
@@ -269,7 +286,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "avatar.group(\n    avatar.root(...),\n    avatar.root(...),\n)"
+      "example": "avatar.group(\n    avatar.root(...),\n    avatar.root(...),\n)",
+      "category": "components"
     },
     {
       "component": "avatar.group_count",
@@ -281,7 +299,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "avatar.group_count(\"+3\")"
+      "example": "avatar.group_count(\"+3\")",
+      "category": "components"
     },
     {
       "component": "badge",
@@ -298,7 +317,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "badge(\"New\", variant=\"secondary\")"
+      "example": "badge(\"New\", variant=\"secondary\")",
+      "category": "components"
     },
     {
       "component": "bubble.root",
@@ -320,7 +340,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "bubble.content",
@@ -332,7 +353,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "bubble.reactions",
@@ -354,7 +376,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "bubble.group",
@@ -366,7 +389,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "button",
@@ -388,7 +412,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "button(\"Click me\", variant=\"outline\", size=\"sm\")"
+      "example": "button(\"Click me\", variant=\"outline\", size=\"sm\")",
+      "category": "components"
     },
     {
       "component": "button_variants",
@@ -410,7 +435,8 @@
           "default": "`\"default\"`"
         }
       ],
-      "example": "rx.el.a(\n    \"Go to docs\",\n    href=\"/docs\",\n    class_name=button_variants(\"outline\", \"sm\"),\n)"
+      "example": "rx.el.a(\n    \"Go to docs\",\n    href=\"/docs\",\n    class_name=button_variants(\"outline\", \"sm\"),\n)",
+      "category": "components"
     },
     {
       "component": "button_group.root",
@@ -427,7 +453,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "button_group.root(\n    button(\"Copy\", variant=\"outline\"),\n    button(\"Paste\", variant=\"outline\"),\n)"
+      "example": "button_group.root(\n    button(\"Copy\", variant=\"outline\"),\n    button(\"Paste\", variant=\"outline\"),\n)",
+      "category": "components"
     },
     {
       "component": "button_group.separator",
@@ -444,7 +471,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "button_group.root(\n    button(\"Bold\", variant=\"ghost\"),\n    button_group.separator(),\n    button(\"Italic\", variant=\"ghost\"),\n)"
+      "example": "button_group.root(\n    button(\"Bold\", variant=\"ghost\"),\n    button_group.separator(),\n    button(\"Italic\", variant=\"ghost\"),\n)",
+      "category": "components"
     },
     {
       "component": "button_group.text",
@@ -456,7 +484,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "button_group.text(\"Filter by\")"
+      "example": "button_group.text(\"Filter by\")",
+      "category": "components"
     },
     {
       "component": "card.root",
@@ -473,7 +502,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "card.root(\n    card.header(card.title(\"Team members\")),\n    card.content(\"...\"),\n    size=\"sm\",\n)"
+      "example": "card.root(\n    card.header(card.title(\"Team members\")),\n    card.content(\"...\"),\n    size=\"sm\",\n)",
+      "category": "components"
     },
     {
       "component": "card.header",
@@ -485,7 +515,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "card.header(\n    card.title(\"Team members\"),\n    card.description(\"Manage who has access.\"),\n    card.action(button(\"Invite\", size=\"sm\")),\n)"
+      "example": "card.header(\n    card.title(\"Team members\"),\n    card.description(\"Manage who has access.\"),\n    card.action(button(\"Invite\", size=\"sm\")),\n)",
+      "category": "components"
     },
     {
       "component": "card.title",
@@ -497,7 +528,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "card.title(\"Team members\")"
+      "example": "card.title(\"Team members\")",
+      "category": "components"
     },
     {
       "component": "card.description",
@@ -509,7 +541,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "card.description(\"Manage who has access to this project.\")"
+      "example": "card.description(\"Manage who has access to this project.\")",
+      "category": "components"
     },
     {
       "component": "card.action",
@@ -521,7 +554,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "card.action(button(\"Invite\", size=\"sm\"))"
+      "example": "card.action(button(\"Invite\", size=\"sm\"))",
+      "category": "components"
     },
     {
       "component": "card.content",
@@ -533,7 +567,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "card.content(\"Main card body content.\")"
+      "example": "card.content(\"Main card body content.\")",
+      "category": "components"
     },
     {
       "component": "card.footer",
@@ -545,7 +580,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "card.footer(button(\"Cancel\", variant=\"ghost\"), button(\"Save\"))"
+      "example": "card.footer(button(\"Cancel\", variant=\"ghost\"), button(\"Save\"))",
+      "category": "components"
     },
     {
       "component": "checkbox.root",
@@ -597,7 +633,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "checkbox.root(\n    checkbox.indicator(),\n    id=\"terms\",\n    default_checked=True,\n)"
+      "example": "checkbox.root(\n    checkbox.indicator(),\n    id=\"terms\",\n    default_checked=True,\n)",
+      "category": "components"
     },
     {
       "component": "checkbox.indicator",
@@ -609,7 +646,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "checkbox.indicator(hi(\"Tick02Icon\"))"
+      "example": "checkbox.indicator(hi(\"Tick02Icon\"))",
+      "category": "components"
     },
     {
       "component": "dialog.root",
@@ -621,7 +659,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "dialog.root(\n    dialog.trigger(button(\"Share\", variant=\"outline\")),\n    dialog.popup(...),\n)"
+      "example": "dialog.root(\n    dialog.trigger(button(\"Share\", variant=\"outline\")),\n    dialog.popup(...),\n)",
+      "category": "components"
     },
     {
       "component": "dialog.trigger",
@@ -638,7 +677,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "dialog.trigger(button(\"Share\", variant=\"outline\"))"
+      "example": "dialog.trigger(button(\"Share\", variant=\"outline\"))",
+      "category": "components"
     },
     {
       "component": "dialog.popup",
@@ -660,7 +700,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "dialog.popup(\n    dialog.header(dialog.title(\"Share link\")),\n    ...,\n)"
+      "example": "dialog.popup(\n    dialog.header(dialog.title(\"Share link\")),\n    ...,\n)",
+      "category": "components"
     },
     {
       "component": "dialog.close",
@@ -677,7 +718,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "dialog.close(button(\"Close\", type=\"button\"))\n\ndialog.close(\n    button(\n        hi(\"Cancel01Icon\", class_name=\"size-4\"),\n        variant=\"ghost\",\n        size=\"icon-sm\",\n        class_name=dialog.class_names.CLOSE_ICON,\n    )\n)"
+      "example": "dialog.close(button(\"Close\", type=\"button\"))\n\ndialog.close(\n    button(\n        hi(\"Cancel01Icon\", class_name=\"size-4\"),\n        variant=\"ghost\",\n        size=\"icon-sm\",\n        class_name=dialog.class_names.CLOSE_ICON,\n    )\n)",
+      "category": "components"
     },
     {
       "component": "dialog.title",
@@ -689,7 +731,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "dialog.title(\"Share link\")"
+      "example": "dialog.title(\"Share link\")",
+      "category": "components"
     },
     {
       "component": "dialog.description",
@@ -701,7 +744,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "dialog.description(\"Anyone who has this link will be able to view this.\")"
+      "example": "dialog.description(\"Anyone who has this link will be able to view this.\")",
+      "category": "components"
     },
     {
       "component": "dialog.header",
@@ -713,7 +757,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "dialog.header(\n    dialog.title(\"Share link\"),\n    dialog.description(\"...\"),\n)"
+      "example": "dialog.header(\n    dialog.title(\"Share link\"),\n    dialog.description(\"...\"),\n)",
+      "category": "components"
     },
     {
       "component": "dialog.footer",
@@ -725,7 +770,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "dialog.footer(dialog.close(button(\"Close\", type=\"button\")))"
+      "example": "dialog.footer(dialog.close(button(\"Close\", type=\"button\")))",
+      "category": "components"
     },
     {
       "component": "field.set",
@@ -737,7 +783,8 @@
           "default": null
         }
       ],
-      "example": "field.set(\n    field.legend(\"Delivery\"),\n    field.group(),\n)"
+      "example": "field.set(\n    field.legend(\"Delivery\"),\n    field.group(),\n)",
+      "category": "components"
     },
     {
       "component": "field.legend",
@@ -754,7 +801,8 @@
           "default": null
         }
       ],
-      "example": "field.legend(\"Notification Preferences\", variant=\"label\")"
+      "example": "field.legend(\"Notification Preferences\", variant=\"label\")",
+      "category": "components"
     },
     {
       "component": "field.group",
@@ -766,7 +814,8 @@
           "default": null
         }
       ],
-      "example": "field.group(\n    field.root(),\n    field.root(),\n    class_name=\"@container/field-group flex flex-col gap-6\",\n)"
+      "example": "field.group(\n    field.root(),\n    field.root(),\n    class_name=\"@container/field-group flex flex-col gap-6\",\n)",
+      "category": "components"
     },
     {
       "component": "field.root",
@@ -788,7 +837,8 @@
           "default": null
         }
       ],
-      "example": "field.root(\n    field.label(\"Remember me\", html_for=\"remember\"),\n    switch.root(id=\"remember\"),\n    orientation=\"horizontal\",\n)"
+      "example": "field.root(\n    field.label(\"Remember me\", html_for=\"remember\"),\n    switch.root(id=\"remember\"),\n    orientation=\"horizontal\",\n)",
+      "category": "components"
     },
     {
       "component": "field.content",
@@ -800,7 +850,8 @@
           "default": null
         }
       ],
-      "example": "field.root(\n    checkbox.root(id=\"notifications\"),\n    field.content(\n        field.label(\"Notifications\", html_for=\"notifications\"),\n        field.description(\"Email, SMS, and push options.\"),\n    ),\n)"
+      "example": "field.root(\n    checkbox.root(id=\"notifications\"),\n    field.content(\n        field.label(\"Notifications\", html_for=\"notifications\"),\n        field.description(\"Email, SMS, and push options.\"),\n    ),\n)",
+      "category": "components"
     },
     {
       "component": "field.label",
@@ -817,7 +868,8 @@
           "default": null
         }
       ],
-      "example": "field.label(\"Email\", html_for=\"email\")"
+      "example": "field.label(\"Email\", html_for=\"email\")",
+      "category": "components"
     },
     {
       "component": "field.title",
@@ -829,7 +881,8 @@
           "default": null
         }
       ],
-      "example": "field.content(\n    field.title(\"Enable Touch ID\"),\n    field.description(\"Unlock your device faster.\"),\n)"
+      "example": "field.content(\n    field.title(\"Enable Touch ID\"),\n    field.description(\"Unlock your device faster.\"),\n)",
+      "category": "components"
     },
     {
       "component": "field.description",
@@ -841,7 +894,8 @@
           "default": null
         }
       ],
-      "example": "field.description(\"We never share your email with anyone.\")"
+      "example": "field.description(\"We never share your email with anyone.\")",
+      "category": "components"
     },
     {
       "component": "field.separator",
@@ -853,7 +907,8 @@
           "default": null
         }
       ],
-      "example": "field.separator(\"Or continue with\")"
+      "example": "field.separator(\"Or continue with\")",
+      "category": "components"
     },
     {
       "component": "field.error",
@@ -865,7 +920,8 @@
           "default": null
         }
       ],
-      "example": "field.error(\"Invalid passcode combination provided.\")"
+      "example": "field.error(\"Invalid passcode combination provided.\")",
+      "category": "components"
     },
     {
       "component": "frame.root",
@@ -897,7 +953,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "frame.root(\n    frame.panel(\n        frame.header(frame.title(\"Overview\")),\n        \"Panel content\",\n    ),\n    variant=\"default\",\n    spacing=\"default\",\n)"
+      "example": "frame.root(\n    frame.panel(\n        frame.header(frame.title(\"Overview\")),\n        \"Panel content\",\n    ),\n    variant=\"default\",\n    spacing=\"default\",\n)",
+      "category": "components"
     },
     {
       "component": "frame.panel",
@@ -909,7 +966,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "frame.panel(\"Panel content\")"
+      "example": "frame.panel(\"Panel content\")",
+      "category": "components"
     },
     {
       "component": "frame.header",
@@ -921,7 +979,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "frame.header(frame.title(\"Overview\"))"
+      "example": "frame.header(frame.title(\"Overview\"))",
+      "category": "components"
     },
     {
       "component": "frame.title",
@@ -933,7 +992,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "frame.title(\"Overview\")"
+      "example": "frame.title(\"Overview\")",
+      "category": "components"
     },
     {
       "component": "frame.description",
@@ -945,7 +1005,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "frame.description(\"A summary of recent activity.\")"
+      "example": "frame.description(\"A summary of recent activity.\")",
+      "category": "components"
     },
     {
       "component": "frame.footer",
@@ -957,7 +1018,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "frame.footer(button(\"View all\", variant=\"ghost\", size=\"sm\"))"
+      "example": "frame.footer(button(\"View all\", variant=\"ghost\", size=\"sm\"))",
+      "category": "components"
     },
     {
       "component": "input",
@@ -994,7 +1056,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "input(id=\"email\", type=\"email\", placeholder=\"you@example.com\")"
+      "example": "input(id=\"email\", type=\"email\", placeholder=\"you@example.com\")",
+      "category": "components"
     },
     {
       "component": "input_group.root",
@@ -1006,7 +1069,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "input_group.root(\n    input_group.addon(hi(\"Search01Icon\")),\n    input_group.input(placeholder=\"Search...\"),\n)"
+      "example": "input_group.root(\n    input_group.addon(hi(\"Search01Icon\")),\n    input_group.input(placeholder=\"Search...\"),\n)",
+      "category": "components"
     },
     {
       "component": "input_group.addon",
@@ -1023,7 +1087,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "input_group.addon(hi(\"Search01Icon\"), align=\"inline-start\")"
+      "example": "input_group.addon(hi(\"Search01Icon\"), align=\"inline-start\")",
+      "category": "components"
     },
     {
       "component": "input_group.button",
@@ -1045,7 +1110,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "input_group.addon(\n    input_group.button(hi(\"X01Icon\"), aria_label=\"Clear\"),\n    align=\"inline-end\",\n)"
+      "example": "input_group.addon(\n    input_group.button(hi(\"X01Icon\"), aria_label=\"Clear\"),\n    align=\"inline-end\",\n)",
+      "category": "components"
     },
     {
       "component": "input_group.input",
@@ -1057,7 +1123,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "input_group.input(placeholder=\"Search...\")"
+      "example": "input_group.input(placeholder=\"Search...\")",
+      "category": "components"
     },
     {
       "component": "input_group.textarea",
@@ -1069,7 +1136,128 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "input_group.textarea(placeholder=\"Leave a comment...\")"
+      "example": "input_group.textarea(placeholder=\"Leave a comment...\")",
+      "category": "components"
+    },
+    {
+      "component": "marker.root",
+      "description": "The root marker element.",
+      "props": [
+        {
+          "name": "variant",
+          "type": "`\"default\" \\",
+          "default": "\"border\" \\"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": null,
+      "category": "components"
+    },
+    {
+      "component": "marker.icon",
+      "description": "A decorative icon slot. Hidden from assistive tech with `aria-hidden`.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": null,
+      "category": "components"
+    },
+    {
+      "component": "marker.content",
+      "description": "The marker text content.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": null,
+      "category": "components"
+    },
+    {
+      "component": "menu.root",
+      "description": "Instantiates a positioning context container built around a native HTML `<details>` disclosure component. Includes automated JavaScript listeners for document keydowns (Escape) and window click-away dismissals.",
+      "props": [
+        {
+          "name": "id",
+          "type": "`str`",
+          "default": "*Auto-generated*"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "menu.root(\n    menu.trigger(...),\n    menu.content(...)\n)",
+      "category": "components"
+    },
+    {
+      "component": "menu.trigger",
+      "description": "> **Nested Interactivity Constraint:** Do not pass fully interactive components (like standard `button(...)` blocks) as children inside `menu.trigger`. Nesting interactive elements intercepts DOM click events and prevents the menu from opening. To style your trigger like a button, pass raw strings/icons and apply button classes directly to the trigger component.",
+      "props": [],
+      "example": "menu.trigger(button(\"Open\"))",
+      "category": "components"
+    },
+    {
+      "component": "menu.content",
+      "description": "> **Layout Boundaries**: This component utilizes pure CSS absolute positioning instead of DOM portaling. The popup menu remains nested deep inside its localized DOM tree node. Ensure that no parent container layouts above this component enforce **overflow: hidden** or **overflow: auto** constraints, as this will physically clip or crop the floating dropdown menu box.",
+      "props": [
+        {
+          "name": "side",
+          "type": "`Literal[\"bottom\", \"top\", \"left\", \"right\"]`",
+          "default": "`\"bottom\"`"
+        },
+        {
+          "name": "side_offset",
+          "type": "`int`",
+          "default": "`4`"
+        },
+        {
+          "name": "align",
+          "type": "`Literal[\"start\", \"end\", \"center\"]`",
+          "default": "`\"start\"`"
+        }
+      ],
+      "example": "menu.content(..., side=\"bottom\", align=\"start\")",
+      "category": "components"
+    },
+    {
+      "component": "menu.item",
+      "description": "An action selection row component. Injects a DOM traversal action snippet that walks up to collapse the parent menu immediately upon clicking.",
+      "props": [
+        {
+          "name": "variant",
+          "type": "`Literal[\"default\", \"destructive\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "close_on_click",
+          "type": "`bool`",
+          "default": "`True`"
+        },
+        {
+          "name": "id",
+          "type": "`str`",
+          "default": "*Auto-generated*"
+        },
+        {
+          "name": "on_click",
+          "type": "`EventHandler`",
+          "default": null
+        }
+      ],
+      "example": "menu.item(\"Profile Item\", variant=\"default\", close_on_click=True)",
+      "category": "components"
     },
     {
       "component": "message.root",
@@ -1086,7 +1274,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "message.group",
@@ -1098,7 +1287,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "message.avatar",
@@ -1125,7 +1315,8 @@
           "default": "-"
         }
       ],
-      "example": null
+      "example": null,
+      "category": "components"
     },
     {
       "component": "select",
@@ -1172,7 +1363,8 @@
           "default": null
         }
       ],
-      "example": "select(\n    select.option(\"Option 1\", value=\"option1\"),\n    select.option(\"Option 2\", value=\"option2\"),\n)"
+      "example": "select(\n    select.option(\"Option 1\", value=\"option1\"),\n    select.option(\"Option 2\", value=\"option2\"),\n)",
+      "category": "components"
     },
     {
       "component": "select.option",
@@ -1194,7 +1386,8 @@
           "default": "`False`"
         }
       ],
-      "example": "select.option(\"Apple\", value=\"apple\")\nselect.option(\"Sold out\", value=\"oos\", disabled=True)"
+      "example": "select.option(\"Apple\", value=\"apple\")\nselect.option(\"Sold out\", value=\"oos\", disabled=True)",
+      "category": "components"
     },
     {
       "component": "select.optgroup",
@@ -1211,7 +1404,8 @@
           "default": "`False`"
         }
       ],
-      "example": "select.optgroup(\n    select.option(\"Apple\", value=\"apple\"),\n    select.option(\"Banana\", value=\"banana\"),\n    label=\"Fruits\",\n)"
+      "example": "select.optgroup(\n    select.option(\"Apple\", value=\"apple\"),\n    select.option(\"Banana\", value=\"banana\"),\n    label=\"Fruits\",\n)",
+      "category": "components"
     },
     {
       "component": "separator",
@@ -1233,78 +1427,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "separator(orientation=\"vertical\")"
-    },
-    {
-      "component": "slider.root",
-      "description": "",
-      "props": [
-        {
-          "name": "orientation",
-          "type": "`Literal[\"horizontal\", \"vertical\"]`",
-          "default": "`\"horizontal\"`"
-        },
-        {
-          "name": "class_name",
-          "type": "`str`",
-          "default": "`\"\"`"
-        }
-      ],
-      "example": "slider.root(\n    slider.input(default_value=20),\n)"
-    },
-    {
-      "component": "slider.input",
-      "description": "`default_value`/`value` accepts a bare scalar, a 1-element list, or a 2-element list \u2014 a 2-element list switches into range mode automatically.",
-      "props": [
-        {
-          "name": "min",
-          "type": "`float`",
-          "default": "`0`"
-        },
-        {
-          "name": "max",
-          "type": "`float`",
-          "default": "`100`"
-        },
-        {
-          "name": "step",
-          "type": "`float`",
-          "default": "`1`"
-        },
-        {
-          "name": "orientation",
-          "type": "`Literal[\"horizontal\", \"vertical\"]`",
-          "default": "`\"horizontal\"`"
-        },
-        {
-          "name": "disabled",
-          "type": "`bool`",
-          "default": "`False`"
-        },
-        {
-          "name": "id",
-          "type": "`str`",
-          "default": "auto-generated"
-        },
-        {
-          "name": "class_name",
-          "type": "`str`",
-          "default": "`\"\"`"
-        }
-      ],
-      "example": "# single thumb\nslider.input(default_value=20)\n\n# range (dual thumb)\nslider.input(default_value=[25, 50], min=0, max=100, step=5)\n\n# vertical \u2014 orientation must also be set on slider.root\nslider.input(default_value=50, orientation=\"vertical\")"
-    },
-    {
-      "component": "slider.value",
-      "description": "A styled `<span>` for displaying the current value \u2014 not automatically wired to the input. To show a live value, bind it to `rx.State` yourself:",
-      "props": [
-        {
-          "name": "class_name",
-          "type": "`str`",
-          "default": "`\"\"`"
-        }
-      ],
-      "example": "class SliderState(rx.State):\n    current: int = 20\n\nslider.root(\n    slider.input(default_value=20, on_change=SliderState.set_current),\n    slider.value(SliderState.current),\n)"
+      "example": "separator(orientation=\"vertical\")",
+      "category": "components"
     },
     {
       "component": "spinner",
@@ -1316,7 +1440,71 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "spinner(class_name=\"size-5\")"
+      "example": "spinner(class_name=\"size-5\")",
+      "category": "components"
+    },
+    {
+      "component": "switch.root",
+      "description": "The main switch control component. Renders an accessible, zero-latency toggle using a native hidden checkbox input element wrapped in a clickable semantic label layout block.",
+      "props": [
+        {
+          "name": "label_text",
+          "type": "`str`",
+          "default": "`\"\"`"
+        },
+        {
+          "name": "size",
+          "type": "`Literal[\"default\", \"sm\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "invalid",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "disabled",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "checked",
+          "type": "`bool`",
+          "default": null
+        },
+        {
+          "name": "default_checked",
+          "type": "`bool`",
+          "default": null
+        },
+        {
+          "name": "track_class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        },
+        {
+          "name": "thumb_class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        },
+        {
+          "name": "id",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "on_change",
+          "type": "`EventHandler`",
+          "default": null
+        }
+      ],
+      "example": "switch.root(\"Enable notifications\", id=\"notify\", size=\"default\")",
+      "category": "components"
     },
     {
       "component": "textarea",
@@ -1353,7 +1541,8 @@
           "default": "`\"\"`"
         }
       ],
-      "example": "textarea(id=\"comment\", placeholder=\"Leave a comment...\")"
+      "example": "textarea(id=\"comment\", placeholder=\"Leave a comment...\")",
+      "category": "components"
     }
   ]
 }

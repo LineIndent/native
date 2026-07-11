@@ -1,0 +1,23 @@
+{
+  "charts": [
+    {
+      "title": "Area Chart",
+      "description": "A versatile chart for visualizing quantitative data trends over time or categories, supporting gradients, stacking, and custom legends.",
+      "variants": [
+        {
+          "label": "Basic",
+          "demo": "area_chart_basic_type"
+        },
+        {
+          "label": "Lienar",
+          "demo": "area_chart_linear_type"
+        },
+        {
+          "label": "Step",
+          "demo": "area_chart_step_type"
+        }
+      ],
+      "file": "area_chart"
+    }
+  ]
+}

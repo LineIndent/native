@@ -91,6 +91,12 @@
       "observed_count": 13
     },
     {
+      "child": "badge",
+      "usual_parent": "card.action",
+      "confidence": 1.0,
+      "observed_count": 2
+    },
+    {
       "child": "bubble.content",
       "usual_parent": "bubble.root",
       "confidence": 1.0,
@@ -112,43 +118,43 @@
       "child": "card.action",
       "usual_parent": "card.header",
       "confidence": 1.0,
-      "observed_count": 2
+      "observed_count": 3
     },
     {
       "child": "card.content",
       "usual_parent": "card.root",
       "confidence": 1.0,
-      "observed_count": 3
+      "observed_count": 14
     },
     {
       "child": "card.description",
       "usual_parent": "card.header",
       "confidence": 1.0,
-      "observed_count": 4
+      "observed_count": 14
     },
     {
       "child": "card.footer",
       "usual_parent": "card.root",
       "confidence": 1.0,
-      "observed_count": 4
+      "observed_count": 16
     },
     {
       "child": "card.header",
       "usual_parent": "card.root",
       "confidence": 1.0,
-      "observed_count": 4
+      "observed_count": 17
     },
     {
       "child": "card.title",
       "usual_parent": "card.header",
       "confidence": 1.0,
-      "observed_count": 4
+      "observed_count": 14
     },
     {
       "child": "checkbox.indicator",
       "usual_parent": "checkbox.root",
       "confidence": 1.0,
-      "observed_count": 8
+      "observed_count": 9
     },
     {
       "child": "checkbox.root",
@@ -268,19 +274,19 @@
       "child": "input_group.addon",
       "usual_parent": "input_group.root",
       "confidence": 1.0,
-      "observed_count": 29
+      "observed_count": 34
     },
     {
       "child": "input_group.button",
       "usual_parent": "input_group.addon",
       "confidence": 1.0,
-      "observed_count": 6
+      "observed_count": 7
     },
     {
       "child": "input_group.input",
       "usual_parent": "input_group.root",
       "confidence": 1.0,
-      "observed_count": 20
+      "observed_count": 24
     },
     {
       "child": "input_group.root",
@@ -292,13 +298,13 @@
       "child": "input_group.text",
       "usual_parent": "input_group.addon",
       "confidence": 1.0,
-      "observed_count": 12
+      "observed_count": 15
     },
     {
       "child": "input_group.textarea",
       "usual_parent": "input_group.root",
       "confidence": 1.0,
-      "observed_count": 3
+      "observed_count": 4
     },
     {
       "child": "marker.content",
@@ -403,5 +409,5 @@
       "observed_count": 4
     }
   ],
-  "demo_files_scanned": 111
+  "demo_files_scanned": 145
 }

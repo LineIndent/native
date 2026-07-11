@@ -5,7 +5,11 @@ order: 0
 ---
 
 ## Basic
-A minimal example showing a single series with a smooth gradient fill.
+
 --DEMO(area_chart_basic_type)--
+
+## Lienar
 --DEMO(area_chart_linear_type)--
+
+## Step
 --DEMO(area_chart_step_type)--

@@ -6,11 +6,13 @@ exist in your library.
 """
 
 import json
+import os
 import re
 from pathlib import Path
 
-DOCS_DIR = Path("/home/claude/docs_extract/docs/components")
-OUTPUT_PATH = Path("/home/claude/ai_builder/manifest.json")
+LIBRARY_ROOT = Path(os.environ.get("COMPONENT_LIBRARY_ROOT", "."))
+DOCS_DIR = LIBRARY_ROOT / "docs"
+OUTPUT_PATH = Path(__file__).parent / "manifest.json"
 
 # Matches "## component.subcomponent" headers under the "# API Reference" section
 API_HEADER_RE = re.compile(r"^## (.+)$", re.MULTILINE)
@@ -83,18 +85,33 @@ def parse_component_sections(api_text: str) -> list[dict]:
 
 
 def build_manifest() -> dict:
+    if not DOCS_DIR.exists():
+        raise FileNotFoundError(
+            f"No docs/ directory found at {DOCS_DIR.resolve()}. "
+            f"Set COMPONENT_LIBRARY_ROOT to the root of your actual Reflex project."
+        )
+
     manifest = {"components": []}
-    for md_file in sorted(DOCS_DIR.glob("*.md")):
-        text = md_file.read_text()
-        api_text = extract_api_reference(text)
-        if not api_text:
-            continue
-        sections = parse_component_sections(api_text)
-        manifest["components"].extend(sections)
+    category_dirs = [d for d in DOCS_DIR.iterdir() if d.is_dir()]
+    for category_dir in sorted(category_dirs):
+        for md_file in sorted(category_dir.glob("*.md")):
+            text = md_file.read_text()
+            api_text = extract_api_reference(text)
+            if not api_text:
+                continue
+            sections = parse_component_sections(api_text)
+            for s in sections:
+                s["category"] = category_dir.name
+            manifest["components"].extend(sections)
     return manifest
 
 
 if __name__ == "__main__":
     manifest = build_manifest()
     OUTPUT_PATH.write_text(json.dumps(manifest, indent=2))
+    from collections import Counter
+
+    by_category = Counter(c.get("category", "?") for c in manifest["components"])
     print(f"Parsed {len(manifest['components'])} component entries -> {OUTPUT_PATH}")
+    for cat, count in sorted(by_category.items()):
+        print(f"  {cat}: {count}")

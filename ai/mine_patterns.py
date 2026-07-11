@@ -14,7 +14,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 LIBRARY_ROOT = Path(os.environ.get("COMPONENT_LIBRARY_ROOT", "."))
-DEMOS_DIR = LIBRARY_ROOT / "native" / "lib" / "components"
+LIB_DIR = LIBRARY_ROOT / "native" / "lib"
 OUTPUT_PATH = Path(__file__).parent / "patterns.json"
 
 # Loaded lazily so this file has no hard dependency on the registry unless run directly
@@ -61,16 +61,17 @@ class CompositionVisitor(ast.NodeVisitor):
 
 
 def mine_patterns() -> dict:
-    if not DEMOS_DIR.exists():
+    if not LIB_DIR.exists():
         raise FileNotFoundError(
-            f"No native/lib/components/ directory found at {DEMOS_DIR.resolve()}.\n"
+            f"No native/lib/ directory found at {LIB_DIR.resolve()}.\n"
             f"Set COMPONENT_LIBRARY_ROOT to the root of your actual Reflex project."
         )
 
     known = _known_components()
     edge_counts: Counter[tuple[str, str]] = Counter()
 
-    demo_files = sorted(DEMOS_DIR.glob("*.py"))
+    demo_files = sorted(LIB_DIR.rglob("*.py"))
+    demo_files = [f for f in demo_files if "__pycache__" not in f.parts]
     for demo_file in demo_files:
         try:
             tree = ast.parse(demo_file.read_text())
