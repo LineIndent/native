@@ -52,8 +52,11 @@ def export(app: App):
     for doc in generate_docs_library():
         main_content = div(*doc.component, class_name="w-full")
 
-        toc_content = table_of_content(doc.url, doc.table_of_content) if not doc.url.startswith("docs/components/") else None
-
+        toc_content = (
+            table_of_content(doc.url, doc.table_of_content)
+            if not (doc.url.startswith("docs/components/") or doc.url.startswith("docs/charts/"))
+            else None
+        )
         title_s = doc.url.split("/")[-1].replace("-", " ").title()
         title = f"{title_s} – buridan/ui"
         card_path = f"{doc.url.split('/')[-1]}.webp"

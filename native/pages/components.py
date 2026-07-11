@@ -12,6 +12,10 @@ from native.templates.sublayout import sub_layout_decorator
 COMPONENTS_PATH = Path("components/ui")
 COMPONENT_EXAMPLES = Path("native/lib/components")
 
+
+DOCS_CHARTS_PATH = Path("docs/charts")
+CHART_EXAMPLES = Path("native/lib/charts")
+
 UTILITY_EXAMPLES = Path("native/lib/utilities")
 
 UTILITIES = [
@@ -71,6 +75,29 @@ def get_utility_links():
         for name, slug in UTILITIES
     ]
 
+def get_chart_links():
+    entries = []
+
+    if CHART_EXAMPLES.exists():
+        for chart_dir in CHART_EXAMPLES.iterdir():
+            if chart_dir.is_dir():
+                stem = chart_dir.name  # e.g., "area"
+
+                # Append "-chart" explicitly to the slug, but keep the display name clean
+                name = f"{stem.replace('_', ' ').title()} Chart" # e.g., "Area Chart"
+                slug = f"{stem.replace('_', '-')}-chart"         # e.g., "area-chart"
+
+                # Count files inside the subfolder (native/lib/charts/area/*.py)
+                example_count = len(list(chart_dir.glob("*.py")))
+
+                entries.append((name, slug, example_count))
+
+    entries.sort(key=lambda x: x[0].lower())
+
+    return [
+        link_card(name, f"/docs/charts/{slug}", count)
+        for name, slug, count in entries
+    ]
 
 def section(title: str, description: str, links):
     return div(
@@ -156,7 +183,7 @@ component_links = get_links(
 )
 
 utility_links = get_utility_links()
-
+chart_links = get_chart_links()
 
 def filter_script(value: Var) -> Var:
     return Var(
@@ -215,6 +242,11 @@ def components_page():
             "UI Components",
             "Building blocks for your web apps.",
             component_links,
+        ),
+        section(
+            "Charts",
+            "A collection of ready-to-use chart components built with Recharts.",
+            chart_links,
         ),
         section(
             "Utilities",
