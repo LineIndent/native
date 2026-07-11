@@ -4,20 +4,20 @@ from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
 
 data = [
-    {"month": "Jan", "desktop": 186},
-    {"month": "Feb", "desktop": 305},
-    {"month": "Mar", "desktop": 237},
-    {"month": "Apr", "desktop": 73},
-    {"month": "May", "desktop": 209},
-    {"month": "Jun", "desktop": 214},
+    {"month": "Jan", "desktop": 186, "mobile": 80},
+    {"month": "Feb", "desktop": 305, "mobile": 200},
+    {"month": "Mar", "desktop": 237, "mobile": 120},
+    {"month": "Apr", "desktop": 73, "mobile": 190},
+    {"month": "May", "desktop": 209, "mobile": 130},
+    {"month": "Jun", "desktop": 214, "mobile": 140},
 ]
 
 
-def area_chart_linear_type():
+def bar_chart_with_legend():
     return rx.el.div(
         rx.el.div(
             rx.el.h3(
-                "Area Chart - Linear",
+                "Bar Chart - Legend",
                 class_name="text-lg font-semibold",
             ),
             rx.el.p(
@@ -27,19 +27,29 @@ def area_chart_linear_type():
             class_name="flex flex-col gap-y-1.5",
         ),
         rx.el.div(
-            rx.recharts.area_chart(
+            rx.recharts.bar_chart(
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
                     horizontal=True, vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
-                rx.recharts.area(
+                rx.recharts.bar(
                     data_key="desktop",
                     fill="var(--chart-1)",
-                    stroke="var(--chart-1)",
-                    stroke_width=2,
-                    type_="linear",
+                    stack_id="a",
+                    radius=[0, 0, 4, 4],
                     is_animation_active=False,
+                ),
+                rx.recharts.bar(
+                    data_key="mobile",
+                    fill="var(--chart-2)",
+                    stack_id="a",
+                    radius=[4, 4, 0, 0],
+                    is_animation_active=False,
+                ),
+                rx.recharts.y_axis(
+                    type_="number",
+                    hide=True,
                 ),
                 rx.recharts.x_axis(
                     data_key="month",
@@ -52,6 +62,7 @@ def area_chart_linear_type():
                         "fontSize": 10,
                     },
                 ),
+                rx.recharts.legend(),
                 data=data,
                 width="100%",
                 height=250,
@@ -60,7 +71,7 @@ def area_chart_linear_type():
         rx.el.div(
             rx.el.div(
                 rx.el.div(
-                    "Trending up by 5.2% this month",
+                    "Trending up by 5.2% this month ",
                     class_name="flex items-center gap-2 leading-none font-medium",
                 ),
                 rx.el.div(
@@ -71,6 +82,6 @@ def area_chart_linear_type():
             ),
             class_name="flex w-full items-start gap-2 text-sm",
         ),
-        class_name=chart_tooltip_content([1], "square")
+        class_name=chart_tooltip_content([1, 2], "square")
         + " w-full p-0 flex flex-col gap-y-6",
     )

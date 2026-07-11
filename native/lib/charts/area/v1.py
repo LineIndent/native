@@ -14,19 +14,24 @@ data = [
 
 
 def area_chart_basic_type():
-
     return rx.el.div(
         rx.el.div(
-            rx.el.h1("Area Chart"),
-            rx.el.p("Showing total visitors for the last 6 months"),
+            rx.el.h3(
+                "Area Chart",
+                class_name="text-lg font-semibold",
+            ),
+            rx.el.p(
+                "Showing total visitors for the last 6 months",
+                class_name="text-sm text-muted-foreground",
+            ),
+            class_name="flex flex-col gap-y-1.5",
         ),
         rx.el.div(
             rx.recharts.area_chart(
                 chart_tooltip(label="show"),
                 rx.recharts.cartesian_grid(
-                    horizontal=True,
-                    vertical=False,
-                    class_name="opacity-30",
+                    horizontal=True, vertical=False,
+                    stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.area(
                     data_key="desktop",
@@ -40,8 +45,11 @@ def area_chart_basic_type():
                     axis_line=False,
                     tick_size=10,
                     tick_line=False,
-                    custom_attrs={"fontSize": "12px"},
                     interval="preserveStartEnd",
+                    tick={
+                        "fill": "var(--foreground)",
+                        "fontSize": 10,
+                    },
                 ),
                 data=data,
                 width="100%",
@@ -51,7 +59,7 @@ def area_chart_basic_type():
         rx.el.div(
             rx.el.div(
                 rx.el.div(
-                    "Trending up by 5.2% this month ",
+                    "Trending up by 5.2% this month",
                     class_name="flex items-center gap-2 leading-none font-medium",
                 ),
                 rx.el.div(
@@ -62,5 +70,6 @@ def area_chart_basic_type():
             ),
             class_name="flex w-full items-start gap-2 text-sm",
         ),
-        class_name=chart_tooltip_content([1], "border") + " w-full p-0",
+        class_name=chart_tooltip_content([1], "border")
+        + " w-full p-0 flex flex-col gap-y-6",
     )

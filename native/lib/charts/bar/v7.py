@@ -4,20 +4,19 @@ from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
 
 data = [
-    {"month": "Jan", "desktop": 186},
-    {"month": "Feb", "desktop": 305},
-    {"month": "Mar", "desktop": 237},
-    {"month": "Apr", "desktop": 73},
-    {"month": "May", "desktop": 209},
-    {"month": "Jun", "desktop": 214},
+    {"browser": "Chrome", "visitors": 275, "fill": "var(--chart-1)"},
+    {"browser": "Safari", "visitors": 200, "fill": "var(--chart-2)"},
+    {"browser": "Firefox", "visitors": 187, "fill": "var(--chart-3)"},
+    {"browser": "Edge", "visitors": 173, "fill": "var(--chart-4)"},
+    {"browser": "Other", "visitors": 90, "fill": "var(--chart-5)"},
 ]
 
 
-def area_chart_linear_type():
+def bar_chart_mixed():
     return rx.el.div(
         rx.el.div(
             rx.el.h3(
-                "Area Chart - Linear",
+                "Bar Chart - Mixed",
                 class_name="text-lg font-semibold",
             ),
             rx.el.p(
@@ -27,32 +26,32 @@ def area_chart_linear_type():
             class_name="flex flex-col gap-y-1.5",
         ),
         rx.el.div(
-            rx.recharts.area_chart(
+            rx.recharts.bar_chart(
                 chart_tooltip(),
-                rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
-                    stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
-                ),
-                rx.recharts.area(
-                    data_key="desktop",
-                    fill="var(--chart-1)",
-                    stroke="var(--chart-1)",
-                    stroke_width=2,
-                    type_="linear",
+                rx.recharts.bar(
+                    data_key="visitors",
+                    fill="fill",
+                    radius=4,
                     is_animation_active=False,
                 ),
                 rx.recharts.x_axis(
-                    data_key="month",
+                    type_="number",
+                    hide=True,
+                    tick_size=0,
+                ),
+                rx.recharts.y_axis(
+                    data_key="browser",
+                    type_="category",
                     axis_line=False,
                     tick_size=10,
                     tick_line=False,
-                    interval="preserveStartEnd",
                     tick={
                         "fill": "var(--foreground)",
                         "fontSize": 10,
                     },
                 ),
                 data=data,
+                layout="vertical",
                 width="100%",
                 height=250,
             ),
@@ -60,7 +59,7 @@ def area_chart_linear_type():
         rx.el.div(
             rx.el.div(
                 rx.el.div(
-                    "Trending up by 5.2% this month",
+                    "Trending up by 5.2% this month ",
                     class_name="flex items-center gap-2 leading-none font-medium",
                 ),
                 rx.el.div(

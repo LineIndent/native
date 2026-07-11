@@ -5,7 +5,7 @@ from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
 data = [
     {"month": "Jan", "desktop": 186},
-    {"month": "Feb", "desktop": 305},
+    {"month": "Feb", "desktop": 340},
     {"month": "Mar", "desktop": 237},
     {"month": "Apr", "desktop": 73},
     {"month": "May", "desktop": 209},
@@ -13,11 +13,11 @@ data = [
 ]
 
 
-def area_chart_linear_type():
+def bar_chart_labeled():
     return rx.el.div(
         rx.el.div(
             rx.el.h3(
-                "Area Chart - Linear",
+                "Bar Chart - Labeled",
                 class_name="text-lg font-semibold",
             ),
             rx.el.p(
@@ -27,19 +27,28 @@ def area_chart_linear_type():
             class_name="flex flex-col gap-y-1.5",
         ),
         rx.el.div(
-            rx.recharts.area_chart(
+            rx.recharts.bar_chart(
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
                     horizontal=True, vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
-                rx.recharts.area(
+                rx.recharts.bar(
+                    rx.recharts.label_list(
+                        data_key="desktop",
+                        position="top",
+                        offset=10,
+                        fill="var(--foreground)",
+                        font_size=12,
+                    ),
                     data_key="desktop",
                     fill="var(--chart-1)",
-                    stroke="var(--chart-1)",
-                    stroke_width=2,
-                    type_="linear",
+                    radius=4,
                     is_animation_active=False,
+                ),
+                rx.recharts.y_axis(
+                    type_="number",
+                    hide=True,
                 ),
                 rx.recharts.x_axis(
                     data_key="month",
@@ -55,12 +64,13 @@ def area_chart_linear_type():
                 data=data,
                 width="100%",
                 height=250,
+                margin={"top": 20},
             ),
         ),
         rx.el.div(
             rx.el.div(
                 rx.el.div(
-                    "Trending up by 5.2% this month",
+                    "Trending up by 5.2% this month ",
                     class_name="flex items-center gap-2 leading-none font-medium",
                 ),
                 rx.el.div(

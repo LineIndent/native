@@ -4,20 +4,20 @@ from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
 
 data = [
-    {"month": "Jan", "desktop": 186},
-    {"month": "Feb", "desktop": 305},
-    {"month": "Mar", "desktop": 237},
-    {"month": "Apr", "desktop": 73},
-    {"month": "May", "desktop": 209},
-    {"month": "Jun", "desktop": 214},
+    {"month": "Jan", "desktop": 186, "mobile": 80},
+    {"month": "Feb", "desktop": 305, "mobile": 200},
+    {"month": "Mar", "desktop": 237, "mobile": 120},
+    {"month": "Apr", "desktop": 73, "mobile": 190},
+    {"month": "May", "desktop": 209, "mobile": 130},
+    {"month": "Jun", "desktop": 214, "mobile": 140},
 ]
 
 
-def area_chart_linear_type():
+def area_chart_stacked():
     return rx.el.div(
         rx.el.div(
             rx.el.h3(
-                "Area Chart - Linear",
+                "Area Chart - Stacked",
                 class_name="text-lg font-semibold",
             ),
             rx.el.p(
@@ -38,7 +38,15 @@ def area_chart_linear_type():
                     fill="var(--chart-1)",
                     stroke="var(--chart-1)",
                     stroke_width=2,
-                    type_="linear",
+                    stack_id="a",
+                    is_animation_active=False,
+                ),
+                rx.recharts.area(
+                    data_key="mobile",
+                    fill="var(--chart-2)",
+                    stroke="var(--chart-2)",
+                    stroke_width=2,
+                    stack_id="a",
                     is_animation_active=False,
                 ),
                 rx.recharts.x_axis(
@@ -71,6 +79,6 @@ def area_chart_linear_type():
             ),
             class_name="flex w-full items-start gap-2 text-sm",
         ),
-        class_name=chart_tooltip_content([1], "square")
+        class_name=chart_tooltip_content([1, 2], "square")
         + " w-full p-0 flex flex-col gap-y-6",
     )

@@ -2,29 +2,28 @@ import reflex as rx
 
 from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
-
 data = [
-    {"month": "Jan", "desktop": 186},
-    {"month": "Feb", "desktop": 305},
-    {"month": "Mar", "desktop": 237},
-    {"month": "Apr", "desktop": 73},
-    {"month": "May", "desktop": 209},
-    {"month": "Jun", "desktop": 214},
+    {"month": "Jan", "desktop": 186, "mobile": 80},
+    {"month": "Feb", "desktop": 305, "mobile": 200},
+    {"month": "Mar", "desktop": 237, "mobile": 120},
+    {"month": "Apr", "desktop": 73, "mobile": 190},
+    {"month": "May", "desktop": 209, "mobile": 130},
+    {"month": "Jun", "desktop": 214, "mobile": 140},
 ]
 
 
-def area_chart_linear_type():
+def area_chart_with_axis():
     return rx.el.div(
         rx.el.div(
             rx.el.h3(
-                "Area Chart - Linear",
+                "Area Chart - Axes",
                 class_name="text-lg font-semibold",
             ),
             rx.el.p(
                 "Showing total visitors for the last 6 months",
                 class_name="text-sm text-muted-foreground",
             ),
-            class_name="flex flex-col gap-y-1.5",
+            class_name="flex flex-col gap-1.5",
         ),
         rx.el.div(
             rx.recharts.area_chart(
@@ -34,11 +33,19 @@ def area_chart_linear_type():
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.area(
-                    data_key="desktop",
+                    data_key="mobile",
                     fill="var(--chart-1)",
                     stroke="var(--chart-1)",
                     stroke_width=2,
-                    type_="linear",
+                    stack_id="a",
+                    is_animation_active=False,
+                ),
+                rx.recharts.area(
+                    data_key="desktop",
+                    fill="var(--chart-2)",
+                    stroke="var(--chart-2)",
+                    stroke_width=2,
+                    stack_id="a",
                     is_animation_active=False,
                 ),
                 rx.recharts.x_axis(
@@ -46,7 +53,18 @@ def area_chart_linear_type():
                     axis_line=False,
                     tick_size=10,
                     tick_line=False,
+                    tick={
+                        "fill": "var(--foreground)",
+                        "fontSize": 10,
+                    },
                     interval="preserveStartEnd",
+                ),
+                rx.recharts.y_axis(
+                    width=30,
+                    axis_line=False,
+                    min_tick_gap=50,
+                    tick_size=10,
+                    tick_line=False,
                     tick={
                         "fill": "var(--foreground)",
                         "fontSize": 10,
@@ -60,7 +78,7 @@ def area_chart_linear_type():
         rx.el.div(
             rx.el.div(
                 rx.el.div(
-                    "Trending up by 5.2% this month",
+                    "Trending up by 5.2% this month ",
                     class_name="flex items-center gap-2 leading-none font-medium",
                 ),
                 rx.el.div(
@@ -71,6 +89,5 @@ def area_chart_linear_type():
             ),
             class_name="flex w-full items-start gap-2 text-sm",
         ),
-        class_name=chart_tooltip_content([1], "square")
-        + " w-full p-0 flex flex-col gap-y-6",
+        class_name=chart_tooltip_content([1, 2], "square") + " w-full p-0 flex flex-col gap-y-6",
     )
