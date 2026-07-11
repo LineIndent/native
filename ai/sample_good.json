@@ -1,0 +1,19 @@
+{
+  "component": "card.root",
+  "props": {},
+  "children": [
+    {
+      "component": "card.header",
+      "props": {},
+      "children": [
+        { "component": "card.title", "props": {}, "children": ["Revenue"] },
+        { "component": "card.description", "props": {}, "children": ["Last 30 days"] }
+      ]
+    },
+    {
+      "component": "card.content",
+      "props": { "class_name": "text-sm text-muted-foreground" },
+      "children": ["No chart component available yet — placeholder content."]
+    }
+  ]
+}

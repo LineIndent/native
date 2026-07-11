@@ -1,0 +1,1359 @@
+{
+  "components": [
+    {
+      "component": "accordion.root",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "accordion.root(\n    accordion.item(...),\n    accordion.item(...),\n)"
+    },
+    {
+      "component": "accordion.item",
+      "description": "Renders a native `<details>`. Give matching items the same `name` to make them mutually exclusive (native `<details name=\"...\">` grouping \u2014 opening one closes the others in the group automatically).",
+      "props": [
+        {
+          "name": "name",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "accordion.item(\n    accordion.trigger(\"Is it accessible?\"),\n    accordion.panel(\"Yes, built on native semantics.\"),\n    name=\"faq\",\n)"
+    },
+    {
+      "component": "accordion.trigger",
+      "description": "Renders a `<summary>` with a chevron icon appended automatically \u2014 no need to add one yourself.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "accordion.trigger(\"Is it accessible?\")"
+    },
+    {
+      "component": "accordion.panel",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "accordion.panel(\"Yes. It adheres to the WAI-ARIA design pattern.\")"
+    },
+    {
+      "component": "attachment.root",
+      "description": "The root attachment container.",
+      "props": [
+        {
+          "name": "state",
+          "type": "`Literal[\"idle\", \"uploading\", \"processing\", \"error\", \"done\"]`",
+          "default": "`\"done\"`"
+        },
+        {
+          "name": "size",
+          "type": "`Literal[\"default\", \"sm\", \"xs\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "orientation",
+          "type": "`Literal[\"horizontal\", \"vertical\"]`",
+          "default": "`\"horizontal\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "attachment.media",
+      "description": "The media slot for an icon or image preview.",
+      "props": [
+        {
+          "name": "variant",
+          "type": "`Literal[\"icon\", \"image\"]`",
+          "default": "`\"icon\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "attachment.content",
+      "description": "Wraps the title and description.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "attachment.title",
+      "description": "The attachment name. Shimmers while the attachment is `uploading` or `processing`.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "attachment.description",
+      "description": "Secondary metadata such as the file type, size, or upload status.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "attachment.actions",
+      "description": "A container for one or more actions, aligned to the end of the attachment.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "attachment.action",
+      "description": "An action button. Renders a [`Button`](/docs/components/button) and accepts all of its props.",
+      "props": [
+        {
+          "name": "size",
+          "type": "`Literal[\"default\", \"xs\", \"sm\", \"lg\", \"icon\", \"icon-xs\", \"icon-sm\", \"icon-lg\"]`",
+          "default": "`\"icon-xs\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "attachment.trigger",
+      "description": "A full-card overlay that activates the attachment. Renders a `rx.el.button` by default or a `rx.el.a` when `link=True`.",
+      "props": [
+        {
+          "name": "link",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "aria_label",
+          "type": "`str",
+          "default": "None`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "attachment.group",
+      "description": "Lays out attachments in a horizontally scrollable, snapping row.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "avatar.root",
+      "description": "The root component that wraps the avatar image and fallback.",
+      "props": [
+        {
+          "name": "size",
+          "type": "`Literal[\"default\", \"sm\", \"lg\", \"xl\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "avatar.root(\n    avatar.image(src=\"/avatars/01.png\"),\n    avatar.fallback(\"RD\"),\n)"
+    },
+    {
+      "component": "avatar.image",
+      "description": "Renders the `<img>` and probes its `src` client-side on mount \u2014 if it fails to load, it hides itself and reveals the sibling `avatar.fallback` automatically. No `fallback_id` wiring needed.",
+      "props": [
+        {
+          "name": "src",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "id",
+          "type": "`str`",
+          "default": "auto-generated"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "avatar.image(src=\"/avatars/01.png\", custom_attrs={\"alt\": \"@shadcn\"})"
+    },
+    {
+      "component": "avatar.fallback",
+      "description": "Shown automatically when `avatar.image` fails to load.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "avatar.fallback(\"RD\")"
+    },
+    {
+      "component": "avatar.badge",
+      "description": "Displays a badge indicator on the avatar, positioned at the bottom right by default.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "avatar.badge(hi(\"BadgeCheck01Icon\"))"
+    },
+    {
+      "component": "avatar.group",
+      "description": "Displays a group of avatars with overlapping styling.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "avatar.group(\n    avatar.root(...),\n    avatar.root(...),\n)"
+    },
+    {
+      "component": "avatar.group_count",
+      "description": "Displays a count indicator at the end of an avatar group.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "avatar.group_count(\"+3\")"
+    },
+    {
+      "component": "badge",
+      "description": "Any other prop accepted by a native `<span>` is also passed straight through.",
+      "props": [
+        {
+          "name": "variant",
+          "type": "`Literal[\"default\", \"secondary\", \"destructive\", \"outline\", \"ghost\", \"link\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "badge(\"New\", variant=\"secondary\")"
+    },
+    {
+      "component": "bubble.root",
+      "description": "The root bubble wrapper.",
+      "props": [
+        {
+          "name": "variant",
+          "type": "`Literal[\"default\", \"secondary\", \"muted\", \"tinted\", \"outline\", \"ghost\", \"destructive\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "align",
+          "type": "`Literal[\"start\", \"end\"]`",
+          "default": "`\"start\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "bubble.content",
+      "description": "The bubble content wrapper.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "bubble.reactions",
+      "description": "Displays overlapped reactions for a bubble.",
+      "props": [
+        {
+          "name": "side",
+          "type": "`Literal[\"top\", \"bottom\"]`",
+          "default": "`\"bottom\"`"
+        },
+        {
+          "name": "align",
+          "type": "`Literal[\"start\", \"end\"]`",
+          "default": "`\"end\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "bubble.group",
+      "description": "Groups consecutive bubbles from the same sender.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "button",
+      "description": "Any other prop accepted by the underlying Base UI `Button` is also passed straight through.",
+      "props": [
+        {
+          "name": "variant",
+          "type": "`Literal[\"default\", \"destructive\", \"outline\", \"secondary\", \"ghost\", \"link\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "size",
+          "type": "`Literal[\"default\", \"xs\", \"sm\", \"lg\", \"icon\", \"icon-xs\", \"icon-sm\", \"icon-lg\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "button(\"Click me\", variant=\"outline\", size=\"sm\")"
+    },
+    {
+      "component": "button_variants",
+      "description": "Returns the same classes `button(...)` would apply, as a plain `Var[str]` \u2014 for styling a non-button element (like a link) to look like a button, without wrapping it in an actual `<button>`.",
+      "props": [
+        {
+          "name": "Arg",
+          "type": "Type",
+          "default": "Default"
+        },
+        {
+          "name": "variant",
+          "type": "`Literal[\"default\", \"destructive\", \"outline\", \"secondary\", \"ghost\", \"link\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "size",
+          "type": "`Literal[\"default\", \"xs\", \"sm\", \"lg\", \"icon\", \"icon-xs\", \"icon-sm\", \"icon-lg\"]`",
+          "default": "`\"default\"`"
+        }
+      ],
+      "example": "rx.el.a(\n    \"Go to docs\",\n    href=\"/docs\",\n    class_name=button_variants(\"outline\", \"sm\"),\n)"
+    },
+    {
+      "component": "button_group.root",
+      "description": "",
+      "props": [
+        {
+          "name": "orientation",
+          "type": "`Literal[\"horizontal\", \"vertical\"]`",
+          "default": "`\"horizontal\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "button_group.root(\n    button(\"Copy\", variant=\"outline\"),\n    button(\"Paste\", variant=\"outline\"),\n)"
+    },
+    {
+      "component": "button_group.separator",
+      "description": "",
+      "props": [
+        {
+          "name": "orientation",
+          "type": "`Literal[\"horizontal\", \"vertical\"]`",
+          "default": "`\"vertical\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "button_group.root(\n    button(\"Bold\", variant=\"ghost\"),\n    button_group.separator(),\n    button(\"Italic\", variant=\"ghost\"),\n)"
+    },
+    {
+      "component": "button_group.text",
+      "description": "Accepts `*children`, so any component (including interactive ones) can be rendered as label content inside a group.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "button_group.text(\"Filter by\")"
+    },
+    {
+      "component": "card.root",
+      "description": "",
+      "props": [
+        {
+          "name": "size",
+          "type": "`Literal[\"default\", \"sm\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "card.root(\n    card.header(card.title(\"Team members\")),\n    card.content(\"...\"),\n    size=\"sm\",\n)"
+    },
+    {
+      "component": "card.header",
+      "description": "For a title, description, and optional action.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "card.header(\n    card.title(\"Team members\"),\n    card.description(\"Manage who has access.\"),\n    card.action(button(\"Invite\", size=\"sm\")),\n)"
+    },
+    {
+      "component": "card.title",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "card.title(\"Team members\")"
+    },
+    {
+      "component": "card.description",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "card.description(\"Manage who has access to this project.\")"
+    },
+    {
+      "component": "card.action",
+      "description": "Places content in the top-right of the header (a button, badge, etc.).",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "card.action(button(\"Invite\", size=\"sm\"))"
+    },
+    {
+      "component": "card.content",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "card.content(\"Main card body content.\")"
+    },
+    {
+      "component": "card.footer",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "card.footer(button(\"Cancel\", variant=\"ghost\"), button(\"Save\"))"
+    },
+    {
+      "component": "checkbox.root",
+      "description": "Renders a `<label>` wrapping a visually-hidden `<input type=\"checkbox\">` and the indicator \u2014 clicking anywhere in the root toggles it, with no extra JS wiring required.",
+      "props": [
+        {
+          "name": "id",
+          "type": "`str`",
+          "default": "auto-passed to input"
+        },
+        {
+          "name": "checked",
+          "type": "`bool`",
+          "default": null
+        },
+        {
+          "name": "default_checked",
+          "type": "`bool`",
+          "default": null
+        },
+        {
+          "name": "disabled",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "required",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "name",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "value",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "on_change",
+          "type": "`EventHandler`",
+          "default": null
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "checkbox.root(\n    checkbox.indicator(),\n    id=\"terms\",\n    default_checked=True,\n)"
+    },
+    {
+      "component": "checkbox.indicator",
+      "description": "The tick icon shown when the checkbox is checked, via `peer-checked:grid` \u2014 no `fallback_id`/`menu_id`-style wiring needed, it's a direct sibling of the input.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "checkbox.indicator(hi(\"Tick02Icon\"))"
+    },
+    {
+      "component": "dialog.root",
+      "description": "Non-visual scoping wrapper (`display: contents`, adds no layout box). Trigger and close resolve their target `<dialog>` by walking up to the nearest `dialog.root` \u2014 no manual id threading, and multiple independent dialogs on the same page (e.g. a per-row \"Share\" dialog) never cross-target each other.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "dialog.root(\n    dialog.trigger(button(\"Share\", variant=\"outline\")),\n    dialog.popup(...),\n)"
+    },
+    {
+      "component": "dialog.trigger",
+      "description": "Wraps its child (typically a `button(...)`) with a capturing click listener that calls `.showModal()` on the nearest `dialog.popup`. No visual box of its own, so nesting a styled button inside doesn't add extra layout depth.",
+      "props": [
+        {
+          "name": "id",
+          "type": "`str`",
+          "default": "auto-generated"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "dialog.trigger(button(\"Share\", variant=\"outline\"))"
+    },
+    {
+      "component": "dialog.popup",
+      "description": "Renders the native `<dialog>`. Escape and backdrop clicks both close it when `dismissible=True` (the default).",
+      "props": [
+        {
+          "name": "dismissible",
+          "type": "`bool`",
+          "default": "`True`"
+        },
+        {
+          "name": "on_open_change",
+          "type": "`EventHandler[[bool]] \\",
+          "default": "None`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "dialog.popup(\n    dialog.header(dialog.title(\"Share link\")),\n    ...,\n)"
+    },
+    {
+      "component": "dialog.close",
+      "description": "Same behavioral wrapper as `dialog.trigger`, but calls `.close()`. Has no default visual styling of its own \u2014 apply `dialog.class_names.CLOSE` / `dialog.class_names.CLOSE_ICON` to whatever you pass in.",
+      "props": [
+        {
+          "name": "id",
+          "type": "`str`",
+          "default": "auto-generated"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "dialog.close(button(\"Close\", type=\"button\"))\n\ndialog.close(\n    button(\n        hi(\"Cancel01Icon\", class_name=\"size-4\"),\n        variant=\"ghost\",\n        size=\"icon-sm\",\n        class_name=dialog.class_names.CLOSE_ICON,\n    )\n)"
+    },
+    {
+      "component": "dialog.title",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "dialog.title(\"Share link\")"
+    },
+    {
+      "component": "dialog.description",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "dialog.description(\"Anyone who has this link will be able to view this.\")"
+    },
+    {
+      "component": "dialog.header",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "dialog.header(\n    dialog.title(\"Share link\"),\n    dialog.description(\"...\"),\n)"
+    },
+    {
+      "component": "dialog.footer",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "dialog.footer(dialog.close(button(\"Close\", type=\"button\")))"
+    },
+    {
+      "component": "field.set",
+      "description": "Container that renders a semantic `fieldset` with spacing presets.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": null
+        }
+      ],
+      "example": "field.set(\n    field.legend(\"Delivery\"),\n    field.group(),\n)"
+    },
+    {
+      "component": "field.legend",
+      "description": "Legend element for a `field.set`. Switch to the `\"label\"` variant to align with standard label sizing.",
+      "props": [
+        {
+          "name": "variant",
+          "type": "`Literal[\"legend\", \"label\"]`",
+          "default": "`\"legend\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": null
+        }
+      ],
+      "example": "field.legend(\"Notification Preferences\", variant=\"label\")"
+    },
+    {
+      "component": "field.group",
+      "description": "Layout wrapper that stacks `field.root` components and enables container queries for responsive orientations.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": null
+        }
+      ],
+      "example": "field.group(\n    field.root(),\n    field.root(),\n    class_name=\"@container/field-group flex flex-col gap-6\",\n)"
+    },
+    {
+      "component": "field.root",
+      "description": "The core wrapper for a single field. Provides orientation control, invalid state styling, and spacing configurations.",
+      "props": [
+        {
+          "name": "orientation",
+          "type": "`\"vertical\"",
+          "default": "\"horizontal\""
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "data_invalid",
+          "type": "`str`",
+          "default": null
+        }
+      ],
+      "example": "field.root(\n    field.label(\"Remember me\", html_for=\"remember\"),\n    switch.root(id=\"remember\"),\n    orientation=\"horizontal\",\n)"
+    },
+    {
+      "component": "field.content",
+      "description": "Flex column that groups control and descriptions when the label sits beside the control. Not required if you have no layout description block.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": null
+        }
+      ],
+      "example": "field.root(\n    checkbox.root(id=\"notifications\"),\n    field.content(\n        field.label(\"Notifications\", html_for=\"notifications\"),\n        field.description(\"Email, SMS, and push options.\"),\n    ),\n)"
+    },
+    {
+      "component": "field.label",
+      "description": "Label styled for both direct inputs and nested `field` child items.",
+      "props": [
+        {
+          "name": "html_for",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": null
+        }
+      ],
+      "example": "field.label(\"Email\", html_for=\"email\")"
+    },
+    {
+      "component": "field.title",
+      "description": "Renders a standalone title with matching label typography properties inside a `field.content` node block.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": null
+        }
+      ],
+      "example": "field.content(\n    field.title(\"Enable Touch ID\"),\n    field.description(\"Unlock your device faster.\"),\n)"
+    },
+    {
+      "component": "field.description",
+      "description": "Helper text slot that automatically line-balances lengthy strings cleanly when utilized inside horizontal configurations.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": null
+        }
+      ],
+      "example": "field.description(\"We never share your email with anyone.\")"
+    },
+    {
+      "component": "field.separator",
+      "description": "Visual divider rule used to separate sections or categories inside a wrapping `field.group` component. Accepts optional inline children contents.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": null
+        }
+      ],
+      "example": "field.separator(\"Or continue with\")"
+    },
+    {
+      "component": "field.error",
+      "description": "Accessible error notification typography container block configured automatically with standard application state layout variables (`role=\"alert\"`).",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": null
+        }
+      ],
+      "example": "field.error(\"Invalid passcode combination provided.\")"
+    },
+    {
+      "component": "frame.root",
+      "description": "",
+      "props": [
+        {
+          "name": "variant",
+          "type": "`Literal[\"default\", \"inverse\", \"ghost\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "spacing",
+          "type": "`Literal[\"xs\", \"sm\", \"default\", \"lg\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "stacked",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "dense",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "frame.root(\n    frame.panel(\n        frame.header(frame.title(\"Overview\")),\n        \"Panel content\",\n    ),\n    variant=\"default\",\n    spacing=\"default\",\n)"
+    },
+    {
+      "component": "frame.panel",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "frame.panel(\"Panel content\")"
+    },
+    {
+      "component": "frame.header",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "frame.header(frame.title(\"Overview\"))"
+    },
+    {
+      "component": "frame.title",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "frame.title(\"Overview\")"
+    },
+    {
+      "component": "frame.description",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "frame.description(\"A summary of recent activity.\")"
+    },
+    {
+      "component": "frame.footer",
+      "description": "",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "frame.footer(button(\"View all\", variant=\"ghost\", size=\"sm\"))"
+    },
+    {
+      "component": "input",
+      "description": "Any other prop accepted by a native `<input>` is also passed straight through.",
+      "props": [
+        {
+          "name": "type",
+          "type": "`str`",
+          "default": "`\"text\"`"
+        },
+        {
+          "name": "disabled",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "id",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "on_change",
+          "type": "`EventHandler`",
+          "default": null
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "input(id=\"email\", type=\"email\", placeholder=\"you@example.com\")"
+    },
+    {
+      "component": "input_group.root",
+      "description": "The main wrapper around inputs and addons.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "input_group.root(\n    input_group.addon(hi(\"Search01Icon\")),\n    input_group.input(placeholder=\"Search...\"),\n)"
+    },
+    {
+      "component": "input_group.addon",
+      "description": "Displays icons, text, buttons, or other content alongside the input. Can contain multiple `input_group.button`s.",
+      "props": [
+        {
+          "name": "align",
+          "type": "`Literal[\"inline-start\", \"inline-end\", \"block-start\", \"block-end\"]`",
+          "default": "`\"inline-start\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "input_group.addon(hi(\"Search01Icon\"), align=\"inline-start\")"
+    },
+    {
+      "component": "input_group.button",
+      "description": "A `button` pre-styled for input group contexts. See the [Button](/docs/components/button) docs for the rest of `button`'s props.",
+      "props": [
+        {
+          "name": "size",
+          "type": "`Literal[\"xs\", \"icon-xs\", \"sm\", \"icon-sm\"]`",
+          "default": "`\"xs\"`"
+        },
+        {
+          "name": "variant",
+          "type": "`Literal[\"default\", \"destructive\", \"outline\", \"secondary\", \"ghost\", \"link\"]`",
+          "default": "`\"ghost\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "input_group.addon(\n    input_group.button(hi(\"X01Icon\"), aria_label=\"Clear\"),\n    align=\"inline-end\",\n)"
+    },
+    {
+      "component": "input_group.input",
+      "description": "Drop-in replacement for `input()` inside an input group \u2014 pre-styled and tagged with the shared `data-slot=\"input-group-control\"` used for group-wide focus states.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "input_group.input(placeholder=\"Search...\")"
+    },
+    {
+      "component": "input_group.textarea",
+      "description": "Drop-in replacement for `textarea()` inside an input group \u2014 same `data-slot=\"input-group-control\"` convention as `input_group.input`.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "input_group.textarea(placeholder=\"Leave a comment...\")"
+    },
+    {
+      "component": "message.root",
+      "description": "The message row wrapper.",
+      "props": [
+        {
+          "name": "align",
+          "type": "`Literal[\"start\", \"end\"]`",
+          "default": "`\"start\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "message.group",
+      "description": "Groups consecutive messages from the same sender.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "message.avatar",
+      "description": "The avatar slot, aligned to the bottom of the message. When the message has a `message.footer`, the avatar shifts up to stay aligned with the message surface instead of the footer.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "-"
+        }
+      ],
+      "example": null
+    },
+    {
+      "component": "select",
+      "description": "The main select component. Calling `select(...)` directly renders the native `<select>` wrapped in a positioning `div` with the chevron icon \u2014 `select` is itself callable (via `NativeSelect.__call__`), so no separate `.root` is needed.",
+      "props": [
+        {
+          "name": "size",
+          "type": "`Literal[\"default\", \"sm\"]`",
+          "default": "`\"default\"`"
+        },
+        {
+          "name": "wrapper_class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        },
+        {
+          "name": "data_slot",
+          "type": "`str`",
+          "default": "`\"native-select\"`"
+        },
+        {
+          "name": "disabled",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "name",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "id",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "on_change",
+          "type": "`EventHandler`",
+          "default": null
+        }
+      ],
+      "example": "select(\n    select.option(\"Option 1\", value=\"option1\"),\n    select.option(\"Option 2\", value=\"option2\"),\n)"
+    },
+    {
+      "component": "select.option",
+      "description": "Represents an individual option within the select.",
+      "props": [
+        {
+          "name": "value",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "disabled",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "hidden",
+          "type": "`bool`",
+          "default": "`False`"
+        }
+      ],
+      "example": "select.option(\"Apple\", value=\"apple\")\nselect.option(\"Sold out\", value=\"oos\", disabled=True)"
+    },
+    {
+      "component": "select.optgroup",
+      "description": "Groups related options together under a labeled heading.",
+      "props": [
+        {
+          "name": "label",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "disabled",
+          "type": "`bool`",
+          "default": "`False`"
+        }
+      ],
+      "example": "select.optgroup(\n    select.option(\"Apple\", value=\"apple\"),\n    select.option(\"Banana\", value=\"banana\"),\n    label=\"Fruits\",\n)"
+    },
+    {
+      "component": "separator",
+      "description": "When `decorative=True` (the default), `aria-hidden=\"true\"` is set \u2014 the separator is treated as purely visual. Set `decorative=False` to render it as a semantic `role=\"separator\"` for assistive technology instead.",
+      "props": [
+        {
+          "name": "orientation",
+          "type": "`Literal[\"horizontal\", \"vertical\"]`",
+          "default": "`\"horizontal\"`"
+        },
+        {
+          "name": "decorative",
+          "type": "`bool`",
+          "default": "`True`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "separator(orientation=\"vertical\")"
+    },
+    {
+      "component": "slider.root",
+      "description": "",
+      "props": [
+        {
+          "name": "orientation",
+          "type": "`Literal[\"horizontal\", \"vertical\"]`",
+          "default": "`\"horizontal\"`"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "slider.root(\n    slider.input(default_value=20),\n)"
+    },
+    {
+      "component": "slider.input",
+      "description": "`default_value`/`value` accepts a bare scalar, a 1-element list, or a 2-element list \u2014 a 2-element list switches into range mode automatically.",
+      "props": [
+        {
+          "name": "min",
+          "type": "`float`",
+          "default": "`0`"
+        },
+        {
+          "name": "max",
+          "type": "`float`",
+          "default": "`100`"
+        },
+        {
+          "name": "step",
+          "type": "`float`",
+          "default": "`1`"
+        },
+        {
+          "name": "orientation",
+          "type": "`Literal[\"horizontal\", \"vertical\"]`",
+          "default": "`\"horizontal\"`"
+        },
+        {
+          "name": "disabled",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "id",
+          "type": "`str`",
+          "default": "auto-generated"
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "# single thumb\nslider.input(default_value=20)\n\n# range (dual thumb)\nslider.input(default_value=[25, 50], min=0, max=100, step=5)\n\n# vertical \u2014 orientation must also be set on slider.root\nslider.input(default_value=50, orientation=\"vertical\")"
+    },
+    {
+      "component": "slider.value",
+      "description": "A styled `<span>` for displaying the current value \u2014 not automatically wired to the input. To show a live value, bind it to `rx.State` yourself:",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "class SliderState(rx.State):\n    current: int = 20\n\nslider.root(\n    slider.input(default_value=20, on_change=SliderState.set_current),\n    slider.value(SliderState.current),\n)"
+    },
+    {
+      "component": "spinner",
+      "description": "Any other prop accepted by a native `<svg>` (`role`, `aria_label`, `data_icon`, etc.) is also passed straight through. `role=\"status\"` is set by default.",
+      "props": [
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "spinner(class_name=\"size-5\")"
+    },
+    {
+      "component": "textarea",
+      "description": "Native browser autocomplete/spellcheck attributes are disabled by default (`autoComplete`, `autoCapitalize`, `autoCorrect`, `spellCheck`) \u2014 override via `custom_attrs` if you want them back for a specific field.",
+      "props": [
+        {
+          "name": "disabled",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "aria_invalid",
+          "type": "`bool`",
+          "default": "`False`"
+        },
+        {
+          "name": "id",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "name",
+          "type": "`str`",
+          "default": null
+        },
+        {
+          "name": "on_change",
+          "type": "`EventHandler`",
+          "default": null
+        },
+        {
+          "name": "class_name",
+          "type": "`str`",
+          "default": "`\"\"`"
+        }
+      ],
+      "example": "textarea(id=\"comment\", placeholder=\"Leave a comment...\")"
+    }
+  ]
+}

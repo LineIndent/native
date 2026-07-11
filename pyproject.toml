@@ -14,4 +14,5 @@ dev = [
     "pillow>=12.2.0",
     "PyYAML>=6.0.3",
     "questionary>=2.1.1",
+    "google-genai"
 ]
