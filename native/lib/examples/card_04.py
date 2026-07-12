@@ -70,7 +70,7 @@ def card_04() -> rx.Component:
                 ),
                 class_name="flex flex-col gap-y-0.5",
             ),
-            button("New Goal", variant="outline", size="sm"),
+            button("New Goal", variant="outline"),
             class_name="w-full flex flex-row items-start justify-between",
         ),
         card.content(

@@ -72,8 +72,8 @@ def card_01() -> rx.Component:
             )
         ),
         card.footer(
-            button("Discard", variant="secondary", size="sm"),
-            button("Save Changes", variant="default", size="sm"),
+            button("Discard", variant="secondary"),
+            button("Save Changes", variant="default"),
             class_name="w-full flex flex-row items-center justify-end gap-x-2",
         ),
         class_name="mx-auto w-full max-w-sm",

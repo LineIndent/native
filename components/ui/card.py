@@ -5,25 +5,61 @@ from reflex_components_core.el import Div
 from ..core.core import CoreComponent
 
 
+# class ClassNames:
+#     ROOT = (
+#         "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card "
+#         "py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 "
+#         "[--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 "
+#         "has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] "
+#         "data-[size=sm]:has-data-[slot=card-footer]:pb-0 "
+#         "*:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl"
+#     )
+#     HEADER = (
+#         "group/card-header @container/card-header grid auto-rows-min items-start gap-1 "
+#         "rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] "
+#         "has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)"
+#     )
+#     TITLE = "cn-font-heading text-base leading-snug font-medium group-data-[size=sm]/card:text-sm"
+#     DESCRIPTION = "text-sm text-muted-foreground"
+#     ACTION = "col-start-2 row-span-2 row-start-1 self-start justify-self-end"
+#     CONTENT = "px-(--card-spacing)"
+#     FOOTER = "flex items-center rounded-b-xl border-t border-input bg-muted/50 p-(--card-spacing)"
+
+
 class ClassNames:
     ROOT = (
-        "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card "
-        "py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 "
-        "[--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 "
-        "has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] "
-        "data-[size=sm]:has-data-[slot=card-footer]:pb-0 "
+        "group/card flex flex-col gap-(--card-gap) overflow-hidden rounded-xl bg-card "
+        "py-(--card-padding) text-sm text-card-foreground ring-1 ring-foreground/10 "
+        "has-data-[slot=card-footer]:pb-0 "
+        "has-[>img:first-child]:pt-0 "
         "*:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl"
     )
+
     HEADER = (
         "group/card-header @container/card-header grid auto-rows-min items-start gap-1 "
-        "rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] "
-        "has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)"
+        "rounded-t-xl px-(--card-padding) "
+        "has-data-[slot=card-action]:grid-cols-[1fr_auto] "
+        "has-data-[slot=card-description]:grid-rows-[auto_auto] "
+        "[.border-b]:pb-(--card-padding)"
     )
-    TITLE = "cn-font-heading text-base leading-snug font-medium group-data-[size=sm]/card:text-sm"
+
+    TITLE = (
+        "cn-font-heading text-base leading-snug font-medium "
+        "group-data-[size=sm]/card:text-sm"
+    )
+
     DESCRIPTION = "text-sm text-muted-foreground"
-    ACTION = "col-start-2 row-span-2 row-start-1 self-start justify-self-end"
-    CONTENT = "px-(--card-spacing)"
-    FOOTER = "flex items-center rounded-b-xl border-t border-input bg-muted/50 p-(--card-spacing)"
+
+    ACTION = (
+        "col-start-2 row-span-2 row-start-1 self-start justify-self-end"
+    )
+
+    CONTENT = "px-(--card-padding)"
+
+    FOOTER = (
+        "flex items-center rounded-b-xl border-t border-input "
+        "bg-muted/50 p-(--card-padding)"
+    )
 
 
 class CardRoot(Div, CoreComponent):

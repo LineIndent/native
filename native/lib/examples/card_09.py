@@ -21,7 +21,7 @@ def card_09() -> rx.Component:
             class_name="flex flex-col items-center text-center",
         ),
         card.footer(
-            button("Set Up Payouts", variant="default", size="sm", class_name="w-full"),
+            button("Set Up Payouts", variant="default", class_name="w-full"),
             class_name="w-full",
         ),
         class_name="mx-auto w-full max-w-sm",

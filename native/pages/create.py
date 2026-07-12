@@ -3,6 +3,7 @@ import json
 import reflex as rx
 
 from components.ui.select import select
+from components.ui.button import button
 from native.registry.colors import COLOR_THEMES
 from native.registry.themes import BASE_THEMES
 from native.registry.radii import RADII_OPTIONS
@@ -152,6 +153,14 @@ def _sidebar_desktop():
         ),
         _theme_select(
             "font-select", "Font", FONT_REGISTRY, FONT_REGISTRY[0]["id"]
+        ),
+        rx.el.div(
+            button("Get Code",
+                id="copy-theme-button",
+                type="button",
+                class_name="w-full"
+            ),
+            class_name="p-3"
         ),
         class_name="pt-3 hidden lg:flex w-full max-w-[12rem] shrink-0 !overflow-hidden flex-col border border-input/90 divide-y divide-input h-full text-sm text-card-foreground dark bg-card/90 isolate rounded-2xl",
 

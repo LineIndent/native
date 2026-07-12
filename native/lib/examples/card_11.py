@@ -31,7 +31,6 @@ def card_11() -> rx.Component:
             button(
                 hi("Cancel01Icon", class_name="size-4"),
                 variant="ghost",
-                size="sm",
                 class_name="!px-2 !py-2 self-start",
             ),
             class_name="w-full flex flex-row items-start justify-between",
@@ -121,7 +120,7 @@ def card_11() -> rx.Component:
         ),
         card.footer(
             button(
-                "Confirm Transfer", variant="default", size="sm", class_name="w-full"
+                "Confirm Transfer", variant="default", class_name="w-full"
             ),
             class_name="w-full",
         ),

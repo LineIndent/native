@@ -17,9 +17,9 @@ def card_07() -> rx.Component:
         card.content(
             rx.el.div(
                 rx.el.div(
-                    button("Default", variant="default", size="sm"),
-                    button("Secondary", variant="secondary", size="sm"),
-                    button("Outline", variant="outline", size="sm"),
+                    button("Default", variant="default"),
+                    button("Secondary", variant="secondary"),
+                    button("Outline", variant="outline"),
                     class_name="w-full grid grid-cols-3 items-center gap-x-2",
                 ),
                 rx.el.div(
@@ -40,8 +40,8 @@ def card_07() -> rx.Component:
             )
         ),
         card.footer(
-            button("Close", variant="default", size="sm"),
-            button("Send Text", variant="outline", size="sm"),
+            button("Close", variant="default"),
+            button("Send Text", variant="outline"),
             class_name="w-full grid grid-cols-2 items-center gap-x-2",
         ),
         class_name="mx-auto w-full max-w-sm",

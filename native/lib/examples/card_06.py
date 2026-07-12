@@ -41,7 +41,6 @@ def card_06() -> rx.Component:
                         hi("PlusSignIcon", class_name="size-3.5"),
                         "Add another",
                         variant="outline",
-                        size="sm",
                         class_name="w-full",
                     ),
                     class_name="flex flex-col gap-y-3",
@@ -73,7 +72,7 @@ def card_06() -> rx.Component:
             )
         ),
         card.footer(
-            button("Send Invites", size="sm", class_name="w-full"),
+            button("Send Invites", class_name="w-full"),
             class_name="w-full",
         ),
         class_name="mx-auto w-full max-w-sm",

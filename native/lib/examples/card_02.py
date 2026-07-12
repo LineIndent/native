@@ -46,13 +46,11 @@ def card_02():
         card.footer(
             button(
                 "Set up scheduled reports",
-                size="sm",
                 class_name="w-full",
             ),
             button(
                 "See what's new",
                 variant="outline",
-                size="sm",
                 class_name="w-full",
             ),
             class_name="flex-col gap-2",
