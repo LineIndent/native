@@ -1,9 +1,12 @@
 .preview-theme {
-    --primary: orange;
-    --radius: 0.625rem;
+    --background: white;
+    --foreground: black;
 }
 
-.dark .preview-theme {
-    --primary: purple;
-    --radius: 0.625rem;
+.preview-theme .bg-background {
+    background: var(--background);
+}
+
+.preview-theme .text-foreground {
+    color: var(--foreground);
 }

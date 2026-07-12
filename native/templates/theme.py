@@ -2,7 +2,7 @@ from reflex_base.event import call_script
 from reflex_components_core.el import svg
 
 from components.ui.button import button
-
+import reflex as rx
 
 def theme_toggle_button():
     return button(
@@ -36,25 +36,32 @@ def theme_toggle_button():
             stroke_linejoin="round",
             class_name="size-4 !transition-none",
         ),
-        on_click=call_script(
+        on_click=lambda _: call_script(
             """
-const html = document.documentElement;
-let targetTheme = 'dark';
-if (html.classList.contains('dark')) {
-    html.classList.remove('dark');
-    html.classList.add('light');
-    html.style.colorScheme = 'light';
-    targetTheme = 'light';
-} else {
-    html.classList.remove('light');
-    html.classList.add('dark');
-    html.style.colorScheme = 'dark';
-    targetTheme = 'dark';
-}
-localStorage.setItem('site-theme', targetTheme);
-localStorage.setItem('theme', targetTheme);
-localStorage.setItem('last_compiled_theme', targetTheme);
-"""
+        const html = document.documentElement;
+        let targetTheme = 'dark';
+        if (html.classList.contains('dark')) {
+            html.classList.remove('dark');
+            html.classList.add('light');
+            html.style.colorScheme = 'light';
+            targetTheme = 'light';
+        } else {
+            html.classList.remove('light');
+            html.classList.add('dark');
+            html.style.colorScheme = 'dark';
+            targetTheme = 'dark';
+        }
+        localStorage.setItem('site-theme', targetTheme);
+        localStorage.setItem('theme', targetTheme);
+        localStorage.setItem('last_compiled_theme', targetTheme);
+
+        if (window.preview) {
+            window.preview.applyAll();
+            console.log('toggle fired, dark =', document.documentElement.classList.contains('dark'));
+        } else {
+            console.log('window.preview is undefined at toggle time');
+        }
+        """
         ),
         variant="ghost",
         size="sm",

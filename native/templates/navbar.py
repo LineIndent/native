@@ -8,9 +8,7 @@ NAV_LIST = [
     {"name": "Home", "path": "/"},
     {"name": "Docs", "path": "/docs"},
     {"name": "Components", "path": "/components"},
-    # {"name": "Blocks", "path": "/blocks"},
-    # {"name": "Charts", "path": "/charts"},
-    # {"name": "Create", "path": "/create"},
+    {"name": "Create", "path": "/create"},
 ]
 
 
