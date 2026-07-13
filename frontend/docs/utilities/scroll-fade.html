@@ -1,0 +1,457 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect" class="css-82mq1g"/><title>Scroll Fade – buridan/ui</title><meta content="favicon.ico" property="og:image"/><meta content="Scroll Fade" name="application-name"/><meta content="buridan, ui, web apps, framework, open source, frontend, backend, full stack" name="keywords"/><meta content="Utilities for adding a fade effect to the edges of a scroll container." name="description"/><meta content="https://buridan.reflex.rundocs/utilities/scroll-fade" property="og:url"/><meta content="website" property="og:type"/><meta content="Scroll Fade" property="og:title"/><meta content="Utilities for adding a fade effect to the edges of a scroll container." property="og:description"/><meta content="https://raw.githubusercontent.com/LineIndent/ui/refs/heads/main/assets/social/scroll-fade.webp" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="summary_large_image" name="twitter:card"/><meta content="buridan.reflex.run" name="twitter:domain"/><meta content="https://buridan.reflex.rundocs/utilities/scroll-fade" property="twitter:url"/><meta content="Scroll Fade" name="twitter:title"/><meta content="Utilities for adding a fade effect to the edges of a scroll container." name="twitter:description"/><meta content="https://raw.githubusercontent.com/LineIndent/ui/refs/heads/main/assets/social/scroll-fade.webp" name="twitter:image"/><link rel="modulepreload" href="/assets/manifest-8fa44fbe.js"/><link rel="modulepreload" href="/assets/entry.client-BhRJEzLE.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-QTnfLwEv.js"/><link rel="modulepreload" href="/assets/chunk-5KNZJZUH-03iYwFZK.js"/><link rel="modulepreload" href="/assets/react-dom-DP3BhkGf.js"/><link rel="modulepreload" href="/assets/root-DKs5hj6x.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-C_42O6mN.js"/><link rel="modulepreload" href="/assets/context-C82-gUYW.js"/><link rel="modulepreload" href="/assets/reflex-env-BVGF6eGS.js"/><link rel="modulepreload" href="/assets/_docs_._utilities_._scroll-fade_._index-D1VBz8Kj.js"/><link rel="modulepreload" href="/assets/export-B1bBhcQV.js"/><link rel="modulepreload" href="/assets/CodeIcon-D_1ATyfx.js"/><link rel="modulepreload" href="/assets/Copy01Icon-SaA0p54e.js"/><link rel="modulepreload" href="/assets/Search01Icon-uevAzKav.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><style data-emotion="css 82mq1g">.css-82mq1g{crossorigin:true;}</style><script src="/prism.js"></script><script src="/theme-preview.js"></script><script>
+(function() {
+    try {
+        const html = document.documentElement;
+        function applyTheme() {
+            let savedTheme = localStorage.getItem('site-theme');
+            if (!savedTheme) savedTheme = 'dark'; // Your default fallback
+            // Sync all keys to keep Reflex happy
+            localStorage.setItem('site-theme', savedTheme);
+            localStorage.setItem('theme', savedTheme);
+            localStorage.setItem('last_compiled_theme', savedTheme);
+            if (savedTheme === 'light') {
+                if (!html.classList.contains('light')) html.classList.add('light');
+                if (html.classList.contains('dark')) html.classList.remove('dark');
+                html.style.colorScheme = 'light';
+            } else {
+                if (!html.classList.contains('dark')) html.classList.add('dark');
+                if (html.classList.contains('light')) html.classList.remove('light');
+                html.style.colorScheme = 'dark';
+            }
+        }
+        applyTheme();
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class' || mutation.attributeName === 'style') {
+                    // Temporarily turn off observer to avoid infinite loops, apply theme, then turn back on
+                    observer.disconnect();
+                    applyTheme();
+                    startObserving();
+                }
+            });
+        });
+        function startObserving() {
+            observer.observe(html, { attributes: true });
+        }
+        startObserving();
+        window.addEventListener('load', applyTheme);
+    } catch (e) {}
+})();
+</script><link href="/assets/__reflex_global_styles-CICRhBz5.css" rel="stylesheet" type="text/css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div><header class="sticky top-0 z-50 w-full h-13 bg-background flex items-center"><div class="w-full max-w-5xl mx-auto flex flex-row items-center justify-between px-2 md:px-0 "><div class="hidden md:flex"><a href="/" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Home</button></a><a href="/docs" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Docs</button></a><a href="/components" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Components</button></a><a href="/create" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Create</button></a></div><div class="flex flex-row gap-x-2 items-center"><button class="group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5" data-slot="button"><style data-emotion="css s3mb0o">.css-s3mb0o{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}</style><svg class="size-4 !transition-none css-s3mb0o" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style data-emotion="css 1telc7s">.css-1telc7s{fill:none;stroke:none;}</style><path d="M0 0h24v24H0z" class="css-1telc7s"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M12 3l0 18"></path><path d="M12 9l4.65 -4.65"></path><path d="M12 14.3l7.37 -7.37"></path><path d="M12 19.6l8.85 -8.85"></path></svg></button><div class="h-3 w-px bg-muted-foreground/40"></div><a class="no-underline" rel="noopener noreferrer" href="https://github.com/LineIndent/ui" target="_blank"><button aria-label="GitHub" class="group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5" data-slot="button"><style data-emotion="css kqzqgg">.css-kqzqgg{fill:currentColor;}</style><svg class="size-4 css-kqzqgg" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6 -3.36-1.34 -3.36-1.34 -.46-1.16-1.11-1.47-1.11-1.47 -.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03 .89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"></path></svg></button></a><div class="h-3 w-px bg-muted-foreground/40"></div><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 bg-primary text-primary-foreground hover:bg-primary/80 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">New Project</button></div></div></header><div class="min-h-screen pt-10"><div class="mx-auto flex max-w-3xl xl:max-w-5xl gap-20 px-4 sm:px-2.5"><div class="min-w-0 flex-1"><section class="flex min-h-screen flex-col gap-16"><div class="mx-auto flex w-full flex-col gap-8"><div class="w-full"><div class="rx-Html docs-prose"><h1 id="scroll-fade">Scroll Fade</h1>
+<p>Utilities for adding a fade effect to the edges of a scroll container.</p>
+<blockquote>
+<p>The <strong>scroll-fade</strong> utility is purely composed of CSS and is based on <a href="https://ui.shadcn.com/docs/utils/scroll-fade">shadcn/scroll-fade</a>. No extensions to <strong>rxconfig.py</strong> are needed as it uses <strong>Tailwind v4</strong> syntax. </p>
+</blockquote>
+<h1 id="installation">Installation</h1>
+<p>If your project was set up with <code>buridan init</code>, you already have scroll-fade. It ships with the <code>buridan</code> package, which the CLI imports in your global CSS file.</p>
+<p>Otherwise install the <code>buirdan</code> package:</p>
+<pre><code class="language-uv">uv run buridan init
+</code></pre>
+<h1 id="usage">Usage</h1>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Styles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scroll-fade</code></td>
+<td><code>mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));</code> <br/> <code>animation-timeline: scroll(self y);</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-y</code></td>
+<td><code>mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));</code> <br/> <code>animation-timeline: scroll(self y);</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-x</code></td>
+<td><code>mask-image: var(--scroll-fade-mask, var(--scroll-fade-inline));</code> <br/> <code>animation-timeline: scroll(self inline);</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-t</code></td>
+<td>Fade mask on the top edge. <br/> <code>animation-timeline: scroll(self y);</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-b</code></td>
+<td>Fade mask on the bottom edge. <br/> <code>animation-timeline: scroll(self y);</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-l</code></td>
+<td>Fade mask on the left edge. <br/> <code>animation-timeline: scroll(self x);</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-r</code></td>
+<td>Fade mask on the right edge. <br/> <code>animation-timeline: scroll(self x);</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-s</code></td>
+<td>Fade mask on the start edge, mirrors in RTL. <br/> <code>animation-timeline: scroll(self inline);</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-e</code></td>
+<td>Fade mask on the end edge, mirrors in RTL. <br/> <code>animation-timeline: scroll(self inline);</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-&lt;number&gt;</code></td>
+<td><code>--scroll-fade-size: calc(var(--spacing) * &lt;number&gt;);</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-[&lt;value&gt;]</code></td>
+<td><code>--scroll-fade-size: &lt;value&gt;;</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-{t,b,s,e}-&lt;number&gt;</code></td>
+<td><code>--scroll-fade-{t,b,s,e}-size: calc(var(--spacing) * &lt;number&gt;);</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-{t,b,s,e}-[&lt;value&gt;]</code></td>
+<td><code>--scroll-fade-{t,b,s,e}-size: &lt;value&gt;;</code></td>
+</tr>
+<tr>
+<td><code>scroll-fade-none</code></td>
+<td><code>--scroll-fade-mask: none;</code></td>
+</tr>
+</tbody>
+</table></div></div>
+<p>Add <code>scroll-fade</code> or <code>scroll-fade-y</code> to the scroll container, i.e. the element that has overflow-y-auto.</p>
+<p>The fade is scroll-aware and tracks the scroll position:</p>
+<ul>
+<li>At rest, the top edge is crisp and the bottom edge fades to hint at more content.</li>
+<li>As you scroll, a fade appears at the top and both edges stay faded mid-scroll.</li>
+<li>At the end, the bottom edge sharpens to show you have reached the last item.</li>
+</ul>
+<p>The fade is applied with <code>mask-image</code>, so it dissolves the content itself rather than overlaying a color. The mask uses a linear fade from transparent to black, so it adapts to any background without configuration. If your scroll area sits inside a card, put the background and border on a wrapper and <code>scroll-fade</code> on the inner scroller, so the fade dissolves the content and not the card.</p>
+<h1 id="scroll-fade-demo">Scroll Fade Demo</h1></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-Xs28olTPwN"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-XajRBE0DIj"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-XajRBE0DIj"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="mx-auto w-full max-w-xs overflow-hidden rounded-2xl border border-input"><div class="h-72 scroll-fade scrollbar-none overflow-y-auto"><div class="flex flex-col gap-1.5 p-1.5"><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 1</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 2</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 3</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 4</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 5</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 6</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 7</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 8</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 9</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 10</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 11</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 12</div></div></div></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+
+def scroll_fade_demo():
+    return rx.el.div(
+        rx.el.div(
+            rx.el.div(
+                *[
+                    rx.el.div(
+                        f&quot;Item {index + 1}&quot;,
+                        class_name=&quot;rounded-lg bg-muted px-3 py-2.5 text-sm&quot;,
+                    )
+                    for index in range(12)
+                ],
+                class_name=&quot;flex flex-col gap-1.5 p-1.5&quot;,
+            ),
+            class_name=&quot;h-72 scroll-fade scrollbar-none overflow-y-auto&quot;,
+        ),
+        class_name=&quot;mx-auto w-full max-w-xs overflow-hidden rounded-2xl border border-input&quot;,
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><h1 id="no-overflow-no-fade">No Overflow, No Fade</h1>
+<p>If the content does not overflow, no fade is shown. You can apply <code>scroll-fade</code> to any list without checking whether it scrolls.</p></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-WbOHmB3USk"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-V0UxVREi9q"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-V0UxVREi9q"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="mx-auto w-full max-w-xs overflow-hidden rounded-2xl border border-input"><div class="scroll-fade scrollbar-none overflow-y-auto"><div class="flex flex-col gap-1.5 p-1.5"><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 1</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 2</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 3</div></div></div></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+
+def scroll_fade_no_fade():
+    return rx.el.div(
+        rx.el.div(
+            rx.el.div(
+                *[
+                    rx.el.div(
+                        f&quot;Item {index + 1}&quot;,
+                        class_name=&quot;rounded-lg bg-muted px-3 py-2.5 text-sm&quot;,
+                    )
+                    for index in range(3)
+                ],
+                class_name=&quot;flex flex-col gap-1.5 p-1.5&quot;,
+            ),
+            class_name=&quot;scroll-fade scrollbar-none overflow-y-auto&quot;,
+        ),
+        class_name=&quot;mx-auto w-full max-w-xs overflow-hidden rounded-2xl border border-input&quot;,
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><h1 id="horizontal-scrolling">Horizontal Scrolling</h1>
+<p>Use <code>scroll-fade-x</code> on containers that scroll horizontally, i.e. the element that has <code>overflow-x-auto</code>.</p></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-uuFIi990h5"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-uAqEuTNnRB"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-uAqEuTNnRB"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="mx-auto w-full max-w-xs overflow-hidden rounded-2xl border border-input"><div class="scroll-fade-x scrollbar-none overflow-x-auto"><div class="flex w-max gap-1.5 p-1.5"><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">Design</div><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">Engineering</div><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">Marketing</div><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">Product</div><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">Research</div><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">Sales</div><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">Support</div><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">Operations</div><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">Finance</div><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">Legal</div><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">People</div><div class="shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm">Security</div></div></div></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+tags = [
+    &quot;Design&quot;,
+    &quot;Engineering&quot;,
+    &quot;Marketing&quot;,
+    &quot;Product&quot;,
+    &quot;Research&quot;,
+    &quot;Sales&quot;,
+    &quot;Support&quot;,
+    &quot;Operations&quot;,
+    &quot;Finance&quot;,
+    &quot;Legal&quot;,
+    &quot;People&quot;,
+    &quot;Security&quot;,
+]
+
+
+def scroll_fade_horizontal():
+    return rx.el.div(
+        rx.el.div(
+            rx.el.div(
+                *[
+                    rx.el.div(
+                        tag,
+                        class_name=&quot;shrink-0 rounded-lg bg-muted px-3 py-2.5 text-sm&quot;,
+                    )
+                    for tag in tags
+                ],
+                class_name=&quot;flex w-max gap-1.5 p-1.5&quot;,
+            ),
+            class_name=&quot;scroll-fade-x scrollbar-none overflow-x-auto&quot;,
+        ),
+        class_name=&quot;mx-auto w-full max-w-xs overflow-hidden rounded-2xl border border-input&quot;,
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><h1 id="edge-fades">Edge Fades</h1>
+<p>Use edge utilities when only one edge should track the scroll position.</p></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-XftQJ1lR8D"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-hZZuDTOs53"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-hZZuDTOs53"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="mx-auto flex max-w-xs min-w-0 flex-col gap-6"><div class="flex flex-col gap-3"><div class="overflow-hidden rounded-2xl border border-input"><div class="h-36 scroll-fade-t scrollbar-none overflow-y-auto"><div class="flex flex-col gap-1.5 p-1.5"><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Inbox triage</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Design review</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">API contract</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">QA pass</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Launch notes</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Metrics follow-up</div></div></div></div><p class="text-center font-mono text-xs text-muted-foreground">scroll-fade-t</p></div><div class="flex flex-col gap-3"><div class="overflow-hidden rounded-2xl border border-input"><div class="h-36 scroll-fade-b scrollbar-none overflow-y-auto"><div class="flex flex-col gap-1.5 p-1.5"><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Inbox triage</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Design review</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">API contract</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">QA pass</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Launch notes</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Metrics follow-up</div></div></div></div><p class="text-center font-mono text-xs text-muted-foreground">scroll-fade-b</p></div><div class="flex flex-col gap-3"><div class="overflow-hidden rounded-2xl border border-input"><div class="scroll-fade-s scrollbar-none overflow-x-auto"><div class="flex w-max gap-1.5 p-1.5"><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Design</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Engineering</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Marketing</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Product</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Research</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Sales</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Support</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Operations</div></div></div></div><p class="text-center font-mono text-xs text-muted-foreground">scroll-fade-s</p></div><div class="flex flex-col gap-3"><div class="overflow-hidden rounded-2xl border border-input"><div class="scroll-fade-e scrollbar-none overflow-x-auto"><div class="flex w-max gap-1.5 p-1.5"><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Design</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Engineering</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Marketing</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Product</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Research</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Sales</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Support</div><div class="shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm">Operations</div></div></div></div><p class="text-center font-mono text-xs text-muted-foreground">scroll-fade-e</p></div></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+items = [
+    &quot;Inbox triage&quot;,
+    &quot;Design review&quot;,
+    &quot;API contract&quot;,
+    &quot;QA pass&quot;,
+    &quot;Launch notes&quot;,
+    &quot;Metrics follow-up&quot;,
+]
+
+tags = [
+    &quot;Design&quot;,
+    &quot;Engineering&quot;,
+    &quot;Marketing&quot;,
+    &quot;Product&quot;,
+    &quot;Research&quot;,
+    &quot;Sales&quot;,
+    &quot;Support&quot;,
+    &quot;Operations&quot;,
+]
+
+
+def scroll_fade_edge_items():
+    return rx.el.div(
+        *[
+            rx.el.div(
+                item,
+                class_name=&quot;rounded-lg bg-muted px-3 py-2.5 text-sm&quot;,
+            )
+            for item in items
+        ],
+        class_name=&quot;flex flex-col gap-1.5 p-1.5&quot;,
+    )
+
+
+def scroll_fade_edge_tags():
+    return rx.el.div(
+        *[
+            rx.el.div(
+                tag,
+                class_name=&quot;shrink-0 rounded-xl bg-muted px-4 py-2.5 text-sm&quot;,
+            )
+            for tag in tags
+        ],
+        class_name=&quot;flex w-max gap-1.5 p-1.5&quot;,
+    )
+
+
+def scroll_fade_edge():
+    return rx.el.div(
+        rx.el.div(
+            rx.el.div(
+                rx.el.div(
+                    scroll_fade_edge_items(),
+                    class_name=&quot;h-36 scroll-fade-t scrollbar-none overflow-y-auto&quot;,
+                ),
+                class_name=&quot;overflow-hidden rounded-2xl border border-input&quot;,
+            ),
+            rx.el.p(
+                &quot;scroll-fade-t&quot;,
+                class_name=&quot;text-center font-mono text-xs text-muted-foreground&quot;,
+            ),
+            class_name=&quot;flex flex-col gap-3&quot;,
+        ),
+        rx.el.div(
+            rx.el.div(
+                rx.el.div(
+                    scroll_fade_edge_items(),
+                    class_name=&quot;h-36 scroll-fade-b scrollbar-none overflow-y-auto&quot;,
+                ),
+                class_name=&quot;overflow-hidden rounded-2xl border border-input&quot;,
+            ),
+            rx.el.p(
+                &quot;scroll-fade-b&quot;,
+                class_name=&quot;text-center font-mono text-xs text-muted-foreground&quot;,
+            ),
+            class_name=&quot;flex flex-col gap-3&quot;,
+        ),
+        rx.el.div(
+            rx.el.div(
+                rx.el.div(
+                    scroll_fade_edge_tags(),
+                    class_name=&quot;scroll-fade-s scrollbar-none overflow-x-auto&quot;,
+                ),
+                class_name=&quot;overflow-hidden rounded-2xl border border-input&quot;,
+            ),
+            rx.el.p(
+                &quot;scroll-fade-s&quot;,
+                class_name=&quot;text-center font-mono text-xs text-muted-foreground&quot;,
+            ),
+            class_name=&quot;flex flex-col gap-3&quot;,
+        ),
+        rx.el.div(
+            rx.el.div(
+                rx.el.div(
+                    scroll_fade_edge_tags(),
+                    class_name=&quot;scroll-fade-e scrollbar-none overflow-x-auto&quot;,
+                ),
+                class_name=&quot;overflow-hidden rounded-2xl border border-input&quot;,
+            ),
+            rx.el.p(
+                &quot;scroll-fade-e&quot;,
+                class_name=&quot;text-center font-mono text-xs text-muted-foreground&quot;,
+            ),
+            class_name=&quot;flex flex-col gap-3&quot;,
+        ),
+        class_name=&quot;mx-auto flex max-w-xs min-w-0 flex-col gap-6&quot;,
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><p>The edge utilities are scroll-aware. Start edges fade in after you scroll away from the start, and end edges fade out when you reach the end. Use <code>scroll-fade-t</code>, <code>scroll-fade-b</code>, <code>scroll-fade-l</code>, and <code>scroll-fade-r</code> for physical edges. Use <code>scroll-fade-s</code> and <code>scroll-fade-e</code> for logical inline edges.</p>
+<h1 id="fade-size">Fade Size</h1>
+<p>The fade depth defaults to 12% of the container, capped at 40px so tall scrollers stay subtle. Use <code>scroll-fade-&lt;number&gt;</code> to set a fixed size on the spacing scale instead, the same way <code>scroll-mt-&lt;number&gt;</code> works.</p></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-ZEMNqNKJuI"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-kxy1TzGuTJ"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-kxy1TzGuTJ"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="mx-auto flex w-full max-w-xs flex-col gap-6"><div class="flex flex-col gap-3"><div class="overflow-hidden rounded-2xl border border-input"><div class="h-48 scroll-fade scrollbar-none overflow-y-auto scroll-fade-4"><div class="flex flex-col gap-1.5 p-1.5"><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 1</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 2</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 3</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 4</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 5</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 6</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 7</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 8</div></div></div></div><p class="text-center font-mono text-xs text-muted-foreground">scroll-fade-4</p></div><div class="flex flex-col gap-3"><div class="overflow-hidden rounded-2xl border border-input"><div class="h-48 scroll-fade scrollbar-none overflow-y-auto scroll-fade-24"><div class="flex flex-col gap-1.5 p-1.5"><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 1</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 2</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 3</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 4</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 5</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 6</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 7</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 8</div></div></div></div><p class="text-center font-mono text-xs text-muted-foreground">scroll-fade-24</p></div></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+
+def scroll_fade_size_items():
+    return rx.el.div(
+        *[
+            rx.el.div(
+                f&quot;Item {index + 1}&quot;,
+                class_name=&quot;rounded-lg bg-muted px-3 py-2.5 text-sm&quot;,
+            )
+            for index in range(8)
+        ],
+        class_name=&quot;flex flex-col gap-1.5 p-1.5&quot;,
+    )
+
+
+def scroll_fade_size():
+    return rx.el.div(
+        rx.el.div(
+            rx.el.div(
+                rx.el.div(
+                    scroll_fade_size_items(),
+                    class_name=&quot;h-48 scroll-fade scrollbar-none overflow-y-auto scroll-fade-4&quot;,
+                ),
+                class_name=&quot;overflow-hidden rounded-2xl border border-input&quot;,
+            ),
+            rx.el.p(
+                &quot;scroll-fade-4&quot;,
+                class_name=&quot;text-center font-mono text-xs text-muted-foreground&quot;,
+            ),
+            class_name=&quot;flex flex-col gap-3&quot;,
+        ),
+        rx.el.div(
+            rx.el.div(
+                rx.el.div(
+                    scroll_fade_size_items(),
+                    class_name=&quot;h-48 scroll-fade scrollbar-none overflow-y-auto scroll-fade-24&quot;,
+                ),
+                class_name=&quot;overflow-hidden rounded-2xl border border-input&quot;,
+            ),
+            rx.el.p(
+                &quot;scroll-fade-24&quot;,
+                class_name=&quot;text-center font-mono text-xs text-muted-foreground&quot;,
+            ),
+            class_name=&quot;flex flex-col gap-3&quot;,
+        ),
+        class_name=&quot;mx-auto flex w-full max-w-xs flex-col gap-6&quot;,
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><p>For one-off values, use an arbitrary length or percentage:</p>
+<pre><code class="language-reflex">rx.el.div(..., class_name="scroll-fade overflow-y-auto scroll-fade-[15%]")
+</code></pre>
+<p>To fade opposite edges by different amounts, use the per-edge modifiers <code>scroll-fade-t-&lt;number&gt;</code>, <code>scroll-fade-b-&lt;number&gt;</code>, <code>scroll-fade-s-&lt;number&gt;</code>, and <code>scroll-fade-e-&lt;number&gt;</code>. They override scroll-fade-<number> on the edge they target and accept arbitrary values too.</number></p>
+<pre><code class="language-reflex">rx.el.div(..., class_name="scroll-fade overflow-y-auto scroll-fade-b-8 scroll-fade-t-2")
+</code></pre>
+<h1 id="disabling-the-fade">Disabling the Fade</h1>
+<p>Use <code>scroll-fade-none</code> to remove the fade. It works in any class order, so the typical use is responsive or stateful.</p></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-iTBoYk0weJ"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-gkhfe7n34Z"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-gkhfe7n34Z"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="mx-auto flex w-full max-w-xs min-w-0 flex-col gap-6"><div class="flex flex-col gap-3"><div class="overflow-hidden rounded-2xl border border-input"><div class="h-48 scroll-fade scrollbar-none overflow-y-auto"><div class="flex flex-col gap-1.5 p-1.5"><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 1</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 2</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 3</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 4</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 5</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 6</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 7</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 8</div></div></div></div><p class="text-center font-mono text-xs text-muted-foreground">scroll-fade</p></div><div class="flex flex-col gap-3"><div class="overflow-hidden rounded-2xl border border-input"><div class="h-48 scroll-fade scrollbar-none overflow-y-auto scroll-fade-none"><div class="flex flex-col gap-1.5 p-1.5"><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 1</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 2</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 3</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 4</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 5</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 6</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 7</div><div class="rounded-lg bg-muted px-3 py-2.5 text-sm">Item 8</div></div></div></div><p class="text-center font-mono text-xs text-muted-foreground">scroll-fade scroll-fade-none</p></div></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+
+def scroll_fade_none_items():
+    return rx.el.div(
+        *[
+            rx.el.div(
+                f&quot;Item {index + 1}&quot;,
+                class_name=&quot;rounded-lg bg-muted px-3 py-2.5 text-sm&quot;,
+            )
+            for index in range(8)
+        ],
+        class_name=&quot;flex flex-col gap-1.5 p-1.5&quot;,
+    )
+
+
+def scroll_fade_none():
+    return rx.el.div(
+        rx.el.div(
+            rx.el.div(
+                rx.el.div(
+                    scroll_fade_none_items(),
+                    class_name=&quot;h-48 scroll-fade scrollbar-none overflow-y-auto&quot;,
+                ),
+                class_name=&quot;overflow-hidden rounded-2xl border border-input&quot;,
+            ),
+            rx.el.p(
+                &quot;scroll-fade&quot;,
+                class_name=&quot;text-center font-mono text-xs text-muted-foreground&quot;,
+            ),
+            class_name=&quot;flex flex-col gap-3&quot;,
+        ),
+        rx.el.div(
+            rx.el.div(
+                rx.el.div(
+                    scroll_fade_none_items(),
+                    class_name=&quot;h-48 scroll-fade scrollbar-none overflow-y-auto scroll-fade-none&quot;,
+                ),
+                class_name=&quot;overflow-hidden rounded-2xl border border-input&quot;,
+            ),
+            rx.el.p(
+                &quot;scroll-fade scroll-fade-none&quot;,
+                class_name=&quot;text-center font-mono text-xs text-muted-foreground&quot;,
+            ),
+            class_name=&quot;flex flex-col gap-3&quot;,
+        ),
+        class_name=&quot;mx-auto flex w-full max-w-xs min-w-0 flex-col gap-6&quot;,
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><h1 id="fallback">Fallback</h1>
+<p>The scroll-aware behavior is implemented with <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll-driven_animations">CSS scroll-driven animations</a>, with no JavaScript and no scroll listeners. In browsers that do not support scroll-driven animations, <code>scroll-fade</code> falls back to a static fade on both edges, and edge utilities fall back to a static fade on the selected edge.</p>
+<p>Since the mask is applied to the scroll container itself, a visible scrollbar fades with the content at the edges. Pair <code>scroll-fade</code> with <code>no-scrollbar</code>, which ships in the same package, if you want to hide the scrollbar entirely.</p></div></div></div><footer class="w-full flex items-center justify-center py-8 text-muted-foreground !text-sm !text-center"><p class="w-full text-[13px] font-light"><span>Built by <a class="font-semibold underline" href="https://github.com/LineIndent">Line Indent</a> at <a class="font-semibold underline" href="https://reflex.dev">Reflex</a>.</span><span class="block sm:inline"> The source code is available on <a class="font-semibold underline" href="https://github.com/LineIndent/ui">GitHub</a>.</span></p></footer></section></div><div class="hidden xl:block max-w-[12rem] w-full sticky top-18 h-[calc(100vh-3rem)] shrink-0"><div class="flex flex-col gap-y-4 overflow-scroll scrollbar-none"><div class="flex flex-col w-full h-full p-4 gap-y-6"><div class="w-full flex flex-col"><p class="text-xs text-muted-foreground font-medium pb-2">On This Page</p><div class="w-full flex flex-col h-[calc(100svh-22rem)] overflow-y-auto scrollbar-none scroll-fade scroll-fade-4"><ul class="flex flex-col w-full gap-y-0 list-none" id="toc-navigation"><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/utilities/scroll-fade#scroll-fade" data-discover="true">Scroll Fade</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/utilities/scroll-fade#installation" data-discover="true">Installation</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/utilities/scroll-fade#usage" data-discover="true">Usage</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/utilities/scroll-fade#scroll-fade-demo" data-discover="true">Scroll Fade Demo</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/utilities/scroll-fade#no-overflow,-no-fade" data-discover="true">No Overflow, No Fade</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/utilities/scroll-fade#horizontal-scrolling" data-discover="true">Horizontal Scrolling</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/utilities/scroll-fade#edge-fades" data-discover="true">Edge Fades</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/utilities/scroll-fade#fade-size" data-discover="true">Fade Size</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/utilities/scroll-fade#disabling-the-fade" data-discover="true">Disabling the Fade</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/utilities/scroll-fade#fallback" data-discover="true">Fallback</a></li></ul><div class="py-2"></div></div></div></div></div></div></div></div></div><script>((storageKey2, restoreKey) => {
+    if (!window.history.state || !window.history.state.key) {
+      let key = Math.random().toString(32).slice(2);
+      window.history.replaceState({ key }, "");
+    }
+    try {
+      let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
+      let storedY = positions[restoreKey || window.history.state.key];
+      if (typeof storedY === "number") {
+        window.scrollTo(0, storedY);
+      }
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(storageKey2);
+    }
+  })("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"v8_passThroughRequests":false,"unstable_trailingSlashAwareDataRequests":false,"unstable_previewServerPrerendering":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-8fa44fbe.js";
+import * as route0 from "/assets/root-DKs5hj6x.js";
+import * as route1 from "/assets/_docs_._utilities_._scroll-fade_._index-D1VBz8Kj.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[docs].[utilities].[scroll-fade]._index":route1};
+
+import("/assets/entry.client-BhRJEzLE.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

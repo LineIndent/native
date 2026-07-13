@@ -1,0 +1,12 @@
+.preview-theme {
+    --background: white;
+    --foreground: black;
+}
+
+.preview-theme .bg-background {
+    background: var(--background);
+}
+
+.preview-theme .text-foreground {
+    color: var(--foreground);
+}

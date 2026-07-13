@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect" class="css-82mq1g"/><link rel="modulepreload" href="/assets/manifest-8fa44fbe.js"/><link rel="modulepreload" href="/assets/entry.client-BhRJEzLE.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-QTnfLwEv.js"/><link rel="modulepreload" href="/assets/chunk-5KNZJZUH-03iYwFZK.js"/><link rel="modulepreload" href="/assets/react-dom-DP3BhkGf.js"/><link rel="modulepreload" href="/assets/root-DKs5hj6x.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-C_42O6mN.js"/><link rel="modulepreload" href="/assets/context-C82-gUYW.js"/><link rel="modulepreload" href="/assets/reflex-env-BVGF6eGS.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><style data-emotion="css 82mq1g">.css-82mq1g{crossorigin:true;}</style><script src="/prism.js"></script><script src="/theme-preview.js"></script><script>
+(function() {
+    try {
+        const html = document.documentElement;
+        function applyTheme() {
+            let savedTheme = localStorage.getItem('site-theme');
+            if (!savedTheme) savedTheme = 'dark'; // Your default fallback
+            // Sync all keys to keep Reflex happy
+            localStorage.setItem('site-theme', savedTheme);
+            localStorage.setItem('theme', savedTheme);
+            localStorage.setItem('last_compiled_theme', savedTheme);
+            if (savedTheme === 'light') {
+                if (!html.classList.contains('light')) html.classList.add('light');
+                if (html.classList.contains('dark')) html.classList.remove('dark');
+                html.style.colorScheme = 'light';
+            } else {
+                if (!html.classList.contains('dark')) html.classList.add('dark');
+                if (html.classList.contains('light')) html.classList.remove('light');
+                html.style.colorScheme = 'dark';
+            }
+        }
+        applyTheme();
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class' || mutation.attributeName === 'style') {
+                    // Temporarily turn off observer to avoid infinite loops, apply theme, then turn back on
+                    observer.disconnect();
+                    applyTheme();
+                    startObserving();
+                }
+            });
+        });
+        function startObserving() {
+            observer.observe(html, { attributes: true });
+        }
+        startObserving();
+        window.addEventListener('load', applyTheme);
+    } catch (e) {}
+})();
+</script><link href="/assets/__reflex_global_styles-CICRhBz5.css" rel="stylesheet" type="text/css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><script>
+              console.log(
+                "💿 Hey developer 👋. You can provide a way better UX than this " +
+                "when your app is loading JS modules and/or running `clientLoader` " +
+                "functions. Check out https://reactrouter.com/start/framework/route-module#hydratefallback " +
+                "for more information."
+              );
+            </script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"v8_passThroughRequests":false,"unstable_trailingSlashAwareDataRequests":false,"unstable_previewServerPrerendering":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":true};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-8fa44fbe.js";
+import * as route0 from "/assets/root-DKs5hj6x.js";
+  
+  window.__reactRouterRouteModules = {"root":route0};
+
+import("/assets/entry.client-BhRJEzLE.js");</script><!--$--><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$--><script>window.__reactRouterContext.streamController.close();</script><!--/$--><!--/$--></body></html>

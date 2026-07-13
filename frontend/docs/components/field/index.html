@@ -1,0 +1,590 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect" class="css-82mq1g"/><title>Field – buridan/ui</title><meta content="favicon.ico" property="og:image"/><meta content="Field" name="application-name"/><meta content="buridan, ui, web apps, framework, open source, frontend, backend, full stack" name="keywords"/><meta content="Combine labels, controls, and help text to compose accessible form fields and grouped inputs." name="description"/><meta content="https://buridan.reflex.rundocs/components/field" property="og:url"/><meta content="website" property="og:type"/><meta content="Field" property="og:title"/><meta content="Combine labels, controls, and help text to compose accessible form fields and grouped inputs." property="og:description"/><meta content="https://raw.githubusercontent.com/LineIndent/ui/refs/heads/main/assets/social/field.webp" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="summary_large_image" name="twitter:card"/><meta content="buridan.reflex.run" name="twitter:domain"/><meta content="https://buridan.reflex.rundocs/components/field" property="twitter:url"/><meta content="Field" name="twitter:title"/><meta content="Combine labels, controls, and help text to compose accessible form fields and grouped inputs." name="twitter:description"/><meta content="https://raw.githubusercontent.com/LineIndent/ui/refs/heads/main/assets/social/field.webp" name="twitter:image"/><link rel="modulepreload" href="/assets/manifest-8fa44fbe.js"/><link rel="modulepreload" href="/assets/entry.client-BhRJEzLE.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-QTnfLwEv.js"/><link rel="modulepreload" href="/assets/chunk-5KNZJZUH-03iYwFZK.js"/><link rel="modulepreload" href="/assets/react-dom-DP3BhkGf.js"/><link rel="modulepreload" href="/assets/root-DKs5hj6x.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-C_42O6mN.js"/><link rel="modulepreload" href="/assets/context-C82-gUYW.js"/><link rel="modulepreload" href="/assets/reflex-env-BVGF6eGS.js"/><link rel="modulepreload" href="/assets/_docs_._components_._field_._index-DUSI035-.js"/><link rel="modulepreload" href="/assets/export-B1bBhcQV.js"/><link rel="modulepreload" href="/assets/ArrowDown01Icon-DDfnNeUj.js"/><link rel="modulepreload" href="/assets/CodeIcon-D_1ATyfx.js"/><link rel="modulepreload" href="/assets/Copy01Icon-SaA0p54e.js"/><link rel="modulepreload" href="/assets/Search01Icon-uevAzKav.js"/><link rel="modulepreload" href="/assets/Tick02Icon-BZZvPScA.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><style data-emotion="css 82mq1g">.css-82mq1g{crossorigin:true;}</style><script src="/prism.js"></script><script src="/theme-preview.js"></script><script>
+(function() {
+    try {
+        const html = document.documentElement;
+        function applyTheme() {
+            let savedTheme = localStorage.getItem('site-theme');
+            if (!savedTheme) savedTheme = 'dark'; // Your default fallback
+            // Sync all keys to keep Reflex happy
+            localStorage.setItem('site-theme', savedTheme);
+            localStorage.setItem('theme', savedTheme);
+            localStorage.setItem('last_compiled_theme', savedTheme);
+            if (savedTheme === 'light') {
+                if (!html.classList.contains('light')) html.classList.add('light');
+                if (html.classList.contains('dark')) html.classList.remove('dark');
+                html.style.colorScheme = 'light';
+            } else {
+                if (!html.classList.contains('dark')) html.classList.add('dark');
+                if (html.classList.contains('light')) html.classList.remove('light');
+                html.style.colorScheme = 'dark';
+            }
+        }
+        applyTheme();
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class' || mutation.attributeName === 'style') {
+                    // Temporarily turn off observer to avoid infinite loops, apply theme, then turn back on
+                    observer.disconnect();
+                    applyTheme();
+                    startObserving();
+                }
+            });
+        });
+        function startObserving() {
+            observer.observe(html, { attributes: true });
+        }
+        startObserving();
+        window.addEventListener('load', applyTheme);
+    } catch (e) {}
+})();
+</script><link href="/assets/__reflex_global_styles-CICRhBz5.css" rel="stylesheet" type="text/css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div><header class="sticky top-0 z-50 w-full h-13 bg-background flex items-center"><div class="w-full max-w-5xl mx-auto flex flex-row items-center justify-between px-2 md:px-0 "><div class="hidden md:flex"><a href="/" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Home</button></a><a href="/docs" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Docs</button></a><a href="/components" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Components</button></a><a href="/create" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Create</button></a></div><div class="flex flex-row gap-x-2 items-center"><button class="group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5" data-slot="button"><style data-emotion="css s3mb0o">.css-s3mb0o{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}</style><svg class="size-4 !transition-none css-s3mb0o" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style data-emotion="css 1telc7s">.css-1telc7s{fill:none;stroke:none;}</style><path d="M0 0h24v24H0z" class="css-1telc7s"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M12 3l0 18"></path><path d="M12 9l4.65 -4.65"></path><path d="M12 14.3l7.37 -7.37"></path><path d="M12 19.6l8.85 -8.85"></path></svg></button><div class="h-3 w-px bg-muted-foreground/40"></div><a class="no-underline" rel="noopener noreferrer" href="https://github.com/LineIndent/ui" target="_blank"><button aria-label="GitHub" class="group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5" data-slot="button"><style data-emotion="css kqzqgg">.css-kqzqgg{fill:currentColor;}</style><svg class="size-4 css-kqzqgg" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6 -3.36-1.34 -3.36-1.34 -.46-1.16-1.11-1.47-1.11-1.47 -.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03 .89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"></path></svg></button></a><div class="h-3 w-px bg-muted-foreground/40"></div><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 bg-primary text-primary-foreground hover:bg-primary/80 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">New Project</button></div></div></header><div class="min-h-screen pt-10"><div class="mx-auto flex max-w-3xl xl:max-w-5xl gap-20 px-4 sm:px-2.5"><div class="min-w-0 flex-1"><section class="flex min-h-screen flex-col gap-16"><div class="mx-auto flex w-full flex-col gap-8"><div class="w-full"><div class="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between mb-10"><div class="flex flex-col items-start gap-4 max-w-xl"><h1 class="text-2xl leading-tight font-bold tracking-tighter">Field</h1><p class="text-sm text-muted-foreground">Combine labels, controls, and help text to compose accessible form fields and grouped inputs.</p><div class="flex w-full max-w-2xl items-stretch gap-2"><code class="rounded-lg  flex h-8 min-w-0 flex-1 items-center gap-2 overflow-x-auto border border-border bg-muted/40 px-3 font-mono text-xs whitespace-nowrap"><span class="shrink-0 select-none text-muted-foreground/50">❯</span><span class="text-muted-foreground command-prefix" id="command-field">buridan add</span><span class="font-medium text-foreground"> field</span></code><div class="flex w-fit items-stretch *:focus-visible:relative *:focus-visible:z-10 has-[&gt;[data-slot=button-group]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&amp;&gt;[data-slot=select-trigger]:last-of-type]:rounded-r-lg [&amp;&gt;[data-slot=select-trigger]:not([class*=&#x27;w-&#x27;])]:w-fit [&amp;&gt;input]:flex-1 *:data-slot:rounded-r-none [&amp;&gt;[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg! [&amp;&gt;[data-slot]~[data-slot]]:rounded-l-none [&amp;&gt;[data-slot]~[data-slot]]:border-l-0" data-orientation="horizontal" data-slot="button-group" role="group"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 w-[80px]" data-slot="button"><span id="copy-command-field-text">Copy</span></button><details class="relative inline-block" data-slot="menu" id="menu-23"><summary class="list-none cursor-pointer [&amp;::-webkit-details-marker]:hidden group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 !rounded-r-lg !rounded-l-none !border-l-none" data-slot="menu-trigger"><div class="flex w-fit items-center"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5]" stroke-width="1.5" stroke="currentColor"><path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></div></summary><style data-emotion="css 1fhgjcy">.css-1fhgjcy{margin-top:4px;}</style><div class="absolute z-50 min-w-32 rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-none top-full left-0 css-1fhgjcy" data-side="bottom" data-slot="menu-content"><div class="px-1.5 py-1 text-xs font-medium text-muted-foreground" data-slot="menu-group-label">Commands</div><div class="-mx-1 my-1 h-px bg-border" data-slot="menu-separator"></div><div class="group/menu-item relative flex cursor-default items-center gap-1.5 rounded-lg px-1.5 py-1 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:hover:bg-destructive/10 data-[variant=destructive]:hover:text-destructive data-disabled:pointer-events-none data-disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4" data-slot="menu-item" data-variant="default" id="command-option-cli"><span class="command-check w-4"></span><span>buridan</span></div><div class="group/menu-item relative flex cursor-default items-center gap-1.5 rounded-lg px-1.5 py-1 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:hover:bg-destructive/10 data-[variant=destructive]:hover:text-destructive data-disabled:pointer-events-none data-disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4" data-slot="menu-item" data-variant="default" id="command-option-uv"><span class="command-check w-4"></span><span>uv run</span></div><div class="group/menu-item relative flex cursor-default items-center gap-1.5 rounded-lg px-1.5 py-1 text-sm outline-hidden select-none hover:bg-accent hover:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:hover:bg-destructive/10 data-[variant=destructive]:hover:text-destructive data-disabled:pointer-events-none data-disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4" data-slot="menu-item" data-variant="default" id="command-option-module"><span class="command-check w-4"></span><span>python -m</span></div></div></details></div></div></div><button>Open Full Preview</button></div><div></div><div class="w-full flex flex-col gap-6 mb-10"><div class="w-full flex flex-col items-start gap-4"><h1 class="text-2xl leading-tight font-bold tracking-tighter">Component Guide</h1><p class="text-sm text-muted-foreground"><span>Use the following to build the </span><strong>Field</strong><span> component.</span></p><div class="w-full group relative flex min-w-0 flex-col border bg-muted/50 min-h-10 rounded-lg" data-view="usage" id="demo-WZzkGsqAKC"><div class="flex items-stretch p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 font-normal w-fit h-7 usage-btn bg-background group-data-[view=anatomy]:bg-transparent group-data-[view=anatomy]:border-transparent" data-slot="button">Basic Usage</button><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 h-7 w-fit font-normal anatomy-btn border-transparent bg-transparent group-data-[view=anatomy]:border-border group-data-[view=anatomy]:bg-background" data-slot="button">Anatomy</button></div></div></div><div class="rounded-md relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]"><div class="size-full overflow-x-auto p-2 flex group-data-[view=anatomy]:hidden"><pre><code class="language-python text-sm">from components.ui.field import field</code></pre></div><div class="size-full overflow-x-auto p-2 hidden group-data-[view=anatomy]:flex"><pre><code class="language-python text-sm">field.root(
+    field.content(
+        field.label(),
+        field.title(),
+        field.description(),
+    ),
+    field.error(),
+)</code></pre></div></div></div></div></div><div></div><div class="w-full flex flex-col gap-6 mb-10"><div class="w-full flex flex-col items-start gap-4"><h1 class="text-2xl leading-tight font-bold tracking-tighter">Source Code &amp; Dependencies</h1><p class="text-sm text-muted-foreground"><span>For manual installation, copy each of the source codes below in their respective locations.</span></p><div class="w-full grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3"><div class="group flex flex-col gap-3 border border-border bg-background p-4 transition-colors hover:bg-muted/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:outline-none rounded-lg"><div class="flex items-center justify-between gap-2"><div class="flex min-w-0 items-center gap-1.5"><h4 class="truncate text-sm tracking-tight">components/core/core.py</h4></div><button id="btn-O1n2xOARrQ"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-O1n2xOARrQ"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="group flex flex-col gap-3 border border-border bg-background p-4 transition-colors hover:bg-muted/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:outline-none rounded-lg"><div class="flex items-center justify-between gap-2"><div class="flex min-w-0 items-center gap-1.5"><h4 class="truncate text-sm tracking-tight">components/ui/separator.py</h4></div><button id="btn-w9jruOdsSI"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-w9jruOdsSI"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="group flex flex-col gap-3 border border-border bg-background p-4 transition-colors hover:bg-muted/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:outline-none rounded-lg"><div class="flex items-center justify-between gap-2"><div class="flex min-w-0 items-center gap-1.5"><h4 class="truncate text-sm tracking-tight">components/ui/field.py</h4></div><button id="btn-blZDmyehQO"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-blZDmyehQO"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div></div></div></div><div class="rx-Html docs-prose"><h1 id="composition">Composition</h1>
+<h2 id="fieldroot">field.root</h2>
+<p>A single control with label, helper text, and validation.</p>
+<pre><code class="language-python">field.root
+├── field.label
+├── Input / Textarea / switch.root / select.root
+├── field.description
+└── field.error
+</code></pre>
+<h2 id="fieldgroup">field.group</h2>
+<p>Related fields in one group. Use <code>field.separator</code> between sections when needed.</p>
+<pre><code class="language-python">field.group
+├── field.root
+│   ├── field.label
+│   ├── Input / Textarea / switch.root / select.root
+│   ├── field.description
+│   └── field.error
+├── field.separator
+└── field.root
+    ├── field.label
+    └── Input / Textarea / switch.root / select.root
+</code></pre>
+<h2 id="fieldset">field.set</h2>
+<p>Semantic grouping with a legend and description, usually containing a <code>field.group</code>.</p>
+<pre><code class="language-python">field.set
+├── field.legend
+├── field.description
+└── field.group
+    ├── field.root
+    │   ├── field.label
+    │   ├── Input / Textarea / switch.root / select.root
+    │   ├── field.description
+    │   └── field.error
+    └── field.root
+        ├── field.label
+        └── Input / Textarea / switch.root / select.root
+</code></pre>
+<ul>
+<li>
+<p><code>field.root</code> is the core wrapper for a single field.</p>
+</li>
+<li>
+<p><code>field.content</code> is a flex column that groups label and description. Not required if you have no description.</p>
+</li>
+<li>
+<p>Wrap related fields with <code>field.group</code>, and use <code>field.set</code> with <code>field.legend</code> for semantic grouping.</p>
+</li>
+</ul>
+<h1 id="examples">Examples</h1>
+<h2 id="general">General</h2>
+<p>Demonstrates <code>field.root</code>, <code>field.group</code>, <code>field.set</code>, <code>field.label</code>, <code>field.description</code>, and <code>field.error</code> composed together.</p>
+<p><strong>Props used:</strong> <code>orientation</code> on <code>field.root</code>; <code>variant</code> on <code>field.legend</code>; <code>html_for</code> on <code>field.label</code>; <code>data_invalid</code> on <code>field.root</code>.</p></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-svKwzOvEdP"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-hXzUa06heX"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-hXzUa06heX"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="w-full max-w-md my-10"><form><div class="group/field-group @container/field-group flex flex-col gap-5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4" data-slot="field-group"><fieldset class="flex flex-col gap-4 has-[&gt;[data-slot=checkbox-group]]:gap-3 has-[&gt;[data-slot=radio-group]]:gap-3" data-slot="field-set"><legend class="mb-1.5 font-medium data-[variant=label]:text-sm data-[variant=legend]:text-base" data-slot="field-legend" data-variant="legend">Payment Method</legend><p class="text-left text-sm leading-normal font-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&amp;]:-mt-1.5 last:mt-0 nth-last-2:-mt-1 [&amp;&gt;a]:underline [&amp;&gt;a]:underline-offset-4 [&amp;&gt;a:hover]:text-primary" data-slot="field-description">All transactions are secure and encrypted</p><div class="group/field-group @container/field-group flex flex-col gap-5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4" data-slot="field-group"><div class="group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-col *:w-full [&amp;&gt;.sr-only]:w-auto" data-orientation="vertical" data-slot="field" role="group"><label class="group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[&gt;[data-slot=field]]:rounded-lg has-[&gt;[data-slot=field]]:border border-input *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10 has-[&gt;[data-slot=field]]:w-full has-[&gt;[data-slot=field]]:flex-col" data-slot="field-label" for="checkout-card-name">Name on Card</label><input class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-8 w-full min-w-0 rounded-lg border bg-transparent px-3 py-1 text-base outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive" data-slot="input" id="checkout-card-name" placeholder="Evil Rabbit" required="" type="text"/></div><div class="group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-col *:w-full [&amp;&gt;.sr-only]:w-auto" data-orientation="vertical" data-slot="field" role="group"><label class="group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[&gt;[data-slot=field]]:rounded-lg has-[&gt;[data-slot=field]]:border border-input *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10 has-[&gt;[data-slot=field]]:w-full has-[&gt;[data-slot=field]]:flex-col" data-slot="field-label" for="checkout-card-number">Card Number</label><input class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-8 w-full min-w-0 rounded-lg border bg-transparent px-3 py-1 text-base outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive" data-slot="input" id="checkout-card-number" placeholder="1234 5678 9012 3456" required="" type="text"/><p class="text-left text-sm leading-normal font-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&amp;]:-mt-1.5 last:mt-0 nth-last-2:-mt-1 [&amp;&gt;a]:underline [&amp;&gt;a]:underline-offset-4 [&amp;&gt;a:hover]:text-primary" data-slot="field-description">Enter your 16-digit card number</p></div><div class="grid grid-cols-3 gap-4"><div class="group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-col *:w-full [&amp;&gt;.sr-only]:w-auto" data-orientation="vertical" data-slot="field" role="group"><label class="group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[&gt;[data-slot=field]]:rounded-lg has-[&gt;[data-slot=field]]:border border-input *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10 has-[&gt;[data-slot=field]]:w-full has-[&gt;[data-slot=field]]:flex-col" data-slot="field-label" for="checkout-exp-month">Month</label></div><div class="group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-col *:w-full [&amp;&gt;.sr-only]:w-auto" data-orientation="vertical" data-slot="field" role="group"><label class="group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[&gt;[data-slot=field]]:rounded-lg has-[&gt;[data-slot=field]]:border border-input *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10 has-[&gt;[data-slot=field]]:w-full has-[&gt;[data-slot=field]]:flex-col" data-slot="field-label" for="checkout-exp-year">Year</label></div><div class="group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-col *:w-full [&amp;&gt;.sr-only]:w-auto" data-orientation="vertical" data-slot="field" role="group"><label class="group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[&gt;[data-slot=field]]:rounded-lg has-[&gt;[data-slot=field]]:border border-input *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10 has-[&gt;[data-slot=field]]:w-full has-[&gt;[data-slot=field]]:flex-col" data-slot="field-label" for="checkout-cvv">CVV</label><input class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-8 w-full min-w-0 rounded-lg border bg-transparent px-3 py-1 text-base outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive" data-slot="input" id="checkout-cvv" placeholder="123" required="" type="text"/></div></div></div></fieldset><div class="relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2" data-content="false" data-slot="field-separator"><div aria-hidden="true" class="shrink-0 bg-input data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-px data-[orientation=vertical]:self-stretch absolute inset-0 top-1/2" data-orientation="horizontal" data-slot="separator"></div></div><fieldset class="flex flex-col gap-4 has-[&gt;[data-slot=checkbox-group]]:gap-3 has-[&gt;[data-slot=radio-group]]:gap-3" data-slot="field-set"><legend class="mb-1.5 font-medium data-[variant=label]:text-sm data-[variant=legend]:text-base" data-slot="field-legend" data-variant="legend">Billing Address</legend><p class="text-left text-sm leading-normal font-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&amp;]:-mt-1.5 last:mt-0 nth-last-2:-mt-1 [&amp;&gt;a]:underline [&amp;&gt;a]:underline-offset-4 [&amp;&gt;a:hover]:text-primary" data-slot="field-description">The billing address associated with your payment method</p><div class="group/field-group @container/field-group flex flex-col gap-5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4" data-slot="field-group"><div class="group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-row items-center has-[&gt;[data-slot=field-content]]:items-start *:data-[slot=field-label]:flex-auto has-[&gt;[data-slot=field-content]]:[&amp;&gt;[data-slot=checkbox]]:mt-[2.5px]" data-orientation="horizontal" data-slot="field" role="group"><label class="group relative inline-flex size-4 shrink-0 cursor-pointer items-center justify-center rounded-[4px] border border-input has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50 has-[:focus-visible]:border-ring has-[:focus-visible]:ring-3 has-[:focus-visible]:ring-ring/50 has-[[aria-invalid=true]]:border-destructive has-[[aria-invalid=true]]:ring-3 has-[[aria-invalid=true]]:ring-destructive/20 dark:bg-input/30 has-[:checked]:border-primary has-[:checked]:bg-primary has-[:checked]:text-primary-foreground dark:has-[:checked]:bg-primary" data-slot="checkbox"><input class="peer sr-only" data-slot="checkbox-input" id="checkout-same-as-shipping" type="checkbox" checked=""/><span class="hidden peer-checked:grid place-content-center text-current [&amp;&gt;svg]:size-3.5" data-slot="checkbox-indicator"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5]" stroke-width="1.5" stroke="currentColor"><path d="M5 14L8.5 17.5L19 6.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></span></label><label class="group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[&gt;[data-slot=field]]:rounded-lg has-[&gt;[data-slot=field]]:border border-input *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10 has-[&gt;[data-slot=field]]:w-full has-[&gt;[data-slot=field]]:flex-col font-normal" data-slot="field-label" for="checkout-same-as-shipping">Same as shipping address</label></div></div></fieldset><fieldset class="flex flex-col gap-4 has-[&gt;[data-slot=checkbox-group]]:gap-3 has-[&gt;[data-slot=radio-group]]:gap-3" data-slot="field-set"><div class="group/field-group @container/field-group flex flex-col gap-5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4" data-slot="field-group"><div class="group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-col *:w-full [&amp;&gt;.sr-only]:w-auto" data-orientation="vertical" data-slot="field" role="group"><label class="group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[&gt;[data-slot=field]]:rounded-lg has-[&gt;[data-slot=field]]:border border-input *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10 has-[&gt;[data-slot=field]]:w-full has-[&gt;[data-slot=field]]:flex-col" data-slot="field-label" for="checkout-comments">Comments</label><textarea autoCapitalize="none" autoComplete="off" autoCorrect="off" class="flex field-sizing-content min-h-16 w-full rounded-lg border border-input bg-transparent px-2.5 py-2 text-base transition-colors outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 resize-none" data-slot="textarea" id="checkout-comments" placeholder="Add any additional comments" spellCheck="false"></textarea></div></div></fieldset><div class="group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-row items-center has-[&gt;[data-slot=field-content]]:items-start *:data-[slot=field-label]:flex-auto has-[&gt;[data-slot=field-content]]:[&amp;&gt;[data-slot=checkbox]]:mt-[2.5px]" data-orientation="horizontal" data-slot="field" role="group"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 bg-primary text-primary-foreground hover:bg-primary/80 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button" type="submit">Submit</button><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button" type="button">Cancel</button></div></div></form></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+from components.ui.button import button
+from components.ui.checkbox import checkbox
+from components.ui.field import field
+from components.ui.input import input
+# from components.ui.select import select
+from components.ui.textarea import textarea
+
+months = [
+    {&quot;label&quot;: &quot;MM&quot;, &quot;value&quot;: &quot;&quot;},
+    {&quot;label&quot;: &quot;01&quot;, &quot;value&quot;: &quot;01&quot;},
+    {&quot;label&quot;: &quot;02&quot;, &quot;value&quot;: &quot;02&quot;},
+    {&quot;label&quot;: &quot;03&quot;, &quot;value&quot;: &quot;03&quot;},
+    {&quot;label&quot;: &quot;04&quot;, &quot;value&quot;: &quot;04&quot;},
+    {&quot;label&quot;: &quot;05&quot;, &quot;value&quot;: &quot;05&quot;},
+    {&quot;label&quot;: &quot;06&quot;, &quot;value&quot;: &quot;06&quot;},
+    {&quot;label&quot;: &quot;07&quot;, &quot;value&quot;: &quot;07&quot;},
+    {&quot;label&quot;: &quot;08&quot;, &quot;value&quot;: &quot;08&quot;},
+    {&quot;label&quot;: &quot;09&quot;, &quot;value&quot;: &quot;09&quot;},
+    {&quot;label&quot;: &quot;10&quot;, &quot;value&quot;: &quot;10&quot;},
+    {&quot;label&quot;: &quot;11&quot;, &quot;value&quot;: &quot;11&quot;},
+    {&quot;label&quot;: &quot;12&quot;, &quot;value&quot;: &quot;12&quot;},
+]
+
+years = [
+    {&quot;label&quot;: &quot;YYYY&quot;, &quot;value&quot;: &quot;&quot;},
+    {&quot;label&quot;: &quot;2024&quot;, &quot;value&quot;: &quot;2024&quot;},
+    {&quot;label&quot;: &quot;2025&quot;, &quot;value&quot;: &quot;2025&quot;},
+    {&quot;label&quot;: &quot;2026&quot;, &quot;value&quot;: &quot;2026&quot;},
+    {&quot;label&quot;: &quot;2027&quot;, &quot;value&quot;: &quot;2027&quot;},
+    {&quot;label&quot;: &quot;2028&quot;, &quot;value&quot;: &quot;2028&quot;},
+    {&quot;label&quot;: &quot;2029&quot;, &quot;value&quot;: &quot;2029&quot;},
+]
+
+
+def field_demo() -&gt; rx.Component:
+    return rx.el.div(
+        rx.el.form(
+            field.group(
+                field.set(
+                    field.legend(&quot;Payment Method&quot;),
+                    field.description(&quot;All transactions are secure and encrypted&quot;),
+                    field.group(
+                        field.root(
+                            field.label(&quot;Name on Card&quot;, html_for=&quot;checkout-card-name&quot;),
+                            input(
+                                id=&quot;checkout-card-name&quot;,
+                                placeholder=&quot;Evil Rabbit&quot;,
+                                required=True,
+                            ),
+                        ),
+                        field.root(
+                            field.label(&quot;Card Number&quot;, html_for=&quot;checkout-card-number&quot;),
+                            input(
+                                id=&quot;checkout-card-number&quot;,
+                                placeholder=&quot;1234 5678 9012 3456&quot;,
+                                required=True,
+                            ),
+                            field.description(&quot;Enter your 16-digit card number&quot;),
+                        ),
+                        rx.el.div(
+                            field.root(
+                                field.label(&quot;Month&quot;, html_for=&quot;checkout-exp-month&quot;),
+                                # select.root(
+                                #     select.trigger(
+                                #         select.value(),
+                                #         select.icon(),
+                                #         id=&quot;checkout-exp-month&quot;,
+                                #     ),
+                                #     select.portal(
+                                #         select.positioner(
+                                #             select.popup(
+                                #                 select.group(
+                                #                     *[
+                                #                         select.item(
+                                #                             select.item_text(
+                                #                                 item[&quot;label&quot;]
+                                #                             ),
+                                #                             select.item_indicator(),
+                                #                             value=item[&quot;value&quot;],
+                                #                         )
+                                #                         for item in months
+                                #                     ]
+                                #                 )
+                                #             )
+                                #         )
+                                #     ),
+                                #     items=months,
+                                #     default_value=&quot;MM&quot;,
+                                # ),
+                            ),
+                            field.root(
+                                field.label(&quot;Year&quot;, html_for=&quot;checkout-exp-year&quot;),
+                                # select.root(
+                                #     select.trigger(
+                                #         select.value(),
+                                #         select.icon(),
+                                #         id=&quot;checkout-exp-year&quot;,
+                                #     ),
+                                #     select.portal(
+                                #         select.positioner(
+                                #             select.popup(
+                                #                 select.group(
+                                #                     *[
+                                #                         select.item(
+                                #                             select.item_text(
+                                #                                 item[&quot;label&quot;]
+                                #                             ),
+                                #                             select.item_indicator(),
+                                #                             value=item[&quot;value&quot;],
+                                #                         )
+                                #                         for item in years
+                                #                     ]
+                                #                 )
+                                #             )
+                                #         )
+                                #     ),
+                                #     items=years,
+                                #     default_value=&quot;YYYY&quot;,
+                                # ),
+                            ),
+                            field.root(
+                                field.label(&quot;CVV&quot;, html_for=&quot;checkout-cvv&quot;),
+                                input(
+                                    id=&quot;checkout-cvv&quot;,
+                                    placeholder=&quot;123&quot;,
+                                    required=True,
+                                ),
+                            ),
+                            class_name=&quot;grid grid-cols-3 gap-4&quot;,
+                        ),
+                    ),
+                ),
+                field.separator(),
+                field.set(
+                    field.legend(&quot;Billing Address&quot;),
+                    field.description(
+                        &quot;The billing address associated with your payment method&quot;
+                    ),
+                    field.group(
+                        field.root(
+                            checkbox.root(
+                                checkbox.indicator(),
+                                id=&quot;checkout-same-as-shipping&quot;,
+                                default_checked=True,
+                            ),
+                            field.label(
+                                &quot;Same as shipping address&quot;,
+                                html_for=&quot;checkout-same-as-shipping&quot;,
+                                class_name=&quot;font-normal&quot;,
+                            ),
+                            orientation=&quot;horizontal&quot;,
+                        )
+                    ),
+                ),
+                field.set(
+                    field.group(
+                        field.root(
+                            field.label(&quot;Comments&quot;, html_for=&quot;checkout-comments&quot;),
+                            textarea(
+                                id=&quot;checkout-comments&quot;,
+                                placeholder=&quot;Add any additional comments&quot;,
+                                class_name=&quot;resize-none&quot;,
+                            ),
+                        )
+                    )
+                ),
+                field.root(
+                    button(&quot;Submit&quot;, type=&quot;submit&quot;),
+                    button(&quot;Cancel&quot;, variant=&quot;outline&quot;, type=&quot;button&quot;),
+                    orientation=&quot;horizontal&quot;,
+                ),
+            )
+        ),
+        class_name=&quot;w-full max-w-md my-10&quot;,
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><h1 id="responsive-layout">Responsive Layout</h1>
+<ul>
+<li>
+<p><strong>Vertical fields</strong>: Default orientation stacks label, control, and helper text—ideal for mobile-first layouts.  </p>
+</li>
+<li>
+<p><strong>Horizontal fields</strong>: Set <code>orientation="horizontal"</code> on <code>field.root</code> to align the label and control side-by-side. Pair with <code>field.content</code> to keep descriptions aligned.  </p>
+</li>
+<li>
+<p><strong>Responsive fields</strong>: Set <code>orientation="responsive"</code> for automatic column layouts inside container-aware parents.</p>
+</li>
+</ul>
+<h1 id="validation-and-errors">Validation and Errors</h1>
+<ul>
+<li>
+<p>Add <code>data_invalid="true"</code> to <code>field.root</code> to switch the entire block into an error state.</p>
+</li>
+<li>
+<p>Add <code>aria_invalid="true"</code> on the input itself for assistive technologies.</p>
+</li>
+<li>
+<p>Render <code>field.error</code> immediately after the control or inside <code>field.content</code> to keep error messages aligned with the field.</p>
+</li>
+</ul>
+<pre><code class="language-python">field.root(
+    field.label("Email", html_for="email"),
+    input(id="email", type="email", aria_invalid="true"),
+    field.error("Enter a valid email address."),
+    data_invalid="true",
+)
+</code></pre>
+<h1 id="api-reference">API Reference</h1>
+<h2 id="fieldset">field.set</h2>
+<p>Container that renders a semantic <code>fieldset</code> with spacing presets.</p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>class_name</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></div>
+<pre><code class="language-python">field.set(
+    field.legend("Delivery"),
+    field.group(),
+)
+</code></pre>
+<h2 id="fieldlegend">field.legend</h2>
+<p>Legend element for a <code>field.set</code>. Switch to the <code>"label"</code> variant to align with standard label sizing.</p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>variant</code></td>
+<td><code>Literal["legend", "label"]</code></td>
+<td><code>"legend"</code></td>
+</tr>
+<tr>
+<td><code>class_name</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></div>
+<pre><code class="language-python">field.legend("Notification Preferences", variant="label")
+</code></pre>
+<p>The <code>field.legend</code> has two variants: <code>legend</code> and <code>label</code>. The <code>label</code> variant applies standard input label sizing and alignment, which is useful if you are stacking nested fieldsets.</p>
+<h2 id="fieldgroup">field.group</h2>
+<p>Layout wrapper that stacks <code>field.root</code> components and enables container queries for responsive orientations.</p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>class_name</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></div>
+<pre><code class="language-python">field.group(
+    field.root(),
+    field.root(),
+    class_name="@container/field-group flex flex-col gap-6",
+)
+</code></pre>
+<h2 id="fieldroot">field.root</h2>
+<p>The core wrapper for a single field. Provides orientation control, invalid state styling, and spacing configurations.</p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>orientation</code></td>
+<td><code>"vertical" | "horizontal" | "responsive"</code></td>
+<td><code>"vertical"</code></td>
+</tr>
+<tr>
+<td><code>class_name</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>data_invalid</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></div>
+<pre><code class="language-python">field.root(
+    field.label("Remember me", html_for="remember"),
+    switch.root(id="remember"),
+    orientation="horizontal",
+)
+</code></pre>
+<h2 id="fieldcontent">field.content</h2>
+<p>Flex column that groups control and descriptions when the label sits beside the control. Not required if you have no layout description block.</p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>class_name</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></div>
+<pre><code class="language-python">field.root(
+    checkbox.root(id="notifications"),
+    field.content(
+        field.label("Notifications", html_for="notifications"),
+        field.description("Email, SMS, and push options."),
+    ),
+)
+</code></pre>
+<h2 id="fieldlabel">field.label</h2>
+<p>Label styled for both direct inputs and nested <code>field</code> child items.</p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>html_for</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>class_name</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></div>
+<pre><code class="language-python">field.label("Email", html_for="email")
+</code></pre>
+<h2 id="fieldtitle">field.title</h2>
+<p>Renders a standalone title with matching label typography properties inside a <code>field.content</code> node block.</p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>class_name</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></div>
+<pre><code class="language-python">field.content(
+    field.title("Enable Touch ID"),
+    field.description("Unlock your device faster."),
+)
+</code></pre>
+<h2 id="fielddescription">field.description</h2>
+<p>Helper text slot that automatically line-balances lengthy strings cleanly when utilized inside horizontal configurations.</p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>class_name</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></div>
+<pre><code class="language-python">field.description("We never share your email with anyone.")
+</code></pre>
+<h2 id="fieldseparator">field.separator</h2>
+<p>Visual divider rule used to separate sections or categories inside a wrapping <code>field.group</code> component. Accepts optional inline children contents.</p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>class_name</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></div>
+<pre><code class="language-python">field.separator("Or continue with")
+</code></pre>
+<h2 id="fielderror">field.error</h2>
+<p>Accessible error notification typography container block configured automatically with standard application state layout variables (<code>role="alert"</code>).</p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th>Prop</th>
+<th>Type</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>class_name</code></td>
+<td><code>str</code></td>
+<td></td>
+</tr>
+</tbody>
+</table></div></div>
+<pre><code class="language-python">field.error("Invalid passcode combination provided.")
+</code></pre></div></div></div><footer class="w-full flex items-center justify-center py-8 text-muted-foreground !text-sm !text-center"><p class="w-full text-[13px] font-light"><span>Built by <a class="font-semibold underline" href="https://github.com/LineIndent">Line Indent</a> at <a class="font-semibold underline" href="https://reflex.dev">Reflex</a>.</span><span class="block sm:inline"> The source code is available on <a class="font-semibold underline" href="https://github.com/LineIndent/ui">GitHub</a>.</span></p></footer></section></div><div class="hidden"></div></div></div></div><script>((storageKey2, restoreKey) => {
+    if (!window.history.state || !window.history.state.key) {
+      let key = Math.random().toString(32).slice(2);
+      window.history.replaceState({ key }, "");
+    }
+    try {
+      let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
+      let storedY = positions[restoreKey || window.history.state.key];
+      if (typeof storedY === "number") {
+        window.scrollTo(0, storedY);
+      }
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(storageKey2);
+    }
+  })("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"v8_passThroughRequests":false,"unstable_trailingSlashAwareDataRequests":false,"unstable_previewServerPrerendering":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-8fa44fbe.js";
+import * as route0 from "/assets/root-DKs5hj6x.js";
+import * as route1 from "/assets/_docs_._components_._field_._index-DUSI035-.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[docs].[components].[field]._index":route1};
+
+import("/assets/entry.client-BhRJEzLE.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

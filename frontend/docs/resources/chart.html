@@ -1,0 +1,498 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.gstatic.com" rel="preconnect" class="css-82mq1g"/><title>Chart – buridan/ui</title><meta content="favicon.ico" property="og:image"/><meta content="Chart" name="application-name"/><meta content="buridan, ui, web apps, framework, open source, frontend, backend, full stack" name="keywords"/><meta content="Beautiful charts. Built using Recharts. Copy and paste into your apps." name="description"/><meta content="https://buridan.reflex.rundocs/resources/chart" property="og:url"/><meta content="website" property="og:type"/><meta content="Chart" property="og:title"/><meta content="Beautiful charts. Built using Recharts. Copy and paste into your apps." property="og:description"/><meta content="https://raw.githubusercontent.com/LineIndent/ui/refs/heads/main/assets/social/chart.webp" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="summary_large_image" name="twitter:card"/><meta content="buridan.reflex.run" name="twitter:domain"/><meta content="https://buridan.reflex.rundocs/resources/chart" property="twitter:url"/><meta content="Chart" name="twitter:title"/><meta content="Beautiful charts. Built using Recharts. Copy and paste into your apps." name="twitter:description"/><meta content="https://raw.githubusercontent.com/LineIndent/ui/refs/heads/main/assets/social/chart.webp" name="twitter:image"/><link rel="modulepreload" href="/assets/manifest-8fa44fbe.js"/><link rel="modulepreload" href="/assets/entry.client-BhRJEzLE.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-QTnfLwEv.js"/><link rel="modulepreload" href="/assets/chunk-5KNZJZUH-03iYwFZK.js"/><link rel="modulepreload" href="/assets/react-dom-DP3BhkGf.js"/><link rel="modulepreload" href="/assets/root-DKs5hj6x.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-C_42O6mN.js"/><link rel="modulepreload" href="/assets/context-C82-gUYW.js"/><link rel="modulepreload" href="/assets/reflex-env-BVGF6eGS.js"/><link rel="modulepreload" href="/assets/_docs_._resources_._chart_._index-DdTpJ7Ej.js"/><link rel="modulepreload" href="/assets/export-B1bBhcQV.js"/><link rel="modulepreload" href="/assets/CodeIcon-D_1ATyfx.js"/><link rel="modulepreload" href="/assets/Copy01Icon-SaA0p54e.js"/><link rel="modulepreload" href="/assets/Search01Icon-uevAzKav.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><style data-emotion="css 82mq1g">.css-82mq1g{crossorigin:true;}</style><script src="/prism.js"></script><script src="/theme-preview.js"></script><script>
+(function() {
+    try {
+        const html = document.documentElement;
+        function applyTheme() {
+            let savedTheme = localStorage.getItem('site-theme');
+            if (!savedTheme) savedTheme = 'dark'; // Your default fallback
+            // Sync all keys to keep Reflex happy
+            localStorage.setItem('site-theme', savedTheme);
+            localStorage.setItem('theme', savedTheme);
+            localStorage.setItem('last_compiled_theme', savedTheme);
+            if (savedTheme === 'light') {
+                if (!html.classList.contains('light')) html.classList.add('light');
+                if (html.classList.contains('dark')) html.classList.remove('dark');
+                html.style.colorScheme = 'light';
+            } else {
+                if (!html.classList.contains('dark')) html.classList.add('dark');
+                if (html.classList.contains('light')) html.classList.remove('light');
+                html.style.colorScheme = 'dark';
+            }
+        }
+        applyTheme();
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class' || mutation.attributeName === 'style') {
+                    // Temporarily turn off observer to avoid infinite loops, apply theme, then turn back on
+                    observer.disconnect();
+                    applyTheme();
+                    startObserving();
+                }
+            });
+        });
+        function startObserving() {
+            observer.observe(html, { attributes: true });
+        }
+        startObserving();
+        window.addEventListener('load', applyTheme);
+    } catch (e) {}
+})();
+</script><link href="/assets/__reflex_global_styles-CICRhBz5.css" rel="stylesheet" type="text/css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div><header class="sticky top-0 z-50 w-full h-13 bg-background flex items-center"><div class="w-full max-w-5xl mx-auto flex flex-row items-center justify-between px-2 md:px-0 "><div class="hidden md:flex"><a href="/" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Home</button></a><a href="/docs" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Docs</button></a><a href="/components" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Components</button></a><a href="/create" data-discover="true"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">Create</button></a></div><div class="flex flex-row gap-x-2 items-center"><button class="group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5" data-slot="button"><style data-emotion="css s3mb0o">.css-s3mb0o{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}</style><svg class="size-4 !transition-none css-s3mb0o" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style data-emotion="css 1telc7s">.css-1telc7s{fill:none;stroke:none;}</style><path d="M0 0h24v24H0z" class="css-1telc7s"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M12 3l0 18"></path><path d="M12 9l4.65 -4.65"></path><path d="M12 14.3l7.37 -7.37"></path><path d="M12 19.6l8.85 -8.85"></path></svg></button><div class="h-3 w-px bg-muted-foreground/40"></div><a class="no-underline" rel="noopener noreferrer" href="https://github.com/LineIndent/ui" target="_blank"><button aria-label="GitHub" class="group/button inline-flex shrink-0 items-center justify-center border border-transparent bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5" data-slot="button"><style data-emotion="css kqzqgg">.css-kqzqgg{fill:currentColor;}</style><svg class="size-4 css-kqzqgg" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6 -3.36-1.34 -3.36-1.34 -.46-1.16-1.11-1.47-1.11-1.47 -.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03 .89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12c0-5.523-4.477-10-10-10z"></path></svg></button></a><div class="h-3 w-px bg-muted-foreground/40"></div><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 bg-primary text-primary-foreground hover:bg-primary/80 h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2" data-slot="button">New Project</button></div></div></header><div class="min-h-screen pt-10"><div class="mx-auto flex max-w-3xl xl:max-w-5xl gap-20 px-4 sm:px-2.5"><div class="min-w-0 flex-1"><section class="flex min-h-screen flex-col gap-16"><div class="mx-auto flex w-full flex-col gap-8"><div class="w-full"><div class="rx-Html docs-prose"><h1 id="charts">Charts</h1>
+<p>Beautiful charts. Built using Recharts. Copy and paste into your apps.</p>
+<p>A collection of chart components that you can copy and paste into your apps. Charts are designed to look great out of the box. They work well with the other components and are fully customizable to fit your project. </p>
+<p>For an overview of whats available, checkout the <a href="/charts">Charts</a> page. </p>
+<h1 id="component">Component</h1>
+<p>Reflex wraps <a href="https://recharts.github.io/">Recharts</a> under the hood. This means you build your own charts using Recharts components and only bring in your theme tokens and custom components like <code>chart_tooltip</code> when and where you need it.</p>
+<pre><code class="language-python">import reflex as rx
+
+rx.recharts.area_chart(
+    rx.recharts.cartesian_grid(),
+    rx.recharts.x_axis(),
+    rx.recharts.y_axis(),
+    rx.recharts.area(),
+    rx.recharts.area(),
+    rx.recharts.tooltip(),
+)
+</code></pre>
+<p>We do not wrap Recharts. This means you're not locked into an abstraction. When a new Recharts version is released, you can follow the official upgrade path to upgrade your charts.</p>
+<h1 id="installation">Installation</h1>
+<p>buridan/ui provides a custom <code>chart_tooltip</code> that can be used to match the overall theme tokens generated. </p>
+<h1 id="your-first-chart">Your First Chart</h1>
+<p>Let's build your first chart. We'll build a bar chart, add a grid, axis, tooltip and legend.</p>
+<h2 id="defining-your-data">Defining your data</h2>
+<p>The following data represents the number of desktop and mobile users for each month.</p>
+<blockquote>
+<p><strong>Note:</strong> All of our examples use static data in a specific data structure. You are not limited to either static data or the structure. For dynamic data, use <a href="https://reflex.dev/docs/state/overview">rx.State</a> instead.</p>
+</blockquote>
+<pre><code class="language-python">data = [
+    {"month": "Jan", "desktop": 186, "mobile": 80},
+    {"month": "Feb", "desktop": 305, "mobile": 200},
+    {"month": "Mar", "desktop": 237, "mobile": 120},
+    {"month": "Apr", "desktop": 73, "mobile": 190},
+    {"month": "May", "desktop": 209, "mobile": 130},
+    {"month": "Jun", "desktop": 214, "mobile": 140},
+]
+</code></pre>
+<h2 id="build-your-chart">Build your chart</h2>
+<p>You can now build your chart using Recharts components.</p></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-ynyCWGQTzg"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-z8n0u6s4Ou"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-z8n0u6s4Ou"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="recharts-responsive-container" style="width:100%;height:250px;min-width:10px;min-height:10px"><div style="width:0;overflow-x:visible"></div></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+data = [
+    {&quot;month&quot;: &quot;Jan&quot;, &quot;desktop&quot;: 186, &quot;mobile&quot;: 80},
+    {&quot;month&quot;: &quot;Feb&quot;, &quot;desktop&quot;: 305, &quot;mobile&quot;: 200},
+    {&quot;month&quot;: &quot;Mar&quot;, &quot;desktop&quot;: 237, &quot;mobile&quot;: 120},
+    {&quot;month&quot;: &quot;Apr&quot;, &quot;desktop&quot;: 73, &quot;mobile&quot;: 190},
+    {&quot;month&quot;: &quot;May&quot;, &quot;desktop&quot;: 209, &quot;mobile&quot;: 130},
+    {&quot;month&quot;: &quot;Jun&quot;, &quot;desktop&quot;: 214, &quot;mobile&quot;: 140},
+]
+
+
+def chart_example():
+
+    return rx.recharts.bar_chart(
+        rx.recharts.bar(
+            data_key=&quot;desktop&quot;,
+            fill=&quot;var(--chart-1)&quot;,
+            radius=4,
+            is_animation_active=False,
+        ),
+        rx.recharts.bar(
+            data_key=&quot;mobile&quot;,
+            fill=&quot;var(--chart-2)&quot;,
+            radius=4,
+            is_animation_active=False,
+        ),
+        data=data,
+        width=&quot;100%&quot;,
+        height=250,
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><h2 id="add-a-grid">Add a Grid</h2>
+<p>Let's add a grid to the chart.</p>
+<pre><code class="language-python">rx.recharts.cartesian_grid(
+    horizontal=True, vertical=False, class_name="opacity-30"
+)
+</code></pre></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-ELs5EQqTgm"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-MDifZFJEAS"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-MDifZFJEAS"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="recharts-responsive-container" style="width:100%;height:250px;min-width:10px;min-height:10px"><div style="width:0;overflow-x:visible"></div></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+data = [
+    {&quot;month&quot;: &quot;Jan&quot;, &quot;desktop&quot;: 186, &quot;mobile&quot;: 80},
+    {&quot;month&quot;: &quot;Feb&quot;, &quot;desktop&quot;: 305, &quot;mobile&quot;: 200},
+    {&quot;month&quot;: &quot;Mar&quot;, &quot;desktop&quot;: 237, &quot;mobile&quot;: 120},
+    {&quot;month&quot;: &quot;Apr&quot;, &quot;desktop&quot;: 73, &quot;mobile&quot;: 190},
+    {&quot;month&quot;: &quot;May&quot;, &quot;desktop&quot;: 209, &quot;mobile&quot;: 130},
+    {&quot;month&quot;: &quot;Jun&quot;, &quot;desktop&quot;: 214, &quot;mobile&quot;: 140},
+]
+
+
+def chart_example_with_grid():
+
+    return rx.recharts.bar_chart(
+        rx.recharts.cartesian_grid(
+            horizontal=True, vertical=False
+        ),
+        rx.recharts.bar(
+            data_key=&quot;desktop&quot;,
+            fill=&quot;var(--chart-1)&quot;,
+            radius=4,
+            is_animation_active=False,
+        ),
+        rx.recharts.bar(
+            data_key=&quot;mobile&quot;,
+            fill=&quot;var(--chart-2)&quot;,
+            radius=4,
+            is_animation_active=False,
+        ),
+        data=data,
+        width=&quot;100%&quot;,
+        height=250,
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><h2 id="add-an-axis">Add an Axis</h2>
+<p>To add an x-axis to the chart, we'll use the <code>rx.recharts.x_axis()</code> component.</p>
+<pre><code class="language-python">rx.recharts.x_axis(
+    data_key="month",
+    axis_line=False,
+    tick_size=10,
+    tick_line=False,
+    custom_attrs={"fontSize": "12px"},
+    interval="preserveStartEnd",
+)
+</code></pre></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-TYFKkmkIFR"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-S6LUywt4e8"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-S6LUywt4e8"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="recharts-responsive-container" style="width:100%;height:250px;min-width:10px;min-height:10px"><div style="width:0;overflow-x:visible"></div></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+data = [
+    {&quot;month&quot;: &quot;Jan&quot;, &quot;desktop&quot;: 186, &quot;mobile&quot;: 80},
+    {&quot;month&quot;: &quot;Feb&quot;, &quot;desktop&quot;: 305, &quot;mobile&quot;: 200},
+    {&quot;month&quot;: &quot;Mar&quot;, &quot;desktop&quot;: 237, &quot;mobile&quot;: 120},
+    {&quot;month&quot;: &quot;Apr&quot;, &quot;desktop&quot;: 73, &quot;mobile&quot;: 190},
+    {&quot;month&quot;: &quot;May&quot;, &quot;desktop&quot;: 209, &quot;mobile&quot;: 130},
+    {&quot;month&quot;: &quot;Jun&quot;, &quot;desktop&quot;: 214, &quot;mobile&quot;: 140},
+]
+
+
+def chart_example_with_x_axis():
+
+    return rx.recharts.bar_chart(
+        rx.recharts.cartesian_grid(
+            horizontal=True, vertical=False, class_name=&quot;opacity-30&quot;
+        ),
+        rx.recharts.bar(
+            data_key=&quot;desktop&quot;,
+            fill=&quot;var(--chart-1)&quot;,
+            radius=4,
+            is_animation_active=False,
+        ),
+        rx.recharts.bar(
+            data_key=&quot;mobile&quot;,
+            fill=&quot;var(--chart-2)&quot;,
+            radius=4,
+            is_animation_active=False,
+        ),
+        rx.recharts.x_axis(
+            data_key=&quot;month&quot;,
+            axis_line=False,
+            tick_size=10,
+            tick_line=False,
+            custom_attrs={&quot;fontSize&quot;: &quot;12px&quot;},
+            interval=&quot;preserveStartEnd&quot;,
+        ),
+        data=data,
+        width=&quot;100%&quot;,
+        height=250,
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><h2 id="add-tooltip">Add Tooltip</h2>
+<p>So far we've only used components from Recharts. They look great out of the box thanks to some customization in the chart component.</p>
+<p>To add a tooltip, we'll use the custom <code>chart_tooltip</code> and <code>chart_tooltip_content</code> components from chart.</p>
+<blockquote>
+<p><strong>Note</strong>: A small comment regarding the custom tooltip. Because of the way Recharts is composed and the way it's wrapped in Reflex, the custom tooltip, as of now, works only for Area, Bar, and Line charts.</p>
+</blockquote>
+<p>To use the custom tooltip, first import it at the top of your chart file.</p>
+<pre><code class="language-python">from components.charts.chart_tooltip import (
+    chart_tooltip,
+    chart_tooltip_content,
+)
+</code></pre>
+<p>Add the component to your chart and pass in the props.</p>
+<pre><code class="language-python">rx.recharts.bar_chart(
+    ...,
+    chart_tooltip(),
+    data=data,
+    width="100%",
+    height=250,
+    class_name=chart_tooltip_content([1, 2], "square"),
+)
+</code></pre></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-7AvWtlANlX"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-7hQpEiywlz"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-7hQpEiywlz"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="recharts-responsive-container" style="width:100%;height:250px;min-width:10px;min-height:10px"><div style="width:0;overflow-x:visible"></div></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
+
+data = [
+    {&quot;month&quot;: &quot;Jan&quot;, &quot;desktop&quot;: 186, &quot;mobile&quot;: 80},
+    {&quot;month&quot;: &quot;Feb&quot;, &quot;desktop&quot;: 305, &quot;mobile&quot;: 200},
+    {&quot;month&quot;: &quot;Mar&quot;, &quot;desktop&quot;: 237, &quot;mobile&quot;: 120},
+    {&quot;month&quot;: &quot;Apr&quot;, &quot;desktop&quot;: 73, &quot;mobile&quot;: 190},
+    {&quot;month&quot;: &quot;May&quot;, &quot;desktop&quot;: 209, &quot;mobile&quot;: 130},
+    {&quot;month&quot;: &quot;Jun&quot;, &quot;desktop&quot;: 214, &quot;mobile&quot;: 140},
+]
+
+
+def chart_example_with_custom_tooltip():
+
+    return rx.recharts.bar_chart(
+        rx.recharts.cartesian_grid(
+            horizontal=True, vertical=False, class_name=&quot;opacity-30&quot;
+        ),
+        rx.recharts.bar(
+            data_key=&quot;desktop&quot;,
+            fill=&quot;var(--chart-1)&quot;,
+            radius=4,
+            is_animation_active=False,
+        ),
+        rx.recharts.bar(
+            data_key=&quot;mobile&quot;,
+            fill=&quot;var(--chart-2)&quot;,
+            radius=4,
+            is_animation_active=False,
+        ),
+        rx.recharts.x_axis(
+            data_key=&quot;month&quot;,
+            axis_line=False,
+            tick_size=10,
+            tick_line=False,
+            custom_attrs={&quot;fontSize&quot;: &quot;12px&quot;},
+            interval=&quot;preserveStartEnd&quot;,
+        ),
+        chart_tooltip(),
+        data=data,
+        width=&quot;100%&quot;,
+        height=250,
+        class_name=chart_tooltip_content([1, 2], &quot;square&quot;),
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><p>Hover to see the tooltips. Easy, right? Two components, and we've got a beautiful tooltip.</p>
+<h2 id="add-legend">Add Legend</h2>
+<p>We'll do the same for the legend. Although there's no API for legends the way we created one for tooltips, the same logic still applies. </p>
+<p>Add the component to your chart.</p>
+<pre><code class="language-python">rx.el.div(
+    rx.foreach(
+        ["Desktop", "Mobile"],
+        lambda device, index: rx.el.div(
+            rx.el.div(
+                class_name=f"h-3 w-3 rounded-sm bg-chart-{index + 1}"
+            ),
+            rx.el.p(device, class_name="text-xs text-foreground"),
+            class_name="flex flex-row items-center gap-x-2",
+        ),
+    ),
+    class_name="flex items-center gap-4 justify-center",
+)
+</code></pre></div><div class="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg" data-view="preview" id="demo-L2yJLLGYqa"><div class="flex items-stretch justify-between p-0.5 pb-0.5"><div class="flex items-center gap-2"><div class="flex items-center gap-1 radius-lg"><button class="group/button inline-flex shrink-0 items-center justify-center rounded-lg border bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-4 border-border hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 size-7 preview-btn bg-background group-data-[view=code]:bg-transparent group-data-[view=code]:border-transparent" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M17 17L21 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button><button class="group/button inline-flex shrink-0 items-center justify-center border bg-clip-padding font-medium whitespace-nowrap outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&amp;_svg:not([class*=&#x27;size-&#x27;])]:size-3.5 size-7 code-btn border-transparent bg-transparent group-data-[view=code]:border-border group-data-[view=code]:bg-background" data-slot="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-3.5" stroke-width="1.5" stroke="currentColor"><path d="M16 6.99998L19.0664 9.64296C20.3554 10.7541 21 11.3096 21 12C21 12.6903 20.3555 13.2459 19.0664 14.357L16 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M8 6.99998L4.93365 9.64296C3.64455 10.7541 3 11.3096 3 12C3 12.6903 3.64455 13.2459 4.93365 14.357L8 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="flex items-center gap-1 px-2"><button id="btn-hVeP4P4eYd"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" color="currentColor" class="[&amp;_path]:stroke-[1.5] size-4" stroke-width="1.5" stroke="currentColor" id="icon-hVeP4P4eYd"><path d="M9 15C9 12.1716 9 10.7574 9.87868 9.87868C10.7574 9 12.1716 9 15 9L16 9C18.8284 9 20.2426 9 21.1213 9.87868C22 10.7574 22 12.1716 22 15V16C22 18.8284 22 20.2426 21.1213 21.1213C20.2426 22 18.8284 22 16 22H15C12.1716 22 10.7574 22 9.87868 21.1213C9 20.2426 9 18.8284 9 16L9 15Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><path d="M16.9999 9C16.9975 6.04291 16.9528 4.51121 16.092 3.46243C15.9258 3.25989 15.7401 3.07418 15.5376 2.90796C14.4312 2 12.7875 2 9.5 2C6.21252 2 4.56878 2 3.46243 2.90796C3.25989 3.07417 3.07418 3.25989 2.90796 3.46243C2 4.56878 2 6.21252 2 9.5C2 12.7875 2 14.4312 2.90796 15.5376C3.07417 15.7401 3.25989 15.9258 3.46243 16.092C4.51121 16.9528 6.04291 16.9975 9 16.9999" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></button></div></div><div class="relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col overflow-hidden border bg-background dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"><div class="w-full flex-1 flex items-center justify-center px-2 py-4 sm:p-6 group-data-[view=code]:hidden"><div class="w-full"><div class="recharts-responsive-container" style="width:100%;height:250px;min-width:10px;min-height:10px"><div style="width:0;overflow-x:visible"></div></div><div class="flex items-center gap-4 justify-center"><div class="flex flex-row items-center gap-x-2"><div class="h-3 w-3 rounded-sm bg-chart-1"></div><p class="text-xs text-foreground">Desktop</p></div><div class="flex flex-row items-center gap-x-2"><div class="h-3 w-3 rounded-sm bg-chart-2"></div><p class="text-xs text-foreground">Mobile</p></div></div></div></div><div class="size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"><pre><code class="language-python text-sm">import reflex as rx
+
+from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
+
+data = [
+    {&quot;month&quot;: &quot;Jan&quot;, &quot;desktop&quot;: 186, &quot;mobile&quot;: 80},
+    {&quot;month&quot;: &quot;Feb&quot;, &quot;desktop&quot;: 305, &quot;mobile&quot;: 200},
+    {&quot;month&quot;: &quot;Mar&quot;, &quot;desktop&quot;: 237, &quot;mobile&quot;: 120},
+    {&quot;month&quot;: &quot;Apr&quot;, &quot;desktop&quot;: 73, &quot;mobile&quot;: 190},
+    {&quot;month&quot;: &quot;May&quot;, &quot;desktop&quot;: 209, &quot;mobile&quot;: 130},
+    {&quot;month&quot;: &quot;Jun&quot;, &quot;desktop&quot;: 214, &quot;mobile&quot;: 140},
+]
+
+
+def chart_example_with_custom_legends():
+
+    return rx.el.div(
+        rx.recharts.bar_chart(
+            rx.recharts.cartesian_grid(
+                horizontal=True, vertical=False, class_name=&quot;opacity-30&quot;
+            ),
+            rx.recharts.bar(
+                data_key=&quot;desktop&quot;,
+                fill=&quot;var(--chart-1)&quot;,
+                radius=4,
+                is_animation_active=False,
+            ),
+            rx.recharts.bar(
+                data_key=&quot;mobile&quot;,
+                fill=&quot;var(--chart-2)&quot;,
+                radius=4,
+                is_animation_active=False,
+            ),
+            rx.recharts.x_axis(
+                data_key=&quot;month&quot;,
+                axis_line=False,
+                tick_size=10,
+                tick_line=False,
+                custom_attrs={&quot;fontSize&quot;: &quot;12px&quot;},
+                interval=&quot;preserveStartEnd&quot;,
+            ),
+            chart_tooltip(),
+            data=data,
+            width=&quot;100%&quot;,
+            height=250,
+            class_name=chart_tooltip_content([1, 2], &quot;square&quot;),
+        ),
+        rx.el.div(
+            rx.foreach(
+                [&quot;Desktop&quot;, &quot;Mobile&quot;],
+                lambda device, index: rx.el.div(
+                    rx.el.div(class_name=f&quot;h-3 w-3 rounded-sm bg-chart-{index + 1}&quot;),
+                    rx.el.p(device, class_name=&quot;text-xs text-foreground&quot;),
+                    class_name=&quot;flex flex-row items-center gap-x-2&quot;,
+                ),
+            ),
+            class_name=&quot;flex items-center gap-4 justify-center&quot;,
+        ),
+        class_name=&quot;w-full&quot;,
+    )</code></pre></div></div></div><div class="rx-Html docs-prose"><p>Done. You've built your first chart!</p>
+<h1 id="theming">Theming</h1>
+<p>Charts have built-in support for theming. You can use css variables (recommended) or color values in any color format, such as hex, hsl or oklch.</p>
+<h2 id="css-variables">CSS Variables</h2>
+<p>Define your colors in your CSS file.</p>
+<pre><code class="language-css">:root {
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+}
+
+.dark {
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+}
+</code></pre>
+<h2 id="hex-hsl-or-oklch">hex, hsl, or oklch</h2>
+<p>You can also define your colors directly in the chart component. Use the color format you prefer.</p>
+<pre><code class="language-python">rx.recharts.bar(data_key="mobile", fill="var(--chart-2)")
+rx.recharts.bar(data_key="mobile", fill="#2563eb")
+rx.recharts.bar(data_key="mobile", fill="oklch(0.5 0.2 240)")
+</code></pre>
+<p>You can also include colors in your data structure and utlize <code>rx.foreach</code> for more concise codebase.</p>
+<pre><code class="language-python">data = [
+    {"month": "Jan", "desktop": 186, "mobile": 80, "fill": "#2563eb"},
+    {"month": "Feb", "desktop": 305, "mobile": 200, "fill": "oklch(0.5 0.2 240)"},
+]
+</code></pre>
+<h1 id="tooltip">Tooltip</h1>
+<p>A chart tooltip contains a label and swatch type. You can use a combination of these to customize your tooltip.</p>
+<pre><code class="language-python">Display = Literal["show", "hide"]
+Swatch = Literal["square", "line", "border"]
+</code></pre></div><div class="text-destructive font-mono text-sm my-2 p-2 border border-destructive/20 bg-destructive/5 rounded">Error: Reference Target &#x27;_&#x27; not found</div><div class="rx-Html docs-prose"><p>You can turn on/off any of these using the <code>display</code> prop and customize the indicator style using the <code>swatch</code> prop.</p>
+<h2 id="props">Props</h2>
+<p>Use the following props to customize the tooltip.</p>
+<p><strong>chart_tooltip()</strong></p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Prop</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>label</code></td>
+<td style="text-align: left;"><code>"show" \| "hide"</code></td>
+<td style="text-align: left;"><code>"show"</code></td>
+<td style="text-align: left;">Whether to render the tooltip label above the items.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>is_animation_active</code></td>
+<td style="text-align: left;"><code>bool</code></td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;">Whether to animate the tooltip on appearance.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>separator</code></td>
+<td style="text-align: left;"><code>str</code></td>
+<td style="text-align: left;"><code>""</code></td>
+<td style="text-align: left;">String placed between the item name and value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>cursor</code></td>
+<td style="text-align: left;"><code>bool</code></td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;">Whether to show the cursor line/highlight on hover.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>item_style</code></td>
+<td style="text-align: left;"><code>dict</code></td>
+<td style="text-align: left;"><code>{}</code></td>
+<td style="text-align: left;">Style overrides merged onto each tooltip item row.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>label_style</code></td>
+<td style="text-align: left;"><code>dict</code></td>
+<td style="text-align: left;"><code>{}</code></td>
+<td style="text-align: left;">Style overrides merged onto the label element.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>content_style</code></td>
+<td style="text-align: left;"><code>dict</code></td>
+<td style="text-align: left;"><code>{}</code></td>
+<td style="text-align: left;">Style overrides merged onto the tooltip container.</td>
+</tr>
+</tbody>
+</table></div></div>
+<p><strong>chart_tooltip_content()</strong></p>
+<div class="w-full overflow-hidden border border-input rounded-lg my-4"><div class="w-full overflow-x-auto scrollbar-none"><table>
+<thead>
+<tr>
+<th style="text-align: left;">Prop</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>chart_colors</code></td>
+<td style="text-align: left;"><code>list[int]</code></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Number of data series in the chart. Must match the number of <code>rx.recharts.bar</code> / <code>line</code> / <code>area</code> components.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>swatch</code></td>
+<td style="text-align: left;"><code>"square" \| "line" \| "border"</code></td>
+<td style="text-align: left;"><code>"square"</code></td>
+<td style="text-align: left;">Indicator style per item. <code>square</code> = small filled box, <code>line</code> = wide pill, <code>border</code> = left accent line per series using <code>--chart-{i}</code>.</td>
+</tr>
+</tbody>
+</table></div></div>
+<blockquote>
+<p><strong>chart_tooltip_content()</strong> returns a string of Tailwind classes and must be passed to the <strong>chart component's</strong> class_name, not to <strong>chart_tooltip()</strong>.</p>
+</blockquote></div></div></div><footer class="w-full flex items-center justify-center py-8 text-muted-foreground !text-sm !text-center"><p class="w-full text-[13px] font-light"><span>Built by <a class="font-semibold underline" href="https://github.com/LineIndent">Line Indent</a> at <a class="font-semibold underline" href="https://reflex.dev">Reflex</a>.</span><span class="block sm:inline"> The source code is available on <a class="font-semibold underline" href="https://github.com/LineIndent/ui">GitHub</a>.</span></p></footer></section></div><div class="hidden xl:block max-w-[12rem] w-full sticky top-18 h-[calc(100vh-3rem)] shrink-0"><div class="flex flex-col gap-y-4 overflow-scroll scrollbar-none"><div class="flex flex-col w-full h-full p-4 gap-y-6"><div class="w-full flex flex-col"><p class="text-xs text-muted-foreground font-medium pb-2">On This Page</p><div class="w-full flex flex-col h-[calc(100svh-22rem)] overflow-y-auto scrollbar-none scroll-fade scroll-fade-4"><ul class="flex flex-col w-full gap-y-0 list-none" id="toc-navigation"><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/resources/chart#charts" data-discover="true">Charts</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/resources/chart#component" data-discover="true">Component</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/resources/chart#installation" data-discover="true">Installation</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/resources/chart#your-first-chart" data-discover="true">Your First Chart</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline pl-4" href="/docs/resources/chart#defining-your-data" data-discover="true">Defining your data</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline pl-4" href="/docs/resources/chart#build-your-chart" data-discover="true">Build your chart</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline pl-4" href="/docs/resources/chart#add-a-grid" data-discover="true">Add a Grid</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline pl-4" href="/docs/resources/chart#add-an-axis" data-discover="true">Add an Axis</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline pl-4" href="/docs/resources/chart#add-tooltip" data-discover="true">Add Tooltip</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline pl-4" href="/docs/resources/chart#add-legend" data-discover="true">Add Legend</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/resources/chart#theming" data-discover="true">Theming</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline pl-4" href="/docs/resources/chart#css-variables" data-discover="true">CSS Variables</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline pl-4" href="/docs/resources/chart#hex,-hsl,-or-oklch" data-discover="true">hex, hsl, or oklch</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline" href="/docs/resources/chart#tooltip" data-discover="true">Tooltip</a></li><li><a class="toc-link cursor-pointer transition-colors duration-200 text-[0.8rem] text-muted-foreground hover:text-foreground no-underline pl-4" href="/docs/resources/chart#props" data-discover="true">Props</a></li></ul><div class="py-2"></div></div></div></div></div></div></div></div></div><script>((storageKey2, restoreKey) => {
+    if (!window.history.state || !window.history.state.key) {
+      let key = Math.random().toString(32).slice(2);
+      window.history.replaceState({ key }, "");
+    }
+    try {
+      let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
+      let storedY = positions[restoreKey || window.history.state.key];
+      if (typeof storedY === "number") {
+        window.scrollTo(0, storedY);
+      }
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(storageKey2);
+    }
+  })("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"v8_passThroughRequests":false,"unstable_trailingSlashAwareDataRequests":false,"unstable_previewServerPrerendering":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-8fa44fbe.js";
+import * as route0 from "/assets/root-DKs5hj6x.js";
+import * as route1 from "/assets/_docs_._resources_._chart_._index-DdTpJ7Ej.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[docs].[resources].[chart]._index":route1};
+
+import("/assets/entry.client-BhRJEzLE.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

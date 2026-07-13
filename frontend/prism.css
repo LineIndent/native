@@ -1,0 +1,185 @@
+/* ─────────────────────────────────────────────
+   Base
+───────────────────────────────────────────── */
+
+code[class*="language-"],
+pre[class*="language-"] {
+    background: transparent !important;
+    color: #111827;
+    font-size: 0.95em;
+    line-height: 1.65;
+    white-space: pre;
+    tab-size: 4;
+    hyphens: none;
+}
+
+/* ─────────────────────────────────────────────
+   LIGHT MODE (wide gray steps, ~9% apart)
+───────────────────────────────────────────── */
+
+/* 🔑 PROPERTY NAMES — pure black, max emphasis */
+.token.property,
+.token.attr-name {
+    color: #000000;
+    font-weight: 700;
+}
+
+/* 🧠 KEYWORDS */
+.token.keyword {
+    color: #171717;
+    font-weight: 600;
+}
+
+/* 🧩 FUNCTIONS / CLASSES */
+.token.function,
+.token.class-name {
+    color: #2e2e2e;
+    font-weight: 600;
+}
+
+/* 🧱 TAGS / CONSTANTS */
+.token.tag,
+.token.constant,
+.token.symbol {
+    color: #454545;
+    font-weight: 500;
+}
+
+/* ⚠️ VARIABLES / EDGE CASES */
+.token.variable,
+.token.regex,
+.token.important {
+    color: #5c5c5c;
+    font-weight: 500;
+}
+
+/* 🔢 NUMBERS / BOOLEANS */
+.token.number,
+.token.boolean {
+    color: #737373;
+}
+
+/* 📦 STRING VALUES */
+.token.string,
+.token.attr-value {
+    color: #8a8a8a;
+}
+
+/* 🔧 OPERATORS / URLS */
+.token.operator,
+.token.entity,
+.token.url {
+    color: #a1a1a1;
+}
+
+.token.punctuation {
+    color: #b3b3b3;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #c7c7c7;
+    font-style: italic;
+}
+
+/* ─────────────────────────────────────────────
+   DARK MODE (each category inverted to its own step)
+───────────────────────────────────────────── */
+
+.dark code[class*="language-"],
+.dark pre[class*="language-"] {
+    color: #e5e7eb;
+}
+
+/* 🔑 PROPERTY NAMES — near white, max emphasis */
+.dark .token.property,
+.dark .token.attr-name {
+    color: #f7f7f7;
+    font-weight: 700;
+}
+
+/* 🧠 KEYWORDS */
+.dark .token.keyword {
+    color: #e8e8e8;
+    font-weight: 600;
+}
+
+/* 🧩 FUNCTIONS / CLASSES */
+.dark .token.function,
+.dark .token.class-name {
+    color: #d1d1d1;
+    font-weight: 600;
+}
+
+/* 🧱 TAGS / CONSTANTS */
+.dark .token.tag,
+.dark .token.constant,
+.dark .token.symbol {
+    color: #bababa;
+    font-weight: 500;
+}
+
+/* ⚠️ VARIABLES */
+.dark .token.variable,
+.dark .token.regex,
+.dark .token.important {
+    color: #a3a3a3;
+    font-weight: 500;
+}
+
+/* 🔢 NUMBERS */
+.dark .token.number,
+.dark .token.boolean {
+    color: #8c8c8c;
+}
+
+/* 📦 STRINGS */
+.dark .token.string,
+.dark .token.attr-value {
+    color: #757575;
+}
+
+/* 🔧 OPERATORS */
+.dark .token.operator,
+.dark .token.entity,
+.dark .token.url {
+    color: #5e5e5e;
+}
+
+.dark .token.punctuation {
+    color: #4d4d4d;
+}
+
+.dark .token.comment,
+.dark .token.prolog,
+.dark .token.doctype,
+.dark .token.cdata {
+    color: #383838;
+    font-style: italic;
+}
+
+/* ─────────────────────────────────────────────
+   Shared
+───────────────────────────────────────────── */
+
+.token.bold,
+.token.important {
+    font-weight: 700;
+}
+
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+@media print {
+    code[class*="language-"],
+    pre[class*="language-"] {
+        text-shadow: none !important;
+    }
+}

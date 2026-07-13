@@ -1,0 +1,252 @@
+@custom-variant dark (&:is(.dark *));
+
+::selection {
+    background: var(--foreground);
+    color: var(--background);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-oxanium);
+    --font-mono: var(--font-oxanium);
+    --font-heading: var(--font-oxanium);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+    --card-padding: 1rem;
+    --card-padding-sm: 0.75rem;
+    --card-gap: 1rem;
+    --font-oxanium: "Oxanium", system-ui, sans-serif;
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+    html {
+        @apply font-sans text-foreground;
+    }
+}
+
+.toc-link[data-active="true"] {
+    color: var(--foreground);
+    font-weight: 500;
+}
+
+@layer components {
+    .docs-prose {
+        /* 1. Base Typography Setup */
+        @apply prose
+    dark:prose-invert
+    max-w-none
+    w-full;
+
+        /* 2. List & Inline Code Modifiers */
+        @apply prose-li:marker:text-foreground
+    prose-code:before:content-none
+    prose-code:after:content-none
+    prose-code:rounded-lg
+    prose-code:bg-muted
+    prose-code:px-1.5
+    prose-code:py-0.5
+    prose-code:text-sm;
+
+        /* 3. Heading Modifiers */
+        @apply prose-h1:scroll-mt-14
+    prose-h2:scroll-mt-14
+    prose-h1:text-2xl
+    prose-h1:font-bold
+    prose-h1:tracking-tight
+    prose-h1:mb-3
+    prose-h2:text-xl
+    prose-h2:font-semibold
+    prose-h2:tracking-tight
+    prose-h2:mt-6
+    prose-h1:mt-6
+    prose-h2:mb-3;
+
+        /* 4. Paragraph Modifiers */
+        @apply prose-p:text-muted-foreground
+    prose-p:leading-relaxed;
+
+        /* 5. Preformatted Code Block Modifiers */
+        @apply prose-pre:rounded-lg
+    prose-pre:bg-secondary
+    prose-pre:shadow-none
+    prose-pre:border-0
+    prose-pre:p-0
+    prose-pre:my-4
+    prose-pre:overflow-x-auto
+    prose-pre:before:content-none
+    prose-pre:after:content-none;
+
+    @apply prose-table:w-full
+        prose-table:rounded-lg
+        prose-table:border-separate
+        prose-table:border-spacing-0
+        prose-table:overflow-x-scroll
+        prose-th:px-4
+        prose-th:py-2
+        prose-th:text-left
+        prose-th:font-bold
+        prose-th:whitespace-nowrap
+        prose-td:px-4
+        prose-td:py-2
+        prose-th:border-b
+        prose-th:border-input
+        prose-table:my-0
+        prose-td:whitespace-nowrap;
+    }
+
+
+    .docs-prose thead {
+        @apply border-b border-input;
+    }
+
+    /* Fixed non-existent prose-tbody variant */
+    .docs-prose tbody tr:not(:last-child) td {
+        @apply border-b border-input;
+    }
+
+    /* Blockquote Style Blocks */
+    .docs-prose blockquote {
+        @apply w-full bg-secondary dark:bg-card flex px-3 not-italic border border-input rounded-lg;
+    }
+    .docs-prose blockquote p {
+        @apply text-sm font-light text-foreground;
+    }
+    .docs-prose blockquote::before,
+    .docs-prose blockquote::after,
+    .docs-prose blockquote p::before,
+    .docs-prose blockquote p::after {
+        content: none;
+    }
+
+    .docs-prose pre {
+        @apply
+            border
+            min-w-0
+            overflow-x-auto
+            border-border
+            bg-muted/40
+            rounded-xl
+            px-3
+            py-3
+            font-mono
+            text-sm;
+    }
+
+    .docs-prose pre > code {
+        @apply
+            block
+            bg-transparent
+            p-0
+            text-inherit;
+    }
+}
