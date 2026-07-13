@@ -37,8 +37,8 @@ PAGES_CONFIG = [
     },
     {
         "route": "index",
-        "title": "Buridan UI",
-        "description": "Composable, themeable components designed for Reflex. Extend, override, and ship without fighting the framework. Open source.",
+        "title": "Buridan Native",
+        "description": "Native HTML UI components you can copy, paste, and ship in minutes. Built for Reflex. Open Source.",
     },
     {
         "route": "blocks",
