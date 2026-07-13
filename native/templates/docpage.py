@@ -16,7 +16,6 @@ def docpage(main_content, toc_content):
                             main_content,
                             class_name="mx-auto flex w-full flex-col gap-8",
                         ),
-                        _footer(),
                         class_name="flex min-h-screen flex-col gap-16",
                     ),
                     class_name="min-w-0 flex-1",
@@ -24,6 +23,7 @@ def docpage(main_content, toc_content):
                 toc_content if toc_content else div(class_name="hidden"),
                 class_name="mx-auto flex max-w-3xl xl:max-w-5xl gap-20 px-4 sm:px-2.5",
             ),
+            _footer(),
             class_name="min-h-screen pt-10",
         ),
             on_mount=[call_script(
