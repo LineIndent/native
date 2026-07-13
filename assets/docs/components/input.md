@@ -111,7 +111,10 @@ input = Input()
 # Examples
 
 ## Basic Demo
-A simple text input demonstrating the default appearance and behavior.
+
+The default appearance and behavior. `type` defaults to `"text"` if not set.
+
+**Props used:** none required beyond default `input(...)`.
 
 ```python
 def input_basic_demo():
@@ -126,7 +129,8 @@ def input_basic_demo():
 ```
 
 ## Email
-An input field optimized for email address entry.
+
+**Props used:** `type="email"` on `input`.
 
 ```python
 def input_email():
@@ -141,7 +145,8 @@ def input_email():
 ```
 
 ## Password
-An input field that hides characters for secure password entry.
+
+**Props used:** `type="password"` on `input`.
 
 ```python
 def input_password():
@@ -156,7 +161,8 @@ def input_password():
 ```
 
 ## Disabled
-An example of an input field in a disabled state.
+
+**Props used:** `disabled` on `input`.
 
 ```python
 def input_disabled():
@@ -172,7 +178,10 @@ def input_disabled():
 ```
 
 ## File Input
-An input field for selecting and uploading files.
+
+Native file styling (`file:` classes) is already baked into the base input styles.
+
+**Props used:** `type="file"` on `input`.
 
 ```python
 def input_file_input():
@@ -186,7 +195,8 @@ def input_file_input():
 ```
 
 ## Custom Input
-An input field with a custom width and styling.
+
+**Props used:** `class_name` on `input`.
 
 ```python
 def input_custom_input():
@@ -200,3 +210,23 @@ def input_custom_input():
         class_name="w-full max-w-md p-8",
     )
 ```
+
+# API Reference
+
+## input
+
+```python
+input(id="email", type="email", placeholder="you@example.com")
+```
+
+| Prop         | Type  | Default  |
+| ------------ | ----- | -------- |
+| `type`       | `str` | `"text"` |
+| `disabled`   | `bool`| `False`  |
+| `value` / `default_value` | `str` |    |
+| `id`         | `str` |          |
+| `name`       | `str` |          |
+| `on_change`  | `EventHandler` |  |
+| `class_name` | `str` | `""`     |
+
+Any other prop accepted by a native `<input>` is also passed straight through.

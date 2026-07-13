@@ -89,9 +89,11 @@ def spinner(class_name: str = "", **props) -> rx.Component:
 # Examples
 
 ## Size
- 
-Use the `size-*` utility class to change the size of the spinner.
- 
+
+Use a `size-*` utility class to change the spinner's size.
+
+**Props used:** `class_name` on `spinner`.
+
 ```python
 def spinner_size():
     return rx.el.div(
@@ -104,9 +106,11 @@ def spinner_size():
 ```
 
 ## Button
- 
-Add a spinner to a button to indicate a loading state. Place it before the label for a start position.
- 
+
+Add a spinner to a button for a loading state. Add `data-icon="inline-start"` to position it before the label.
+
+**Props used:** `data_icon` on `spinner`.
+
 ```python
 def spinner_button():
     return rx.el.div(
@@ -118,9 +122,11 @@ def spinner_button():
 ```
 
 ## Badge
- 
-Add a spinner to a badge to indicate a loading or syncing state.
- 
+
+Add a spinner to a badge for a loading/syncing state.
+
+**Props used:** `data_icon` on `spinner`.
+
 ```python
 def spinner_badge():
     return rx.el.div(
@@ -132,9 +138,11 @@ def spinner_badge():
 ```
 
 ## Marker
- 
-Combine `Spinner` with `Marker` and the `shimmer` utility for animated streaming status indicators. Set `role="status"` so assistive technology announces the update.
- 
+
+Combine `spinner` with `marker` and the `shimmer` utility for animated streaming status indicators. Set `role="status"` so assistive technology announces updates.
+
+**Props used:** `role` on `spinner`.
+
 ```python
 def spinner_marker():
     return rx.el.div(
@@ -160,8 +168,15 @@ def spinner_marker():
 ```
 
 # API Reference
- 
-| Prop         | Type   | Default | Description                                      |
-|--------------|--------|---------|--------------------------------------------------|
-| `class_name` | `str`  | `""`    | Additional Tailwind classes applied to the icon. |
-| `**props`    | `dict` | —       | Any valid HTML attribute forwarded to the element (`role`, `aria_label`, etc.). |
+
+## spinner
+
+```python
+spinner(class_name="size-5")
+```
+
+| Prop         | Type   | Default | Description                                                          |
+| ------------ | ------ | ------- | ---------------------------------------------------------------------- |
+| `class_name` | `str`  | `""`    | Additional classes applied to the icon (e.g. `size-*` to resize).      |
+
+Any other prop accepted by a native `<svg>` (`role`, `aria_label`, `data_icon`, etc.) is also passed straight through. `role="status"` is set by default.

@@ -5,7 +5,6 @@ order: 0
 ---
 
 
-
 ## Input Group, Add Addons, Buttons, And Helper Content To Inputs.
 
 
@@ -477,14 +476,15 @@ input_group = InputGroupNamespace()
 
 # Align
 
-Use the `align` prop on `input_group.addon` to position the addon relative to the input.
+Use `align` on `input_group.addon` to position it relative to the input.
 
->For proper focus management, **input_group.addon** should always be placed after **input_group.input** or **input_group.textarea** in the DOM. Use the **align** prop to visually position the addon.
-
+> For proper focus management, `input_group.addon` should always be placed **after** `input_group.input` or `input_group.textarea` in the DOM. Use `align` to visually position it instead of reordering the DOM.
 
 ## inline-start
 
-Use `align="inline-start"` to position the addon at the start of the input. This is the default.
+The default — positions the addon at the start of the input.
+
+**Props used:** `align="inline-start"` on `input_group.addon`.
 
 ```python
 def input_group_inline_start() -> rx.Component:
@@ -503,7 +503,7 @@ def input_group_inline_start() -> rx.Component:
 
 ## inline-end
 
-Use `align="inline-end"` to position the addon at the end of the input.
+**Props used:** `align="inline-end"` on `input_group.addon`.
 
 ```python
 def input_group_inline_end() -> rx.Component:
@@ -523,7 +523,9 @@ def input_group_inline_end() -> rx.Component:
 
 ## block-start
 
-Use `align="block-start"` to position the addon above the input.
+Positions the addon above the input — typically used with `input_group.textarea`.
+
+**Props used:** `align="block-start"` on `input_group.addon`.
 
 ```python
 def input_group_block_start() -> rx.Component:
@@ -577,7 +579,7 @@ def input_group_block_start() -> rx.Component:
 
 ## block-end
 
-Use `align="block-end"` to position the addon below the input.
+**Props used:** `align="block-end"` on `input_group.addon`.
 
 ```python
 def input_group_block_end() -> rx.Component:
@@ -630,6 +632,9 @@ def input_group_block_end() -> rx.Component:
 # Examples
 
 ## Icons
+
+**Props used:** `align` on `input_group.addon`.
+
 ```python
 def input_group_icons() -> rx.Component:
     return rx.el.div(
@@ -671,6 +676,9 @@ def input_group_icons() -> rx.Component:
 ```
 
 ## Text
+
+**Props used:** none required beyond default `input_group.text` composition.
+
 ```python
 def input_group_text() -> rx.Component:
     return rx.el.div(
@@ -721,6 +729,9 @@ def input_group_text() -> rx.Component:
 ```
 
 ## Button
+
+**Props used:** `size` on `input_group.button`.
+
 ```python
 def input_group_button() -> rx.Component:
     return rx.el.div(
@@ -797,6 +808,9 @@ def input_group_button() -> rx.Component:
 ```
 
 ## Spinner
+
+**Props used:** `align` on `input_group.addon`.
+
 ```python
 def input_group_spinner() -> rx.Component:
     return rx.el.div(
@@ -841,6 +855,9 @@ def input_group_spinner() -> rx.Component:
 ```
 
 ## Dropdown
+
+**Props used:** see the [Menu](/docs/components/menu) docs for menu-specific props.
+
 ```python
 def input_group_dropdown() -> rx.Component:
     return rx.el.div(
@@ -886,55 +903,75 @@ def input_group_dropdown() -> rx.Component:
 
 ## input_group.root
 
-The main component that wraps inputs and addons.
+The main wrapper around inputs and addons.
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` |         |
+```python
+input_group.root(
+    input_group.addon(hi("Search01Icon")),
+    input_group.input(placeholder="Search..."),
+)
+```
 
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |
 
 ## input_group.addon
 
-Displays icons, text, buttons, or other content alongside inputs.
+Displays icons, text, buttons, or other content alongside the input. Can contain multiple `input_group.button`s.
 
->For proper focus navigation, the `input_group.addon` component should be placed after the input. Set the `align` prop to position the addon.
+```python
+input_group.addon(hi("Search01Icon"), align="inline-start")
+```
 
-| Prop        | Type                                                             | Default          |
-| ----------- | ---------------------------------------------------------------- | ---------------- |
-| `align`     | `"inline-start" \| "inline-end" \| "block-start" \| "block-end"` | `"inline-start"` |
-| `class_name` | `string`                                                         |                  |
+| Prop         | Type                                                                     | Default          |
+| ------------ | --------------------------------------------------------------------------| ---------------- |
+| `align`      | `Literal["inline-start", "inline-end", "block-start", "block-end"]`      | `"inline-start"` |
+| `class_name` | `str`                                                                     | `""`              |
 
-
->For **input_group.input**, use the **inline-start** or **inline-end** alignment. For **input_group.textarea**, use the **block-start** or **block-end** alignment.
-
-The `input_group.addon` component can have multiple `input_group.button` components and icons.
+Use `inline-start`/`inline-end` with `input_group.input`, and `block-start`/`block-end` with `input_group.textarea`.
 
 ## input_group.button
 
-Displays buttons within input groups. See the [Button](/docs/components/button) docs for more information. 
+A `button` pre-styled for input group contexts. See the [Button](/docs/components/button) docs for the rest of `button`'s props.
 
-| Prop        | Type                                                                          | Default   |
-| ----------- | ----------------------------------------------------------------------------- | --------- |
-| `size`      | `"xs" \| "icon-xs" \| "sm" \| "icon-sm"`                                      | `"xs"`    |
-| `variant`   | `"default" \| "destructive" \| "outline" \| "secondary" \| "ghost" \| "link"` | `"ghost"` |
-| `class_name` | `string`                                                                      |           |
+```python
+input_group.addon(
+    input_group.button(hi("X01Icon"), aria_label="Clear"),
+    align="inline-end",
+)
+```
+
+| Prop         | Type                                                                          | Default   |
+| ------------ | -------------------------------------------------------------------------------| --------- |
+| `size`       | `Literal["xs", "icon-xs", "sm", "icon-sm"]`                                   | `"xs"`    |
+| `variant`    | `Literal["default", "destructive", "outline", "secondary", "ghost", "link"]` | `"ghost"` |
+| `class_name` | `str`                                                                          | `""`      |
 
 ## input_group.input
 
-Replacement for `input()` when building input groups. This component has the input group styles pre-applied and uses the unified `data-slot="input-group-control"` for focus state handling.
+Drop-in replacement for `input()` inside an input group — pre-styled and tagged with the shared `data-slot="input-group-control"` used for group-wide focus states.
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` |         |
+```python
+input_group.input(placeholder="Search...")
+```
 
-All other props are passed through to the underlying `Input()` component.
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |
+
+Any other prop accepted by `input()` is passed straight through.
 
 ## input_group.textarea
 
-Replacement for `textarea()` when building input groups. This component has the textarea group styles pre-applied and uses the unified `data-slot="input-group-control"` for focus state handling.
+Drop-in replacement for `textarea()` inside an input group — same `data-slot="input-group-control"` convention as `input_group.input`.
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` |         |
+```python
+input_group.textarea(placeholder="Leave a comment...")
+```
 
-All other props are passed through to the underlying `textarea()` component.
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |
+
+Any other prop accepted by `textarea()` is passed straight through.

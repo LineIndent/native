@@ -71,23 +71,38 @@ from ..core.core import CoreComponent
 
 class ClassNames:
     ROOT = (
-        "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card "
-        "py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 "
-        "[--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 "
-        "has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] "
-        "data-[size=sm]:has-data-[slot=card-footer]:pb-0 "
+        "group/card flex flex-col gap-(--card-gap) overflow-hidden rounded-xl bg-card "
+        "py-(--card-padding) text-sm text-card-foreground ring-1 ring-foreground/10 "
+        "has-data-[slot=card-footer]:pb-0 "
+        "has-[>img:first-child]:pt-0 "
         "*:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl"
     )
+
     HEADER = (
         "group/card-header @container/card-header grid auto-rows-min items-start gap-1 "
-        "rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] "
-        "has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)"
+        "rounded-t-xl px-(--card-padding) "
+        "has-data-[slot=card-action]:grid-cols-[1fr_auto] "
+        "has-data-[slot=card-description]:grid-rows-[auto_auto] "
+        "[.border-b]:pb-(--card-padding)"
     )
-    TITLE = "cn-font-heading text-base leading-snug font-medium group-data-[size=sm]/card:text-sm"
+
+    TITLE = (
+        "cn-font-heading text-base leading-snug font-medium "
+        "group-data-[size=sm]/card:text-sm"
+    )
+
     DESCRIPTION = "text-sm text-muted-foreground"
-    ACTION = "col-start-2 row-span-2 row-start-1 self-start justify-self-end"
-    CONTENT = "px-(--card-spacing)"
-    FOOTER = "flex items-center rounded-b-xl border-t border-input bg-muted/50 p-(--card-spacing)"
+
+    ACTION = (
+        "col-start-2 row-span-2 row-start-1 self-start justify-self-end"
+    )
+
+    CONTENT = "px-(--card-padding)"
+
+    FOOTER = (
+        "flex items-center rounded-b-xl border-t border-input "
+        "bg-muted/50 p-(--card-padding)"
+    )
 
 
 class CardRoot(Div, CoreComponent):
@@ -168,7 +183,9 @@ card = Card()
 
 ## Size
 
-Use the `size="sm"` prop to set the size of the card to small. The small size variant uses smaller spacing.
+Use `size="sm"` for tighter spacing throughout the card.
+
+**Props used:** `size` on `card.root`.
 
 ```python
 def card_small() -> rx.Component:
@@ -229,7 +246,9 @@ def card_small() -> rx.Component:
 
 ## Spacing
 
-In addition to the `size` prop, you can use the `--card-spacing` CSS variable to control the spacing between sections and the inset of card parts.
+Beyond `size`, use the `--card-spacing` CSS variable directly to control section spacing and inset.
+
+**Props used:** `class_name` (setting `--card-spacing` inline) on `card.root`.
 
 ```python
 def card_spacing() -> rx.Component:
@@ -312,7 +331,7 @@ def card_spacing() -> rx.Component:
     )
 ```
 
-Use negative margins with `-mx-(--card-spacing)` to make content go edge to edge while keeping it aligned with the card inset. When the edge-to-edge content sits above a footer, use `-mb-(--card-spacing)` on `card.content` to remove the section gap.
+Use negative margins with `-mx-(--card-spacing)` to let content go edge-to-edge while staying aligned with the card's inset. When edge-to-edge content sits above a footer, add `-mb-(--card-spacing)` on `card.content` to remove the section gap.
 
 ```python
 def card_edge_to_edge() -> rx.Component:
@@ -348,10 +367,11 @@ def card_edge_to_edge() -> rx.Component:
     )
 ```
 
-
 ## Image
 
-Add an image before the card header to create a card with an image.
+Add an image before `card.header` to create a card with a cover image — corner radii adjust automatically for first/last-child images.
+
+**Props used:** none required — place `rx.el.img(...)` as the first child of `card.root`.
 
 ```python
 def card_image() -> rx.Component:
@@ -380,62 +400,87 @@ def card_image() -> rx.Component:
     )
 ```
 
-
 # API Reference
 
 ## card.root
 
-The `card.root` component is the root container for card content.
+```python
+card.root(
+    card.header(card.title("Team members")),
+    card.content("..."),
+    size="sm",
+)
+```
 
-| Prop        | Type                | Default     |
-| ----------- | ------------------- | ----------- |
-| `size`      | `"default" \| "sm"` | `"default"` |
-| `class_name` | `string`            | -           |
+| Prop         | Type                          | Default     |
+| ------------ | -------------------------------| ----------- |
+| `size`       | `Literal["default", "sm"]`   | `"default"` |
+| `class_name` | `str`                         | `""`         |
 
 ## card.header
 
-The `card.header` component is used for a title, description, and optional action.
+For a title, description, and optional action.
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` | -       |
+```python
+card.header(
+    card.title("Team members"),
+    card.description("Manage who has access."),
+    card.action(button("Invite", size="sm")),
+)
+```
+
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |
 
 ## card.title
 
-The `card.title` component is used for the card title.
+```python
+card.title("Team members")
+```
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` | -       |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |
 
 ## card.description
 
-The `card.description` component is used for helper text under the title.
+```python
+card.description("Manage who has access to this project.")
+```
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` | -       |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |
 
 ## card.action
 
-The `card.action` component places content in the top-right of the header (for example, a button or a badge).
+Places content in the top-right of the header (a button, badge, etc.).
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` | -       |
+```python
+card.action(button("Invite", size="sm"))
+```
+
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |
 
 ## card.content
 
-The `card.content` component is used for the main card body.
+```python
+card.content("Main card body content.")
+```
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` | -       |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |
 
 ## card.footer
 
-The `card.footer` component is used for actions and secondary content at the bottom of the card.
+```python
+card.footer(button("Cancel", variant="ghost"), button("Save"))
+```
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` | -       |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |

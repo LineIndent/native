@@ -173,10 +173,9 @@ class ButtonGroup(ComponentNamespace):
 button_group = ButtonGroup()
 ```
 
-
 # Accessibility
 
-- The `button_group.root` component has the `role` attribute set to `group`.
+- `button_group.root` sets `role="group"`.
 - Use `Tab` to navigate between the buttons in the group.
 - Use `aria-label` or `aria-labelledby` to label the button group.
 
@@ -184,7 +183,9 @@ button_group = ButtonGroup()
 
 ## Orientation
 
-Set the `orientation` prop to change the button group layout.
+Set the `orientation` prop to change the layout.
+
+**Props used:** `orientation` on `button_group.root`.
 
 ```python
 def button_group_orientation() -> rx.Component:
@@ -208,6 +209,8 @@ def button_group_orientation() -> rx.Component:
 ## Size
 
 Control the size of buttons using the `size` prop on individual buttons.
+
+**Props used:** `size` on `button`.
 
 ```python
 def button_group_size() -> rx.Component:
@@ -236,9 +239,9 @@ def button_group_size() -> rx.Component:
 
 ## Separator
 
-The `button_group.separator` component visually divides buttons within a group.
+`button_group.separator` visually divides buttons within a group. `outline`-variant buttons don't need one (they already have a border) — other variants benefit from it for visual hierarchy.
 
-Buttons with variant `outline` do not need a separator since they have a border. For other variants, a separator is recommended to improve the visual hierarchy.
+**Props used:** none required beyond default `button_group.separator`.
 
 ```python
 def button_group_separator() -> rx.Component:
@@ -251,7 +254,9 @@ def button_group_separator() -> rx.Component:
 
 ## Split
 
-Create a split button group by adding two buttons separated by a `button_group.separator`.
+Two buttons separated by a `button_group.separator`.
+
+**Props used:** none required beyond default `button_group.separator`.
 
 ```python
 def button_group_split() -> rx.Component:
@@ -268,7 +273,9 @@ def button_group_split() -> rx.Component:
 
 ## Input
 
-Wrap an `input` component with buttons.
+Wrap an `input` with buttons on either side.
+
+**Props used:** none required — standard `button_group.root` composition.
 
 ```python
 def button_group_input() -> rx.Component:
@@ -284,7 +291,9 @@ def button_group_input() -> rx.Component:
 
 ## Dropdown Menu
 
-Create a split button group with a `menu` component.
+A split button group with a `menu` as the second segment.
+
+**Props used:** see the [Menu](/docs/components/menu) docs for menu-specific props.
 
 ```python
 def button_group_dropdown() -> rx.Component:
@@ -314,10 +323,11 @@ def button_group_dropdown() -> rx.Component:
     )
 ```
 
-
 ## Select
 
 Pair with a `select` component.
+
+**Props used:** see the [Select](/docs/components/select) docs for select-specific props.
 
 
 > Component `button_group_select` not found
@@ -327,29 +337,41 @@ Pair with a `select` component.
 
 ## button_group.root
 
-The `button_group.root` component is a container that groups related buttons together with consistent styling.
+```python
+button_group.root(
+    button("Copy", variant="outline"),
+    button("Paste", variant="outline"),
+)
+```
 
-| Prop          | Type                         | Default        |
-| ------------- | ---------------------------- | -------------- |
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
-
+| Prop          | Type                                 | Default        |
+| ------------- | -------------------------------------- | -------------- |
+| `orientation` | `Literal["horizontal", "vertical"]`   | `"horizontal"` |
+| `class_name`  | `str`                                  | `""`            |
 
 ## button_group.separator
 
-The `button_group.separator` component visually divides buttons within a group.
+```python
+button_group.root(
+    button("Bold", variant="ghost"),
+    button_group.separator(),
+    button("Italic", variant="ghost"),
+)
+```
 
-| Prop          | Type                         | Default      |
-| ------------- | ---------------------------- | ------------ |
-| `orientation` | `"horizontal" \| "vertical"` | `"vertical"` |
-
+| Prop          | Type                                 | Default      |
+| ------------- | -------------------------------------- | ------------ |
+| `orientation` | `Literal["horizontal", "vertical"]`   | `"vertical"` |
+| `class_name`  | `str`                                  | `""`          |
 
 ## button_group.text
 
-Use this component to display text within a button group.
+Accepts `*children`, so any component (including interactive ones) can be rendered as label content inside a group.
 
-| Prop      | Type      | Default |
-| --------- | --------- | ------- |
-| `*children` | `rx.Component` | `false` |
+```python
+button_group.text("Filter by")
+```
 
-
-The `button_group.text` accepts `*children` so any interactive component passed to it will be rendered. Use it to render a custom component as the text, for example a label.
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |

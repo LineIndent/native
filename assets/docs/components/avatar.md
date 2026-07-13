@@ -222,7 +222,9 @@ avatar = Avatar()
 
 ## Basic
 
-A basic avatar component with an image and a fallback.
+A basic avatar with an image and a fallback. The fallback is shown automatically if the image fails to load.
+
+**Props used:** `src` on `avatar.image`; no props required on `avatar.fallback`.
 
 ```python
 def avatar_basic() -> rx.Component:
@@ -243,7 +245,9 @@ def avatar_basic() -> rx.Component:
 
 ## Badge
 
-Use the `avatar.badge` component to add a badge to the avatar. The badge is positioned at the bottom right of the avatar.
+Use `avatar.badge` to add a badge to the avatar. It's positioned at the bottom right by default.
+
+**Props used:** none required — pass content as children.
 
 ```python
 def avatar_with_badge() -> rx.Component:
@@ -265,7 +269,7 @@ def avatar_with_badge() -> rx.Component:
     )
 ```
 
-Use the `class_name` prop to add custom styles to the badge such as custom colors, sizes, etc.
+Use `class_name` to customize the badge's colors, size, etc.
 
 ```python
 avatar.badge(class_name="bg-green-600 dark:bg-green-800")
@@ -273,7 +277,9 @@ avatar.badge(class_name="bg-green-600 dark:bg-green-800")
 
 ## Badge with Icon
 
-You can also use an icon inside `avatar.badge`.
+You can also render an icon inside `avatar.badge`.
+
+**Props used:** none required — pass an icon as a child.
 
 ```python
 def avatar_badge_icon() -> rx.Component:
@@ -297,7 +303,9 @@ def avatar_badge_icon() -> rx.Component:
 
 ## Avatar Group
 
-Use the `avatar.group` component to add a group of avatars.
+Use `avatar.group` to render a group of overlapping avatars.
+
+**Props used:** none required on `avatar.group` — wraps multiple `avatar.root` children.
 
 ```python
 def avatar_as_group() -> rx.Component:
@@ -330,7 +338,9 @@ def avatar_as_group() -> rx.Component:
 
 ## Avatar Group Count
 
-Use `avatar.group_count` to add a count to the group.
+Use `avatar.group_count` to show a "+N" count at the end of a group.
+
+**Props used:** none required — pass the count text as a child.
 
 ```python
 def avatar_with_group_count() -> rx.Component:
@@ -363,7 +373,9 @@ def avatar_with_group_count() -> rx.Component:
 
 ## Avatar Group with Icon
 
-You can also use an icon inside `avatar.group_count`.
+You can also render an icon inside `avatar.group_count`.
+
+**Props used:** none required — pass an icon as a child.
 
 ```python
 def avatar_group_count_icon() -> rx.Component:
@@ -398,7 +410,9 @@ def avatar_group_count_icon() -> rx.Component:
 
 ## Sizes
 
-Use the `size` prop to change the size of the avatar.
+Use the `size` prop to change the avatar's size.
+
+**Props used:** `size` on `avatar.root`.
 
 ```python
 def avatar_sizes() -> rx.Component:
@@ -432,7 +446,9 @@ def avatar_sizes() -> rx.Component:
 
 ## Dropdown
 
-You can use the `Avatar` component as a trigger for a dropdown menu.
+`avatar.root` can be used as a trigger for a dropdown menu.
+
+**Props used:** `size` on `avatar.root`; see the [Menu](/docs/components/menu) docs for menu-specific props.
 
 ```python
 def avatar_dropdown_menu() -> rx.Component:
@@ -453,57 +469,87 @@ def avatar_dropdown_menu() -> rx.Component:
     )
 ```
 
-<br>
-
 # API Reference
 
 ## avatar.root
 
-The `avatar.root` component is the root component that wraps the avatar image and fallback.
+The root component that wraps the avatar image and fallback.
 
-| Prop        | Type                        | Default     |
-| ----------- | --------------------------- | ----------- |
-| `size`      | `"default" \| "sm" \| "lg"` | `"default"` |
-| `class_name` | `string`                    | -           |
+```python
+avatar.root(
+    avatar.image(src="/avatars/01.png"),
+    avatar.fallback("RD"),
+)
+```
+
+| Prop         | Type                                       | Default     |
+| ------------ | ------------------------------------------ | ----------- |
+| `size`       | `Literal["default", "sm", "lg", "xl"]`     | `"default"` |
+| `class_name` | `str`                                       | `""`        |
 
 ## avatar.image
 
-The `avatar.image` component displays the avatar image. It accepts all Base UI Avatar Image props.
+Renders the `<img>` and probes its `src` client-side on mount — if it fails to load, it hides itself and reveals the sibling `avatar.fallback` automatically. No `fallback_id` wiring needed.
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `src`       | `string` | -       |
-| `alt`       | `string` | -       |
-| `class_name` | `string` | -       |
+```python
+avatar.image(src="/avatars/01.png", custom_attrs={"alt": "@shadcn"})
+```
+
+| Prop         | Type  | Default             |
+| ------------ | ----- | ------------------- |
+| `src`        | `str` |                      |
+| `id`         | `str` | auto-generated       |
+| `class_name` | `str` | `""`                 |
+
+Any other prop accepted by a native `<img>` is also passed straight through.
 
 ## avatar.fallback
 
-The `avatar.fallback` component displays a fallback when the image fails to load. It accepts all Base UI Avatar Fallback props.
+Shown automatically when `avatar.image` fails to load.
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` | -       |
+```python
+avatar.fallback("RD")
+```
+
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |
 
 ## avatar.badge
 
-The `avatar.badge` component displays a badge indicator on the avatar, typically positioned at the bottom right.
+Displays a badge indicator on the avatar, positioned at the bottom right by default.
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` | -       |
+```python
+avatar.badge(hi("BadgeCheck01Icon"))
+```
+
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |
 
 ## avatar.group
 
-The `avatar.group` component displays a group of avatars with overlapping styling.
+Displays a group of avatars with overlapping styling.
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` | -       |
+```python
+avatar.group(
+    avatar.root(...),
+    avatar.root(...),
+)
+```
+
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |
 
 ## avatar.group_count
 
-The `avatar.group_count` component displays a count indicator in an avatar group, typically showing the number of additional avatars.
+Displays a count indicator at the end of an avatar group.
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `class_name` | `string` | -       |
+```python
+avatar.group_count("+3")
+```
+
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` | `""`    |

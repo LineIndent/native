@@ -207,7 +207,9 @@ button = Button.create
 
 ## Sizes
 
-Use the `size` prop to change the size of the button.
+Use the `size` prop to change the button's size.
+
+**Props used:** `size` on `button`.
 
 ```python
 def button_size() -> rx.Component:
@@ -258,12 +260,16 @@ def button_size() -> rx.Component:
 
 ## Default
 
+**Props used:** none required — `variant="default"` is the default.
+
 ```python
 def button_default():
     return button("Button")
 ```
 
 ## Secondary
+
+**Props used:** `variant` on `button`.
 
 ```python
 def button_secondary():
@@ -272,12 +278,16 @@ def button_secondary():
 
 ## Outline
 
+**Props used:** `variant` on `button`.
+
 ```python
 def button_outline():
     return button("Outline", variant="outline")
 ```
 
 ## Ghost
+
+**Props used:** `variant` on `button`.
 
 ```python
 def button_ghost():
@@ -286,6 +296,8 @@ def button_ghost():
 
 ## Link
 
+**Props used:** `variant` on `button`.
+
 ```python
 def button_link():
     return button("Link", variant="link")
@@ -293,12 +305,16 @@ def button_link():
 
 ## Destructive
 
+**Props used:** `variant` on `button`.
+
 ```python
 def button_destructive():
     return button("Destructive", variant="destructive")
 ```
 
 ## Icon
+
+**Props used:** `size="icon"` on `button`.
 
 ```python
 def button_icon():
@@ -311,7 +327,9 @@ def button_icon():
 
 ## With Icon
 
-Remember to add the `data-icon="inline-start"` or `data-icon="inline-end"` attribute to the icon for the correct spacing.
+Add `data-icon="inline-start"` or `data-icon="inline-end"` to the icon child for correct spacing.
+
+**Props used:** `data_icon` on the icon child.
 
 ```python
 def button_with_icon() -> rx.Component:
@@ -332,7 +350,7 @@ def button_with_icon() -> rx.Component:
 
 ## Rounded
 
-Use the `rounded-full` class to make the button rounded.
+**Props used:** `class_name="rounded-full"` on `button`.
 
 ```python
 def button_rounded() -> rx.Component:
@@ -353,7 +371,9 @@ def button_rounded() -> rx.Component:
 
 ## Spinner
 
-Render a `spinner()` component inside the button to show a loading state. Remember to add the `data-icon="inline-start"` or `data-icon="inline-end"` attribute to the spinner for the correct spacing.
+Render a `spinner()` inside the button for a loading state, with the same `data-icon` positioning convention as icons.
+
+**Props used:** `data_icon` on the spinner child.
 
 ```python
 def button_loading() -> rx.Component:
@@ -375,9 +395,9 @@ def button_loading() -> rx.Component:
 
 ## As Link
 
-You can use the `button_variants` helper function to make a link look like a button.
+Use `button_variants(...)` to generate the button's classes as a plain `Var`, applied to a real `rx.el.a`. Don't wrap an `<a>` inside `button(...)` — the underlying Base UI `Button` always sets `role="button"`, which overrides the link's semantic role.
 
-Do **not** use `button(rx.el.a(...))` for links. The Base UI `Button` component always applies `role="button"`, which overrides the semantic link role on `<a>` elements. Use `button_variants` with a plain `rx.el.a` tag instead to cleanly generate the necessary classes as a dynamic Reflex `Var`.
+**Props used:** `variant`, `size` args on `button_variants(...)`.
 
 ```python
 def button_render() -> rx.Component:
@@ -388,14 +408,35 @@ def button_render() -> rx.Component:
     )
 ```
 
-
 # API Reference
 
-## Button
+## button
 
-The `Button` component is a wrapper around the `button` element that adds a variety of styles and functionality.
+```python
+button("Click me", variant="outline", size="sm")
+```
 
-| Prop      | Type                                                                                 | Default     |
-| --------- | ------------------------------------------------------------------------------------ | ----------- |
-| `variant` | `"default" \| "outline" \| "ghost" \| "destructive" \| "secondary" \| "link"`        | `"default"` |
-| `size`    | `"default" \| "xs" \| "sm" \| "lg" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg"` | `"default"` |
+| Prop      | Type                                                                                      | Default     |
+| --------- | ------------------------------------------------------------------------------------------ | ----------- |
+| `variant` | `Literal["default", "destructive", "outline", "secondary", "ghost", "link"]`              | `"default"` |
+| `size`    | `Literal["default", "xs", "sm", "lg", "icon", "icon-xs", "icon-sm", "icon-lg"]`            | `"default"` |
+| `class_name` | `str`                                                                                    | `""`        |
+
+Any other prop accepted by the underlying Base UI `Button` is also passed straight through.
+
+## button_variants
+
+Returns the same classes `button(...)` would apply, as a plain `Var[str]` — for styling a non-button element (like a link) to look like a button, without wrapping it in an actual `<button>`.
+
+```python
+rx.el.a(
+    "Go to docs",
+    href="/docs",
+    class_name=button_variants("outline", "sm"),
+)
+```
+
+| Arg       | Type                                                                            | Default     |
+| --------- | --------------------------------------------------------------------------------- | ----------- |
+| `variant` | `Literal["default", "destructive", "outline", "secondary", "ghost", "link"]`     | `"default"` |
+| `size`    | `Literal["default", "xs", "sm", "lg", "icon", "icon-xs", "icon-sm", "icon-lg"]`   | `"default"` |

@@ -351,6 +351,10 @@ field.set
 
 ## General
 
+Demonstrates `field.root`, `field.group`, `field.set`, `field.label`, `field.description`, and `field.error` composed together.
+
+**Props used:** `orientation` on `field.root`; `variant` on `field.legend`; `html_for` on `field.label`; `data_invalid` on `field.root`.
+
 ```python
 def field_demo() -> rx.Component:
     return rx.el.div(
@@ -531,7 +535,7 @@ Container that renders a semantic `fieldset` with spacing presets.
 | `class_name` | `str` | |
 
 ```python
-field.set_(
+field.set(
     field.legend("Delivery"),
     field.group(),
 )
@@ -539,11 +543,11 @@ field.set_(
 
 ## field.legend
 
-Legend element for a `field.set_`. Switch to the `"label"` variant to align with standard label sizing.
+Legend element for a `field.set`. Switch to the `"label"` variant to align with standard label sizing.
 
 | Prop | Type | Default |
 | --- | --- | --- |
-| `variant` | `"legend" | "label"` | `"legend"` |
+| `variant` | `Literal["legend", "label"]` | `"legend"` |
 | `class_name` | `str` |  |
 
 ```python

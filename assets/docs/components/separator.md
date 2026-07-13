@@ -106,7 +106,9 @@ separator = SeparatorComponent.create
 
 ## Default
 
-The default `orientation` is set to `horizontal`.
+The default `orientation` is `"horizontal"`.
+
+**Props used:** none required — `orientation="horizontal"` is the default.
 
 ```python
 def separator_horizontal() -> rx.Component:
@@ -127,9 +129,9 @@ def separator_horizontal() -> rx.Component:
     )
 ```
 
-## Vertical 
+## Vertical
 
-Use `orientation="vertical"` for a vertical separator.
+**Props used:** `orientation="vertical"` on `separator`.
 
 ```python
 def separator_vertical() -> rx.Component:
@@ -146,6 +148,8 @@ def separator_vertical() -> rx.Component:
 ## Menu
 
 Vertical separators between menu items with descriptions.
+
+**Props used:** `orientation="vertical"` on `separator`.
 
 ```python
 def separator_menu() -> rx.Component:
@@ -179,6 +183,8 @@ def separator_menu() -> rx.Component:
 
 Horizontal separators between list items.
 
+**Props used:** none required — `orientation="horizontal"` is the default.
+
 ```python
 def separator_list() -> rx.Component:
     return rx.el.div(
@@ -202,3 +208,19 @@ def separator_list() -> rx.Component:
         class_name="flex w-full max-w-sm flex-col gap-2 text-sm",
     )
 ```
+
+# API Reference
+
+## separator
+
+```python
+separator(orientation="vertical")
+```
+
+| Prop          | Type                                 | Default        |
+| ------------- | -------------------------------------- | -------------- |
+| `orientation` | `Literal["horizontal", "vertical"]`   | `"horizontal"` |
+| `decorative`  | `bool`                                 | `True`         |
+| `class_name`  | `str`                                  | `""`            |
+
+When `decorative=True` (the default), `aria-hidden="true"` is set — the separator is treated as purely visual. Set `decorative=False` to render it as a semantic `role="separator"` for assistive technology instead.

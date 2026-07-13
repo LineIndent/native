@@ -1,11 +1,11 @@
-BURIDAN_URL = "https://buridan.reflex.run"
+BURIDAN_URL = "https://native.buridan.dev"
 
 BURIDAN_KEY_WORDS = (
     "buridan, ui, web apps, framework, open source, frontend, backend, full stack"
 )
 
 SOCIAL_CARD_BASE_PATH = (
-    "https://raw.githubusercontent.com/LineIndent/ui/refs/heads/main/assets/social/"
+    "https://raw.githubusercontent.com/LineIndent/native/refs/heads/main/assets/social/"
 )
 
 BURIDAN_KEY_WORDS = (
