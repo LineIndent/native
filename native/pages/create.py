@@ -1,4 +1,5 @@
 import json
+from typing import Literal
 
 import reflex as rx
 
@@ -6,6 +7,7 @@ from components.ui.select import select
 from components.ui.button import button
 from components.ui.dialog import dialog
 from components.ui.input import input
+from native.templates._get_code import get_code
 from native.registry.colors import COLOR_THEMES
 from native.registry.themes import BASE_THEMES
 from native.registry.radii import RADII_OPTIONS
@@ -29,36 +31,63 @@ from native.lib.examples.card_13 import card_13
 
 
 def _theme_select(
-    id_: str, label: str, options: list[dict], default_id: str, *, describe: bool = False
+    id_: str,
+    label: str,
+    options: list[dict],
+    default_id: str,
+    *,
+    describe: bool = False,
+    icon: rx.Component | None = None,
+    swatch: Literal["primary", "chart"] | None = None,
 ) -> rx.Component:
+
     def _option_label(opt: dict) -> str:
         if describe and opt.get("description"):
             return f"{opt['label']}"
-            # return f"{opt['label']} — {opt['description']}"
         return opt["label"]
 
+    if icon is not None:
+        indicator = icon
+    elif swatch == "primary":
+        indicator = rx.el.div(
+            id=f"{id_}-swatch",
+            class_name="size-4 rounded-full shrink-0 border border-border/40",
+        )
+    elif swatch == "chart":
+        indicator = rx.el.div(
+            *[
+                rx.el.div(
+                    id=f"{id_}-swatch-{i}",
+                    class_name="size-2.5 rounded-full shrink-0 border border-border/40",
+                )
+                for i in range(1)
+            ],
+            class_name="flex items-center gap-1 shrink-0",
+        )
+    else:
+        indicator = rx.el.div()
 
-    return rx.el.div(rx.el.div(
-        rx.el.div(rx.el.span(
-            label, html_for=id_, class_name="text-sm font-medium text-muted-foreground"
+    return rx.el.div(
+        rx.el.div(
+            rx.el.div(
+                rx.el.span(
+                    label, html_for=id_, class_name="text-sm font-medium text-muted-foreground"
+                ),
+                # indicator,
+                class_name="flex flex-row items-center justify-between",
+            ),
+            select(
+                *[select.option(_option_label(opt), value=opt["id"]) for opt in options],
+                id=id_,
+                default_value=default_id,
+                wrapper_class_name="w-full [&_[data-slot=native-select-icon]]:hidden",
+                class_name="w-full h-9",
+            ),
+            class_name="flex flex-col gap-2 px-1 pt-2",
         ),
-
-        # rx.el.div(
-        #     class_name="size-4 bg-primary shrink-0"
-        # ),
-            class_name="flex flex-row items-center justify-between"
-        ),
-        select(
-            *[select.option(_option_label(opt), value=opt["id"]) for opt in options],
-            id=id_,
-            default_value=default_id,
-            wrapper_class_name="w-full [&_[data-slot=native-select-icon]]:hidden",
-            class_name="w-full h-9"
-        ),
-        class_name="flex flex-col gap-2 px-1 pt-2",
-    ),
-    class_name="px-3 pb-3"
+        class_name="px-3 pb-3",
     )
+
 
 def open_preset() -> rx.Component:
     return dialog.root(
@@ -75,56 +104,74 @@ def open_preset() -> rx.Component:
             ),
             dialog.footer(
                 rx.el.div(
-                dialog.close(button("Cancel", type="button", variant="outline", class_name="flex-1"), class_name="flex-1"),
-                dialog.close(button("Apply", type="button", class_name="flex-1",                         id="apply-preset-button",
-), class_name="flex-1"),
-                class_name="w-full flex flex-row items-center justify-center gap-x-4",
+                    dialog.close(
+                        button("Cancel", type="button", variant="outline", class_name="flex-1"),
+                        class_name="flex-1",
+                    ),
+                    dialog.close(
+                        button(
+                            "Apply",
+                            type="button",
+                            class_name="flex-1",
+                            id="apply-preset-button",
+                        ),
+                        class_name="flex-1",
+                    ),
+                    class_name="w-full flex flex-row items-center justify-center gap-x-4",
                 ),
             ),
             class_name="sm:max-w-sm",
         ),
     )
 
+
 def _sidebar_desktop():
     return rx.el.aside(
         rx.el.div(
-            button("Reset",
+            button(
+                "Reset",
                 id="reset-preset-button",
                 type="button",
                 class_name="w-full",
                 variant="destructive",
             ),
-            class_name="p-3 bg-card/20"
+            class_name="p-3 bg-card/20",
         ),
         rx.el.div(
             _theme_select(
-            "style-select", "Style", STYLE_REGISTRY, STYLE_REGISTRY[0]["id"],
-            describe=True,
-        ),
-        rx.el.div(
-            _theme_select(
-                "base-theme-select", "Base theme", BASE_THEMES, BASE_THEMES[0]["id"]
+                "style-select", "Style", STYLE_REGISTRY, STYLE_REGISTRY[0]["id"],
+                describe=True,
+            ),
+            rx.el.div(
+                _theme_select(
+                    "base-theme-select", "Base theme", BASE_THEMES, BASE_THEMES[0]["id"],
+                    swatch="primary",
+                ),
+                _theme_select(
+                    "color-theme-select", "Color theme", COLOR_THEMES, COLOR_THEMES[0]["id"],
+                    swatch="primary",
+                ),
+                _theme_select(
+                    "chart-color-select", "Chart colors", COLOR_THEMES, COLOR_THEMES[0]["id"],
+                    swatch="chart",
+                ),
             ),
             _theme_select(
-                "color-theme-select", "Color theme", COLOR_THEMES, COLOR_THEMES[0]["id"]
+                "radius-select", "Radius", RADII_OPTIONS, RADII_OPTIONS[0]["id"]
             ),
-        ),
-        _theme_select(
-            "radius-select", "Radius", RADII_OPTIONS, RADII_OPTIONS[0]["id"]
-        ),
-        _theme_select(
-            "font-select", "Font", FONT_REGISTRY, FONT_REGISTRY[0]["id"]
-        ),
-        class_name="flex-1 min-h-0 overflow-y-auto scrollbar-none divide-y divide-input",
+            _theme_select(
+                "font-select", "Font", FONT_REGISTRY, FONT_REGISTRY[0]["id"]
+            ),
+            class_name="flex-1 min-h-0 overflow-y-auto scrollbar-none divide-y divide-input",
         ),
         rx.el.div(
-            button("Shuffle",
+            button(
+                "Shuffle",
                 id="shuffle-button",
                 type="button",
                 variant="outline",
-                class_name="w-full justify-start"
+                class_name="w-full justify-start",
             ),
-
             button(
                 rx.el.span("--preset ", html_for="preset-code-display"),
                 rx.el.input(
@@ -135,29 +182,37 @@ def _sidebar_desktop():
                 ),
                 variant="outline",
                 type="button",
-                class_name="w-full flex flex-row items-center justify-start"
+                class_name="w-full flex flex-row items-center justify-start",
             ),
             open_preset(),
-            class_name="p-4 flex flex-col gap-3 bg-card/20"
+            class_name="p-4 flex flex-col gap-3 bg-card/20",
         ),
         rx.el.div(
-            button("Get Code",
-                id="copy-theme-button",
-                type="button",
-                class_name="w-full"
-            ),
-            class_name="p-3 bg-card/20"
+            get_code(),
+            # button(
+            #     "Get Code",
+            #     id="copy-theme-button",
+            #     type="button",
+            #     class_name="w-full",
+            # ),
+            class_name="p-3 bg-card/20",
         ),
-        class_name="hidden lg:flex w-full max-w-[12rem] shrink-0 !overflow-hidden flex-col border border-input/90 divide-y divide-input h-full text-sm text-card-foreground dark bg-card/90 isolate rounded-2xl",
-
+        class_name=(
+            "hidden lg:flex w-full max-w-[12rem] shrink-0 !overflow-hidden flex-col "
+            "border border-input/90 divide-y divide-input h-full text-sm "
+            "text-card-foreground dark bg-card/90 isolate rounded-2xl"
+        ),
     )
+
 
 def sidebar():
     return rx.el.div(
         _sidebar_desktop(),
-        class_name="w-full flex-initial h-auto min-h-0 min-w-0 max-w-full lg:flex-1 lg:h-full lg:w-[12rem] lg:max-w-[12rem] lg:shrink-0",
-
-    ),
+        class_name=(
+            "w-full flex-initial h-auto min-h-0 min-w-0 max-w-full lg:flex-1 "
+            "lg:h-full lg:w-[12rem] lg:max-w-[12rem] lg:shrink-0"
+        ),
+    )
 
 
 def preview_space():
@@ -199,8 +254,8 @@ def preview_space():
             class_name="w-full h-full",
         ),
         class_name="w-full flex-[2] min-h-0 order-first lg:order-none lg:flex-1 lg:min-w-0 lg:h-full",
-
     )
+
 
 def create_page():
     return rx.el.div(
@@ -211,11 +266,11 @@ def create_page():
                 preview_space(),
                 class_name="flex flex-col gap-x-6 lg:flex-row w-full h-full min-h-0 overflow-hidden p-4 lg:px-6 lg:pb-6 lg:pt-2 gap-y-6 scrollbar-none",
             ),
-            class_name="relative flex h-screen flex-col bg-background overflow-hidden"
+            class_name="relative flex h-screen flex-col bg-background overflow-hidden",
         ),
         class_name="relative flex h-screen flex-col bg-background overflow-hidden",
-        on_mount=rx.call_script(
-        f"""
+        on_mount=[rx.call_script(
+            f"""
             window.__THEME_REGISTRIES__ = {{
                 base: {json.dumps(BASE_THEMES)},
                 color: {json.dumps(COLOR_THEMES)},
@@ -224,6 +279,15 @@ def create_page():
                 font: {json.dumps(FONT_REGISTRY)},
             }};
             if (window.preview) window.preview.applyAll();
-        """
+            """
         ),
+        rx.call_script(
+            """
+            requestAnimationFrame(() => {
+                Prism.highlightAll();
+            });
+            """
+        ),
+
+        ],
     )

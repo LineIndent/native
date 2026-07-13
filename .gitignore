@@ -10,6 +10,9 @@ build/
 dist/
 wheels/
 *.egg-info
-
+.DS_Store
+frontend
+.idea
+ai/
 # Virtual environments
 .venv

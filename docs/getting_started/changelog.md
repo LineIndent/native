@@ -8,47 +8,17 @@ order: 5
 
 Latest updates and announcements.
 
-# July 2026 - API Consolidation & High Fidelity
+# July 2026 - Native/Buridan
 
-Following the introduction of our theming engine, the focus shifted entirely toward refining and consolidating the underlying component APIs. The core mission of this release was to bring the library's structural orchestration and code patterns into complete alignment with the high-fidelity standards established by `shadcn/ui`.
+Under-the-hood layouts can get incredibly messy when they are wrapped in too many heavy React abstractions. In this update, we went back to the drawing board and completely rewrote Buridan's core elements to rely purely on native HTML elements (`rx.el.*`) instead of wrapping everything in heavy, custom third-party components.
 
-This update moves away from standalone, fluid function parameters in favor of a unified namespace pattern. Components are now split cleanly into dedicated structural elements, such as `.root()` and `.item()`. This pattern allows users to build composite layouts with declarative precision, ensuring clean, intuitive component hierarchies across any application.
+By ditching complex client-side libraries like Radix UI and Base UI, we've stripped away massive JavaScript bundles and unnecessary DOM nodes. 
 
-Alongside structural improvements, the underlying style aggregation engine was rebuilt to natively support strict Tailwind merge inheritance `(cn)`. Custom, per-instance layout parameters (such as explicit dimension overrides) are now safely appended at the end of the style cascade. This eliminates utility specificity conflicts and gives developers reliable, uncompromised control over layout sizes and layouts.
+We did this for a couple of really practical reasons that make a huge difference in day-to-day development:
 
+- **Crazy Fast, Lightweight Performance:** Dropping Radix and Base UI means we've eliminated heavy component runtimes. The browser has virtually no bundle bloat to download, parse, or execute. Your site loads instantly, transitions are snappy, and the interactive elements run at native speed.
+- **Flawless Event & Focus Propagation:** Standard wrapper divs can swallow click events or break standard form focus paths. By sticking to native elements, browser features work exactly as they should. For example, if you want to click an outer styled card container and have it programmatically trigger an underlying native select dropdown or focus an input field, it works natively without your event bubble getting caught in a messy component hierarchy.
+- **Featherlight DOM Overhead:** Stripping out nested wrapper divs means the browser has fewer nodes to paint. Your rendered page markup is incredibly clean, which makes styling adjustments with Tailwind CSS utilities extremely predictable—no more fighting arbitrary class specificity clashes.
+- **Predictable 1:1 API mapping:** Native tags are standard. There are no hidden proprietary parameters, undocumented properties, or unexpected behavioral overrides. What you write in your Python code maps 1:1 with what the browser actually renders in the DOM tree.
 
-# June 2026 - buridan/create
-
-The key feature introduced is the `buridan/create` feature. Based on the popular shadcn/ui, this feature allows users to generate their own CSS tokens and apply it to their Reflex projects. Local development or via [Reflex Build](https://build.reflex.dev/), both are covered. 
-
-No more purple/green dashboards and components with inconsistent spacing and obscure alignments, with /create users have full control of their theme system that provides clean, minimal, and consistent styling that can be applied to any Reflex app. 
-
-[buridan/create](/create) lets users generate unique presets that can be saved and shared. You can customize everything from the ground up and that includes fonts, color schemes, and more.
-
-> Want to build your theme visually? Use [buridan/create](/create) to preview colors, radius, and fonts, then generate a preset for your project.
-
-
-# May 2026 - buridan v0.9.0
-
-The buridan library went through some major site changes in `v0.9.0`. As Reflex gets closer to `v1.0`, the buridan UI library is getting closer to establishing a solid API for its components as well as a strong [theme system](/resources/theming). 
-
-Because this library is heavily influenced by the popular React library [shadcn/ui](https://ui.shadcn.com/), the first major change was getting the site to look and feel like shadcn. This meant changing the entire way core site components were built, namely the sidebar, navbar, and the main content area. 
-
-Next, markdown content had to be revised. Previously, there were mismatches between components and their dependencies as well as the actual code output. All this changed as a centralized registry system was introduced. Now each component correctly outputs its dependencies and source code. 
-
-Finally, a command line interface was needed to make everything accessible to end users. So the buridan [CLI](/getting-started/cli) was created to handle two main things:
-
-- Distribute the components and their dependencies in a systematic way.
-- Apply CSS theme tokens to a Reflex app to enure good practice theme usage across projects. 
-
-The CLI package is available on PyPI and can be added to any Reflex project.
-
-```uv
-uv add buridan-create
-```
-
-In conjunction with the CLI, as the site documentation began to grow, local development was an area of concern, mainly because running or hot-reloading the entire site after each change would take a few seconds, even more as more documentation pages were being added. 
-
-To solve this another CLI was created called `dev.py`. This interactive CLI lets users choose which and how many pages to load onto the local server, cutting the hot-reload times by a significant amount. 
-
-To learn more about how to use `dev,py`, visit its documentation [here](/getting-started/dev).
+It’s a simpler, much more robust foundation that keeps your apps lightweight, super-fast, and incredibly responsive.

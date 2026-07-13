@@ -55,7 +55,6 @@ def _usage_demo(component_name: str):
                     rx.el.code(
                         f"from components.ui.{component_name} import {component_name}",
                         class_name="language-python text-sm",
-                        # on_mount=rx.call_script("Prism.highlightAll()"),
                     ),
                 ),
                 class_name=(
@@ -68,7 +67,6 @@ def _usage_demo(component_name: str):
                     rx.el.code(
                         anatomy,
                         class_name="language-python text-sm",
-                        # on_mount=rx.call_script("Prism.highlightAll()"),
                     ),
                 ),
                 class_name=(

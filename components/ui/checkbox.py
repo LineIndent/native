@@ -5,7 +5,6 @@ from ..core.core import CoreComponent, cn
 from ..core.hugeicon import hi
 
 
-
 class ClassNames:
     ROOT = (
         "group relative inline-flex size-4 shrink-0 cursor-pointer items-center "

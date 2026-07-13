@@ -39,18 +39,9 @@ class SidebarSection:
 
 SIDEBAR_SECTIONS = [
     SidebarSection(title="Getting Started", routes=routes.GET_STARTED_URLS),
-    # SidebarSection(
-    #     title="@buridan/ui",
-    #     routes=[
-    #         {
-    #             "title": "pypi 0.1.19",
-    #             "url": "https://pypi.org/project/buridan-create/",
-    #         }
-    #     ],
-    # ),
-    # SidebarSection(title="Resources", routes=routes.RESOURCES_URLS),
     SidebarSection(title="Utilities", routes=routes.UTILITIES),
-    # SidebarSection(title="Charts", routes=routes.CHARTS_URLS),
+    SidebarSection(title="Resources", routes=routes.RESOURCES_URLS),
+    SidebarSection(title="Charts", routes=routes.CHARTS_URLS),
     SidebarSection(title="Components", routes=routes.BASE_UI_COMPONENTS),
 ]
 

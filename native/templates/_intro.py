@@ -182,12 +182,12 @@ def intro(raw_arg):
                             """
                         ),
                     ),
-                    command_selector(),
+                    # command_selector(),
                 ),
                 class_name="flex w-full max-w-2xl items-stretch gap-2",
             ),
             class_name="flex flex-col items-start gap-4 max-w-xl",
         ),
-        rx.el.button("Open Full Preview"),
+        # rx.el.button("Open Full Preview"),
         class_name="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between mb-10",
     )

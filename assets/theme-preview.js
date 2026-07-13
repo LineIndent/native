@@ -13,6 +13,12 @@
 //   var DEFAULT_RADIUS_VALUE = "__default__";
 //   var MATCH_BASE_VALUE = "__match_base__";
 
+//   // --- preset codec ---------------------------------------------------
+//   // Each dimension gets a FIXED, generously-oversized bit width — larger
+//   // than the registry's current length on purpose, so new entries can be
+//   // appended at the end later without shifting indices and silently
+//   // corrupting every preset code issued before that change. Registry
+//   // entries must only ever be appended, never inserted/reordered.
 //   var PRESET_VERSION = 1;
 //   var BASE62_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 //   var DEFAULT_PRESET_CODE = "b0";
@@ -100,6 +106,9 @@
 //     return encodeBase62(packed);
 //   }
 
+//   // Returns true/false rather than throwing — callers (paste box, URL
+//   // param) both need to handle "that wasn't a valid code" gracefully,
+//   // not crash the page.
 //   function applyCodeToState(code) {
 //     if (!ensureDefaults()) return false;
 
@@ -218,6 +227,13 @@
 //     return document.querySelector(".preview-theme");
 //   }
 
+//   // --- shared helper for preset -> dependent-select synthetic options -----
+//   // Style resets Radius to a "Default" option (fixed label, meaning "use
+//   // whatever --radius the current style defines"). Base resets Color to a
+//   // synthetic option labeled with the base's own name (meaning "don't
+//   // overlay a separate color theme, use the base's own primary/chart
+//   // colors as-is"). Both are the same mechanism: create-if-missing, update
+//   // label, select it — reused here instead of duplicated per-select.
 //   function upsertSyntheticOption(selectEl, value, label) {
 //     if (!selectEl) return null;
 //     var opt = selectEl.querySelector('option[value="' + value + '"]');
@@ -260,7 +276,10 @@
 //     Object.keys(entry.vars).forEach(function (key) {
 //       el.style.setProperty(key, entry.vars[key]);
 //     });
-
+//     // Radius is part of the style's own vars bag (applied above), but it's
+//     // ALSO independently overridable via the Radius select — so if the
+//     // user has explicitly picked something other than "Default", that
+//     // explicit choice takes precedence over what the style just set.
 //     if (state.radius !== DEFAULT_RADIUS_VALUE) {
 //       applyRadiusOverride();
 //     }
@@ -381,6 +400,13 @@
 //       afterStateChange();
 //     },
 
+//     // Random combo via Mulberry32 — deterministic given a seed, so the
+//     // resulting combo can always be re-derived from that seed alone. Not
+//     // used for encoding the SHARE code though (see comboToCode) — a PRNG
+//     // is one-way by design (seed -> output), there's no efficient way to
+//     // go from an arbitrary target combo back to "which seed produces
+//     // this", so shuffle and the share-code codec are deliberately separate
+//     // mechanisms rather than one trying to do both jobs.
 //     shuffle: function (seed) {
 //       var registries = window.__THEME_REGISTRIES__;
 //       if (!registries) return;
@@ -415,6 +441,9 @@
 //     },
 
 //     getPresetCode: comboToCode,
+//     reset: function () {
+//       window.preview.applyPresetCode(DEFAULT_PRESET_CODE);
+//     },
 //     applyAll: applyAll,
 //     getThemeCSS: getThemeCSS,
 //   };
@@ -435,6 +464,9 @@
 //     if (e.target.id === "shuffle-button") {
 //       window.preview.shuffle();
 //     }
+//     if (e.target.id === "reset-preset-button") {
+//       window.preview.reset();
+//     }
 //     if (e.target.id === "apply-preset-button") {
 //       var input = document.getElementById("preset-input");
 //       if (!input) return;
@@ -453,11 +485,17 @@
 //     }
 //   }).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
+//   // On first load: if the URL has a valid ?preset= code, apply it.
+//   // Otherwise fall back to plain defaults (and write "b0" to the URL so
+//   // the default state is itself shareable from the very first load).
 //   var urlCode = readPresetFromUrl();
 //   var appliedFromUrl = urlCode ? applyCodeToState(urlCode) : false;
 
 //   applyAll();
 
+//   // Seed the synthetic options on first load too, not just on future
+//   // change events — otherwise "Default"/"<Base label>" wouldn't appear
+//   // until the user touched Style or Base at least once.
 //   if (ensureDefaults()) {
 //     var baseEntry = findById("base", state.base);
 //     upsertSyntheticOption(
@@ -486,6 +524,7 @@
 
   var DEFAULT_RADIUS_VALUE = "__default__";
   var MATCH_BASE_VALUE = "__match_base__";
+  var MATCH_COLOR_VALUE = "__match_color__";
 
   // --- preset codec ---------------------------------------------------
   // Each dimension gets a FIXED, generously-oversized bit width — larger
@@ -493,15 +532,33 @@
   // appended at the end later without shifting indices and silently
   // corrupting every preset code issued before that change. Registry
   // entries must only ever be appended, never inserted/reordered.
-  var PRESET_VERSION = 1;
+  //
+  // v1 -> v2 added the "chart" dimension. The bit layout changed, so v1 is
+  // kept exactly as originally shipped, purely for decoding old codes that
+  // are already out in the world (e.g. bookmarked/shared URLs) — encoding
+  // always uses the current version. A v1 code has no chart information,
+  // so it decodes with chart defaulting to "Auto". An unrecognized future
+  // version is rejected outright rather than guessed at.
+  var PRESET_VERSION = 2;
   var BASE62_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   var DEFAULT_PRESET_CODE = "b0";
-  var BITS = { font: 5, color: 5, base: 4, radius: 4, style: 4 };
-  var SHIFT = (function () {
+
+  var BITS_V1 = { font: 5, color: 5, base: 4, radius: 4, style: 4 };
+  var SHIFT_V1 = (function () {
     var s = {}, offset = 0;
     ["font", "color", "base", "radius", "style"].forEach(function (name) {
       s[name] = offset;
-      offset += BITS[name];
+      offset += BITS_V1[name];
+    });
+    return s;
+  })();
+
+  var BITS_V2 = { font: 5, color: 5, chart: 5, base: 4, radius: 4, style: 4 };
+  var SHIFT_V2 = (function () {
+    var s = {}, offset = 0;
+    ["font", "color", "chart", "base", "radius", "style"].forEach(function (name) {
+      s[name] = offset;
+      offset += BITS_V2[name];
     });
     return s;
   })();
@@ -563,18 +620,20 @@
     var fontIdx = plainIndex("font", state.font);
     var colorIdx = state.color === MATCH_BASE_VALUE ? 0 : inheritableIndex("color", state.color);
     var radiusIdx = state.radius === DEFAULT_RADIUS_VALUE ? 0 : inheritableIndex("radius", state.radius);
+    var chartIdx = state.chart === MATCH_COLOR_VALUE ? 0 : inheritableIndex("color", state.chart);
 
-    if (styleIdx === 0 && radiusIdx === 0 && baseIdx === 0 && colorIdx === 0 && fontIdx === 0) {
+    if (styleIdx === 0 && radiusIdx === 0 && baseIdx === 0 && colorIdx === 0 && chartIdx === 0 && fontIdx === 0) {
       return DEFAULT_PRESET_CODE;
     }
 
     var packed =
       ((PRESET_VERSION << 28) |
-        (styleIdx << SHIFT.style) |
-        (radiusIdx << SHIFT.radius) |
-        (baseIdx << SHIFT.base) |
-        (colorIdx << SHIFT.color) |
-        (fontIdx << SHIFT.font)) >>>
+        (styleIdx << SHIFT_V2.style) |
+        (radiusIdx << SHIFT_V2.radius) |
+        (baseIdx << SHIFT_V2.base) |
+        (colorIdx << SHIFT_V2.color) |
+        (chartIdx << SHIFT_V2.chart) |
+        (fontIdx << SHIFT_V2.font)) >>>
       0;
 
     return encodeBase62(packed);
@@ -595,13 +654,26 @@
     }
 
     var version = (packed >>> 28) & 0xf;
-    if (version !== PRESET_VERSION) return false;
+    var styleIdx, radiusIdx, baseIdx, colorIdx, fontIdx, chartIdx;
 
-    var styleIdx = (packed >>> SHIFT.style) & ((1 << BITS.style) - 1);
-    var radiusIdx = (packed >>> SHIFT.radius) & ((1 << BITS.radius) - 1);
-    var baseIdx = (packed >>> SHIFT.base) & ((1 << BITS.base) - 1);
-    var colorIdx = (packed >>> SHIFT.color) & ((1 << BITS.color) - 1);
-    var fontIdx = (packed >>> SHIFT.font) & ((1 << BITS.font) - 1);
+    if (version === 1) {
+      // Legacy format — no chart dimension existed yet, defaults to "Auto".
+      styleIdx = (packed >>> SHIFT_V1.style) & ((1 << BITS_V1.style) - 1);
+      radiusIdx = (packed >>> SHIFT_V1.radius) & ((1 << BITS_V1.radius) - 1);
+      baseIdx = (packed >>> SHIFT_V1.base) & ((1 << BITS_V1.base) - 1);
+      colorIdx = (packed >>> SHIFT_V1.color) & ((1 << BITS_V1.color) - 1);
+      fontIdx = (packed >>> SHIFT_V1.font) & ((1 << BITS_V1.font) - 1);
+      chartIdx = 0;
+    } else if (version === 2) {
+      styleIdx = (packed >>> SHIFT_V2.style) & ((1 << BITS_V2.style) - 1);
+      radiusIdx = (packed >>> SHIFT_V2.radius) & ((1 << BITS_V2.radius) - 1);
+      baseIdx = (packed >>> SHIFT_V2.base) & ((1 << BITS_V2.base) - 1);
+      colorIdx = (packed >>> SHIFT_V2.color) & ((1 << BITS_V2.color) - 1);
+      chartIdx = (packed >>> SHIFT_V2.chart) & ((1 << BITS_V2.chart) - 1);
+      fontIdx = (packed >>> SHIFT_V2.font) & ((1 << BITS_V2.font) - 1);
+    } else {
+      return false; // unknown future version — reject rather than misread
+    }
 
     var registries = window.__THEME_REGISTRIES__;
     var styleEntry = registries.style[styleIdx];
@@ -621,6 +693,14 @@
       state.color = colorEntry.id;
     }
 
+    if (chartIdx === 0) {
+      state.chart = MATCH_COLOR_VALUE;
+    } else {
+      var chartEntry = registries.color[chartIdx - 1];
+      if (!chartEntry) return false;
+      state.chart = chartEntry.id;
+    }
+
     if (radiusIdx === 0) {
       state.radius = DEFAULT_RADIUS_VALUE;
     } else {
@@ -636,6 +716,7 @@
     var styleSelect = document.getElementById("style-select");
     var baseSelect = document.getElementById("base-theme-select");
     var colorSelect = document.getElementById("color-theme-select");
+    var chartSelect = document.getElementById("chart-color-select");
     var radiusSelect = document.getElementById("radius-select");
     var fontSelect = document.getElementById("font-select");
 
@@ -647,6 +728,10 @@
     if (colorSelect) {
       upsertSyntheticOption(colorSelect, MATCH_BASE_VALUE, baseEntry ? baseEntry.label : "Match base");
       colorSelect.value = state.color;
+    }
+    if (chartSelect) {
+      upsertSyntheticOption(chartSelect, MATCH_COLOR_VALUE, "Auto");
+      chartSelect.value = state.chart;
     }
     if (radiusSelect) {
       upsertSyntheticOption(radiusSelect, DEFAULT_RADIUS_VALUE, "Default");
@@ -683,6 +768,7 @@
   var state = {
     base: null,
     color: MATCH_BASE_VALUE,
+    chart: MATCH_COLOR_VALUE,
     style: null,
     radius: DEFAULT_RADIUS_VALUE,
     font: null,
@@ -731,6 +817,8 @@
     });
   }
 
+  var CHART_KEYS = ["chart-1", "chart-2", "chart-3", "chart-4", "chart-5"];
+
   function applyColorOverlay() {
     if (state.color === MATCH_BASE_VALUE) return; // base's own colors stand as-is
     var entry = findById("color", state.color);
@@ -738,8 +826,41 @@
     if (!entry || !el) return;
     var isDark = document.documentElement.classList.contains("dark");
     var values = isDark ? entry.dark : entry.light;
+    // chart-* is governed exclusively by applyChartOverlay — excluded here
+    // so the two don't fight over the same keys depending on call order.
     Object.keys(values).forEach(function (key) {
-      el.style.setProperty("--" + key, values[key]);
+      if (CHART_KEYS.indexOf(key) === -1) {
+        el.style.setProperty("--" + key, values[key]);
+      }
+    });
+  }
+
+  // What chart-1..5 WOULD be if Chart is left on "Auto" — mirrors whatever
+  // the Color select currently resolves to (an explicit color theme's own
+  // chart-*, or the base's own chart-* if Color is also on "match base").
+  function effectiveChartValues(isDark) {
+    if (state.color !== MATCH_BASE_VALUE) {
+      var c = findById("color", state.color);
+      if (c) return isDark ? c.dark : c.light;
+    }
+    var b = findById("base", state.base);
+    return b ? (isDark ? b.dark : b.light) : {};
+  }
+
+  function applyChartOverlay() {
+    var el = root();
+    if (!el) return;
+    var isDark = document.documentElement.classList.contains("dark");
+    var values;
+    if (state.chart === MATCH_COLOR_VALUE) {
+      values = effectiveChartValues(isDark);
+    } else {
+      var entry = findById("color", state.chart); // chart reuses COLOR_THEMES as its source list
+      if (!entry) return;
+      values = isDark ? entry.dark : entry.light;
+    }
+    CHART_KEYS.forEach(function (key) {
+      if (values[key] !== undefined) el.style.setProperty("--" + key, values[key]);
     });
   }
 
@@ -779,8 +900,46 @@
     if (!ensureDefaults()) return;
     applyBase();
     applyColorOverlay();
+    applyChartOverlay();
     applyStyle(); // sets --radius from style, then re-applies an explicit radius override on top if one is active
     applyFont();
+    syncSwatches();
+  }
+
+  // Reads live CSS values back from the actual applied state (state object
+  // + registries), rather than re-deriving colors independently — so
+  // swatches can never drift out of sync with what's really applied.
+  function syncSwatches() {
+    var isDark = document.documentElement.classList.contains("dark");
+
+    var baseEntry = findById("base", state.base);
+    var baseSwatch = document.getElementById("base-theme-select-swatch");
+    if (baseSwatch && baseEntry) {
+      var bv = isDark ? baseEntry.dark : baseEntry.light;
+      baseSwatch.style.backgroundColor = bv.primary;
+    }
+
+    var colorSwatch = document.getElementById("color-theme-select-swatch");
+    if (colorSwatch) {
+      var effectiveColor =
+        state.color === MATCH_BASE_VALUE
+          ? baseEntry && (isDark ? baseEntry.dark.primary : baseEntry.light.primary)
+          : (function () {
+              var c = findById("color", state.color);
+              return c && (isDark ? c.dark.primary : c.light.primary);
+            })();
+      if (effectiveColor) colorSwatch.style.backgroundColor = effectiveColor;
+    }
+
+    var chartValues = effectiveChartValues(isDark);
+    if (state.chart !== MATCH_COLOR_VALUE) {
+      var explicitChart = findById("color", state.chart);
+      if (explicitChart) chartValues = isDark ? explicitChart.dark : explicitChart.light;
+    }
+    CHART_KEYS.forEach(function (key, i) {
+      var dot = document.getElementById("chart-color-select-swatch-" + (i + 1));
+      if (dot && chartValues[key]) dot.style.backgroundColor = chartValues[key];
+    });
   }
 
   function getThemeCSS() {
@@ -796,10 +955,23 @@
       if (radiusEntry) radiusValue = radiusEntry.value;
     }
 
-    var light = Object.assign({}, base.light, color ? color.light : {}, style.vars, font.vars, {
+    // Chart resolution mirrors applyChartOverlay's precedence, computed for
+    // both modes at once since the exported CSS needs both :root and .dark
+    // blocks simultaneously (unlike the live apply path, which only ever
+    // cares about whichever mode is currently active).
+    var chartSource = state.chart === MATCH_COLOR_VALUE ? color || base : findById("color", state.chart);
+    var chartLight = {}, chartDark = {};
+    if (chartSource) {
+      CHART_KEYS.forEach(function (key) {
+        if (chartSource.light[key] !== undefined) chartLight[key] = chartSource.light[key];
+        if (chartSource.dark[key] !== undefined) chartDark[key] = chartSource.dark[key];
+      });
+    }
+
+    var light = Object.assign({}, base.light, color ? color.light : {}, chartLight, style.vars, font.vars, {
       "--radius": radiusValue,
     });
-    var dark = Object.assign({}, base.dark, color ? color.dark : {}, style.vars, font.vars, {
+    var dark = Object.assign({}, base.dark, color ? color.dark : {}, chartDark, style.vars, font.vars, {
       "--radius": radiusValue,
     });
 
@@ -835,12 +1007,23 @@
       }
       applyBase();
       applyColorOverlay();
+      applyChartOverlay(); // keeps Chart's "Auto" tracking live if it's not explicitly overridden
+      syncSwatches();
       afterStateChange();
     },
 
     setColor: function (id) {
       state.color = id;
       applyColorOverlay();
+      applyChartOverlay(); // same — Auto chart tracks whichever color is now effective
+      syncSwatches();
+      afterStateChange();
+    },
+
+    setChart: function (id) {
+      state.chart = id;
+      applyChartOverlay();
+      syncSwatches();
       afterStateChange();
     },
 
@@ -893,6 +1076,10 @@
         rng() < 0.5
           ? MATCH_BASE_VALUE
           : registries.color[Math.floor(rng() * registries.color.length)].id;
+      state.chart =
+        rng() < 0.5
+          ? MATCH_COLOR_VALUE
+          : registries.color[Math.floor(rng() * registries.color.length)].id;
       state.radius =
         rng() < 0.5
           ? DEFAULT_RADIUS_VALUE
@@ -926,6 +1113,7 @@
     var id = e.target.id;
     if (id === "base-theme-select") window.preview.setBase(e.target.value);
     if (id === "color-theme-select") window.preview.setColor(e.target.value);
+    if (id === "chart-color-select") window.preview.setChart(e.target.value);
     if (id === "style-select") window.preview.setStyle(e.target.value);
     if (id === "radius-select") window.preview.setRadius(e.target.value);
     if (id === "font-select") window.preview.setFont(e.target.value);
@@ -933,6 +1121,8 @@
 
   document.addEventListener("click", function (e) {
     if (e.target.id === "copy-theme-button") {
+      var target = document.getElementById("get-css-theme");
+      target.textContent = getThemeCSS();
       navigator.clipboard.writeText(getThemeCSS());
     }
     if (e.target.id === "shuffle-button") {
@@ -954,10 +1144,13 @@
       if (mutations[i].attributeName === "class") {
         applyBase();
         applyColorOverlay();
+        applyChartOverlay();
+        syncSwatches();
         break;
       }
     }
   }).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
 
   // On first load: if the URL has a valid ?preset= code, apply it.
   // Otherwise fall back to plain defaults (and write "b0" to the URL so

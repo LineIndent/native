@@ -15,59 +15,49 @@ We use and recommend CSS variables for theming. This approach provides semantic 
 rx.el.div(class_name="bg-background text-foreground")
 ```
 
-# rxconfig.py
+# Tailwind V4
 
-To use CSS variables for theming, make the following changes to your `rxconfig.py` file found at the root of your Reflex app. 
+We recommend using **Tailwind V4** in your Reflex application as it allows for better syntax use nad avoids duplicating codes. Using Tailwind V4 also allows us to bypass extending `rxconfig.py` with corresponding CSS tokens by utilizing `@theme inline` syntax.
 
-Import the tailwind plugin `TailwindConfig`, add it to the `plugins=[...]` list, define (or remove if unnecessary) `darkMode` or specific `plugins`, then finally set the `theme` and extend the colors based on the CSS tokens in your `globals.css` file in your assets folder.
+A basic Tailwind V4 setup in Reflex could look like the following:
+
+```css
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+}
+```
+
+By using `@theme inline` we now have access to those tokens directly inside any component.
+
+However, we some Tailwind packages get processed as JavaScript files, for example `@tailwind/typography`, and these kinds of packages need to be added into `rxconfig.py` directly. 
 
 ```python
+import reflex as rx
 from reflex.plugins.shared_tailwind import TailwindConfig
 
 config = rx.Config(
+    ...,
     plugins=[
         rx.plugins.TailwindV4Plugin(
-            TailwindConfig(
-                darkMode="class",
-                plugins=[
-                    "@tailwindcss/typography",
-                    "tailwind-scrollbar",
-                    "tailwindcss-animate",
-                ],
-                theme={
-                    "extend": {
-                        "colors": {
-                            "background": "var(--background)",
-                            "foreground": "var(--foreground)",
-                        },
-                    }
-                },
-            )
+            config=TailwindConfig(plugins=["@tailwindcss/typography"])
         ),
-    ]
+    ],
 )
 ```
 
-Further extensions are possible, such as `fontFamily`, `borderRadius`, and `boxShadow` by further extending the `theme` dictionary as such, making sure each `var(...)` token is defined in a CSS file.
-
-```python
-theme={
-    "extend": {
-        "colors": {...},
-        "fontFamily": {
-            "theme": "var(--font-family)",
-        },
-        "borderRadius": {
-            "radius": "var(--radius)",
-        },
-        "boxShadow": {
-            "default": "var(--shadow)",
-        },
-    }
-},
-```
-
-Make sure to pull your CSS files where your tokens are defined in your `rx.App` instance.
+Finally, make sure to pull your CSS files where your tokens are defined in your `rx.App` instance.
 
 ```python
 app = rx.App(stylesheets=["globals.css"])
