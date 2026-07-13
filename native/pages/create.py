@@ -89,7 +89,7 @@ def _sidebar_desktop():
     return rx.el.aside(
         rx.el.div(
             button("Reset",
-                # id="copy-theme-button",
+                id="reset-preset-button",
                 type="button",
                 class_name="w-full",
                 variant="destructive",
