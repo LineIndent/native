@@ -161,15 +161,23 @@ _MD_EXTENSIONS = ["fenced_code", "tables", "toc"]
 
 _PROSE_CLASS = "docs-prose"
 
+
 def wrap_tables(html: str) -> str:
-    """Wrap every table in a horizontally scrollable container."""
+    """Wrap every table in a double container for perfect scrolling and borders."""
     soup = BeautifulSoup(html, "html.parser")
 
     for table in soup.find_all("table"):
-        wrapper = soup.new_tag("div")
-        wrapper["class"] = "w-full overflow-x-auto scrollbar-none !p-0"
+        # Outer Wrapper: Handles border, rounded corners, and vertical spacing
+        outer_wrapper = soup.new_tag("div")
+        outer_wrapper["class"] = "w-full overflow-hidden border border-input rounded-lg my-4"
 
-        table.wrap(wrapper)
+        # Inner Wrapper: Handles ONLY horizontal scrolling
+        inner_wrapper = soup.new_tag("div")
+        inner_wrapper["class"] = "w-full overflow-x-auto scrollbar-none"
+
+        # Wrap them up: table goes inside inner, inner goes inside outer
+        table.wrap(inner_wrapper)
+        inner_wrapper.wrap(outer_wrapper)
 
     return str(soup)
 

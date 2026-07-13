@@ -32,7 +32,7 @@ def file_codeblock(file_path: str, source: str) -> rx.Component:
         on_click=rx.call_script(
             f"document.getElementById('{btn_id}').click();"
         ),
-        class_name="group flex flex-col gap-3 border border-border bg-background p-4 transition-colors hover:bg-muted/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:outline-none",
+        class_name="group flex flex-col gap-3 border border-border bg-background p-4 transition-colors hover:bg-muted/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:outline-none rounded-lg",
     )
 
 

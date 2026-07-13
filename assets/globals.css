@@ -175,8 +175,8 @@
         @apply prose-p:text-muted-foreground
     prose-p:leading-relaxed;
 
-        /* 5. Preformatted Code Block Modifiers (Cleaned of invalid text-md) */
-        @apply prose-pre:rounded-2xl
+        /* 5. Preformatted Code Block Modifiers */
+        @apply prose-pre:rounded-lg
     prose-pre:bg-secondary
     prose-pre:shadow-none
     prose-pre:border-0
@@ -186,34 +186,37 @@
     prose-pre:before:content-none
     prose-pre:after:content-none;
 
-        /* 6. Table Modifiers (Cleaned of missing table/thead/tbody variants) */
-        @apply prose-table:border
-    prose-table:border-input
-    /*prose-table:mb-4*/
-    prose-th:px-4
-    prose-th:py-2
-    prose-th:text-left
-    prose-th:font-bold
-    prose-th:whitespace-nowrap
-    prose-td:px-4
-    prose-td:py-2
-    prose-td:whitespace-nowrap;
+    @apply prose-table:w-full
+        prose-table:rounded-lg
+        prose-table:border-separate
+        prose-table:border-spacing-0
+        prose-table:overflow-x-scroll
+        prose-th:px-4
+        prose-th:py-2
+        prose-th:text-left
+        prose-th:font-bold
+        prose-th:whitespace-nowrap
+        prose-td:px-4
+        prose-td:py-2
+        prose-th:border-b
+        prose-th:border-input
+        prose-table:my-0
+        prose-td:whitespace-nowrap;
     }
 
 
-    /* Fixed non-existent prose-thead variant */
     .docs-prose thead {
         @apply border-b border-input;
     }
 
     /* Fixed non-existent prose-tbody variant */
-    .docs-prose tbody {
-        @apply divide-y divide-input;
+    .docs-prose tbody tr:not(:last-child) td {
+        @apply border-b border-input;
     }
 
     /* Blockquote Style Blocks */
     .docs-prose blockquote {
-        @apply w-full bg-secondary dark:bg-card flex px-3 not-italic border-0;
+        @apply w-full bg-secondary dark:bg-card flex px-3 not-italic border border-input rounded-lg;
     }
     .docs-prose blockquote p {
         @apply text-sm font-light text-foreground;
@@ -246,5 +249,4 @@
             p-0
             text-inherit;
     }
-
 }

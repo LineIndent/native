@@ -77,14 +77,14 @@ def _usage_demo(component_name: str):
                 ),
             ),
             class_name=(
-                "relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col "
+                "rounded-md relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col "
                 "overflow-hidden border bg-background "
                 "dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]"
             ),
         ),
         id=f"demo-{demo_id}",
         data_view="usage",
-        class_name="w-full group relative flex min-w-0 flex-col border bg-muted/50 min-h-10",
+        class_name="w-full group relative flex min-w-0 flex-col border bg-muted/50 min-h-10 rounded-lg",
     )
 
 

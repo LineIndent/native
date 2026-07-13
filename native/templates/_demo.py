@@ -31,6 +31,7 @@ def demo(component: rx.Component, source: str):
                     button(
                         hi("CodeIcon", class_name="size-3.5"),
                         variant="outline",
+                        size="sm",
                         class_name=(
                             "size-7 code-btn border-transparent bg-transparent "
                             "group-data-[view=code]:border-border "
@@ -42,7 +43,7 @@ def demo(component: rx.Component, source: str):
                             """
                         ),
                     ),
-                    class_name="flex items-center gap-1"
+                    class_name="flex items-center gap-1 radius-lg"
                 ),
                 class_name="flex items-center gap-2",
             ),
@@ -74,10 +75,10 @@ def demo(component: rx.Component, source: str):
             class_name=(
                 "relative m-0.5 mt-0 flex min-h-0 flex-1 flex-col "
                 "overflow-hidden border bg-background "
-                "dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]"
+                "dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] rounded-md"
             ),
         ),
         id=f"demo-{demo_id}",
         data_view="preview",
-        class_name="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh]",
+        class_name="group relative flex min-w-0 flex-col border bg-muted/50 min-h-[45vh] rounded-lg",
     )

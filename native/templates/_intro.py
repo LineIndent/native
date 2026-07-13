@@ -10,7 +10,7 @@ def command_selector():
     return menu.root(
         menu.trigger(
             hi("ArrowDown01Icon"),
-            class_name=button_variants("outline"),
+            class_name=f"""{button_variants("outline")} !rounded-r-lg !rounded-l-none !border-l-none""",
         ),
         menu.content(
             menu.group_label("Commands"),
@@ -146,7 +146,7 @@ def intro(raw_arg):
                         class_name="font-medium text-foreground",
                     ),
                     class_name=(
-                        "flex h-8 min-w-0 flex-1 items-center gap-2 "
+                        "rounded-lg  flex h-8 min-w-0 flex-1 items-center gap-2 "
                         "overflow-x-auto border border-border bg-muted/40 "
                         "px-3 font-mono text-xs whitespace-nowrap"
                     ),
