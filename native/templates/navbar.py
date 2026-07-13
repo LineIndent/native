@@ -16,7 +16,7 @@ def _separator() -> Div:
     return div(class_name="h-3 w-px bg-muted-foreground/40")
 
 
-def navbar() -> Header:
+def navbar(class_name: str = "") -> Header:
     return header(
         div(
             div(
@@ -24,6 +24,7 @@ def navbar() -> Header:
                     a(button(nav["name"], variant="ghost"), href=nav["path"])
                     for nav in NAV_LIST
                 ],
+                class_name="hidden md:flex"
             ),
             div(
                 theme_toggle_button(),
@@ -33,7 +34,7 @@ def navbar() -> Header:
                 button("New Project"),
                 class_name="flex flex-row gap-x-2 items-center",
             ),
-            class_name="w-full max-w-5xl mx-auto flex flex-row items-center justify-between px-2 md:px-0",
+            class_name="w-full max-w-5xl mx-auto flex flex-row items-center justify-between px-2 md:px-0 " + class_name,
         ),
         class_name="sticky top-0 z-50 w-full h-13 bg-background flex items-center",
     )

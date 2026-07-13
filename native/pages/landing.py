@@ -1,4 +1,4 @@
-from reflex_components_core.el import Section, a, div, section
+from reflex_components_core.el import Section, a, div, section, img
 
 from components.core.hugeicon import hi
 from components.ui.button import button
@@ -63,7 +63,20 @@ def landing_page() -> Section:
         ),
     )
 
+    landing_mobile = div(
+        img(
+            src="site/landing_ss_dark.webp",
+            class_name="w-[1450px] max-w-none hidden dark:flex",
+        ),
+        img(
+            src="/site/landing_ss_light.webp",
+            class_name="w-[1450px] max-w-none flex dark:hidden",
+        ),
+        class_name="overflow-x-hidden w-full flex justify-center",
+    )
+
     return section(
-        landing_desktop,
+        div(landing_desktop, class_name="hidden sm:block"),
+        div(landing_mobile, class_name="flex sm:hidden"),
         class_name="mx-auto w-full relative",
     )

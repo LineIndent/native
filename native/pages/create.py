@@ -4,6 +4,8 @@ import reflex as rx
 
 from components.ui.select import select
 from components.ui.button import button
+from components.ui.dialog import dialog
+from components.ui.input import input
 from native.registry.colors import COLOR_THEMES
 from native.registry.themes import BASE_THEMES
 from native.registry.radii import RADII_OPTIONS
@@ -50,93 +52,52 @@ def _theme_select(
             *[select.option(_option_label(opt), value=opt["id"]) for opt in options],
             id=id_,
             default_value=default_id,
-            # wrapper_class_name="w-full [&_[data-slot=native-select-icon]]:hidden",
-            wrapper_class_name="w-full",
-            class_name="w-full"
+            wrapper_class_name="w-full [&_[data-slot=native-select-icon]]:hidden",
+            class_name="w-full h-9"
         ),
         class_name="flex flex-col gap-2 px-1 pt-2",
     ),
     class_name="px-3 pb-3"
     )
 
-
-def _create_page() -> rx.Component:
-    return rx.el.div(
-        rx.el.aside(
-            rx.el.h2(
-                "Theme Builder",
-                class_name="text-lg font-semibold text-foreground mb-2",
-            ),
-            _theme_select(
-                "style-select", "Style", STYLE_REGISTRY, STYLE_REGISTRY[0]["id"],
-                describe=True,
-            ),
-            _theme_select(
-                "radius-select", "Radius", RADII_OPTIONS, RADII_OPTIONS[0]["id"]
-            ),
-            _theme_select(
-                "base-theme-select", "Base theme", BASE_THEMES, BASE_THEMES[0]["id"]
-            ),
-            _theme_select(
-                "color-theme-select", "Color theme", COLOR_THEMES, COLOR_THEMES[0]["id"]
-            ),
-            _theme_select(
-                "font-select", "Font", FONT_REGISTRY, FONT_REGISTRY[0]["id"]
-            ),
-            rx.el.button(
-                "Copy theme CSS",
-                id="copy-theme-button",
-                type="button",
-                class_name="mt-2 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-sm w-full",
-            ),
-            class_name="flex flex-col gap-4 w-64 shrink-0 border-r border-border p-6 overflow-y-auto",
-        ),
-        rx.el.main(
-            rx.el.div(
-                card_01(),
-                card_02(),
-                card_03(),
-                card_04(),
-                card_05(),
-                card_06(),
-                card_07(),
-                card_08(),
-                card_09(),
-                card_10(),
-                card_11(),
-                card_12(),
-                card_13(),
-                class_name=" ".join(
-                    [
-                        "flex flex-row gap-10 flex-wrap overflow-scroll w-full"
-                    ]
+def open_preset() -> rx.Component:
+    return dialog.root(
+        dialog.trigger(button("Open Preset", variant="outline", class_name="justify-start")),
+        dialog.popup(
+            dialog.header(
+                dialog.title("Open Theme Preset"),
+                dialog.description(
+                    "Paste a preset ID to load a theme configuration."
                 ),
             ),
-            class_name=(
-                "preview-theme w-full overflow-hidden flex flex-col gap-(--card-gap) bg-accent dark:bg-background text-foreground "
-                "border-(length:--border-width) border-border rounded-xl "
-                "p-(--card-padding) flex-1 m-6 font-(family-name:--font-family)"
+            rx.el.div(
+                input(id="preset-input", placeholder="e.g. IBZJp", class_name="flex-1"),
             ),
+            dialog.footer(
+                rx.el.div(
+                dialog.close(button("Cancel", type="button", variant="outline", class_name="flex-1"), class_name="flex-1"),
+                dialog.close(button("Apply", type="button", class_name="flex-1",                         id="apply-preset-button",
+), class_name="flex-1"),
+                class_name="w-full flex flex-row items-center justify-center gap-x-4",
+                ),
+            ),
+            class_name="sm:max-w-sm",
         ),
-        on_mount=rx.call_script(
-            f"""
-window.__THEME_REGISTRIES__ = {{
-    base: {json.dumps(BASE_THEMES)},
-    color: {json.dumps(COLOR_THEMES)},
-    radius: {json.dumps(RADII_OPTIONS)},
-    style: {json.dumps(STYLE_REGISTRY)},
-    font: {json.dumps(FONT_REGISTRY)},
-}};
-if (window.preview) window.preview.applyAll();
-"""
-        ),
-        class_name="w-full h-screen flex",
     )
-
 
 def _sidebar_desktop():
     return rx.el.aside(
-        _theme_select(
+        rx.el.div(
+            button("Reset",
+                # id="copy-theme-button",
+                type="button",
+                class_name="w-full",
+                variant="destructive",
+            ),
+            class_name="p-3 bg-card/20"
+        ),
+        rx.el.div(
+            _theme_select(
             "style-select", "Style", STYLE_REGISTRY, STYLE_REGISTRY[0]["id"],
             describe=True,
         ),
@@ -154,15 +115,40 @@ def _sidebar_desktop():
         _theme_select(
             "font-select", "Font", FONT_REGISTRY, FONT_REGISTRY[0]["id"]
         ),
+        class_name="flex-1 min-h-0 overflow-y-auto scrollbar-none divide-y divide-input",
+        ),
+        rx.el.div(
+            button("Shuffle",
+                id="shuffle-button",
+                type="button",
+                variant="outline",
+                class_name="w-full justify-start"
+            ),
+
+            button(
+                rx.el.span("--preset ", html_for="preset-code-display"),
+                rx.el.input(
+                    id="preset-code-display",
+                    default_value="b0",
+                    read_only=True,
+                    disabled=True,
+                ),
+                variant="outline",
+                type="button",
+                class_name="w-full flex flex-row items-center justify-start"
+            ),
+            open_preset(),
+            class_name="p-4 flex flex-col gap-3 bg-card/20"
+        ),
         rx.el.div(
             button("Get Code",
                 id="copy-theme-button",
                 type="button",
                 class_name="w-full"
             ),
-            class_name="p-3"
+            class_name="p-3 bg-card/20"
         ),
-        class_name="pt-3 hidden lg:flex w-full max-w-[12rem] shrink-0 !overflow-hidden flex-col border border-input/90 divide-y divide-input h-full text-sm text-card-foreground dark bg-card/90 isolate rounded-2xl",
+        class_name="hidden lg:flex w-full max-w-[12rem] shrink-0 !overflow-hidden flex-col border border-input/90 divide-y divide-input h-full text-sm text-card-foreground dark bg-card/90 isolate rounded-2xl",
 
     )
 
@@ -219,7 +205,7 @@ def preview_space():
 def create_page():
     return rx.el.div(
         rx.el.div(
-            navbar(),
+            navbar(class_name="max-w-full !pl-4 !pr-6"),
             rx.el.main(
                 sidebar(),
                 preview_space(),
@@ -240,4 +226,4 @@ def create_page():
             if (window.preview) window.preview.applyAll();
         """
         ),
-    ),
+    )

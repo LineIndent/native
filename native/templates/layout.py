@@ -38,14 +38,13 @@ def layout_decorator(
                             ),
                             class_name="mx-auto flex flex-1 flex-col",
                         ),
-                        class_name="w-full",
+                        class_name="w-full px-4",
                     ),
                     page_content,
                     _footer(),
-                    class_name="flex min-h-screen flex-col gap-16",
+                    class_name="flex min-h-screen flex-col gap-8",
                 ),
-                class_name="mx-auto min-h-screen max-w-[96rem] px-4",
-                # class_name="mx-auto min-h-screen max-w-6xl px-4",
+                class_name="mx-auto min-h-screen max-w-[96rem]",
             )
 
         return wrapper

@@ -10,7 +10,7 @@ from native.templates.toc import table_of_content
 from native.templates._meta_tags import generate_site_meta_tags
 
 
-from reflex_components_core.el import div
+from reflex_components_core.el import div, h1, h2
 
 def export(app: App):
 
@@ -78,3 +78,26 @@ def export(app: App):
     #             social_card=card_path,
     #         ),
     #     )
+
+
+    app.add_page(
+        component=div(
+            div(
+                h1(
+                    "404",
+                    class_name=(
+                        "inline-block mr-5 pr-[23px] text-2xl font-medium align-top "
+                        "leading-[49px] border-r border-input"
+                    ),
+                ),
+                h2(
+                    "This page could not be found.",
+                    class_name="text-sm font-normal leading-[49px] m-0",
+                ),
+                class_name="flex flex-row items-center",
+            ),
+            class_name="w-full h-screen flex items-center justify-center",
+        ),
+        route="/404",
+        title="buridan/ui",
+    )
