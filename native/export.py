@@ -24,9 +24,9 @@ def export(app: App):
         route="/",
         title="The UI Library for Reflex Developers - buridan/ui",
         meta=generate_site_meta_tags(
-            title="Buridan UI",
+            title="Buridan Native",
             url="/",
-            description="Composable, themeable components designed for Reflex. Extend, override, and ship without fighting the framework. Open source.",
+            description="Native HTML UI components you can copy, paste, and ship in minutes. Built for Reflex. Open Source.",
             social_card="index.webp",
         )
     )
