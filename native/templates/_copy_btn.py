@@ -24,7 +24,6 @@ def create_copy_button(content: str) -> tuple[rx.Component, str]:
     button = rx.el.button(
         hi("Copy01Icon", id=icon_id, class_name="size-4"),
         id=btn_id,
-        # class_name="px-[0.75rem]",
         on_click=rx.call_script(
             f"""
                 const icon = document.getElementById('{icon_id}');

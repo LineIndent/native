@@ -1,19 +1,19 @@
 import json
-from typing import Literal
-
 import reflex as rx
 
 from components.ui.select import select
 from components.ui.button import button
 from components.ui.dialog import dialog
 from components.ui.input import input
-from native.templates._get_code import get_code
+from components.core.hugeicon import hi
 from native.registry.colors import COLOR_THEMES
 from native.registry.themes import BASE_THEMES
 from native.registry.radii import RADII_OPTIONS
 from native.registry.styles import STYLE_REGISTRY
 from native.registry.fonts import FONT_REGISTRY
 from native.templates.navbar import navbar
+from native.templates._get_code import get_code, ADD_SWATCHES_JS
+
 
 from native.lib.examples.card_01 import card_01
 from native.lib.examples.card_02 import card_02
@@ -38,8 +38,19 @@ def _theme_select(
     *,
     describe: bool = False,
     icon: rx.Component | None = None,
-    swatch: Literal["primary", "chart"] | None = None,
+    swatch: bool = False,
 ) -> rx.Component:
+    """
+    swatch=True: a single live color dot next to the label (id=f"{id_}-swatch"),
+      kept in sync by theme-preview.js. Which CSS token it reflects is
+      decided per-select in the JS layer, not here — base-theme-select
+      shows --accent, color-theme-select shows the effective --primary,
+      chart-color-select shows the effective --chart-1.
+    icon: a static icon (e.g. hi("PaintBucketIcon")) shown instead of a
+      swatch — for selects with no live color to preview (Style, Radius,
+      Font). Pass real icon names from your own hugeicon set; I'm not
+      guessing at exact names here.
+    """
 
     def _option_label(opt: dict) -> str:
         if describe and opt.get("description"):
@@ -48,21 +59,10 @@ def _theme_select(
 
     if icon is not None:
         indicator = icon
-    elif swatch == "primary":
+    elif swatch:
         indicator = rx.el.div(
             id=f"{id_}-swatch",
             class_name="size-4 rounded-full shrink-0 border border-border/40",
-        )
-    elif swatch == "chart":
-        indicator = rx.el.div(
-            *[
-                rx.el.div(
-                    id=f"{id_}-swatch-{i}",
-                    class_name="size-2.5 rounded-full shrink-0 border border-border/40",
-                )
-                for i in range(1)
-            ],
-            class_name="flex items-center gap-1 shrink-0",
         )
     else:
         indicator = rx.el.div()
@@ -73,7 +73,7 @@ def _theme_select(
                 rx.el.span(
                     label, html_for=id_, class_name="text-sm font-medium text-muted-foreground"
                 ),
-                # indicator,
+                indicator,
                 class_name="flex flex-row items-center justify-between",
             ),
             select(
@@ -129,11 +129,14 @@ def _sidebar_desktop():
     return rx.el.aside(
         rx.el.div(
             button(
-                "Reset",
-                id="reset-preset-button",
+                "Get Code",
+                id="copy-theme-button",
                 type="button",
                 class_name="w-full",
-                variant="destructive",
+                on_click=rx.call_script(
+                    'const el = document.getElementById("toggle-wrapper"); '
+                    'el.dataset.show = el.dataset.show === "true" ? "false" : "true";'
+                )
             ),
             class_name="p-3 bg-card/20",
         ),
@@ -141,26 +144,35 @@ def _sidebar_desktop():
             _theme_select(
                 "style-select", "Style", STYLE_REGISTRY, STYLE_REGISTRY[0]["id"],
                 describe=True,
+                icon=hi("HexagonIcon"),
             ),
             rx.el.div(
                 _theme_select(
                     "base-theme-select", "Base theme", BASE_THEMES, BASE_THEMES[0]["id"],
-                    swatch="primary",
+                    swatch=True,
                 ),
                 _theme_select(
-                    "color-theme-select", "Color theme", COLOR_THEMES, COLOR_THEMES[0]["id"],
-                    swatch="primary",
+                    "color-theme-select", "Color theme",
+                    [{"id": "__match_base__", "label": BASE_THEMES[0]["label"]}] + COLOR_THEMES,
+                    "__match_base__",
+                    swatch=True,
                 ),
                 _theme_select(
-                    "chart-color-select", "Chart colors", COLOR_THEMES, COLOR_THEMES[0]["id"],
-                    swatch="chart",
+                    "chart-color-select", "Chart colors",
+                    [{"id": "__match_base__", "label": BASE_THEMES[0]["label"]}] + COLOR_THEMES,
+                    "__match_base__",
+                    swatch=True,
                 ),
             ),
             _theme_select(
-                "radius-select", "Radius", RADII_OPTIONS, RADII_OPTIONS[0]["id"]
+                "radius-select", "Radius",
+                [{"id": "__default__", "label": "Default"}] + RADII_OPTIONS,
+                "__default__",
+                icon=hi("SquareRoundCornerIcon")
             ),
             _theme_select(
-                "font-select", "Font", FONT_REGISTRY, FONT_REGISTRY[0]["id"]
+                "font-select", "Font", FONT_REGISTRY, FONT_REGISTRY[0]["id"],
+                icon=hi("TextFontIcon")
             ),
             class_name="flex-1 min-h-0 overflow-y-auto scrollbar-none divide-y divide-input",
         ),
@@ -188,13 +200,13 @@ def _sidebar_desktop():
             class_name="p-4 flex flex-col gap-3 bg-card/20",
         ),
         rx.el.div(
-            get_code(),
-            # button(
-            #     "Get Code",
-            #     id="copy-theme-button",
-            #     type="button",
-            #     class_name="w-full",
-            # ),
+            button(
+                "Reset",
+                id="reset-preset-button",
+                type="button",
+                class_name="w-full",
+                variant="destructive",
+            ),
             class_name="p-3 bg-card/20",
         ),
         class_name=(
@@ -257,6 +269,64 @@ def preview_space():
     )
 
 
+# def source_space():
+#     return rx.el.div(
+#         rx.el.div(
+#             get_code(),
+#             class_name="flex-2"
+#         ),
+#         rx.el.div(
+#             "asdas",
+#             class_name="flex-1 border"
+#         ),
+#         id="source-space",
+#         class_name=(
+#         "hidden "
+#         "group-data-[show=true]:flex "
+#         "w-full flex-initial h-auto min-h-0 min-w-0 max-w-full lg:flex-1 "
+#         "lg:h-full lg:w-sm lg:max-w-sm lg:shrink-0 border border-input/90 rounded-2xl"
+#     ),
+#     )
+#
+
+def source_space():
+    return rx.el.div(
+        # 1. TOP SECTION (80% Height)
+        rx.el.div(
+            get_code(),
+            # flex-[4] tells it to grab 4 parts of the available space
+            # min-h-0 is crucial so the scrolling container inside get_code() doesn't break
+            class_name="flex-[15] min-h-0 w-full border border-input/90 rounded-2xl"
+        ),
+
+        # 2. BOTTOM SECTION (20% Height)
+        rx.el.div(
+            rx.el.p(
+                rx.el.span(
+                    "Read the ",
+                    rx.el.a(
+                        "theming",
+                        href="/docs/resources/theming",
+                        class_name="font-semibold underline",
+                    ),
+                    " documentation.",
+                ),
+                class_name="w-full text-[13px] font-light",
+            ),
+            class_name="flex-[1] flex w-full px-4 flex-row items-end justify-center"
+        ),
+
+        id="source-space",
+        class_name=(
+            "hidden "
+            # Must add 'flex-col' to stack them vertically!
+            "group-data-[show=true]:flex flex-col gap-y-4 "
+            "w-full flex-initial h-auto min-h-0 min-w-0 max-w-full lg:flex-1 "
+            "lg:h-full lg:w-sm lg:max-w-sm lg:shrink-0"
+        ),
+    )
+
+
 def create_page():
     return rx.el.div(
         rx.el.div(
@@ -264,7 +334,10 @@ def create_page():
             rx.el.main(
                 sidebar(),
                 preview_space(),
-                class_name="flex flex-col gap-x-6 lg:flex-row w-full h-full min-h-0 overflow-hidden p-4 lg:px-6 lg:pb-6 lg:pt-2 gap-y-6 scrollbar-none",
+                source_space(),
+                id="toggle-wrapper",
+                data_show="false",
+                class_name="group flex flex-col gap-x-6 lg:flex-row w-full h-full min-h-0 overflow-hidden p-4 lg:px-6 lg:pb-6 lg:pt-2 gap-y-6 scrollbar-none",
             ),
             class_name="relative flex h-screen flex-col bg-background overflow-hidden",
         ),
@@ -288,6 +361,5 @@ def create_page():
             });
             """
         ),
-
         ],
     )
