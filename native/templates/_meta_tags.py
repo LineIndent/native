@@ -15,10 +15,6 @@ BURIDAN_KEY_WORDS = (
 
 def generate_site_meta_tags(title: str, url: str, description: str, social_card: str):
     return [
-        # {
-        #     "name": "google-site-verification",
-        #     "content": "ET-mQBtJu68mobKWQbFUUuC-vMqCtwzdO_QL8v2i4CU",
-        # },
         {"name": "application-name", "content": title},
         {"name": "keywords", "content": BURIDAN_KEY_WORDS},
         {"name": "description", "content": description},
@@ -30,7 +26,7 @@ def generate_site_meta_tags(title: str, url: str, description: str, social_card:
         {"property": "og:image:width", "content": "1200"},
         {"property": "og:image:height", "content": "630"},
         {"name": "twitter:card", "content": "summary_large_image"},
-        {"name": "twitter:domain", "content": "buridan.reflex.run"},
+        {"name": "twitter:domain", "content": "native.buridan.dev"},
         {"property": "twitter:url", "content": f"{BURIDAN_URL}{url}"},
         {"name": "twitter:title", "content": title},
         {"name": "twitter:description", "content": description},

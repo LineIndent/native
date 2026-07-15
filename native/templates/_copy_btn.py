@@ -2,17 +2,15 @@ import json
 import random
 import string
 
-import reflex as rx
-
 from components.core.hugeicon import hi
-
+from reflex_components_core.el import button, Button
+from reflex.event import call_script
 
 def generate_component_id() -> str:
-    """Generate a unique component ID."""
     return "".join(random.choices(string.ascii_letters + string.digits, k=10))
 
 
-def create_copy_button(content: str) -> tuple[rx.Component, str]:
+def create_copy_button(content: str) -> tuple[Button, str]:
     uid = generate_component_id()
     btn_id = f"btn-{uid}"
     icon_id = f"icon-{uid}"
@@ -21,10 +19,10 @@ def create_copy_button(content: str) -> tuple[rx.Component, str]:
     tick_icon_svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 14.5C5 14.5 6.5 14.5 8.5 18C8.5 18 14.0588 8.83333 19 7"/></svg>'
     safe_content = json.dumps(content)
 
-    button = rx.el.button(
+    btn_component = button(
         hi("Copy01Icon", id=icon_id, class_name="size-4"),
         id=btn_id,
-        on_click=rx.call_script(
+        on_click=call_script(
             f"""
                 const icon = document.getElementById('{icon_id}');
                 navigator.clipboard.writeText({safe_content});
@@ -40,4 +38,4 @@ def create_copy_button(content: str) -> tuple[rx.Component, str]:
         ),
     )
 
-    return button, btn_id
+    return btn_component, btn_id
