@@ -18,7 +18,7 @@ def github() -> A:
             size="sm",
             aria_label="GitHub",
         ),
-        href="https://github.com/LineIndent/ui",
+        href="https://github.com/LineIndent/native",
         target="_blank",
         rel="noopener noreferrer",
         class_name="no-underline",

@@ -12,7 +12,7 @@ from native.registry.radii import RADII_OPTIONS
 from native.registry.styles import STYLE_REGISTRY
 from native.registry.fonts import FONT_REGISTRY
 from native.templates.navbar import navbar
-from native.templates._get_code import get_code, ADD_SWATCHES_JS
+from native.templates._get_code import get_code
 
 
 from native.lib.examples.card_01 import card_01
@@ -28,6 +28,7 @@ from native.lib.examples.card_10 import card_10
 from native.lib.examples.card_11 import card_11
 from native.lib.examples.card_12 import card_12
 from native.lib.examples.card_13 import card_13
+from native.lib.examples.card_14 import card_14
 
 
 def _theme_select(
@@ -246,6 +247,7 @@ def preview_space():
                         card_11(),
                         card_12(),
                         card_13(),
+                        card_14(),
                         class_name=" ".join(
                             [
                                 "preview-theme",
@@ -269,37 +271,13 @@ def preview_space():
     )
 
 
-# def source_space():
-#     return rx.el.div(
-#         rx.el.div(
-#             get_code(),
-#             class_name="flex-2"
-#         ),
-#         rx.el.div(
-#             "asdas",
-#             class_name="flex-1 border"
-#         ),
-#         id="source-space",
-#         class_name=(
-#         "hidden "
-#         "group-data-[show=true]:flex "
-#         "w-full flex-initial h-auto min-h-0 min-w-0 max-w-full lg:flex-1 "
-#         "lg:h-full lg:w-sm lg:max-w-sm lg:shrink-0 border border-input/90 rounded-2xl"
-#     ),
-#     )
-#
 
 def source_space():
     return rx.el.div(
-        # 1. TOP SECTION (80% Height)
         rx.el.div(
             get_code(),
-            # flex-[4] tells it to grab 4 parts of the available space
-            # min-h-0 is crucial so the scrolling container inside get_code() doesn't break
             class_name="flex-[15] min-h-0 w-full border border-input/90 rounded-2xl"
         ),
-
-        # 2. BOTTOM SECTION (20% Height)
         rx.el.div(
             rx.el.p(
                 rx.el.span(
@@ -319,7 +297,6 @@ def source_space():
         id="source-space",
         class_name=(
             "hidden "
-            # Must add 'flex-col' to stack them vertically!
             "group-data-[show=true]:flex flex-col gap-y-4 "
             "w-full flex-initial h-auto min-h-0 min-w-0 max-w-full lg:flex-1 "
             "lg:h-full lg:w-sm lg:max-w-sm lg:shrink-0"

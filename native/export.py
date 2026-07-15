@@ -16,13 +16,20 @@ def export(app: App):
 
     app.add_page(
         component=create_page(),
-        route="/create"
+        route="/create",
+        title="New Project - buridan/native",
+        meta=generate_site_meta_tags(
+            title="New Project",
+            url="/create",
+            description="Build your theme system for Reflex. Customize everything from the ground up. Pick your font, color scheme, and more.",
+            social_card="create.webp",
+        )
     )
 
     app.add_page(
         component=landing_page(),
         route="/",
-        title="The UI Library for Reflex Developers - buridan/ui",
+        title="The UI Library for Reflex Developers - buridan/native",
         meta=generate_site_meta_tags(
             title="Buridan Native",
             url="/",
@@ -34,7 +41,7 @@ def export(app: App):
     app.add_page(
         component=components_page(),
         route="/components",
-        title="Components - buridan/ui",
+        title="Components - buridan/native",
         meta=generate_site_meta_tags(
             title="Components",
             url="/components",
@@ -46,7 +53,7 @@ def export(app: App):
     app.add_page(
         component=docs_page(),
         route="/docs",
-        title="Documentation - buridan/ui",
+        title="Documentation - buridan/native",
         meta=generate_site_meta_tags(
             title="Documentation",
             url="/docs",
@@ -55,29 +62,29 @@ def export(app: App):
         )
     )
 
-    # for doc in generate_docs_library():
-    #     main_content = div(*doc.component, class_name="w-full")
+    for doc in generate_docs_library():
+        main_content = div(*doc.component, class_name="w-full")
 
-    #     toc_content = (
-    #         table_of_content(doc.url, doc.table_of_content)
-    #         if not (doc.url.startswith("docs/components/") or doc.url.startswith("docs/charts/") or doc.url.startswith("docs/utilities/"))
-    #         else None
-    #     )
-    #     title_s = doc.url.split("/")[-1].replace("-", " ").title()
-    #     title = f"{title_s} – buridan/ui"
-    #     card_path = f"{doc.url.split('/')[-1]}.webp"
+        toc_content = (
+            table_of_content(doc.url, doc.table_of_content)
+            if not (doc.url.startswith("docs/components/") or doc.url.startswith("docs/charts/") or doc.url.startswith("docs/utilities/"))
+            else None
+        )
+        title_s = doc.url.split("/")[-1].replace("-", " ").title()
+        title = f"{title_s} – buridan/native"
+        card_path = f"{doc.url.split('/')[-1]}.webp"
 
-    #     app.add_page(
-    #         component=docpage(main_content, toc_content),
-    #         route=f"/{doc.url}",
-    #         title=title,
-    #         meta=generate_site_meta_tags(
-    #             title=title_s,
-    #             url=f"{doc.url}",
-    #             description=doc.description,
-    #             social_card=card_path,
-    #         ),
-    #     )
+        app.add_page(
+            component=docpage(main_content, toc_content),
+            route=f"/{doc.url}",
+            title=title,
+            meta=generate_site_meta_tags(
+                title=title_s,
+                url=f"{doc.url}",
+                description=doc.description,
+                social_card=card_path,
+            ),
+        )
 
 
     app.add_page(
@@ -99,5 +106,5 @@ def export(app: App):
             class_name="w-full h-screen flex items-center justify-center",
         ),
         route="/404",
-        title="buridan/ui",
+        title="buridan/native",
     )

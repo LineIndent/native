@@ -85,7 +85,7 @@ def navbar(class_name: str = "") -> Header:
                 _separator(),
                 github(),
                 _separator(),
-                button(a("New Project", href="/create")),
+                a(button("New Project"), href="/create"),
                 class_name="flex flex-row gap-x-2 items-center",
             ),
             class_name="w-full max-w-5xl mx-auto flex flex-row items-center justify-between px-2 md:px-0 " + class_name,

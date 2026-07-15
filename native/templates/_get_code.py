@@ -1,6 +1,6 @@
 import reflex as rx
 from components.ui.button import button
-from components.core.hugeicon import hi
+
 
 
 
@@ -67,7 +67,7 @@ def get_code_section(title: str, description: str, component: rx.Component, has_
             ),
             rx.el.div(
                 component,
-                class_name="max-h-[45vh] overflow-y-scroll scrollbar-none p-4 bg-secondary dark:bg-card rounded-xl"
+                class_name="max-h-[45vh] overflow-y-scroll scrollbar-none p-4 bg-muted/60 rounded-xl"
             ),
             copy_btn,
             class_name="w-full flex flex-col gap-y-1",
