@@ -3,7 +3,7 @@ from typing import Literal
 import reflex as rx
 from reflex.components.component import ComponentNamespace
 
-from ..core.core import cn
+from ..core.core import CoreComponent
 
 MessageAlign = Literal["start", "end"]
 
@@ -41,89 +41,63 @@ class ClassNames:
     )
 
 
-def message_group(*children, class_name: str = "", **props) -> rx.Component:
-    ##
-
-    return rx.el.div(
-        *children,
-        data_slot="message-group",
-        class_name=cn(ClassNames.GROUP, class_name),
-        **props,
-    )
+class NativeMessageGroup(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "message-group"
+        cls.set_class_name(ClassNames.GROUP, props)
+        return rx.el.div(*children, **props)
 
 
-def message_root(
-    *children,
-    align: MessageAlign = "start",
-    class_name: str = "",
-    **props,
-) -> rx.Component:
-    ##
-
-    return rx.el.div(
-        *children,
-        data_slot="message",
-        data_align=align,
-        class_name=cn(ClassNames.ROOT, class_name),
-        **props,
-    )
+class NativeMessageRoot(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        align = props.pop("align", "start")
+        props["data-slot"] = "message"
+        props["data-align"] = align
+        cls.set_class_name(ClassNames.ROOT, props)
+        return rx.el.div(*children, **props)
 
 
-def message_avatar(*children, class_name: str = "", **props) -> rx.Component:
-    ##
-
-    return rx.el.div(
-        *children,
-        data_slot="message-avatar",
-        class_name=cn(ClassNames.AVATAR, class_name),
-        **props,
-    )
+class NativeMessageAvatar(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "message-avatar"
+        cls.set_class_name(ClassNames.AVATAR, props)
+        return rx.el.div(*children, **props)
 
 
-def message_content(*children, class_name: str = "", **props) -> rx.Component:
-    ##
-
-    return rx.el.div(
-        *children,
-        data_slot="message-content",
-        class_name=cn(ClassNames.CONTENT, class_name),
-        **props,
-    )
+class NativeMessageContent(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "message-content"
+        cls.set_class_name(ClassNames.CONTENT, props)
+        return rx.el.div(*children, **props)
 
 
-def message_header(*children, class_name: str = "", **props) -> rx.Component:
-    ##
-
-    return rx.el.div(
-        *children,
-        data_slot="message-header",
-        class_name=cn(ClassNames.HEADER, class_name),
-        **props,
-    )
+class NativeMessageHeader(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "message-header"
+        cls.set_class_name(ClassNames.HEADER, props)
+        return rx.el.div(*children, **props)
 
 
-def message_footer(*children, class_name: str = "", **props) -> rx.Component:
-    ##
-
-    return rx.el.div(
-        *children,
-        data_slot="message-footer",
-        class_name=cn(ClassNames.FOOTER, class_name),
-        **props,
-    )
+class NativeMessageFooter(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "message-footer"
+        cls.set_class_name(ClassNames.FOOTER, props)
+        return rx.el.div(*children, **props)
 
 
 class Message(ComponentNamespace):
-    ##
-
-
-    group = staticmethod(message_group)
-    root = staticmethod(message_root)
-    avatar = staticmethod(message_avatar)
-    content = staticmethod(message_content)
-    header = staticmethod(message_header)
-    footer = staticmethod(message_footer)
-
+    group = staticmethod(NativeMessageGroup.create)
+    root = staticmethod(NativeMessageRoot.create)
+    avatar = staticmethod(NativeMessageAvatar.create)
+    content = staticmethod(NativeMessageContent.create)
+    header = staticmethod(NativeMessageHeader.create)
+    footer = staticmethod(NativeMessageFooter.create)
     class_names = ClassNames
 
 
