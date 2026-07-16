@@ -1,3 +1,5 @@
+@import "./typeset.css";
+
 @custom-variant dark (&:is(.dark *));
 
 ::selection {
@@ -186,7 +188,7 @@
     prose-pre:before:content-none
     prose-pre:after:content-none;
 
-    @apply prose-table:w-full
+        @apply prose-table:w-full
         prose-table:rounded-lg
         prose-table:border-separate
         prose-table:border-spacing-0
@@ -203,7 +205,6 @@
         prose-table:my-0
         prose-td:whitespace-nowrap;
     }
-
 
     .docs-prose thead {
         @apply border-b border-input;
@@ -229,8 +230,7 @@
     }
 
     .docs-prose pre {
-        @apply
-            border
+        @apply border
             min-w-0
             overflow-x-auto
             border-border
@@ -243,8 +243,7 @@
     }
 
     .docs-prose pre > code {
-        @apply
-            block
+        @apply block
             bg-transparent
             p-0
             text-inherit;

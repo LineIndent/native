@@ -1,20 +1,21 @@
-from reflex_components_core.el import Div, Header, a, div, header
 from dataclasses import dataclass
+
 from reflex.event import call_script
-from components.ui.button import button, button_variants
-from native.templates.github import github
-from native.templates.theme import theme_toggle_button
-from components.ui.menu import menu
+from reflex_components_core.el import Div, Header, a, div, header
+
 import native.registry.routes as routes
 from components.core.hugeicon import hi
-
-
+from components.ui.button import button, button_variants
+from components.ui.menu import menu
+from native.templates.github import github
+from native.templates.theme import theme_toggle_button
 
 NAV_LIST = [
     {"title": "Home", "url": ""},
     {"title": "Docs", "url": "docs"},
     {"title": "Components", "url": "components"},
     {"title": "Create", "url": "create"},
+    {"title": "Typeset", "url": "typeset"},
 ]
 
 
@@ -52,7 +53,7 @@ def _mobile_navigation():
                 menu.item(
                     route["title"],
                     id=f"mob-nav-{s_idx}-{r_idx}",
-                    on_click=call_script(f"window.location.href = '{target_url}';")
+                    on_click=call_script(f"window.location.href = '{target_url}';"),
                 )
             )
 
@@ -60,14 +61,19 @@ def _mobile_navigation():
             menu_elements.append(menu.separator())
 
     return menu.root(
-        menu.trigger(hi("Menu09Icon", class_name="size-4 shrink-0 mr-2"), "Navigation", class_name=button_variants("outline")),
+        menu.trigger(
+            hi("Menu09Icon", class_name="size-4 shrink-0 mr-2"),
+            "Navigation",
+            class_name=button_variants("outline"),
+        ),
         menu.content(
             *menu_elements,
             side="bottom",
             align="start",
-            class_name="max-h-[50vh] overflow-y-auto w-48"
+            class_name="max-h-[50vh] overflow-y-auto w-48",
         ),
     )
+
 
 def navbar(class_name: str = "") -> Header:
     return header(
@@ -77,7 +83,7 @@ def navbar(class_name: str = "") -> Header:
                     a(button(nav["title"], variant="ghost"), href=f"/{nav['url']}")
                     for nav in NAV_LIST
                 ],
-                class_name="hidden md:flex"
+                class_name="hidden md:flex",
             ),
             div(_mobile_navigation(), class_name="flex md:hidden"),
             div(
@@ -88,7 +94,8 @@ def navbar(class_name: str = "") -> Header:
                 a(button("New Project"), href="/create"),
                 class_name="flex flex-row gap-x-2 items-center",
             ),
-            class_name="w-full max-w-5xl mx-auto flex flex-row items-center justify-between px-2 md:px-0 " + class_name,
+            class_name="w-full max-w-5xl mx-auto flex flex-row items-center justify-between px-2 md:px-0 "
+            + class_name,
         ),
         class_name="sticky top-0 z-50 w-full h-13 bg-background flex items-center",
     )

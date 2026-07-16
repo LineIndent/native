@@ -1,7 +1,7 @@
 import reflex as rx
+from reflex_components_core.el import div, h1, h4, p, span
 
 from native.templates._copy_btn import create_copy_button
-from reflex_components_core.el import div, p, h1, h4, span
 
 
 def _parse_file_path(file_path: str) -> tuple[str, str]:
@@ -29,9 +29,7 @@ def file_codeblock(file_path: str, source: str) -> rx.Component:
             button,
             class_name="flex items-center justify-between gap-2",
         ),
-        on_click=rx.call_script(
-            f"document.getElementById('{btn_id}').click();"
-        ),
+        on_click=rx.call_script(f"document.getElementById('{btn_id}').click();"),
         class_name="group flex flex-col gap-3 border border-border bg-background p-4 hover:bg-muted/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:outline-none rounded-lg",
     )
 
@@ -44,7 +42,9 @@ def source(files):
                 class_name="text-2xl leading-tight font-bold tracking-tighter",
             ),
             p(
-                span("For manual installation, copy each of the source codes below in their respective locations."),
+                span(
+                    "For manual installation, copy each of the source codes below in their respective locations."
+                ),
                 class_name="text-sm text-muted-foreground",
             ),
             div(

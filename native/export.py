@@ -1,18 +1,30 @@
 from reflex.app import App
+from reflex_components_core.el import div, h1, h2
 
 from native.engine.generator import generate_docs_library
 from native.pages.components import components_page
-from native.pages.landing import landing_page
 from native.pages.create import create_page
 from native.pages.docs import docs_page
+from native.pages.landing import landing_page
+from native.pages.typeset import typeset_page
+from native.templates._meta_tags import generate_site_meta_tags
 from native.templates.docpage import docpage
 from native.templates.toc import table_of_content
-from native.templates._meta_tags import generate_site_meta_tags
 
-
-from reflex_components_core.el import div, h1, h2
 
 def export(app: App):
+
+    app.add_page(
+        component=typeset_page(),
+        route="/typeset",
+        title="New Project - buridan/native",
+        meta=generate_site_meta_tags(
+            title="New Typeset",
+            url="/create",
+            description="Build your theme system for Reflex. Customize everything from the ground up. Pick your font, color scheme, and more.",
+            social_card="create.webp",
+        ),
+    )
 
     app.add_page(
         component=create_page(),
@@ -23,7 +35,7 @@ def export(app: App):
             url="/create",
             description="Build your theme system for Reflex. Customize everything from the ground up. Pick your font, color scheme, and more.",
             social_card="create.webp",
-        )
+        ),
     )
 
     app.add_page(
@@ -35,7 +47,7 @@ def export(app: App):
             url="/",
             description="Native HTML UI components you can copy, paste, and ship in minutes. Built for Reflex. Open Source.",
             social_card="index.webp",
-        )
+        ),
     )
 
     app.add_page(
@@ -47,7 +59,7 @@ def export(app: App):
             url="/components",
             description="A collection of ready-to-use UI components for building modern applications. From simple controls to complex interface patterns, copy and paste into your apps.",
             social_card="components.webp",
-        )
+        ),
     )
 
     app.add_page(
@@ -59,33 +71,36 @@ def export(app: App):
             url="/docs",
             description="Explore our comprehensive guides, core concepts, and developer resources to help you build and scale your applications.",
             social_card="docs.webp",
-        )
+        ),
     )
 
-    for doc in generate_docs_library():
-        main_content = div(*doc.component, class_name="w-full")
+    # for doc in generate_docs_library():
+    #     main_content = div(*doc.component, class_name="w-full")
 
-        toc_content = (
-            table_of_content(doc.url, doc.table_of_content)
-            if not (doc.url.startswith("docs/components/") or doc.url.startswith("docs/charts/") or doc.url.startswith("docs/utilities/"))
-            else None
-        )
-        title_s = doc.url.split("/")[-1].replace("-", " ").title()
-        title = f"{title_s} – buridan/native"
-        card_path = f"{doc.url.split('/')[-1]}.webp"
+    #     toc_content = (
+    #         table_of_content(doc.url, doc.table_of_content)
+    #         if not (
+    #             doc.url.startswith("docs/components/")
+    #             or doc.url.startswith("docs/charts/")
+    #             or doc.url.startswith("docs/utilities/")
+    #         )
+    #         else None
+    #     )
+    #     title_s = doc.url.split("/")[-1].replace("-", " ").title()
+    #     title = f"{title_s} – buridan/native"
+    #     card_path = f"{doc.url.split('/')[-1]}.webp"
 
-        app.add_page(
-            component=docpage(main_content, toc_content),
-            route=f"/{doc.url}",
-            title=title,
-            meta=generate_site_meta_tags(
-                title=title_s,
-                url=f"{doc.url}",
-                description=doc.description,
-                social_card=card_path,
-            ),
-        )
-
+    #     app.add_page(
+    #         component=docpage(main_content, toc_content),
+    #         route=f"/{doc.url}",
+    #         title=title,
+    #         meta=generate_site_meta_tags(
+    #             title=title_s,
+    #             url=f"{doc.url}",
+    #             description=doc.description,
+    #             social_card=card_path,
+    #         ),
+    #     )
 
     app.add_page(
         component=div(

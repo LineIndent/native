@@ -3,16 +3,15 @@ name = "native"
 version = "0.1.0"
 description = "Add your description here"
 requires-python = ">=3.11"
-dependencies = [
-    "beautifulsoup4>=4.15.0",
-    "markdown>=3.10.2",
-]
+dependencies = []
 
 [dependency-groups]
 dev = [
-    "reflex==0.9.6post1",
+    "reflex==0.9.7",
     "pillow>=12.2.0",
     "PyYAML>=6.0.3",
     "questionary>=2.1.1",
-    "google-genai"
+    "google-genai",
+    "beautifulsoup4>=4.15.0",
+    "markdown>=3.10.2",
 ]

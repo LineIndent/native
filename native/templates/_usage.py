@@ -1,12 +1,13 @@
 import reflex as rx
+from reflex_components_core.el import div, h1, p, span, strong
 
-from native.registry.anatomy import ANATOMY
-
-from native.templates._copy_btn import generate_component_id
-from reflex_components_core.el import div, p, h1, span, strong
 from components.ui.button import button
+from native.registry.anatomy import ANATOMY
+from native.templates._copy_btn import generate_component_id
+
 
 def _usage_demo(component_name: str):
+
     demo_id = generate_component_id()
     anatomy = ANATOMY.get(component_name)
 
@@ -22,7 +23,6 @@ def _usage_demo(component_name: str):
                             "group-data-[view=anatomy]:bg-transparent "
                             "group-data-[view=anatomy]:border-transparent"
                         ),
-
                         on_click=rx.call_script(
                             f"""
                             document.getElementById("demo-{demo_id}").dataset.view = "usage";
@@ -43,7 +43,7 @@ def _usage_demo(component_name: str):
                             """
                         ),
                     ),
-                    class_name="flex items-center gap-1"
+                    class_name="flex items-center gap-1",
                 ),
                 class_name="flex items-center gap-2",
             ),
