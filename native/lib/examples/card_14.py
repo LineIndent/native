@@ -5,7 +5,6 @@ from components.ui.card import card
 from native.templates.masonary import masonry_card
 
 
-
 @masonry_card(label="General")
 def card_14() -> rx.Component:
     return card.root(
@@ -30,8 +29,7 @@ def card_14() -> rx.Component:
         card.footer(
             button(
                 "Share Feedback",
-                variant="outline",
-                class_name="w-full rounded-full",
+                class_name="w-full",
             ),
         ),
     )

@@ -19,6 +19,8 @@ from native.registry.typeset_options import (
     MONO_FONTS,
     SIZE_OPTIONS,
 )
+from native.templates._get_typeset_code import typeset_get_code
+from native.templates.navbar import navbar
 
 
 def _typeset_select(
@@ -26,26 +28,43 @@ def _typeset_select(
 ) -> rx.Component:
     return rx.el.div(
         rx.el.div(
-            rx.el.span(
-                label,
-                html_for=id_,
-                class_name="text-sm font-medium text-muted-foreground",
+            rx.el.div(
+                rx.el.span(
+                    label,
+                    html_for=id_,
+                    class_name="text-sm font-medium text-muted-foreground",
+                ),
+                rx.el.div(),
+                class_name="flex flex-row items-center justify-between",
             ),
-            class_name="flex flex-row items-center justify-between",
+            select(
+                *[select.option(opt["label"], value=opt["id"]) for opt in options],
+                id=id_,
+                default_value=default_id,
+                wrapper_class_name="w-full [&_[data-slot=native-select-icon]]:hidden",
+                class_name="w-full h-9",
+            ),
+            class_name="flex flex-col gap-2 px-1 pt-2",
         ),
-        select(
-            *[select.option(opt["label"], value=opt["id"]) for opt in options],
-            id=id_,
-            default_value=default_id,
-            wrapper_class_name="w-full [&_[data-slot=native-select-icon]]:hidden",
-            class_name="w-full h-9",
-        ),
-        class_name="flex flex-col gap-2 px-1 pt-2",
+        class_name="px-3 pb-3",
     )
 
 
-def _sidebar() -> rx.Component:
+def _sidebar_desktop():
     return rx.el.aside(
+        # rx.el.div(
+        #     button(
+        #         "Get Code",
+        #         id="typeset-get-code-button",
+        #         type="button",
+        #         class_name="w-full",
+        #         on_click=rx.call_script(
+        #             'const el = document.getElementById("typeset-toggle-wrapper"); '
+        #             'el.dataset.show = el.dataset.show === "true" ? "false" : "true";'
+        #         ),
+        #     ),
+        #     class_name="p-3 bg-card/20",
+        # ),
         rx.el.div(
             _typeset_select(
                 "measure-select", "Measure", MEASURE_OPTIONS, DEFAULT_MEASURE_ID
@@ -62,7 +81,7 @@ def _sidebar() -> rx.Component:
                 "leading-select", "Leading", LEADING_OPTIONS, DEFAULT_LEADING_ID
             ),
             _typeset_select("flow-select", "Flow", FLOW_OPTIONS, DEFAULT_FLOW_ID),
-            class_name="flex-1 min-h-0 overflow-y-auto scrollbar-none divide-y divide-input px-2",
+            class_name="flex-1 min-h-0 overflow-y-auto scrollbar-none divide-y divide-input",
         ),
         rx.el.div(
             button(
@@ -70,97 +89,122 @@ def _sidebar() -> rx.Component:
                 id="typeset-shuffle-button",
                 type="button",
                 variant="outline",
-                class_name="w-full justify-start",
-            ),
-            button(
-                "Get Code",
-                id="typeset-copy-button",
-                type="button",
-                class_name="w-full",
+                class_name="w-full text-center",
             ),
             class_name="p-4 flex flex-col gap-3 bg-card/20",
         ),
         class_name=(
-            "hidden lg:flex w-full max-w-[16rem] shrink-0 !overflow-hidden flex-col "
+            "hidden lg:flex w-full max-w-[12rem] shrink-0 !overflow-hidden flex-col "
             "border border-input/90 divide-y divide-input h-full text-sm "
             "text-card-foreground dark bg-card/90 isolate rounded-2xl"
         ),
     )
 
 
-def _sample_content() -> rx.Component:
-    """Placeholder article content — swap for real docs content later. The
-    exact tags matter here (h1/h2/p/ul/code), since typeset.css targets
-    them specifically."""
+def sidebar():
     return rx.el.div(
-        rx.el.h1("Building a Streaming Chatbot"),
-        rx.el.p(
-            "The ",
-            rx.el.code("useChat"),
-            " hook makes it effortless to create a conversational user "
-            "interface for your chatbot application. It enables the "
-            "streaming of chat messages from your AI provider, manages "
-            "the chat state, and updates the UI automatically as new "
-            "messages arrive.",
+        _sidebar_desktop(),
+        class_name=(
+            "w-full flex-initial h-auto min-h-0 min-w-0 max-w-full lg:flex-1 "
+            "lg:h-full lg:w-[12rem] lg:max-w-[12rem] lg:shrink-0"
         ),
-        rx.el.p(
-            "To summarize, the ",
-            rx.el.code("useChat"),
-            " hook provides the following features:",
-        ),
-        rx.el.ul(
-            rx.el.li(
-                rx.el.strong("Message Streaming"),
-                ": All the messages from the AI provider are streamed to the chat UI in real-time.",
-            ),
-            rx.el.li(
-                rx.el.strong("Managed States"),
-                ": The hook manages the states for input, messages, status, error and more for you.",
-            ),
-            rx.el.li(
-                rx.el.strong("Seamless Integration"),
-                ": Easily integrate your chat AI into any design or layout with minimal effort.",
-            ),
-        ),
-        rx.el.h2("Example"),
-        rx.el.p(
-            "In this guide, you will learn how to use the ",
-            rx.el.code("useChat"),
-            " hook to create a chatbot application with real-time message streaming.",
-        ),
-        class_name="typeset typeset-preview mx-auto",
     )
 
 
-def _preview_space() -> rx.Component:
+def _sample_content() -> rx.Component:
+    import markdown  # noqa: E402
+
+    _MD_EXTENSIONS = ["fenced_code", "tables", "toc"]
+
+    with open("native/lib/typeset/set_one.md", "r") as file:
+        source = file.read()
+
+    source = markdown.markdown(source, extensions=_MD_EXTENSIONS)
+
+    return rx.el.div(
+        rx.html(source),
+        class_name="typeset typeset-docs typeset-preview",
+    )
+
+
+def preview_space():
     return rx.el.div(
         rx.el.div(
             _sample_content(),
-            class_name="w-full h-full border-1 border-input/90 rounded-2xl p-4 md:p-10 bg-background overflow-auto scrollbar-none",
+            class_name="w-full h-full flex justify-center  border-1 border-input/90 rounded-2xl p-4 md:p-10 bg-background overflow-auto scrollbar-none",
         ),
-        class_name="w-full flex-1 min-h-0 h-full",
+        class_name="w-full flex-[2] min-h-0 order-first lg:order-none lg:flex-1 lg:min-w-0 lg:h-full",
     )
 
 
-def typeset_page() -> rx.Component:
+def source_space():
     return rx.el.div(
-        rx.el.main(
-            _sidebar(),
-            _preview_space(),
-            class_name="flex flex-col gap-x-6 lg:flex-row w-full h-full min-h-0 overflow-hidden p-4 lg:px-6 lg:pb-6 lg:pt-4 gap-y-6 scrollbar-none",
+        rx.el.div(
+            typeset_get_code(),
+            class_name="flex-[15] min-h-0 w-full border border-input/90 rounded-2xl",
         ),
-        class_name="relative flex h-screen flex-col bg-background overflow-hidden",
-        on_mount=rx.call_script(
-            f"""
-            window.__TYPESET_REGISTRIES__ = {{
-                headingBodyFonts: {json.dumps(HEADING_BODY_FONTS)},
-                monoFonts: {json.dumps(MONO_FONTS)},
-                measure: {json.dumps(MEASURE_OPTIONS)},
-                size: {json.dumps(SIZE_OPTIONS)},
-                leading: {json.dumps(LEADING_OPTIONS)},
-                flow: {json.dumps(FLOW_OPTIONS)},
-            }};
-            if (window.typesetPreview) window.typesetPreview.applyAll();
-            """
+        # rx.el.div(
+        #     rx.el.p(
+        #         rx.el.span(
+        #             "Read the ",
+        #             rx.el.a(
+        #                 "typeset",
+        #                 href="/docs/resources/typeset",
+        #                 class_name="font-semibold underline",
+        #             ),
+        #             " documentation.",
+        #         ),
+        #         class_name="w-full text-[13px] font-light",
+        #     ),
+        #     class_name="flex-[1] flex w-full px-4 flex-row items-end justify-center",
+        # ),
+        id="source-space",
+        class_name=(
+            "flex flex-col gap-y-4 "
+            "w-full flex-initial h-auto min-h-0 min-w-0 max-w-full lg:flex-1 "
+            "lg:h-full lg:w-sm lg:max-w-sm lg:shrink-0"
         ),
+    )
+
+
+def typeset_page():
+    return rx.el.div(
+        rx.el.div(
+            navbar(class_name="max-w-full !pl-4 !pr-6"),
+            rx.el.main(
+                sidebar(),
+                preview_space(),
+                source_space(),
+                id="typeset-toggle-wrapper",
+                data_show="false",
+                class_name="group flex flex-col gap-x-6 lg:flex-row w-full h-full min-h-0 overflow-hidden p-4 lg:px-6 lg:pb-6 lg:pt-2 gap-y-6 scrollbar-none",
+            ),
+            class_name="relative flex h-screen flex-col bg-background overflow-hidden",
+        ),
+        class_name="relative w-full max-w-[96rem] flex h-screen flex-col bg-background overflow-hidden justify-center",
+        on_mount=[
+            rx.call_script(
+                f"""
+                window.__TYPESET_REGISTRIES__ = {{
+                    headingBodyFonts: {json.dumps(HEADING_BODY_FONTS)},
+                    monoFonts: {json.dumps(MONO_FONTS)},
+                    measure: {json.dumps(MEASURE_OPTIONS)},
+                    size: {json.dumps(SIZE_OPTIONS)},
+                    leading: {json.dumps(LEADING_OPTIONS)},
+                    flow: {json.dumps(FLOW_OPTIONS)},
+                }};
+                if (window.typesetPreview) {{
+                    window.typesetPreview.applyAll();
+                    window.typesetPreview.renderCodeBlocks();
+                }}
+                """
+            ),
+            rx.call_script(
+                """
+                requestAnimationFrame(() => {
+                    if (window.Prism) Prism.highlightAll();
+                });
+                """
+            ),
+        ],
     )

@@ -1,20 +1,12 @@
 import json
+
 import reflex as rx
 
-from components.ui.select import select
+from components.core.hugeicon import hi
 from components.ui.button import button
 from components.ui.dialog import dialog
 from components.ui.input import input
-from components.core.hugeicon import hi
-from native.registry.colors import COLOR_THEMES
-from native.registry.themes import BASE_THEMES
-from native.registry.radii import RADII_OPTIONS
-from native.registry.styles import STYLE_REGISTRY
-from native.registry.fonts import FONT_REGISTRY
-from native.templates.navbar import navbar
-from native.templates._get_code import get_code
-
-
+from components.ui.select import select
 from native.lib.examples.card_01 import card_01
 from native.lib.examples.card_02 import card_02
 from native.lib.examples.card_03 import card_03
@@ -29,6 +21,13 @@ from native.lib.examples.card_11 import card_11
 from native.lib.examples.card_12 import card_12
 from native.lib.examples.card_13 import card_13
 from native.lib.examples.card_14 import card_14
+from native.registry.colors import COLOR_THEMES
+from native.registry.fonts import FONT_REGISTRY
+from native.registry.radii import RADII_OPTIONS
+from native.registry.styles import STYLE_REGISTRY
+from native.registry.themes import BASE_THEMES
+from native.templates._get_code import get_code
+from native.templates.navbar import navbar
 
 
 def _theme_select(
@@ -72,13 +71,18 @@ def _theme_select(
         rx.el.div(
             rx.el.div(
                 rx.el.span(
-                    label, html_for=id_, class_name="text-sm font-medium text-muted-foreground"
+                    label,
+                    html_for=id_,
+                    class_name="text-sm font-medium text-muted-foreground",
                 ),
                 indicator,
                 class_name="flex flex-row items-center justify-between",
             ),
             select(
-                *[select.option(_option_label(opt), value=opt["id"]) for opt in options],
+                *[
+                    select.option(_option_label(opt), value=opt["id"])
+                    for opt in options
+                ],
                 id=id_,
                 default_value=default_id,
                 wrapper_class_name="w-full [&_[data-slot=native-select-icon]]:hidden",
@@ -92,13 +96,13 @@ def _theme_select(
 
 def open_preset() -> rx.Component:
     return dialog.root(
-        dialog.trigger(button("Open Preset", variant="outline", class_name="justify-start")),
+        dialog.trigger(
+            button("Open Preset", variant="outline", class_name="justify-start")
+        ),
         dialog.popup(
             dialog.header(
                 dialog.title("Open Theme Preset"),
-                dialog.description(
-                    "Paste a preset ID to load a theme configuration."
-                ),
+                dialog.description("Paste a preset ID to load a theme configuration."),
             ),
             rx.el.div(
                 input(id="preset-input", placeholder="e.g. IBZJp", class_name="flex-1"),
@@ -106,7 +110,12 @@ def open_preset() -> rx.Component:
             dialog.footer(
                 rx.el.div(
                     dialog.close(
-                        button("Cancel", type="button", variant="outline", class_name="flex-1"),
+                        button(
+                            "Cancel",
+                            type="button",
+                            variant="outline",
+                            class_name="flex-1",
+                        ),
                         class_name="flex-1",
                     ),
                     dialog.close(
@@ -137,43 +146,57 @@ def _sidebar_desktop():
                 on_click=rx.call_script(
                     'const el = document.getElementById("toggle-wrapper"); '
                     'el.dataset.show = el.dataset.show === "true" ? "false" : "true";'
-                )
+                ),
             ),
             class_name="p-3 bg-card/20",
         ),
         rx.el.div(
             _theme_select(
-                "style-select", "Style", STYLE_REGISTRY, STYLE_REGISTRY[0]["id"],
+                "style-select",
+                "Style",
+                STYLE_REGISTRY,
+                STYLE_REGISTRY[0]["id"],
                 describe=True,
                 icon=hi("HexagonIcon"),
             ),
             rx.el.div(
                 _theme_select(
-                    "base-theme-select", "Base theme", BASE_THEMES, BASE_THEMES[0]["id"],
+                    "base-theme-select",
+                    "Base theme",
+                    BASE_THEMES,
+                    BASE_THEMES[0]["id"],
                     swatch=True,
                 ),
                 _theme_select(
-                    "color-theme-select", "Color theme",
-                    [{"id": "__match_base__", "label": BASE_THEMES[0]["label"]}] + COLOR_THEMES,
+                    "color-theme-select",
+                    "Color theme",
+                    [{"id": "__match_base__", "label": BASE_THEMES[0]["label"]}]
+                    + COLOR_THEMES,
                     "__match_base__",
                     swatch=True,
                 ),
                 _theme_select(
-                    "chart-color-select", "Chart colors",
-                    [{"id": "__match_base__", "label": BASE_THEMES[0]["label"]}] + COLOR_THEMES,
+                    "chart-color-select",
+                    "Chart colors",
+                    [{"id": "__match_base__", "label": BASE_THEMES[0]["label"]}]
+                    + COLOR_THEMES,
                     "__match_base__",
                     swatch=True,
                 ),
             ),
             _theme_select(
-                "radius-select", "Radius",
+                "radius-select",
+                "Radius",
                 [{"id": "__default__", "label": "Default"}] + RADII_OPTIONS,
                 "__default__",
-                icon=hi("SquareRoundCornerIcon")
+                icon=hi("SquareRoundCornerIcon"),
             ),
             _theme_select(
-                "font-select", "Font", FONT_REGISTRY, FONT_REGISTRY[0]["id"],
-                icon=hi("TextFontIcon")
+                "font-select",
+                "Font",
+                FONT_REGISTRY,
+                FONT_REGISTRY[0]["id"],
+                icon=hi("TextFontIcon"),
             ),
             class_name="flex-1 min-h-0 overflow-y-auto scrollbar-none divide-y divide-input",
         ),
@@ -271,12 +294,11 @@ def preview_space():
     )
 
 
-
 def source_space():
     return rx.el.div(
         rx.el.div(
             get_code(),
-            class_name="flex-[15] min-h-0 w-full border border-input/90 rounded-2xl"
+            class_name="flex-[15] min-h-0 w-full border border-input/90 rounded-2xl",
         ),
         rx.el.div(
             rx.el.p(
@@ -291,9 +313,8 @@ def source_space():
                 ),
                 class_name="w-full text-[13px] font-light",
             ),
-            class_name="flex-[1] flex w-full px-4 flex-row items-end justify-center"
+            class_name="flex-[1] flex w-full px-4 flex-row items-end justify-center",
         ),
-
         id="source-space",
         class_name=(
             "hidden "
@@ -319,8 +340,9 @@ def create_page():
             class_name="relative flex h-screen flex-col bg-background overflow-hidden",
         ),
         class_name="relative flex h-screen flex-col bg-background overflow-hidden",
-        on_mount=[rx.call_script(
-            f"""
+        on_mount=[
+            rx.call_script(
+                f"""
             window.__THEME_REGISTRIES__ = {{
                 base: {json.dumps(BASE_THEMES)},
                 color: {json.dumps(COLOR_THEMES)},
@@ -330,13 +352,13 @@ def create_page():
             }};
             if (window.preview) window.preview.applyAll();
             """
-        ),
-        rx.call_script(
-            """
+            ),
+            rx.call_script(
+                """
             requestAnimationFrame(() => {
                 Prism.highlightAll();
             });
             """
-        ),
+            ),
         ],
     )
