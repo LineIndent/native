@@ -3,8 +3,8 @@ from typing import Literal
 import reflex as rx
 from reflex.components.component import ComponentNamespace
 
+from ..core.core import CoreComponent, cn
 from ..ui.button import button
-from ..core.core import cn
 
 AttachmentOrientation = Literal["horizontal", "vertical"]
 AttachmentSize = Literal["default", "sm", "xs"]
@@ -107,140 +107,121 @@ class ClassNames:
     )
 
 
-def attachment_root(
-    *children,
-    orientation: AttachmentOrientation = "horizontal",
-    size: AttachmentSize = "default",
-    state: AttachmentState = "done",
-    class_name: str = "",
-    **props,
-) -> rx.Component:
+class NativeAttachmentRoot(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        orientation: AttachmentOrientation = props.pop("orientation", "horizontal")
+        size: AttachmentSize = props.pop("size", "default")
+        state: AttachmentState = props.pop("state", "done")
 
-    return rx.el.div(
-        *children,
-        data_slot="attachment",
-        data_state=state,
-        data_size=size,
-        data_orientation=orientation,
-        class_name=cn(
-            ClassNames.ROOT_BASE,
-            ClassNames.SIZES.get(size, ""),
-            ClassNames.ORIENTATIONS.get(orientation, ""),
-            class_name,
-        ),
-        **props,
-    )
+        props["data-slot"] = "attachment"
+        props["data-state"] = state
+        props["data-size"] = size
+        props["data-orientation"] = orientation
+
+        cls.set_class_name(
+            cn(
+                ClassNames.ROOT_BASE,
+                ClassNames.SIZES.get(size, ""),
+                ClassNames.ORIENTATIONS.get(orientation, ""),
+            ),
+            props,
+        )
+        return rx.el.div(*children, **props)
 
 
-def attachment_media(
-    *children,
-    variant: AttachmentMediaVariant = "icon",
-    class_name: str = "",
-    **props,
-) -> rx.Component:
+class NativeAttachmentMedia(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        variant: AttachmentMediaVariant = props.pop("variant", "icon")
 
-    return rx.el.div(
-        *children,
-        data_slot="attachment-media",
-        data_variant=variant,
-        class_name=cn(
-            ClassNames.MEDIA_BASE,
-            ClassNames.MEDIA_VARIANTS.get(variant, ""),
-            class_name,
-        ),
-        **props,
-    )
+        props["data-slot"] = "attachment-media"
+        props["data-variant"] = variant
+
+        cls.set_class_name(
+            cn(
+                ClassNames.MEDIA_BASE,
+                ClassNames.MEDIA_VARIANTS.get(variant, ""),
+            ),
+            props,
+        )
+        return rx.el.div(*children, **props)
 
 
-def attachment_content(*children, class_name: str = "", **props) -> rx.Component:
-
-    return rx.el.div(
-        *children,
-        data_slot="attachment-content",
-        class_name=cn(ClassNames.CONTENT, class_name),
-        **props,
-    )
+class NativeAttachmentContent(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "attachment-content"
+        cls.set_class_name(ClassNames.CONTENT, props)
+        return rx.el.div(*children, **props)
 
 
-def attachment_title(*children, class_name: str = "", **props) -> rx.Component:
-
-    return rx.el.span(
-        *children,
-        data_slot="attachment-title",
-        class_name=cn(ClassNames.TITLE, class_name),
-        **props,
-    )
+class NativeAttachmentTitle(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "attachment-title"
+        cls.set_class_name(ClassNames.TITLE, props)
+        return rx.el.span(*children, **props)
 
 
-def attachment_description(*children, class_name: str = "", **props) -> rx.Component:
-
-    return rx.el.span(
-        *children,
-        data_slot="attachment-description",
-        class_name=cn(ClassNames.DESCRIPTION, class_name),
-        **props,
-    )
+class NativeAttachmentDescription(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "attachment-description"
+        cls.set_class_name(ClassNames.DESCRIPTION, props)
+        return rx.el.span(*children, **props)
 
 
-def attachment_actions(*children, class_name: str = "", **props) -> rx.Component:
-
-    return rx.el.div(
-        *children,
-        data_slot="attachment-actions",
-        class_name=cn(ClassNames.ACTIONS, class_name),
-        **props,
-    )
+class NativeAttachmentActions(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "attachment-actions"
+        cls.set_class_name(ClassNames.ACTIONS, props)
+        return rx.el.div(*children, **props)
 
 
-def attachment_action(*children, class_name: str = "", **props) -> rx.Component:
-    props.setdefault("variant", "ghost")
-
-    props.setdefault("size", "icon-xs")
-
-    return button(
-        *children,
-        data_slot="attachment-action",
-        class_name=cn(class_name),
-        **props,
-    )
+class NativeAttachmentAction(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props.setdefault("variant", "ghost")
+        props.setdefault("size", "icon-xs")
+        props["data-slot"] = "attachment-action"
+        return button(*children, **props)
 
 
-def attachment_trigger(
-    *children, link: bool = False, class_name: str = "", **props
-) -> rx.Component:
+class NativeAttachmentTrigger(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        link: bool = props.pop("link", False)
+        component_fn = rx.el.a if link else rx.el.button
 
-    component_fn = rx.el.a if link else rx.el.button
+        props["data-slot"] = "attachment-trigger"
+        cls.set_class_name(ClassNames.TRIGGER, props)
 
-    props.setdefault("data-slot", "attachment-trigger")
-    props.setdefault("class_name", cn(ClassNames.TRIGGER, class_name))
+        if not link:
+            props.setdefault("type", "button")
 
-    if not link:
-        props.setdefault("type", "button")
-
-    return component_fn(*children, **props)
+        return component_fn(*children, **props)
 
 
-def attachment_group(*children, class_name: str = "", **props) -> rx.Component:
-
-    return rx.el.div(
-        *children,
-        data_slot="attachment-group",
-        class_name=cn(ClassNames.GROUP, class_name),
-        **props,
-    )
+class NativeAttachmentGroup(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "attachment-group"
+        cls.set_class_name(ClassNames.GROUP, props)
+        return rx.el.div(*children, **props)
 
 
 class Attachment(ComponentNamespace):
-    root = staticmethod(attachment_root)
-    media = staticmethod(attachment_media)
-    content = staticmethod(attachment_content)
-    title = staticmethod(attachment_title)
-    description = staticmethod(attachment_description)
-    actions = staticmethod(attachment_actions)
-    action = staticmethod(attachment_action)
-    trigger = staticmethod(attachment_trigger)
-    group = staticmethod(attachment_group)
-
+    root = staticmethod(NativeAttachmentRoot.create)
+    media = staticmethod(NativeAttachmentMedia.create)
+    content = staticmethod(NativeAttachmentContent.create)
+    title = staticmethod(NativeAttachmentTitle.create)
+    description = staticmethod(NativeAttachmentDescription.create)
+    actions = staticmethod(NativeAttachmentActions.create)
+    action = staticmethod(NativeAttachmentAction.create)
+    trigger = staticmethod(NativeAttachmentTrigger.create)
+    group = staticmethod(NativeAttachmentGroup.create)
     class_names = ClassNames
 
 

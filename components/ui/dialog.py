@@ -66,52 +66,6 @@ class DialogTrigger(CoreComponent):
         return rx.el.div(*children, **props)
 
 
-# class DialogPopup(Div, CoreComponent):
-#     @classmethod
-#     def create(
-#         cls,
-#         *children,
-#         dismissible: bool = True,
-#         on_open_change: rx.EventHandler | None = None,
-#         **props,
-#     ) -> rx.Component:
-#         props["data-slot"] = "dialog-content"
-#         cls.set_class_name(ClassNames.POPUP, props)
-
-#         if on_open_change is not None:
-#             props["on_close"] = lambda: on_open_change(False)
-#         if not dismissible:
-#             props["on_cancel"] = rx.prevent_default
-
-#         if dismissible:
-#             popup_id = props.get("id") or f"dialog-content-{uuid.uuid4().hex[:8]}"
-#             props["id"] = popup_id
-
-#             existing_on_mount = props.pop("on_mount", None)
-#             close_on_backdrop_script = rx.call_script(
-#                 f"""
-#                 (function() {{
-#                     var dlg = document.getElementById('{popup_id}');
-#                     if (!dlg || dlg.__dialogBackdropAttached) return;
-#                     dlg.__dialogBackdropAttached = true;
-#                     dlg.addEventListener('click', function (e) {{
-#                         if (e.target === dlg) dlg.close();
-#                     }});
-#                 }})()
-#                 """
-#             )
-#             if existing_on_mount is not None:
-#                 events = (
-#                     existing_on_mount
-#                     if isinstance(existing_on_mount, list)
-#                     else [existing_on_mount]
-#                 )
-#                 props["on_mount"] = [*events, close_on_backdrop_script]
-#             else:
-#                 props["on_mount"] = close_on_backdrop_script
-
-#         return rx.el.dialog(*children, **props)
-
 class DialogPopup(Div, CoreComponent):
     @classmethod
     def create(
@@ -123,10 +77,8 @@ class DialogPopup(Div, CoreComponent):
     ) -> rx.Component:
         props["data-slot"] = "dialog-content"
 
-        # 1. Safely pop the user-defined custom layout classes out of props
         custom_classes = props.pop("class_name", "")
 
-        # 2. Use cn() to merge defaults with custom classes, overriding conflicts like max-w-*
         cls.set_class_name(cn(ClassNames.POPUP, custom_classes), props)
 
         if on_open_change is not None:
