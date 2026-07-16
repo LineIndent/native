@@ -50,6 +50,11 @@ PAGES_CONFIG = [
         "title": "Documentation",
         "description": "Explore our comprehensive guides, core concepts, and developer resources to help you build and scale your applications.",
     },
+    {
+        "route": "typeset",
+        "title": "Typeset",
+        "description": "A styling system for HTML and rendered markdown, from blog posts to streaming chat. One CSS file you own.",
+    },
 ]
 
 

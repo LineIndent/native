@@ -22,7 +22,6 @@ We recommend using **Tailwind V4** in your Reflex application as it allows for b
 A basic Tailwind V4 setup in Reflex could look like the following:
 
 ```css
-
 @theme inline {
     --color-background: var(--background);
     --color-foreground: var(--foreground);

@@ -17,12 +17,12 @@ def export(app: App):
     app.add_page(
         component=typeset_page(),
         route="/typeset",
-        title="New Project - buridan/native",
+        title="Typeset - buridan/native",
         meta=generate_site_meta_tags(
-            title="New Typeset",
-            url="/create",
-            description="Build your theme system for Reflex. Customize everything from the ground up. Pick your font, color scheme, and more.",
-            social_card="create.webp",
+            title="Typeset",
+            url="/typeset",
+            description="A styling system for HTML and rendered markdown, from blog posts to streaming chat. One CSS file you own.",
+            social_card="typeset.webp",
         ),
     )
 

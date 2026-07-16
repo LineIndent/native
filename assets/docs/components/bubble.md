@@ -67,25 +67,13 @@ from typing import Literal
 import reflex as rx
 from reflex.components.component import ComponentNamespace
 
-from ..core.core import cn
+from ..core.core import CoreComponent, cn
 
 BubbleVariant = Literal[
-    "default",
-    "secondary",
-    "muted",
-    "tinted",
-    "outline",
-    "ghost",
-    "destructive",
+    "default", "secondary", "muted", "tinted", "outline", "ghost", "destructive"
 ]
-BubbleAlign = Literal[
-    "start",
-    "end",
-]
-BubbleSide = Literal[
-    "top",
-    "bottom",
-]
+BubbleAlign = Literal["start", "end"]
+BubbleSide = Literal["top", "bottom"]
 
 
 class ClassNames:
@@ -100,7 +88,7 @@ class ClassNames:
             "*:data-[slot=bubble-content]:bg-secondary "
             "*:data-[slot=bubble-content]:text-secondary-foreground"
         ),
-        "muted": ("*:data-[slot=bubble-content]:bg-muted"),
+        "muted": "*:data-[slot=bubble-content]:bg-muted",
         "tinted": (
             "*:data-[slot=bubble-content]:bg-[oklch(from_var(--primary)_0.93_calc(c*0.4)_h)] "
             "*:data-[slot=bubble-content]:text-foreground "
@@ -152,77 +140,68 @@ class ClassNames:
     }
 
 
-def bubble_group(*children, class_name: str = "", **props) -> rx.Component:
-
-    return rx.el.div(
-        *children,
-        data_slot="bubble-group",
-        class_name=cn(ClassNames.GROUP, class_name),
-        **props,
-    )
+class NativeBubbleGroup(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "bubble-group"
+        cls.set_class_name(ClassNames.GROUP, props)
+        return rx.el.div(*children, **props)
 
 
-def bubble_root(
-    *children,
-    variant: BubbleVariant = "default",
-    align: BubbleAlign = "start",
-    class_name: str = "",
-    **props,
-) -> rx.Component:
+class NativeBubbleRoot(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        variant: BubbleVariant = props.pop("variant", "default")
+        align: BubbleAlign = props.pop("align", "start")
 
-    return rx.el.div(
-        *children,
-        data_slot="bubble",
-        data_variant=variant,
-        data_align=align,
-        class_name=cn(
-            ClassNames.ROOT,
-            ClassNames.VARIANTS.get(variant, ""),
-            class_name,
-        ),
-        **props,
-    )
+        props["data-slot"] = "bubble"
+        props["data-variant"] = variant
+        props["data-align"] = align
+
+        cls.set_class_name(
+            cn(
+                ClassNames.ROOT,
+                ClassNames.VARIANTS.get(variant, ""),
+            ),
+            props,
+        )
+        return rx.el.div(*children, **props)
 
 
-def bubble_content(*children, class_name: str = "", **props) -> rx.Component:
-
-    return rx.el.div(
-        *children,
-        data_slot="bubble-content",
-        class_name=cn(ClassNames.CONTENT, class_name),
-        **props,
-    )
+class NativeBubbleContent(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        props["data-slot"] = "bubble-content"
+        cls.set_class_name(ClassNames.CONTENT, props)
+        return rx.el.div(*children, **props)
 
 
-def bubble_reactions(
-    *children,
-    side: BubbleSide = "bottom",
-    align: BubbleAlign = "end",
-    class_name: str = "",
-    **props,
-) -> rx.Component:
+class NativeBubbleReactions(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        side: BubbleSide = props.pop("side", "bottom")
+        align: BubbleAlign = props.pop("align", "end")
 
-    return rx.el.div(
-        *children,
-        data_slot="bubble-reactions",
-        data_align=align,
-        data_side=side,
-        class_name=cn(
-            ClassNames.REACTIONS_BASE,
-            ClassNames.REACTIONS_SIDE.get(side, ""),
-            ClassNames.REACTIONS_ALIGN.get(align, ""),
-            class_name,
-        ),
-        **props,
-    )
+        props["data-slot"] = "bubble-reactions"
+        props["data-align"] = align
+        props["data-side"] = side
+
+        cls.set_class_name(
+            cn(
+                ClassNames.REACTIONS_BASE,
+                ClassNames.REACTIONS_SIDE.get(side, ""),
+                ClassNames.REACTIONS_ALIGN.get(align, ""),
+            ),
+            props,
+        )
+        return rx.el.div(*children, **props)
 
 
 class Bubble(ComponentNamespace):
-    group = staticmethod(bubble_group)
-    root = staticmethod(bubble_root)
-    content = staticmethod(bubble_content)
-    reactions = staticmethod(bubble_reactions)
-
+    group = staticmethod(NativeBubbleGroup.create)
+    root = staticmethod(NativeBubbleRoot.create)
+    content = staticmethod(NativeBubbleContent.create)
+    reactions = staticmethod(NativeBubbleReactions.create)
     class_names = ClassNames
 
 

@@ -118,17 +118,6 @@ class AvatarRoot(Div, CoreComponent):
 
 
 class AvatarImage(CoreComponent):
-    """
-    Renders an <img> and probes its `src` client-side on mount. If the image
-    fails to load, it hides itself and reveals the sibling AvatarFallback
-    (matched via the nearest ancestor with data-slot="avatar").
-
-    Note: if this is rendered inside rx.foreach, the auto-generated uuid will
-    be baked in once at template-build time and shared across all rendered
-    items. In that case pass an explicit `id` derived from your loop data,
-    e.g. id=f"avatar-img-{user.id}".
-    """
-
     @classmethod
     def create(cls, **props) -> rx.Component:
         custom_classes = props.pop("class_name", "")
