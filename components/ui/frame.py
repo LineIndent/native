@@ -3,7 +3,7 @@ from typing import Literal
 import reflex as rx
 from reflex.components.component import ComponentNamespace
 
-from ..core.core import cn
+from ..core.core import CoreComponent, cn
 
 LiteralVariant = Literal["default", "inverse", "ghost"]
 LiteralSpacing = Literal["xs", "sm", "default", "lg"]
@@ -37,96 +37,113 @@ SPACING_CLASSES: dict[str, str] = {
 }
 
 
-def frame_root(
-    *children,
-    variant: LiteralVariant = "default",
-    spacing: LiteralSpacing = "default",
-    stacked: bool = False,
-    dense: bool = False,
-    class_name: str = "",
-    **props,
-) -> rx.Component:
-    stacked_class = (
-        "gap-0 *:has-[+[data-slot=frame-panel]]:rounded-b-none *:[[data-slot=frame-panel]+[data-slot=frame-panel]]:rounded-t-none *:[[data-slot=frame-panel]+[data-slot=frame-panel]]:border-t-0"
-        if stacked
-        else ""
-    )
+class FrameRoot(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        variant: LiteralVariant = props.pop("variant", "default")
+        spacing: LiteralSpacing = props.pop("spacing", "default")
+        stacked: bool = props.pop("stacked", False)
+        dense: bool = props.pop("dense", False)
+        class_name: str = props.pop("class_name", "")
 
-    dense_class = (
-        "p-0 gap-0 [&_[data-slot=frame-panel]]:-mx-px [&_[data-slot=frame-panel]]:before:hidden [&_[data-slot=frame-panel]:last-child]:-mb-px"
-        if dense
-        else ""
-    )
+        stacked_class = (
+            "gap-0 *:has-[+[data-slot=frame-panel]]:rounded-b-none *:[[data-slot=frame-panel]+[data-slot=frame-panel]]:rounded-t-none *:[[data-slot=frame-panel]+[data-slot=frame-panel]]:border-t-0"
+            if stacked
+            else ""
+        )
 
-    return rx.el.div(
-        *children,
-        class_name=cn(
-            ClassNames.ROOT,
-            VARIANT_CLASSES.get(variant, ""),
-            SPACING_CLASSES.get(spacing, ""),
-            stacked_class,
-            dense_class,
-            class_name,
-        ),
-        data_slot="frame",
-        data_spacing=spacing,
-        **props,
-    )
+        dense_class = (
+            "p-0 gap-0 [&_[data-slot=frame-panel]]:-mx-px [&_[data-slot=frame-panel]]:before:hidden [&_[data-slot=frame-panel]:last-child]:-mb-px"
+            if dense
+            else ""
+        )
 
+        props["data-slot"] = "frame"
+        props["data-spacing"] = spacing
 
-def frame_panel(*children, class_name: str = "", **props) -> rx.Component:
-    return rx.el.div(
-        *children,
-        class_name=cn(ClassNames.PANEL, class_name),
-        data_slot="frame-panel",
-        **props,
-    )
+        return rx.el.div(
+            *children,
+            class_name=cn(
+                ClassNames.ROOT,
+                VARIANT_CLASSES.get(variant, ""),
+                SPACING_CLASSES.get(spacing, ""),
+                stacked_class,
+                dense_class,
+                class_name,
+            ),
+            **props,
+        )
 
 
-def frame_header(*children, class_name: str = "", **props) -> rx.Component:
-    return rx.el.header(
-        *children,
-        class_name=cn(ClassNames.HEADER, class_name),
-        data_slot="frame-panel-header",
-        **props,
-    )
+class FramePanel(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        class_name: str = props.pop("class_name", "")
+        props["data-slot"] = "frame-panel"
+        return rx.el.div(
+            *children,
+            class_name=cn(ClassNames.PANEL, class_name),
+            **props,
+        )
 
 
-def frame_title(*children, class_name: str = "", **props) -> rx.Component:
-    return rx.el.div(
-        *children,
-        class_name=cn(ClassNames.TITLE, class_name),
-        data_slot="frame-panel-title",
-        **props,
-    )
+class FrameHeader(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        class_name: str = props.pop("class_name", "")
+        props["data-slot"] = "frame-panel-header"
+        return rx.el.header(
+            *children,
+            class_name=cn(ClassNames.HEADER, class_name),
+            **props,
+        )
 
 
-def frame_description(*children, class_name: str = "", **props) -> rx.Component:
-    return rx.el.div(
-        *children,
-        class_name=cn(ClassNames.DESCRIPTION, class_name),
-        data_slot="frame-panel-description",
-        **props,
-    )
+class FrameTitle(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        class_name: str = props.pop("class_name", "")
+        props["data-slot"] = "frame-panel-title"
+        return rx.el.div(
+            *children,
+            class_name=cn(ClassNames.TITLE, class_name),
+            **props,
+        )
 
 
-def frame_footer(*children, class_name: str = "", **props) -> rx.Component:
-    return rx.el.footer(
-        *children,
-        class_name=cn(ClassNames.FOOTER, class_name),
-        data_slot="frame-panel-footer",
-        **props,
-    )
+class FrameDescription(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        class_name: str = props.pop("class_name", "")
+        props["data-slot"] = "frame-panel-description"
+        return rx.el.div(
+            *children,
+            class_name=cn(ClassNames.DESCRIPTION, class_name),
+            **props,
+        )
+
+
+class FrameFooter(CoreComponent):
+    @classmethod
+    def create(cls, *children, **props) -> rx.Component:
+        class_name: str = props.pop("class_name", "")
+        props["data-slot"] = "frame-panel-footer"
+        return rx.el.footer(
+            *children,
+            class_name=cn(ClassNames.FOOTER, class_name),
+            **props,
+        )
 
 
 class Frame(ComponentNamespace):
-    root = staticmethod(frame_root)
-    panel = staticmethod(frame_panel)
-    header = staticmethod(frame_header)
-    title = staticmethod(frame_title)
-    description = staticmethod(frame_description)
-    footer = staticmethod(frame_footer)
-    __call__ = staticmethod(frame_root)
+    root = staticmethod(FrameRoot.create)
+    panel = staticmethod(FramePanel.create)
+    header = staticmethod(FrameHeader.create)
+    title = staticmethod(FrameTitle.create)
+    description = staticmethod(FrameDescription.create)
+    footer = staticmethod(FrameFooter.create)
+    __call__ = staticmethod(FrameRoot.create)
+    class_names = ClassNames
 
 
 frame = Frame()
