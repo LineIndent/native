@@ -1,4 +1,4 @@
-from reflex_components_core.el import Section, a, div, section, img
+from reflex_components_core.el import Section, a, div, img, section
 
 from components.core.hugeicon import hi
 from components.ui.button import button
@@ -53,8 +53,8 @@ def landing_page() -> Section:
                 "max-w-[96rem]",
                 "columns-[320px]",
                 "px-7",
-                "gap-6",
-                "space-y-6",
+                "gap-8",
+                "space-y-8",
                 # -> create masking fade-away at the bottom of the component
                 "sm:mask-[linear-gradient(to_bottom,black_65%,transparent_100%)]",
                 "sm:mask-size-[100%_100%]",

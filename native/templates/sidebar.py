@@ -134,9 +134,9 @@ def sidebar():
         rx.el.div(content, id="doc-sidebar"),
         class_name=(
             "hidden lg:flex flex-col "
-            "max-w-[18rem] w-full "
-            "sticky top-32 "
-            "h-[calc(100svh-16rem)] "
+            "max-w-64 shrink-0 w-full "
+            "sticky top-24 "
+            "h-[calc(100svh-12rem)] "
             "overflow-y-auto scrollbar-none "
             "sm:mask-[linear-gradient(to_bottom,transparent_0%,black_15%,black_85%,transparent_100%)] "
             "sm:mask-size-[100%_100%] "

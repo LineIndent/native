@@ -136,16 +136,16 @@ def table_of_content(url: str, toc_data: List[Dict]):
     return rx.el.div(
         rx.el.div(
             rx.el.div(
-                # #
-                # rx.el.div(
-                #     rx.el.p(
-                #         "External Tools",
-                #         class_name="text-xs text-muted-foreground font-medium pb-2",
-                #     ),
-                #     _create_external_tool_links(url),
-                #     class_name="w-full flex flex-col",
-                # ),
-                # #
+                #
+                rx.el.div(
+                    rx.el.p(
+                        "External Tools",
+                        class_name="text-xs text-muted-foreground font-medium pb-2",
+                    ),
+                    _create_external_tool_links(url),
+                    class_name="w-full flex flex-col",
+                ),
+                #
                 # rx.el.div(
                 #     rx.el.p(
                 #         "Agent Resources",
@@ -181,7 +181,7 @@ def table_of_content(url: str, toc_data: List[Dict]):
             ),
             class_name="flex flex-col gap-y-4 overflow-scroll scrollbar-none",
         ),
-        class_name="hidden xl:block max-w-[12rem] w-full sticky top-18 h-[calc(100vh-3rem)] shrink-0",
+        class_name="hidden xl:block max-w-64 w-full sticky top-18 h-[calc(100vh-3rem)] shrink-0",
         on_mount=rx.call_script(
             """
                 (function() {

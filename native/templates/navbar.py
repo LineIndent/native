@@ -94,7 +94,7 @@ def navbar(class_name: str = "") -> Header:
                 a(button("New Project"), href="/create"),
                 class_name="flex flex-row gap-x-2 items-center",
             ),
-            class_name="w-full max-w-5xl mx-auto flex flex-row items-center justify-between px-2 md:px-0 "
+            class_name="w-full mx-auto flex flex-row items-center justify-between px-4 md:px-8 "
             + class_name,
         ),
         class_name="sticky top-0 z-50 w-full h-13 bg-background flex items-center",

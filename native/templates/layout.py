@@ -17,7 +17,7 @@ def layout_decorator(
             page_content = func(*args, **kwargs)
             return main(
                 section(
-                    navbar(class_name="max-w-full !pl-4 !pr-6"),
+                    navbar(),
                     div(
                         div(
                             h1(
