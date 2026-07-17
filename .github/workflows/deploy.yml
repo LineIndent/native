@@ -30,3 +30,11 @@ jobs:
 
       - name: Install Vercel CLI
         run: npm install --global vercel
+
+      - name: Pull Vercel environment
+        working-directory: frontend
+        run: |
+          vercel pull \
+            --yes \
+            --environment=production \
+            --token=${{ secrets.VERCEL_TOKEN }}
