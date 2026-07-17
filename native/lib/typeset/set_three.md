@@ -14,7 +14,7 @@ _June 18, 2026_
 
 The deprecated `store.update()` alias is removed. Replace it with `store.set()`; the signature is identical:
 
-```diff
+```
 - store.update((s) => ({ count: s.count + 1 }))
 + store.set((s) => ({ count: s.count + 1 }))
 ```
