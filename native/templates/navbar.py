@@ -14,8 +14,8 @@ NAV_LIST = [
     {"title": "Home", "url": ""},
     {"title": "Docs", "url": "docs"},
     {"title": "Components", "url": "components"},
-    {"title": "Create", "url": "create"},
     {"title": "Typeset", "url": "typeset"},
+    {"title": "Create", "url": "create"},
 ]
 
 

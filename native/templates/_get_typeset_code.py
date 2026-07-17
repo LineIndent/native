@@ -6,10 +6,6 @@ from reflex.event import EventSpec
 
 from components.ui.button import button
 
-# Adjust this path if your project structure differs — reading the actual
-# typeset.css asset at import time (rather than duplicating its content as
-# a hardcoded string here) means the "Copy typeset.css" button always
-# reflects the real file, with nothing to drift out of sync.
 _TYPESET_CSS_PATH = Path(__file__).resolve().parents[2] / "assets" / "typeset.css"
 
 try:
@@ -31,19 +27,6 @@ def get_code_section(
     copy_id: str | None = None,
     on_copy_click: EventSpec | None = None,
 ):
-    """
-    copy_id: unique id for the copy button. The original version of this
-    helper hardcoded "copy-css-preset" for every has_copy=True call, which
-    only worked because exactly one section used it — with three copy-able
-    sections here, that would collide (three buttons sharing one id, only
-    the first ever reachable via getElementById). Callers must pass a
-    unique id per section now.
-    on_copy_click: for STATIC content (e.g. the typeset.css file), wire the
-    copy action directly here. For DYNAMIC content, leave this None — the
-    external typeset-preview.js already listens for clicks on copy_id
-    itself via its own document-level delegation, so the button doesn't
-    need its own handler in that case.
-    """
 
     if has_copy:
         copy_btn = button(
@@ -78,6 +61,19 @@ def get_code_section(
     )
 
 
+COPY_SCRIPT = f"""
+navigator.clipboard.writeText({json.dumps(TYPESET_CSS_CONTENT)});
+
+const btn = document.getElementById("copy-typeset-css");
+if (btn) {{
+    btn.innerText = "Copied!";
+    setTimeout(() => {{
+        btn.innerText = "Copy";
+    }}, 1000);
+}}
+"""
+
+
 def typeset_get_code():
     return rx.el.div(
         get_code_section(
@@ -88,25 +84,16 @@ def typeset_get_code():
             ),
             has_copy=True,
             copy_id="copy-typeset-css",
-            # Static content — copied directly on click rather than routed
-            # through typeset-preview.js's dynamic-content delegation.
-            on_copy_click=rx.call_script(
-                "navigator.clipboard.writeText("
-                + json.dumps(TYPESET_CSS_CONTENT)
-                + ");"
-            ),
+            on_copy_click=rx.call_script(COPY_SCRIPT),
         ),
         get_code_section(
             title="2. Add the fonts",
-            description="Load the fonts with next/font in your root layout:",
+            description="Copy this code into your main Reflex file to load your selected Google Fonts.",
             component=rx.el.pre(
-                rx.el.code(id="get-typeset-fonts", class_name="language-jsx w-full"),
+                rx.el.code(id="get-typeset-fonts", class_name="language-python w-full"),
             ),
             has_copy=True,
             copy_id="copy-typeset-fonts",
-            # Dynamic — typeset-preview.js populates this element's text AND
-            # listens for clicks on copy-typeset-fonts itself. No on_click
-            # needed here.
         ),
         get_code_section(
             title="3. Create your custom typeset",

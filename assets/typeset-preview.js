@@ -1,11 +1,6 @@
 (function () {
   "use strict";
 
-  // Which registry list each field pulls from. Heading/Body share the same
-  // sans+serif list; Mono gets its own — both precomputed in Python from
-  // the existing FONT_REGISTRY (filtered by category) rather than
-  // duplicated here, so shuffle only ever picks fonts that are actually
-  // selectable in that field's dropdown.
   var FIELD_REGISTRY = {
     heading: "headingBodyFonts",
     body: "headingBodyFonts",
@@ -16,11 +11,6 @@
     flow: "flow",
   };
 
-  // Named defaults, not index-0 — none of these are first in their actual
-  // lists (15px is index 1 in SIZE_OPTIONS, "geist" isn't first in
-  // FONT_REGISTRY, etc.), so defaulting to "whatever's first" would
-  // silently pick the wrong thing, same trap the theme builder's
-  // Color/Chart selects fell into before being fixed.
   var DEFAULTS = {
     heading: "geist",
     body: "geist",
@@ -71,11 +61,6 @@
     if (fam) el.style.setProperty(cssVar, fam);
   }
 
-  // Measure is deliberately NOT a --typeset-* custom property — the real
-  // stylesheet has no such variable. It's a plain max-width applied
-  // directly to the wrapping element, matching shadcn's own usage example
-  // (class="typeset typeset-docs max-w-[37em]"). Every other field here
-  // IS a genuine CSS custom property; this one alone isn't.
   function applyMeasure() {
     var entry = findById("measure", state.measure);
     var el = root();
@@ -156,37 +141,14 @@
     applyAll();
   }
 
-  // Google Fonts import names for next/font/google — NOT derivable from
-  // FONT_REGISTRY's id/label alone (e.g. id="playfair" but the real font
-  // is "Playfair Display"; id="ibm-plex-mono" needs "IBM" fully
-  // capitalized, not title-cased). This is a second source of truth that
-  // has to be kept in sync with FONT_REGISTRY by hand — the durable fix is
-  // adding a google_import field to FONT_REGISTRY itself so this table
-  // isn't needed at all. Until then, any new font added to FONT_REGISTRY
-  // needs an entry here too, or its step-2 snippet will be silently wrong.
-  var GOOGLE_FONT_IMPORTS = {
-    inter: "Inter",
-    geist: "Geist",
-    roboto: "Roboto",
-    outfit: "Outfit",
-    "plus-jakarta": "Plus_Jakarta_Sans",
-    "public-sans": "Public_Sans",
-    playfair: "Playfair_Display",
-    merriweather: "Merriweather",
-    lora: "Lora",
-    "instrument-serif": "Instrument_Serif",
-    "fira-code": "Fira_Code",
-    "jetbrains-mono": "JetBrains_Mono",
-    "geist-mono": "Geist_Mono",
-    "ibm-plex-mono": "IBM_Plex_Mono",
-  };
-
-  function cssVarNameFor(fontId) {
-    return "--font-" + fontId;
+  function googleFontNameFrom(entry) {
+    var m =
+      entry.vars &&
+      entry.vars["--font-family"] &&
+      entry.vars["--font-family"].match(/^"([^"]+)"/);
+    return m ? m[1] : entry.label;
   }
 
-  // Deduped by font id — heading/body are very often the same font, and
-  // the next/font import block should only load each one once.
   function activeFontEntries() {
     var seen = {};
     var result = [];
@@ -200,73 +162,35 @@
     return result;
   }
 
-  function deriveFallbackImportName(fontId) {
-    // Best-effort only — title-cases each hyphen-separated word, which
-    // gets plenty of real Google Font names right (montserrat -> Montserrat)
-    // but WILL get acronym casing wrong (ibm-plex-mono -> Ibm_Plex_Mono, not
-    // IBM_Plex_Mono). Good enough to produce syntactically safe, non-
-    // colliding code; not good enough to trust blindly — callers mark
-    // fallback usage explicitly rather than passing it off as verified.
-    return fontId
-      .split("-")
-      .map(function (w) {
-        return w.charAt(0).toUpperCase() + w.slice(1);
-      })
-      .join("_");
-  }
-
-  function getFontImportsCode() {
+  function getFontLinkCode() {
     var fonts = activeFontEntries();
     if (!fonts.length) return "";
 
-    var usedFallback = false;
-    var importNames = fonts.map(function (f) {
-      if (GOOGLE_FONT_IMPORTS[f.id]) return GOOGLE_FONT_IMPORTS[f.id];
-      usedFallback = true;
-      return deriveFallbackImportName(f.id);
-    });
-
-    var lines = [];
-    if (usedFallback) {
-      lines.push(
-        "// NOTE: one or more font import names below are a best-effort guess",
-        "// (not in the known-good list) — double check against next/font/google",
-        "// before shipping this.",
-      );
-    }
-    lines.push(
-      "// app/layout.tsx",
-      "import { " + importNames.join(", ") + ' } from "next/font/google"',
-      "",
-    );
-
-    fonts.forEach(function (f, i) {
-      var constName = importNames[i].toLowerCase();
-      lines.push(
-        "const " + constName + " = " + importNames[i] + "({",
-        '  subsets: ["latin"],',
-        '  variable: "' + cssVarNameFor(f.id) + '",',
-        "})",
-      );
-      lines.push("");
-    });
-
-    var classNames = fonts
-      .map(function (f, i) {
-        return "${" + importNames[i].toLowerCase() + ".variable}";
+    var families = fonts
+      .map(function (f) {
+        return (
+          "family=" + googleFontNameFrom(f).replace(/ /g, "+") + ":wght@400;700"
+        );
       })
-      .join(" ");
-    lines.push("<html className={`" + classNames + "`}>");
+      .join("&");
 
-    return lines.join("\n");
+    var url = "https://fonts.googleapis.com/css2?" + families + "&display=swap";
+
+    return `import reflex as rx
+
+app = rx.App(
+    stylesheets=[
+        "${url}",
+    ],
+    head_components=[
+        rx.el.link(rel="preconnect", href="https://fonts.googleapis.com"),
+        rx.el.link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin="true"),
+    ]
+)`;
   }
 
-  // The exported theme-tokens block references var(--font-{id}) rather
-  // than the literal font-family string the LIVE PREVIEW uses — the real
-  // app will have next/font actually defining that variable (via the step-2
-  // snippet above), so referencing it is correct there even though the
-  // preview (no real next/font loading happening in this browser tool)
-  // needs the literal string to render anything at all.
+  // Literal font-family string, same value the live preview already uses
+  // — there's no CSS variable to reference with this loading approach.
   function getThemeTokensCode(className) {
     var heading = findById("heading", state.heading);
     var body = findById("body", state.body);
@@ -280,15 +204,15 @@
       "." +
       (className || "typeset-preset") +
       " {\n" +
-      "  --typeset-font-body: var(" +
-      cssVarNameFor(body.id) +
-      ");\n" +
-      "  --typeset-font-heading: var(" +
-      cssVarNameFor(heading.id) +
-      ");\n" +
-      "  --typeset-font-mono: var(" +
-      cssVarNameFor(mono.id) +
-      ");\n" +
+      "  --typeset-font-body: " +
+      body.vars["--font-family"] +
+      ";\n" +
+      "  --typeset-font-heading: " +
+      heading.vars["--font-family"] +
+      ";\n" +
+      "  --typeset-font-mono: " +
+      mono.vars["--font-family"] +
+      ";\n" +
       "  --typeset-size: " +
       size.value +
       ";\n" +
@@ -306,11 +230,14 @@
     var measure = findById("measure", state.measure);
     if (!measure) return "";
     return (
-      '<div className="typeset ' +
+      "rx.el.div(\n" +
+      "    ...,\n" +
+      '    class_name="typeset ' +
       (className || "typeset-preset") +
       " max-w-[" +
       measure.value +
-      ']">\n  {content}\n</div>'
+      ']",\n' +
+      ")"
     );
   }
 
@@ -320,7 +247,7 @@
   // live as the user changes selections.
   function renderCodeBlocks() {
     var fontsEl = document.getElementById("get-typeset-fonts");
-    if (fontsEl) fontsEl.textContent = getFontImportsCode();
+    if (fontsEl) fontsEl.textContent = getFontLinkCode();
 
     var tokensEl = document.getElementById("get-typeset-tokens");
     if (tokensEl) tokensEl.textContent = getThemeTokensCode();
@@ -338,7 +265,7 @@
     state: state,
     applyAll: applyAll,
     shuffle: shuffle,
-    getFontImportsCode: getFontImportsCode,
+    getFontLinkCode: getFontLinkCode,
     getThemeTokensCode: getThemeTokensCode,
     getUsageCode: getUsageCode,
     renderCodeBlocks: renderCodeBlocks,
@@ -361,12 +288,26 @@
       renderCodeBlocks();
     }
     if (e.target.id === "copy-typeset-fonts") {
-      navigator.clipboard.writeText(getFontImportsCode());
+      navigator.clipboard.writeText(getFontLinkCode());
+      const text = document.getElementById("copy-typeset-fonts");
+      if (text) {
+        text.innerText = "Copied!";
+        setTimeout(() => {
+          text.innerText = "Copy";
+        }, 1000);
+      }
     }
     if (e.target.id === "copy-typeset-tokens") {
       navigator.clipboard.writeText(
         getThemeTokensCode() + "\n\n" + getUsageCode(),
       );
+      const text = document.getElementById("copy-typeset-tokens");
+      if (text) {
+        text.innerText = "Copied!";
+        setTimeout(() => {
+          text.innerText = "Copy";
+        }, 1000);
+      }
     }
   });
 

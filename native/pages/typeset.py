@@ -52,19 +52,6 @@ def _typeset_select(
 
 def _sidebar_desktop():
     return rx.el.aside(
-        # rx.el.div(
-        #     button(
-        #         "Get Code",
-        #         id="typeset-get-code-button",
-        #         type="button",
-        #         class_name="w-full",
-        #         on_click=rx.call_script(
-        #             'const el = document.getElementById("typeset-toggle-wrapper"); '
-        #             'el.dataset.show = el.dataset.show === "true" ? "false" : "true";'
-        #         ),
-        #     ),
-        #     class_name="p-3 bg-card/20",
-        # ),
         rx.el.div(
             _typeset_select(
                 "measure-select", "Measure", MEASURE_OPTIONS, DEFAULT_MEASURE_ID
@@ -111,19 +98,71 @@ def sidebar():
     )
 
 
-def _sample_content() -> rx.Component:
-    import markdown  # noqa: E402
+def _read_and_render_md(filename: str) -> str:
+    """Helper to read and compile local Markdown files into HTML."""
+    import markdown
 
     _MD_EXTENSIONS = ["fenced_code", "tables", "toc"]
+    try:
+        with open(f"native/lib/typeset/{filename}", "r") as file:
+            content = file.read()
+        return markdown.markdown(content, extensions=_MD_EXTENSIONS)
+    except FileNotFoundError:
+        return f"<p>Error: {filename} not found.</p>"
 
-    with open("native/lib/typeset/set_one.md", "r") as file:
-        source = file.read()
 
-    source = markdown.markdown(source, extensions=_MD_EXTENSIONS)
+def _sample_content() -> rx.Component:
+    html_one = _read_and_render_md("set_one.md")
+    html_two = _read_and_render_md("set_two.md")
+    html_three = _read_and_render_md("set_three.md")
+    html_four = _read_and_render_md("set_four.md")
+
+    sources = [html_one, html_two, html_three, html_four]
 
     return rx.el.div(
-        rx.html(source),
-        class_name="typeset typeset-docs typeset-preview",
+        rx.el.div(
+            *[
+                rx.el.div(
+                    rx.html(html_content),
+                    class_name=f"hidden group-data-[active='{i}']:block w-full",
+                )
+                for i, html_content in enumerate(sources, start=1)
+            ],
+            id="typeset-preview",
+            class_name="typeset typeset-docs typeset-preview w-full max-w-xl mx-auto px-6 pt-8 pb-24",
+        ),
+        rx.el.div(
+            rx.el.div(
+                *[
+                    button(
+                        str(i),
+                        id=f"nav-btn-{i}",
+                        type="button",
+                        variant="ghost",
+                        on_click=rx.call_script(
+                            f'document.getElementById("typeset-preview-wrapper").dataset.active = "{i}";'
+                        ),
+                        class_name=(
+                            "inline-flex shrink-0 items-center justify-center whitespace-nowrap outline-none "
+                            "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 "
+                            "disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive "
+                            "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 "
+                            "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 "
+                            "hover:bg-accent dark:hover:bg-accent/50 gap-1.5 has-[>svg]:px-2.5 h-7 min-w-7 "
+                            "cursor-pointer rounded-lg px-2 text-xs font-medium text-muted-foreground "
+                            "transition-colors hover:text-foreground "
+                            f"group-data-[active={i}]:bg-accent group-data-[active={i}]:text-accent-foreground"
+                        ),
+                    )
+                    for i in [1, 2, 3, 4]
+                ],
+                class_name="dark flex items-center gap-1 rounded-xl bg-card/90 p-1 shadow-xl backdrop-blur-xl",
+            ),
+            class_name="sticky bottom-3 z-20 flex items-center justify-center gap-1.5",
+        ),
+        id="typeset-preview-wrapper",
+        data_active="1",
+        class_name="group relative w-full flex flex-col min-h-0",
     )
 
 
@@ -131,7 +170,7 @@ def preview_space():
     return rx.el.div(
         rx.el.div(
             _sample_content(),
-            class_name="w-full h-full flex justify-center  border-1 border-input/90 rounded-2xl p-4 md:p-10 bg-background overflow-auto scrollbar-none",
+            class_name="w-full h-full flex justify-center border-1 border-input/90 rounded-2xl bg-background overflow-auto scrollbar-none",
         ),
         class_name="w-full flex-[2] min-h-0 order-first lg:order-none lg:flex-1 lg:min-w-0 lg:h-full",
     )
