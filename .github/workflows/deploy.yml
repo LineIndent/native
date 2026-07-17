@@ -16,4 +16,8 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
-      - run: echo "Success!"
+      - name: Export Reflex frontend
+        run: uv run reflex export --frontend-only
+
+      - name: Show files
+        run: ls -la
