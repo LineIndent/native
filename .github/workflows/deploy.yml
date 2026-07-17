@@ -39,6 +39,13 @@ jobs:
             --environment=production \
             --token=${{ secrets.VERCEL_TOKEN }}
 
+      - name: Build Vercel project
+        working-directory: frontend
+        run: |
+          vercel build \
+            --prod \
+            --token=${{ secrets.VERCEL_TOKEN }}
+
       - name: Deploy to Vercel
         working-directory: frontend
         run: |
