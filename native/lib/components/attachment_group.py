@@ -19,29 +19,6 @@ items = [
 def attachment_group_demo():
     return rx.el.div(
         attachment.group(
-            # rx.foreach(
-            #     items,
-            #     lambda item: attachment.root(
-            #         rx.cond(
-            #             item["type"] == "image",
-            #             attachment.media(
-            #                 rx.el.img(src=item["src"], alt=item["name"]),
-            #                 variant="image",
-            #             ),
-            #             attachment.media(hi("File02Icon")),
-            #         ),
-            #         attachment.content(
-            #             attachment.title(item["name"]),
-            #             attachment.description(item["meta"]),
-            #         ),
-            #         attachment.actions(
-            #             attachment.action(
-            #                 hi("Cancel01Icon"), aria_label=f"Remove {item['name']}"
-            #             )
-            #         ),
-            #         class_name="w-64",
-            #     ),
-            # ),
             [
                 attachment.root(
                     attachment.media(
@@ -56,8 +33,7 @@ def attachment_group_demo():
                     ),
                     attachment.actions(
                         attachment.action(
-                            hi("Cancel01Icon"),
-                            aria_label=f"Remove {item['name']}"
+                            hi("Cancel01Icon"), aria_label=f"Remove {item['name']}"
                         )
                     ),
                     class_name="w-64",

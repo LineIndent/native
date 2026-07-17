@@ -7,15 +7,11 @@ Edit the corresponding file in app/www/anatomy_src/ instead, then re-run the scr
 ANATOMY = {
     "accordion": """accordion.root(
     accordion.item(
-        accordion.header(
-            accordion.trigger(),
-        ),
+        accordion.trigger(),
         accordion.panel(),
     ),
     accordion.item(
-        accordion.header(
-            accordion.trigger(),
-        ),
+        accordion.trigger(),
         accordion.panel(),
     ),
 )""",
@@ -29,25 +25,11 @@ ANATOMY = {
         attachment.action()
     ),
 )""",
-    "autocomplete": """autocomplete(
-    items=[...],
-)""",
     "avatar": """avatar.root(
     avatar.image(),
     avatar.fallback(),
 )""",
     "badge": """badge()""",
-    "breadcrumb": """breadcrumb.root(
-    breadcrumb.list(
-        breadcrumb.item(
-            breadcrumb.link(),
-        ),
-        breadcrumb.separator(),
-        breadcrumb.item(
-            breadcrumb.page(),
-        ),
-    ),
-)""",
     "bubble": """bubble.root(
     bubble.content(),
     bubble.reactions(),
@@ -69,48 +51,12 @@ ANATOMY = {
     "checkbox": """checkbox.root(
     checkbox.indicator(),
 )""",
-    "collapsible": """collapsible.root(
-    collapsible.trigger(),
-    collapsible.panel(),
-)""",
-    "context_menu": """context_menu.root(
-    context_menu.trigger(),
-    context_menu.portal(
-        context_menu.positioner(
-            context_menu.popup(
-                context_menu.item(),
-                context_menu.separator(),
-                context_menu.group(
-                    context_menu.group_label(),
-                    context_menu.item(),
-                ),
-                context_menu.checkbox_item(
-                    context_menu.checkbox_item_indicator(),
-                ),
-                context_menu.radio_group(
-                    context_menu.radio_item(
-                        context_menu.radio_item_indicator(),
-                    ),
-                ),
-                context_menu.sub(
-                    context_menu.sub_trigger(),
-                    context_menu.positioner(
-                        context_menu.popup(),
-                    ),
-                ),
-            ),
-        ),
-    ),
-)""",
     "dialog": """dialog.root(
     dialog.trigger(),
-    dialog.portal(
-        dialog.backdrop(),
-        dialog.popup(
-            dialog.title(),
-            dialog.description(),
-            dialog.close(),
-        ),
+    dialog.popup(
+        dialog.title(),
+        dialog.description(),
+        dialog.close(),
     ),
 )""",
     "field": """field.root(
@@ -130,15 +76,10 @@ ANATOMY = {
         frame.footer(),
     ),
 )""",
-    "heatmap": """heatmap()""",
     "input": """input()""",
     "input_group": """input_group.root(
     input_group.input(placeholder="Search..."),
     input_group.addon(),
-)""",
-    "kbd": """kbd.group(
-    kbd.root(),
-    kbd.root(),
 )""",
     "marker": """marker.root(
     marker.icon(),
@@ -146,33 +87,12 @@ ANATOMY = {
 )""",
     "menu": """menu.root(
     menu.trigger(),
-    menu.portal(
-        menu.positioner(
-            menu.popup(
-                menu.item(),
-                menu.separator(),
-                menu.group(
-                    menu.group_label(),
-                    menu.item(),
-                ),
-                menu.checkbox_item(
-                    menu.checkbox_item_indicator(),
-                ),
-                menu.radio_group(
-                    menu.radio_item(
-                        menu.radio_item_indicator(),
-                    ),
-                ),
-                menu.submenu_root(
-                    menu.submenu_trigger(),
-                    menu.portal(
-                        menu.positioner(
-                            menu.popup(),
-                        ),
-                    ),
-                ),
-            ),
-        ),
+    menu.content(
+        menu.group_label(),
+        menu.item(menu.shortcut()),
+        menu.separator(),
+        menu.group_label(),
+        menu.close(),
     ),
 )""",
     "message": """message.group(
@@ -184,118 +104,25 @@ ANATOMY = {
         ),
     ),
 )""",
-    "metric": """metric(
-    label="Revenue",
-    value="$12,000",
-    trend="+12%",
-)""",
-    "popover": """popover.root(
-    popover.trigger(),
-    popover.portal(
-        popover.backdrop(),
-        popover.positioner(
-            popover.popup(
-                popover.header(
-                    popover.title(),
-                    popover.description(),
-                ),
-                popover.close(),
-            ),
-        ),
+    "select": """select(
+    select.option(),
+    select.optgroup(
+        select.option(),
+        select.option(),
     ),
-)""",
-    "scroll_area": """scroll_area.root(
-    scroll_area.viewport(
-        scroll_area.content(),
-    ),
-    scroll_area.scrollbar(
-        scroll_area.thumb(),
-    ),
-    scroll_area.corner(),
-)""",
-    "select": """select.root(
-    select.trigger(
-        select.value(),
-        select.icon(),
-    ),
-    select.portal(
-        select.positioner(
-            select.popup(
-                select.group(
-                    select.group_label(),
-                    select.item(
-                        select.item_text(),
-                        select.item_indicator(),
-                    ),
-                ),
-                select.separator(),
-            ),
-        ),
+    select.optgroup(
+        select.option(),
+        select.option(),
     ),
 )""",
     "separator": """separator()""",
-    "skeleton": """skeleton()""",
-    "slider": """slider.root(
-    slider.control(
-        slider.track(
-            slider.indicator(),
-            slider.thumb(),
-        ),
-    ),
-)""",
     "spinner": """spinner()""",
-    "switch": """switch.root(
-    switch.thumb(),
-)""",
-    "table": """table.root(
-    table.header(
-        table.row(
-            table.head(),
-        ),
-    ),
-    table.body(
-        table.row(
-            table.cell(),
-        ),
-    ),
-    table.footer(),
-    table.caption(),
-)""",
+    "switch": """switch.root()""",
     "tabs": """tabs.root(
     tabs.list(
-        tabs.tab(),
-        tabs.indicator(),
+        tabs.trigger(),
     ),
-    tabs.panel(),
+    tabs.content(),
 )""",
     "textarea": """textarea()""",
-    "timeline": """timeline.root(
-    timeline.item(
-        timeline.indicator(),
-        timeline.separator(),
-        timeline.header(
-            timeline.date(),
-            timeline.title(),
-        ),
-        timeline.content(),
-        step=1,
-        active_step=1,
-    ),
-)""",
-    "toggle": """toggle()""",
-    "toggle_group": """toggle_group(
-    toggle_group.item("Option 1", value="1"),
-    toggle_group.item("Option 2", value="2"),
-)""",
-    "tooltip": """tooltip.root(
-    tooltip.trigger(),
-    tooltip.portal(
-        tooltip.positioner(
-            tooltip.popup(
-                tooltip.arrow(),
-                "Tooltip content",
-            ),
-        ),
-    ),
-)""",
 }

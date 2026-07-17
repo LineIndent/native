@@ -76,6 +76,9 @@ class TabsTrigger(CoreComponent):
         trigger_id = props.get("id") or f"tabs-trigger-{uuid.uuid4().hex[:8]}"
         props["id"] = trigger_id
 
+        user_on_click = props.pop("on_click", None)
+        user_on_mount = props.pop("on_mount", None)
+
         js_on_click = f"""
         (function() {{
             var trigger = document.getElementById('{trigger_id}');
@@ -102,8 +105,21 @@ class TabsTrigger(CoreComponent):
         }})()
         """
 
-        props["on_click"] = rx.call_script(js_on_click)
-        props["on_mount"] = rx.call_script(js_on_mount)
+        click_handlers = [rx.call_script(js_on_click)]
+        if user_on_click is not None:
+            if isinstance(user_on_click, list):
+                click_handlers.extend(user_on_click)
+            else:
+                click_handlers.append(user_on_click)
+        props["on_click"] = click_handlers
+
+        mount_handlers = [rx.call_script(js_on_mount)]
+        if user_on_mount is not None:
+            if isinstance(user_on_mount, list):
+                mount_handlers.extend(user_on_mount)
+            else:
+                mount_handlers.append(user_on_mount)
+        props["on_mount"] = mount_handlers
 
         cls.set_class_name(cn(ClassNames.TRIGGER, custom_classes), props)
         return rx.el.button(*children, **props)

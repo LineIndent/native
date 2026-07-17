@@ -1,12 +1,10 @@
 import reflex as rx
 
 from components.ui.card import card
-
-# Assuming your imports are structured like this
 from components.ui.tabs import tabs
 
 
-def tabs_demo() -> rx.Component:
+def tabs_basic() -> rx.Component:
     return tabs.root(
         tabs.list(
             tabs.trigger("Overview", value="overview"),
@@ -81,5 +79,4 @@ def tabs_demo() -> rx.Component:
         ),
         default_value="overview",
         class_name="w-[400px]",
-        orientation="vertical",
     )

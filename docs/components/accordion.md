@@ -19,7 +19,6 @@ Built on native `<details>`/`<summary>` — expand/collapse, keyboard support, a
 **Props used:** `name` on `accordion.item` (groups items so only one stays open at a time, matching native `<details name="...">` behavior).
 
 --DEMO(accordion_basic)--
---DEMO(tabs_demo)--
 
 # API Reference
 

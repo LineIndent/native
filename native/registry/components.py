@@ -5,6 +5,12 @@ Re-run the script after adding/moving/renaming component files.
 """
 
 COMPONENT_REGISTRY = {
+    # --- components/chart ---
+    "chart_tooltip": {
+        "files": ["components/chart/chart_tooltip.py"],
+        "dependencies": [],
+    },
+
     # --- components/core ---
     "core": {
         "files": ["components/core/core.py"],
@@ -52,10 +58,6 @@ COMPONENT_REGISTRY = {
         "files": ["components/ui/checkbox.py"],
         "dependencies": ["core", "hugeicon"],
     },
-    "code": {
-        "files": ["components/ui/code.py"],
-        "dependencies": ["core"],
-    },
     "dialog": {
         "files": ["components/ui/dialog.py"],
         "dependencies": ["core"],
@@ -96,16 +98,16 @@ COMPONENT_REGISTRY = {
         "files": ["components/ui/separator.py"],
         "dependencies": ["core"],
     },
-    "slider": {
-        "files": ["components/ui/slider.py"],
-        "dependencies": ["core"],
-    },
     "spinner": {
         "files": ["components/ui/spinner.py"],
         "dependencies": ["core"],
     },
     "switch": {
         "files": ["components/ui/switch.py"],
+        "dependencies": ["core"],
+    },
+    "tabs": {
+        "files": ["components/ui/tabs.py"],
         "dependencies": ["core"],
     },
     "textarea": {
