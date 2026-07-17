@@ -50,7 +50,7 @@ jobs:
         run: |
           vercel build \
             --prod \
-            --token=${$ secrets.VERCEL_TOKEN}
+            --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy to Vercel
         working-directory: frontend
