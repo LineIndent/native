@@ -66,9 +66,7 @@ class NativeSwitch(CoreComponent):
         cls.set_class_name(ClassNames.ROOT, props)
 
         return rx.el.label(
-            rx.el.input(
-                type="checkbox", class_name=ClassNames.INPUT, **input_props
-            ),
+            rx.el.input(type="checkbox", class_name=ClassNames.INPUT, **input_props),
             rx.el.div(
                 rx.el.span(
                     # Dynamically merge custom thumb classes

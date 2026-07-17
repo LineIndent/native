@@ -2,7 +2,6 @@ import reflex as rx
 
 from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
-
 data = [
     {"month": "Jan", "desktop": 186},
     {"month": "Feb", "desktop": 305},
@@ -30,7 +29,8 @@ def area_chart_basic_type():
             rx.recharts.area_chart(
                 chart_tooltip(label="show"),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.area(

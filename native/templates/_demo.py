@@ -1,9 +1,10 @@
 import reflex as rx
-
-from native.templates._copy_btn import create_copy_button, generate_component_id
 from reflex_components_core.el import div
-from components.ui.button import button
+
 from components.core.hugeicon import hi
+from components.ui.button import button
+from native.templates._copy_btn import create_copy_button, generate_component_id
+
 
 def demo(component: rx.Component, source: str):
     demo_id = generate_component_id()
@@ -21,7 +22,6 @@ def demo(component: rx.Component, source: str):
                             "group-data-[view=code]:bg-transparent "
                             "group-data-[view=code]:border-transparent"
                         ),
-
                         on_click=rx.call_script(
                             f"""
                             document.getElementById("demo-{demo_id}").dataset.view = "preview";
@@ -43,13 +43,11 @@ def demo(component: rx.Component, source: str):
                             """
                         ),
                     ),
-                    class_name="flex items-center gap-1 radius-lg"
+                    class_name="flex items-center gap-1 radius-lg",
                 ),
                 class_name="flex items-center gap-2",
             ),
-            div(
-                copy_button,
-                class_name="flex items-center gap-1 px-2"),
+            div(copy_button, class_name="flex items-center gap-1 px-2"),
             class_name="flex items-stretch justify-between p-0.5 pb-0.5",
         ),
         div(
@@ -68,8 +66,7 @@ def demo(component: rx.Component, source: str):
                     ),
                 ),
                 class_name=(
-                    "size-full overflow-y-auto p-2 hidden "
-                    "group-data-[view=code]:flex"
+                    "size-full overflow-y-auto p-2 hidden group-data-[view=code]:flex"
                 ),
             ),
             class_name=(

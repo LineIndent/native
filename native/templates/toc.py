@@ -1,4 +1,3 @@
-from typing import Dict, List
 
 import reflex as rx
 
@@ -38,7 +37,7 @@ def create_copy_button(url: str) -> rx.Component:
     )
 
 
-def _create_markdown_toc_links(url: str, toc_data: List[Dict]) -> rx.Component:
+def _create_markdown_toc_links(url: str, toc_data: list[dict]) -> rx.Component:
 
     if not toc_data:
         return rx.el.div()
@@ -126,7 +125,7 @@ def _create_external_tool_links(url: str):
     )
 
 
-def table_of_content(url: str, toc_data: List[Dict]):
+def table_of_content(url: str, toc_data: list[dict]):
     """
     Render table of contents.
 

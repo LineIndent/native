@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import List
 
 import reflex as rx
 
@@ -84,7 +83,7 @@ def create_menu_item(data: dict):
     )
 
 
-def create_sidebar_menu_items(routes: List[dict]):
+def create_sidebar_menu_items(routes: list[dict]):
     """Create menu items from routes."""
     return rx.el.div(
         *[create_menu_item(route) for route in routes],

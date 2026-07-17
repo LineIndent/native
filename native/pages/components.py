@@ -75,6 +75,7 @@ def get_utility_links():
         for name, slug in UTILITIES
     ]
 
+
 def get_chart_links():
     entries = []
 
@@ -84,8 +85,8 @@ def get_chart_links():
                 stem = chart_dir.name  # e.g., "area"
 
                 # Append "-chart" explicitly to the slug, but keep the display name clean
-                name = f"{stem.replace('_', ' ').title()} Chart" # e.g., "Area Chart"
-                slug = f"{stem.replace('_', '-')}-chart"         # e.g., "area-chart"
+                name = f"{stem.replace('_', ' ').title()} Chart"  # e.g., "Area Chart"
+                slug = f"{stem.replace('_', '-')}-chart"  # e.g., "area-chart"
 
                 # Count files inside the subfolder (native/lib/charts/area/*.py)
                 example_count = len(list(chart_dir.glob("*.py")))
@@ -95,9 +96,9 @@ def get_chart_links():
     entries.sort(key=lambda x: x[0].lower())
 
     return [
-        link_card(name, f"/docs/charts/{slug}", count)
-        for name, slug, count in entries
+        link_card(name, f"/docs/charts/{slug}", count) for name, slug, count in entries
     ]
+
 
 def section(title: str, description: str, links):
     return div(
@@ -184,6 +185,7 @@ component_links = get_links(
 
 utility_links = get_utility_links()
 chart_links = get_chart_links()
+
 
 def filter_script(value: Var) -> Var:
     return Var(

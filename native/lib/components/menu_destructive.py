@@ -1,6 +1,8 @@
 import reflex as rx
-from components.ui.menu import menu
+
 from components.ui.button import button_variants
+from components.ui.menu import menu
+
 
 def menu_destructive() -> rx.Component:
     return menu.root(
@@ -9,6 +11,6 @@ def menu_destructive() -> rx.Component:
             menu.item("Account Settings"),
             menu.separator(),
             menu.item("Delete Repository", variant="destructive"),
-            class_name="w-[10rem]"
-        )
+            class_name="w-[10rem]",
+        ),
     )

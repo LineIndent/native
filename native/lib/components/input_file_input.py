@@ -1,4 +1,5 @@
 import reflex as rx
+
 from components.ui.input import input
 
 
@@ -10,4 +11,3 @@ def input_file_input():
         ),
         class_name="w-full max-w-md p-8",
     )
-

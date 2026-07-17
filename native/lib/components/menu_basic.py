@@ -1,6 +1,8 @@
 import reflex as rx
-from components.ui.menu import menu
+
 from components.ui.button import button_variants
+from components.ui.menu import menu
+
 
 def menu_basic() -> rx.Component:
     return menu.root(
@@ -10,5 +12,5 @@ def menu_basic() -> rx.Component:
             menu.item("Profile"),
             menu.item("Billing"),
             menu.item("Settings"),
-        )
+        ),
     )

@@ -1,5 +1,5 @@
 import functools
-from typing import Callable
+from collections.abc import Callable
 
 from reflex_components_core.el import Main, Section, div, h1, main, p, section
 

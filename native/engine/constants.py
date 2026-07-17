@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List
 
 import reflex as rx
 
@@ -11,8 +10,8 @@ class DocDataStruct:
 
     url: str
     description: str
-    component: List[rx.Component]
-    table_of_content: List[Dict]
+    component: list[rx.Component]
+    table_of_content: list[dict]
 
 
 # --- Docs Path Constants ---

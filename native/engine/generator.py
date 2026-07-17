@@ -1,13 +1,12 @@
 import os
 import re
-from typing import List
 
 import native.engine.constants as constants
 from native.engine.parser import parse_and_render
 from native.engine.utils import parse_frontmatter
 
 
-def generate_docs_library() -> List[constants.DocDataStruct]:
+def generate_docs_library() -> list[constants.DocDataStruct]:
     docs = []
     dev_mode = os.environ.get("BURIDAN_DEV_MODE") == "true"
 
@@ -51,7 +50,7 @@ def generate_docs_library() -> List[constants.DocDataStruct]:
         url_path = "docs/" + "/".join(url_path_parts).replace(".md", "")
 
         # Read the markdown content
-        with open(md_file_path, "r", encoding="utf-8") as f:
+        with open(md_file_path, encoding="utf-8") as f:
             md_content = f.read()
 
         md_data, md_content = parse_frontmatter(md_content)

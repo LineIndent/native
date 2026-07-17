@@ -2,9 +2,11 @@ import json
 import random
 import string
 
-from components.core.hugeicon import hi
-from reflex_components_core.el import button, Button
 from reflex.event import call_script
+from reflex_components_core.el import Button, button
+
+from components.core.hugeicon import hi
+
 
 def generate_component_id() -> str:
     return "".join(random.choices(string.ascii_letters + string.digits, k=10))

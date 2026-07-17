@@ -1,7 +1,9 @@
 import reflex as rx
-from components.ui.menu import menu
-from components.ui.button import button_variants
+
 from components.core.hugeicon import hi
+from components.ui.button import button_variants
+from components.ui.menu import menu
+
 
 def menu_icons() -> rx.Component:
     return menu.root(
@@ -10,5 +12,5 @@ def menu_icons() -> rx.Component:
             menu.item(hi("UserIcon"), "Profile"),
             menu.item(hi("CreditCardIcon"), "Billing"),
             menu.item(hi("Setting07Icon"), "Settings"),
-        )
+        ),
     )

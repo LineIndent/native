@@ -5,14 +5,12 @@ import re
 import shutil
 import sys
 from pathlib import Path
-from typing import Dict, Tuple
 
 # Add project root
 ROOT_DIR = Path(__file__).parent.parent
 sys.path.append(str(ROOT_DIR))
 
 from native.registry.components import COMPONENT_REGISTRY
-
 
 # ---------------------------------------------------------
 # PATHS
@@ -31,7 +29,8 @@ DYNAMIC_LOAD_DIRS = [
 # LIVE REGISTRY
 # ---------------------------------------------------------
 
-def build_live_registry(dirs: list[str]) -> Dict[str, Tuple[object, str]]:
+
+def build_live_registry(dirs: list[str]) -> dict[str, tuple[object, str]]:
     registry = {}
 
     for folder in dirs:
@@ -44,11 +43,7 @@ def build_live_registry(dirs: list[str]) -> Dict[str, Tuple[object, str]]:
             if py_file.name.startswith("__"):
                 continue
 
-            module_name = ".".join(
-                py_file.relative_to(ROOT_DIR)
-                .with_suffix("")
-                .parts
-            )
+            module_name = ".".join(py_file.relative_to(ROOT_DIR).with_suffix("").parts)
 
             try:
                 module = importlib.import_module(module_name)
@@ -60,11 +55,7 @@ def build_live_registry(dirs: list[str]) -> Dict[str, Tuple[object, str]]:
                 if name.startswith("_"):
                     continue
 
-                if (
-                    inspect.isfunction(obj)
-                    or inspect.isclass(obj)
-                    or callable(obj)
-                ):
+                if inspect.isfunction(obj) or inspect.isclass(obj) or callable(obj):
                     if getattr(obj, "__module__", None) == module_name:
                         registry[name.lower()] = (obj, name)
 
@@ -78,13 +69,9 @@ LIVE_REGISTRY = build_live_registry(DYNAMIC_LOAD_DIRS)
 # HELPERS
 # ---------------------------------------------------------
 
+
 def clean_arg(value: str | None) -> str:
-    return (
-        (value or "")
-        .strip()
-        .strip("'\"[]{}")
-        .lower()
-    )
+    return (value or "").strip().strip("'\"[]{}").lower()
 
 
 def get_dependencies(name: str):
@@ -140,109 +127,71 @@ def convert_to_markdown(content: str):
         name = clean_arg(match.group(2))
 
         try:
-
             # -----------------------------
             # INSTALL / SOURCE
             # -----------------------------
 
             if cmd in ("install", "source"):
-
                 files = read_component_files(name)
 
                 if not files:
-                    return (
-                        f"\n> No source found for `{name}`\n"
-                    )
+                    return f"\n> No source found for `{name}`\n"
 
-                return "\n\n".join(
-                    f"```python\n{src}\n```"
-                    for src in files
-                )
-
+                return "\n\n".join(f"```python\n{src}\n```" for src in files)
 
             # -----------------------------
             # USAGE
             # -----------------------------
 
             if cmd == "usage":
-
                 entry = LIVE_REGISTRY.get(name)
 
                 if not entry:
-                    return (
-                        f"\n> Component `{name}` not found\n"
-                    )
+                    return f"\n> Component `{name}` not found\n"
 
                 obj, preferred_name = entry
 
-                file = Path(
-                    inspect.getfile(obj)
-                ).stem
+                file = Path(inspect.getfile(obj)).stem
 
                 return (
-                    "```python\n"
-                    f"from components.ui.{file} "
-                    f"import {preferred_name}\n"
-                    "```"
+                    f"```python\nfrom components.ui.{file} import {preferred_name}\n```"
                 )
-
 
             # -----------------------------
             # DEMO
             # -----------------------------
 
             if cmd == "demo":
-
                 entry = LIVE_REGISTRY.get(name)
 
                 if not entry:
-                    return (
-                        f"\n> Component `{name}` not found\n"
-                    )
+                    return f"\n> Component `{name}` not found\n"
 
                 obj, _ = entry
 
                 source = inspect.getsource(obj)
 
-                return (
-                    "```python\n"
-                    f"{source.strip()}\n"
-                    "```"
-                )
-
+                return f"```python\n{source.strip()}\n```"
 
             # -----------------------------
             # INTRO
             # -----------------------------
 
             if cmd == "intro":
+                return f"\n## {name.title()}\n"
 
-                return (
-                    f"\n## {name.title()}\n"
-                )
-
-
-            return (
-                f"\n> Unknown token `{cmd}`\n"
-            )
-
+            return f"\n> Unknown token `{cmd}`\n"
 
         except Exception as e:
-            return (
-                f"\n> Error processing `{cmd}`: {e}\n"
-            )
+            return f"\n> Error processing `{cmd}`: {e}\n"
 
-
-    return re.sub(
-        TOKEN_RE,
-        replace,
-        content
-    )
+    return re.sub(TOKEN_RE, replace, content)
 
 
 # ---------------------------------------------------------
 # MAIN
 # ---------------------------------------------------------
+
 
 def main():
 
@@ -259,7 +208,6 @@ def main():
     count = 0
 
     for md_file in DOCS_SOURCE_DIR.rglob("*.md"):
-
         count += 1
 
         content = md_file.read_text()
@@ -271,18 +219,11 @@ def main():
         # becomes:
         # assets/docs/getting-started/my-page.md
 
-        relative_path = md_file.relative_to(
-            DOCS_SOURCE_DIR
-        )
+        relative_path = md_file.relative_to(DOCS_SOURCE_DIR)
 
-        normalized_parts = [
-            part.replace("_", "-")
-            for part in relative_path.parts
-        ]
+        normalized_parts = [part.replace("_", "-") for part in relative_path.parts]
 
-        output_path = MARKDOWN_OUTPUT_DIR / pathlib.Path(
-            *normalized_parts
-        )
+        output_path = MARKDOWN_OUTPUT_DIR / pathlib.Path(*normalized_parts)
 
         output_path.parent.mkdir(
             parents=True,
@@ -294,13 +235,9 @@ def main():
             newline="",
         )
 
-        print(
-            f"{output_path.relative_to(ROOT_DIR)}"
-        )
+        print(f"{output_path.relative_to(ROOT_DIR)}")
 
-    print(
-        f"Done. Processed {count} files."
-    )
+    print(f"Done. Processed {count} files.")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,6 @@ import reflex as rx
 
 from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
-
 data = [
     {"month": "Jan", "desktop": 186, "mobile": 80, "tablet": 50},
     {"month": "Feb", "desktop": 305, "mobile": 200, "tablet": 120},
@@ -29,7 +28,8 @@ def bar_chart_multiple_tracks():
             rx.recharts.bar_chart(
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.bar(
@@ -73,7 +73,8 @@ def bar_chart_multiple_tracks():
                         ),
                         rx.el.p(device, class_name="text-xs text-foreground"),
                         class_name="flex flex-row items-center gap-x-2",
-                    ) for index, device in enumerate(["Desktop", "Mobile", "Tablet"])
+                    )
+                    for index, device in enumerate(["Desktop", "Mobile", "Tablet"])
                 ],
                 class_name="flex items-center gap-4 justify-center",
             ),

@@ -1,7 +1,6 @@
 import reflex as rx
 
 from components.ui.avatar import avatar
-from components.ui.button import button
 from components.ui.menu import menu
 
 

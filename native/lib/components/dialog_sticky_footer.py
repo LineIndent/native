@@ -42,5 +42,5 @@ def dialog_sticky_footer() -> rx.Component:
                     class_name=dialog.class_names.CLOSE_ICON,
                 )
             ),
-        )
+        ),
     )

@@ -6,7 +6,6 @@ from reflex.experimental import ClientStateVar
 
 from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
-
 start_date = datetime.date(2024, 4, 1)
 
 data = [
@@ -96,7 +95,8 @@ def area_chart_dynamic():
                 ),
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 area("mobile", "chart-2"),

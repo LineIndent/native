@@ -14,4 +14,16 @@ dev = [
     "google-genai",
     "beautifulsoup4>=4.15.0",
     "markdown>=3.10.2",
+    "ruff>=0.15.22",
 ]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

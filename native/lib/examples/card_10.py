@@ -66,9 +66,7 @@ def card_10() -> rx.Component:
             )
         ),
         card.footer(
-            button(
-                "Save Preferences", variant="default", class_name="w-full"
-            ),
+            button("Save Preferences", variant="default", class_name="w-full"),
             class_name="w-full",
         ),
         class_name="mx-auto w-full max-w-sm shadow-sm",

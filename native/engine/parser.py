@@ -22,18 +22,15 @@ import inspect
 import pathlib
 import re
 from pathlib import Path
-from typing import Dict, List, Tuple
-import markdown  # noqa: E402
-from bs4 import BeautifulSoup
 
+import markdown  # noqa: E402
 import reflex as rx
+from bs4 import BeautifulSoup
 
 from native.registry.components import COMPONENT_REGISTRY
 from native.templates._demo import demo
-
 from native.templates._intro import intro
 from native.templates._usage import usage
-
 
 _PROJECT_ROOT = pathlib.Path(__file__).parent.parent.parent
 
@@ -45,8 +42,8 @@ _TOKEN_MATCH_RE = re.compile(r"--([\w_]+)(?:\(([^)]+)\))?--")
 # Live registry: import every file once, remember whatever it publicly
 # defines. No inspect.getmembers() gymnastics, no per-render reflection.
 # --------------------------------------------------------------------------
-def _build_live_registry(dirs: List[str]) -> Dict[str, Tuple[object, str]]:
-    registry: Dict[str, Tuple[object, str]] = {}
+def _build_live_registry(dirs: list[str]) -> dict[str, tuple[object, str]]:
+    registry: dict[str, tuple[object, str]] = {}
 
     for folder in dirs:
         for py_file in (_PROJECT_ROOT / folder).rglob("*.py"):
@@ -77,9 +74,9 @@ def _build_live_registry(dirs: List[str]) -> Dict[str, Tuple[object, str]]:
 _LIVE_REGISTRY = _build_live_registry(["native/lib", "components/"])
 
 
-def get_all_dependencies(name: str, registry: Dict = COMPONENT_REGISTRY) -> List[str]:
+def get_all_dependencies(name: str, registry: dict = COMPONENT_REGISTRY) -> list[str]:
     """Recursively resolve install-time dependencies in install order."""
-    ordered: List[str] = []
+    ordered: list[str] = []
 
     def resolve(comp_name: str) -> None:
         comp = registry.get(comp_name.lower())
@@ -126,7 +123,6 @@ def render_token(cmd: str, raw_arg: str) -> rx.Component:
         return intro(raw_arg)
 
     if cmd == "usage":
-
         return usage(raw_arg)
 
     if "source" in cmd:
@@ -169,7 +165,9 @@ def wrap_tables(html: str) -> str:
     for table in soup.find_all("table"):
         # Outer Wrapper: Handles border, rounded corners, and vertical spacing
         outer_wrapper = soup.new_tag("div")
-        outer_wrapper["class"] = "w-full overflow-hidden border border-input rounded-lg my-4"
+        outer_wrapper["class"] = (
+            "w-full overflow-hidden border border-input rounded-lg my-4"
+        )
 
         # Inner Wrapper: Handles ONLY horizontal scrolling
         inner_wrapper = soup.new_tag("div")
@@ -193,9 +191,7 @@ def render_markdown_chunk(text: str) -> rx.Component:
     return rx.html(html, class_name=_PROSE_CLASS)
 
 
-
-
-def parse_and_render(content: str) -> List[rx.Component]:
+def parse_and_render(content: str) -> list[rx.Component]:
     pieces = []
     cursor = 0
 

@@ -13,9 +13,7 @@ data = [
 def chart_example_with_grid():
 
     return rx.recharts.bar_chart(
-        rx.recharts.cartesian_grid(
-            horizontal=True, vertical=False
-        ),
+        rx.recharts.cartesian_grid(horizontal=True, vertical=False),
         rx.recharts.bar(
             data_key="desktop",
             fill="var(--chart-1)",

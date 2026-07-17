@@ -7,10 +7,12 @@ from components.ui.dialog import dialog
 def dialog_no_close_button() -> rx.Component:
     return dialog.root(
         dialog.trigger(button("No Close Button", variant="outline")),
-        dialog.popup(dialog.header(
-            dialog.title("No Close Button"),
-            dialog.description(
-                "This dialog doesn't have a close button in the top-right corner."
+        dialog.popup(
+            dialog.header(
+                dialog.title("No Close Button"),
+                dialog.description(
+                    "This dialog doesn't have a close button in the top-right corner."
+                ),
             ),
-        ),)
+        ),
     )

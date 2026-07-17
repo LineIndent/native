@@ -27,5 +27,4 @@ def parse_frontmatter(content: str) -> tuple[dict, str]:
 
             metadata[key] = value
 
-
     return metadata, rest_of_content.lstrip()

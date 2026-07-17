@@ -131,7 +131,9 @@ class MenuItem(CoreComponent):
 
         # 0. Pop out the variant prop so we can apply the data-variant attribute
         variant = props.pop("variant", "default")
-        props["data-variant"] = variant  # This maps to your Tailwind: data-[variant=destructive]
+        props["data-variant"] = (
+            variant  # This maps to your Tailwind: data-[variant=destructive]
+        )
 
         item_id = props.get("id") or f"menu-item-{next(_menu_item_counter)}"
         props["id"] = item_id

@@ -2,7 +2,6 @@ import reflex as rx
 
 from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
-
 data = [
     {"month": "Jan", "desktop": 186, "mobile": 80},
     {"month": "Feb", "desktop": 305, "mobile": 200},
@@ -30,7 +29,8 @@ def bar_chart_with_legend():
             rx.recharts.bar_chart(
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.bar(

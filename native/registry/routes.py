@@ -30,7 +30,7 @@ def generate_doc_routes(section_folder, base_path) -> list[dict]:
 
     for file_path in md_files:
         try:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, encoding="utf-8") as f:
                 content = f.read()
         except FileNotFoundError:
             continue

@@ -56,7 +56,7 @@ def bubble_with_variants():
 
                     Ghost bubbles are full width and can take the full width of the container.
                     """,
-                    class_name="docs-prose"
+                    class_name="docs-prose",
                 ),
             ),
             variant="ghost",

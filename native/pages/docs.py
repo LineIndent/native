@@ -63,7 +63,9 @@ def link_card(name: str, href: str, description: str = ""):
                     class_name="text-xs text-muted-foreground line-clamp-2 leading-relaxed",
                 ),
                 class_name="mt-1",
-            ) if description else div(),
+            )
+            if description
+            else div(),
             class_name="flex flex-col gap-1",
         ),
         href=href,
@@ -129,7 +131,10 @@ def section(title: str, description: str, links):
 def no_results():
     return div(
         div(
-            div("No documentation pages found", class_name="font-sans text-sm font-medium"),
+            div(
+                "No documentation pages found",
+                class_name="font-sans text-sm font-medium",
+            ),
             class_name="flex max-w-sm flex-col items-center gap-2",
         ),
         div(

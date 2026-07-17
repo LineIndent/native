@@ -99,7 +99,6 @@ class _ChartTooltipContent:
                     [&_.recharts-tooltip-item:nth-child({i})]:before:!block
                 """)
             else:  ##
-
                 lines.append(f"""
                     [&_.recharts-tooltip-item:nth-child({i})]:before:!content-['']
                     [&_.recharts-tooltip-item:nth-child({i})]:before:!w-3

@@ -2,7 +2,6 @@ import reflex as rx
 
 from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
-
 data = [
     {"browser": "Chrome", "visitors": 275, "fill": "var(--chart-1)"},
     {"browser": "Safari", "visitors": 200, "fill": "var(--chart-2)"},

@@ -17,5 +17,5 @@ def switch_disabled() -> rx.Component:
         ),
         orientation="horizontal",
         data_disabled="true",
-        class_name="w-full max-w-[10rem]"
+        class_name="w-full max-w-[10rem]",
     )

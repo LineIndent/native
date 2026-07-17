@@ -17,7 +17,10 @@ def line_chart_footer_legend():
         rx.el.div(
             rx.el.div(
                 rx.el.h3("Line Chart - Multiple", class_name="text-lg font-semibold"),
-                rx.el.p("Showing total visitors for the last 6 months", class_name="text-sm text-muted-foreground"),
+                rx.el.p(
+                    "Showing total visitors for the last 6 months",
+                    class_name="text-sm text-muted-foreground",
+                ),
                 class_name="flex flex-col gap-y-1.5",
             ),
             class_name="flex flex-row items-center justify-between w-full",
@@ -26,7 +29,8 @@ def line_chart_footer_legend():
             rx.recharts.line_chart(
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.line(
@@ -86,5 +90,6 @@ def line_chart_footer_legend():
             ),
             class_name="flex w-full items-start gap-2 text-sm",
         ),
-        class_name=chart_tooltip_content([1, 2], "square") + " w-full p-0 flex flex-col gap-y-6",
+        class_name=chart_tooltip_content([1, 2], "square")
+        + " w-full p-0 flex flex-col gap-y-6",
     )

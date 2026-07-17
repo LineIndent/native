@@ -2,7 +2,6 @@ import reflex as rx
 
 from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
-
 data = [
     {"month": "Jan", "desktop": 186},
     {"month": "Feb", "desktop": 305},

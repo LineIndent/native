@@ -29,7 +29,8 @@ def area_chart_with_axis():
             rx.recharts.area_chart(
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.area(
@@ -89,5 +90,6 @@ def area_chart_with_axis():
             ),
             class_name="flex w-full items-start gap-2 text-sm",
         ),
-        class_name=chart_tooltip_content([1, 2], "square") + " w-full p-0 flex flex-col gap-y-6",
+        class_name=chart_tooltip_content([1, 2], "square")
+        + " w-full p-0 flex flex-col gap-y-6",
     )

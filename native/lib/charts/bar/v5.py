@@ -1,10 +1,9 @@
 from datetime import datetime
 
 import reflex as rx
-
 from reflex.experimental import ClientStateVar
-from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
+from components.chart.chart_tooltip import chart_tooltip, chart_tooltip_content
 
 data = [
     {"date": "2024-04-01", "desktop": 222, "mobile": 150},
@@ -48,6 +47,7 @@ formatted_data = [
 
 SelectedType = ClientStateVar.create("bar_selected", "mobile")
 
+
 def bar_chart_dynamic():
 
     return rx.el.div(
@@ -69,13 +69,14 @@ def bar_chart_dynamic():
                 default_value="Mobile",
                 class_name="relative flex items-center whitespace-nowrap justify-center gap-2 py-2 rounded-lg shadow-sm px-3",
             ),
-            class_name="w-full flex flex-row items-center justify-between"
+            class_name="w-full flex flex-row items-center justify-between",
         ),
         rx.el.div(
             rx.recharts.bar_chart(
                 chart_tooltip("hide"),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.bar(
