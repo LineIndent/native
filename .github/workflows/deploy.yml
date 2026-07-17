@@ -27,3 +27,6 @@ jobs:
 
       - name: Show frontend contents
         run: ls -la frontend
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel
