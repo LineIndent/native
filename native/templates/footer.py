@@ -23,7 +23,7 @@ def _footer() -> Footer:
                 " The source code is available on ",
                 a(
                     "GitHub",
-                    href="https://github.com/LineIndent/ui",
+                    href="https://github.com/LineIndent/native",
                     class_name="font-semibold underline",
                 ),
                 ".",

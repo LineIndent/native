@@ -1,4 +1,4 @@
-name: Deploy Frontend
+name: Deploy Native website to Vercel
 
 on:
   push:
