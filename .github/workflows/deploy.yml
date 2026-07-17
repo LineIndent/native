@@ -1,12 +1,19 @@
-name: Test Workflow
+name: Deploy Frontend
 
 on:
   push:
     branches: [main]
 
 jobs:
-  hello:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "It works!"
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        run: uv sync
+
+      - run: echo "Success!"
