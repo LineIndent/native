@@ -19,8 +19,11 @@ jobs:
       - name: Export Reflex frontend
         run: uv run reflex export --frontend-only
 
+      - name: Create frontend directory
+        run: mkdir frontend
+
       - name: Unzip frontend
-        run: unzip frontend.zip
+        run: unzip -o frontend.zip -d frontend
 
       - name: Show frontend contents
         run: ls -la frontend
