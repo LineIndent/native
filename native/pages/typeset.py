@@ -50,9 +50,6 @@ def _typeset_select(
     )
 
 
-def _get_code_mobile(): ...
-
-
 def _sidebar_desktop():
     return rx.el.aside(
         rx.el.div(
@@ -85,16 +82,6 @@ def _sidebar_desktop():
                 variant="outline",
                 class_name="flex-1",
             ),
-            # button(
-            #     "Get Code",
-            #     on_click=rx.call_script(
-            #         """
-            #         const el = document.getElementById("typeset-toggle-wrapper");
-            #         el.dataset.show = el.dataset.show === "true" ? "false" : "true";
-            #         """
-            #     ),
-            #     class_name="flex-1 lg:hidden",
-            # ),
             button(
                 rx.el.span(
                     "Get Code",
@@ -122,16 +109,6 @@ def _sidebar_desktop():
             "lg:w-[12rem] lg:max-w-[12rem] lg:h-full lg:gap-0 lg:divide-y lg:divide-input"
         ),
     )
-
-
-# def sidebar():
-#     return rx.el.div(
-#         _sidebar_desktop(),
-#         class_name=(
-#             "w-full flex-initial h-auto min-h-0 min-w-0 max-w-full lg:flex-1 "
-#             "lg:h-full lg:w-[12rem] lg:max-w-[12rem] lg:shrink-0"
-#         ),
-#     )
 
 
 def sidebar():
@@ -213,16 +190,6 @@ def _sample_content() -> rx.Component:
     )
 
 
-# def preview_space():
-#     return rx.el.div(
-#         rx.el.div(
-#             _sample_content(),
-#             class_name="w-full h-full flex justify-center border-1 border-input/90 rounded-2xl bg-background overflow-auto scrollbar-none",
-#         ),
-#         class_name="w-full flex-[2] min-h-0 order-first lg:order-none lg:flex-1 lg:min-w-0 lg:h-full",
-#     )
-
-
 def preview_space():
     return rx.el.div(
         rx.el.div(
@@ -231,36 +198,6 @@ def preview_space():
         ),
         class_name="w-full flex-[2] min-h-0 order-first lg:order-none lg:flex-1 lg:min-w-0 lg:h-full max-lg:group-data-[show=true]:hidden",
     )
-
-
-# def source_space():
-#     return rx.el.div(
-#         rx.el.div(
-#             typeset_get_code(),
-#             class_name="flex-[15] min-h-0 w-full border border-input/90 rounded-2xl",
-#         ),
-#         # rx.el.div(
-#         #     rx.el.p(
-#         #         rx.el.span(
-#         #             "Read the ",
-#         #             rx.el.a(
-#         #                 "typeset",
-#         #                 href="/docs/resources/typeset",
-#         #                 class_name="font-semibold underline",
-#         #             ),
-#         #             " documentation.",
-#         #         ),
-#         #         class_name="w-full text-[13px] font-light",
-#         #     ),
-#         #     class_name="flex-[1] flex w-full px-4 flex-row items-end justify-center",
-#         # ),
-#         id="source-space",
-#         class_name=(
-#             "hidden xl:flex lg:flex-col lg:gap-y-4 "
-#             "lg:w-full lg:flex-initial lg:h-auto lg:min-h-0 lg:min-w-0 lg:max-w-full lg:flex-1 "
-#             "lg:h-full lg:w-sm lg:max-w-sm lg:shrink-0"
-#         ),
-#     )
 
 
 def source_space():

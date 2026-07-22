@@ -4,9 +4,13 @@ import reflex as rx
 
 from components.core.hugeicon import hi
 from components.ui.button import button
+from components.ui.card import card
 from components.ui.dialog import dialog
 from components.ui.input import input
 from components.ui.select import select
+from native.lib.charts.area.v8 import area_chart_with_gradient
+from native.lib.charts.bar.v1 import bar_chart_multiple
+from native.lib.charts.line.v8 import line_chart_footer_legend
 from native.lib.examples.card_01 import card_01
 from native.lib.examples.card_02 import card_02
 from native.lib.examples.card_03 import card_03
@@ -27,6 +31,7 @@ from native.registry.radii import RADII_OPTIONS
 from native.registry.styles import STYLE_REGISTRY
 from native.registry.themes import BASE_THEMES
 from native.templates._get_code import get_code
+from native.templates.masonary import masonry_card
 from native.templates.navbar import navbar
 
 
@@ -257,6 +262,9 @@ def preview_space():
             rx.el.div(
                 rx.el.div(
                     rx.el.div(
+                        masonry_card(
+                            lambda: card.root(card.content(area_chart_with_gradient()))
+                        )(),
                         card_01(),
                         card_02(),
                         card_03(),
@@ -264,6 +272,9 @@ def preview_space():
                         card_05(),
                         card_06(),
                         card_07(),
+                        masonry_card(
+                            lambda: card.root(card.content(bar_chart_multiple()))
+                        )(),
                         card_08(),
                         card_09(),
                         card_10(),
@@ -271,6 +282,9 @@ def preview_space():
                         card_12(),
                         card_13(),
                         card_14(),
+                        masonry_card(
+                            lambda: card.root(card.content(line_chart_footer_legend()))
+                        )(),
                         class_name=" ".join(
                             [
                                 "preview-theme",

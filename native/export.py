@@ -74,28 +74,28 @@ def export(app: App):
         ),
     )
 
-    for doc in generate_docs_library():
-        main_content = div(*doc.component, class_name="w-full")
+    # for doc in generate_docs_library():
+    #     main_content = div(*doc.component, class_name="w-full")
 
-        toc_content = table_of_content(doc.url, doc.table_of_content)
+    #     toc_content = table_of_content(doc.url, doc.table_of_content)
 
-        title_s = doc.url.split("/")[-1].replace("-", " ").title()
+    #     title_s = doc.url.split("/")[-1].replace("-", " ").title()
 
-        title = f"{title_s} – buridan/native"
+    #     title = f"{title_s} – buridan/native"
 
-        card_path = f"{doc.url.split('/')[-1]}.webp"
+    #     card_path = f"{doc.url.split('/')[-1]}.webp"
 
-        app.add_page(
-            component=docpage(main_content, toc_content),
-            route=f"/{doc.url}",
-            title=title,
-            meta=generate_site_meta_tags(
-                title=title_s,
-                url=f"{doc.url}",
-                description=doc.description,
-                social_card=card_path,
-            ),
-        )
+    #     app.add_page(
+    #         component=docpage(main_content, toc_content),
+    #         route=f"/{doc.url}",
+    #         title=title,
+    #         meta=generate_site_meta_tags(
+    #             title=title_s,
+    #             url=f"{doc.url}",
+    #             description=doc.description,
+    #             social_card=card_path,
+    #         ),
+    #     )
 
     app.add_page(
         component=div(

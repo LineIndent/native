@@ -68,9 +68,9 @@ def area_chart_with_gradient():
                         )
                         for s in series
                     ],
-                    class_name="flex items-center gap-4",
+                    class_name="flex items-center gap-4 w-full justify-end",
                 ),
-                class_name="flex items-center justify-between w-full",
+                class_name="flex flex-row flex-wrap gap-4 items-center justify-between w-full",
             ),
         ),
         rx.el.div(
