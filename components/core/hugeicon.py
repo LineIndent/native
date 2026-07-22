@@ -4,8 +4,8 @@ from reflex.vars.base import Var, VarData
 
 from ..core.core import CoreComponent
 
-REACT_LIBRARY = "@hugeicons/react@1.1.6"
-CORE_ICONS_LIBRARY = "@hugeicons/core-free-icons@4.2.1"
+REACT_LIBRARY = "@hugeicons/react@1.1.9"
+CORE_ICONS_LIBRARY = "@hugeicons/core-free-icons@4.2.3"
 
 
 class HugeIcon(CoreComponent):
