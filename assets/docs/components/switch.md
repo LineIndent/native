@@ -130,9 +130,7 @@ class NativeSwitch(CoreComponent):
         cls.set_class_name(ClassNames.ROOT, props)
 
         return rx.el.label(
-            rx.el.input(
-                type="checkbox", class_name=ClassNames.INPUT, **input_props
-            ),
+            rx.el.input(type="checkbox", class_name=ClassNames.INPUT, **input_props),
             rx.el.div(
                 rx.el.span(
                     # Dynamically merge custom thumb classes
@@ -169,7 +167,9 @@ def switch_basic() -> rx.Component:
     return field.root(
         field.content(
             field.title("Strict Mode"),
-            field.description("Enable strict validation protocols across all incoming API payloads."),
+            field.description(
+                "Enable strict validation protocols across all incoming API payloads."
+            ),
         ),
         switch.root(id="strict-mode"),
         orientation="horizontal",
@@ -190,7 +190,9 @@ def switch_with_label() -> rx.Component:
         rx.el.div(
             field.content(
                 field.title("Enterprise Pipeline"),
-                field.description("Deploy dedicated runners, isolated networks, and unlimited concurrency."),
+                field.description(
+                    "Deploy dedicated runners, isolated networks, and unlimited concurrency."
+                ),
             ),
             switch.root(id="enterprise-plan"),
             class_name="flex items-start justify-between gap-4 max-w-sm",
@@ -280,7 +282,7 @@ def switch_disabled() -> rx.Component:
         ),
         orientation="horizontal",
         data_disabled="true",
-        class_name="w-full max-w-[10rem]"
+        class_name="w-full max-w-[10rem]",
     )
 ```
 

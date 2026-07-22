@@ -6,6 +6,8 @@
     "export": "react-router build"
   },
   "dependencies": {
+    "@hugeicons/core-free-icons": "4.2.1",
+    "@hugeicons/react": "1.1.6",
     "@react-router/node": "7.15.0",
     "clsx-for-tailwind": "1.0.0",
     "isbot": "5.1.40",

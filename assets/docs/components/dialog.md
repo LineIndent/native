@@ -315,12 +315,14 @@ To omit the top-right close icon, simply don't render a `dialog.close(...)` for 
 def dialog_no_close_button() -> rx.Component:
     return dialog.root(
         dialog.trigger(button("No Close Button", variant="outline")),
-        dialog.popup(dialog.header(
-            dialog.title("No Close Button"),
-            dialog.description(
-                "This dialog doesn't have a close button in the top-right corner."
+        dialog.popup(
+            dialog.header(
+                dialog.title("No Close Button"),
+                dialog.description(
+                    "This dialog doesn't have a close button in the top-right corner."
+                ),
             ),
-        ),)
+        ),
     )
 ```
 
@@ -368,7 +370,7 @@ def dialog_sticky_footer() -> rx.Component:
                     class_name=dialog.class_names.CLOSE_ICON,
                 )
             ),
-        )
+        ),
     )
 ```
 

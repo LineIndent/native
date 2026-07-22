@@ -230,7 +230,6 @@ def tabs_basic() -> rx.Component:
             tabs.trigger("Analytics", value="analytics"),
             tabs.trigger("Reports", value="reports"),
             tabs.trigger("Settings", value="settings"),
-            variant="line",
         ),
         tabs.content(
             card.root(

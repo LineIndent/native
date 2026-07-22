@@ -195,7 +195,9 @@ class MenuItem(CoreComponent):
 
         # 0. Pop out the variant prop so we can apply the data-variant attribute
         variant = props.pop("variant", "default")
-        props["data-variant"] = variant  # This maps to your Tailwind: data-[variant=destructive]
+        props["data-variant"] = (
+            variant  # This maps to your Tailwind: data-[variant=destructive]
+        )
 
         item_id = props.get("id") or f"menu-item-{next(_menu_item_counter)}"
         props["id"] = item_id
@@ -306,7 +308,7 @@ def menu_basic() -> rx.Component:
             menu.item("Profile"),
             menu.item("Billing"),
             menu.item("Settings"),
-        )
+        ),
     )
 ```
 
@@ -319,13 +321,15 @@ Dropdown items with right-aligned keyboard command hints built into the row layo
 ```python
 def menu_shortcuts() -> rx.Component:
     return menu.root(
-        menu.trigger("Workspace Actions Menu", class_name=button_variants(variant="outline")),
+        menu.trigger(
+            "Workspace Actions Menu", class_name=button_variants(variant="outline")
+        ),
         menu.content(
             menu.item("New Tab", menu.shortcut("⌘T")),
             menu.item("New Window", menu.shortcut("⌘N")),
             menu.separator(),
             menu.item("Save Project", menu.shortcut("⌘S")),
-        )
+        ),
     )
 ```
 
@@ -343,7 +347,7 @@ def menu_icons() -> rx.Component:
             menu.item(hi("UserIcon"), "Profile"),
             menu.item(hi("CreditCardIcon"), "Billing"),
             menu.item(hi("Setting07Icon"), "Settings"),
-        )
+        ),
     )
 ```
 
@@ -361,8 +365,8 @@ def menu_destructive() -> rx.Component:
             menu.item("Account Settings"),
             menu.separator(),
             menu.item("Delete Repository", variant="destructive"),
-            class_name="w-[10rem]"
-        )
+            class_name="w-[10rem]",
+        ),
     )
 ```
 

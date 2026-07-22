@@ -455,33 +455,6 @@ Set `variant="image"` on `attachment.media` and render an `rx.el.img()` inside i
 def attachment_image_demo():
     return rx.el.div(
         attachment.group(
-            # rx.foreach(
-            #     images,
-            #     lambda image: attachment.root(
-            #         attachment.trigger(
-            #             link=True,
-            #             href=image["src"],
-            #             target="_blank",
-            #             rel="noreferrer",
-            #             aria_label=f"Open {image['name']}",
-            #         ),
-            #         attachment.media(
-            #             rx.el.img(src=image["src"], alt=image["alt"]),
-            #             variant="image",
-            #         ),
-            #         attachment.content(
-            #             attachment.title(image["name"]),
-            #             attachment.description(image["meta"]),
-            #         ),
-            #         attachment.actions(
-            #             attachment.action(
-            #                 hi("Cancel01Icon"),
-            #                 aria_label=f"Remove {image['name']}",
-            #             )
-            #         ),
-            #         orientation="vertical",
-            #     ),
-            # ),
             [
                 attachment.root(
                     attachment.trigger(
@@ -642,29 +615,6 @@ Wrap attachments in `attachment.group` to lay them out in a horizontally scrolla
 def attachment_group_demo():
     return rx.el.div(
         attachment.group(
-            # rx.foreach(
-            #     items,
-            #     lambda item: attachment.root(
-            #         rx.cond(
-            #             item["type"] == "image",
-            #             attachment.media(
-            #                 rx.el.img(src=item["src"], alt=item["name"]),
-            #                 variant="image",
-            #             ),
-            #             attachment.media(hi("File02Icon")),
-            #         ),
-            #         attachment.content(
-            #             attachment.title(item["name"]),
-            #             attachment.description(item["meta"]),
-            #         ),
-            #         attachment.actions(
-            #             attachment.action(
-            #                 hi("Cancel01Icon"), aria_label=f"Remove {item['name']}"
-            #             )
-            #         ),
-            #         class_name="w-64",
-            #     ),
-            # ),
             [
                 attachment.root(
                     attachment.media(
@@ -679,8 +629,7 @@ def attachment_group_demo():
                     ),
                     attachment.actions(
                         attachment.action(
-                            hi("Cancel01Icon"),
-                            aria_label=f"Remove {item['name']}"
+                            hi("Cancel01Icon"), aria_label=f"Remove {item['name']}"
                         )
                     ),
                     class_name="w-64",

@@ -151,7 +151,9 @@ class ClassNames:
 
     INPUT = "peer sr-only"
 
-    INDICATOR = "hidden peer-checked:grid place-content-center text-current [&>svg]:size-3.5"
+    INDICATOR = (
+        "hidden peer-checked:grid place-content-center text-current [&>svg]:size-3.5"
+    )
 
     BOX = (
         "pointer-events-none flex size-4 shrink-0 items-center justify-center "
@@ -165,6 +167,20 @@ class ClassNames:
         "dark:peer-checked:bg-primary"
     )
 
+    # Props that describe the actual form control (not the label wrapper).
+    # Anything data-* or aria-* is included too, since those attributes are
+    # almost always meant for the real <input> — e.g. JS hooks like
+    # data-dt-select, or accessibility state like aria-label.
+    _KNOWN_INPUT_PROPS = (
+        "checked",
+        "default_checked",
+        "disabled",
+        "required",
+        "name",
+        "value",
+        "on_change",
+        "id",
+    )
 
 
 class CheckboxRoot(CoreComponent):
@@ -173,17 +189,12 @@ class CheckboxRoot(CoreComponent):
         custom_classes = props.pop("class_name", "")
 
         input_props = {}
-        for key in (
-            "checked",
-            "default_checked",
-            "disabled",
-            "required",
-            "name",
-            "value",
-            "on_change",
-            "id",
-        ):
-            if key in props:
+        for key in list(props.keys()):
+            if (
+                key in ClassNames._KNOWN_INPUT_PROPS
+                or key.startswith("data-")
+                or key.startswith("aria-")
+            ):
                 input_props[key] = props.pop(key)
 
         input_props["type"] = "checkbox"

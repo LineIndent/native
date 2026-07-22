@@ -93,9 +93,7 @@ class ClassNames:
 
     DESCRIPTION = "text-sm text-muted-foreground"
 
-    ACTION = (
-        "col-start-2 row-span-2 row-start-1 self-start justify-self-end"
-    )
+    ACTION = "col-start-2 row-span-2 row-start-1 self-start justify-self-end"
 
     CONTENT = "px-(--card-padding)"
 

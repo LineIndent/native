@@ -872,7 +872,7 @@ def input_group_dropdown() -> rx.Component:
                         menu.item("Settings"),
                         menu.item("Copy path"),
                         menu.item("Open location"),
-                    )
+                    ),
                 ),
                 align="inline-end",
             ),
@@ -890,7 +890,7 @@ def input_group_dropdown() -> rx.Component:
                         menu.item("Documentation"),
                         menu.item("Blog Posts"),
                         menu.item("Changelog"),
-                    )
+                    ),
                 ),
                 align="inline-end",
             ),

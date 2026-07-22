@@ -36,7 +36,8 @@ def area_chart_basic_type():
             rx.recharts.area_chart(
                 chart_tooltip(label="show"),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.area(
@@ -105,7 +106,8 @@ def area_chart_linear_type():
             rx.recharts.area_chart(
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.area(
@@ -175,7 +177,8 @@ def area_chart_step_type():
             rx.recharts.area_chart(
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.area(
@@ -245,7 +248,8 @@ def area_chart_stacked():
             rx.recharts.area_chart(
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.area(
@@ -349,7 +353,8 @@ def area_chart_dynamic():
                 ),
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 area("mobile", "chart-2"),
@@ -417,7 +422,8 @@ def area_chart_with_legend():
             rx.recharts.area_chart(
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.area(
@@ -467,7 +473,8 @@ def area_chart_with_legend():
             ),
             class_name="flex w-full items-start gap-2 text-sm",
         ),
-        class_name=chart_tooltip_content([1, 2], "square") + " w-full p-0 flex flex-col gap-y-6",
+        class_name=chart_tooltip_content([1, 2], "square")
+        + " w-full p-0 flex flex-col gap-y-6",
     )
 ```
 
@@ -495,7 +502,8 @@ def area_chart_with_axis():
             rx.recharts.area_chart(
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 rx.recharts.area(
@@ -555,7 +563,8 @@ def area_chart_with_axis():
             ),
             class_name="flex w-full items-start gap-2 text-sm",
         ),
-        class_name=chart_tooltip_content([1, 2], "square") + " w-full p-0 flex flex-col gap-y-6",
+        class_name=chart_tooltip_content([1, 2], "square")
+        + " w-full p-0 flex flex-col gap-y-6",
     )
 ```
 
@@ -634,7 +643,8 @@ def area_chart_with_gradient():
                 ),
                 chart_tooltip(),
                 rx.recharts.cartesian_grid(
-                    horizontal=True, vertical=False,
+                    horizontal=True,
+                    vertical=False,
                     stroke="color-mix(in oklab, var(--muted-foreground) 15%, transparent)",
                 ),
                 *[
@@ -678,7 +688,8 @@ def area_chart_with_gradient():
             ),
             class_name="flex w-full items-start gap-2 text-sm",
         ),
-        class_name=chart_tooltip_content([1, 2], "square") + " w-full p-0 flex flex-col gap-y-6",
+        class_name=chart_tooltip_content([1, 2], "square")
+        + " w-full p-0 flex flex-col gap-y-6",
     )
 ```
 

@@ -21,9 +21,7 @@ ANATOMY = {
         attachment.title(),
         attachment.description(),
     ),
-    attachment.actions(
-        attachment.action()
-    ),
+    attachment.actions(attachment.action()),
 )""",
     "avatar": """avatar.root(
     avatar.image(),
@@ -118,6 +116,19 @@ ANATOMY = {
     "separator": """separator()""",
     "spinner": """spinner()""",
     "switch": """switch.root()""",
+    "table": """table.root(
+    table.search(for_table=""),
+    table.header(
+        table.row(
+            table.head(),
+        )
+    ),
+    table.body(
+        table.row(
+            table.cell(),
+        )
+    ),
+)""",
     "tabs": """tabs.root(
     tabs.list(
         tabs.trigger(),
