@@ -539,7 +539,7 @@ def line_chart_footer_legend():
                 *[
                     rx.el.div(
                         rx.el.div(
-                            class_name=f"w-3 h-3 rounded-sm bg-chart-{index + 1}"
+                            class_name=f"w-2.5 h-2.5 rounded-[2.5px] bg-chart-{index + 1}"
                         ),
                         rx.el.p(device, class_name="text-sm text-foreground"),
                         class_name="flex flex-row items-center gap-x-2",

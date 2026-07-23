@@ -19,8 +19,8 @@ from native.templates.layout import layout_decorator
 
 
 @layout_decorator(
-    title="Native HTML UI components you can copy, paste, and ship in minutes.",
-    description="Production-ready shadcn/ui blocks and components designed for Reflex. Extend, override, and ship without fighting the framework. Open souce, no lock-in.",
+    title="Themes",
+    description="",
     ctas=[
         a(
             button("Build Your Own", hi("ArrowRight02Icon", class_name="size-4")),
@@ -28,7 +28,7 @@ from native.templates.layout import layout_decorator
         ),
     ],
 )
-def landing_page() -> Section:
+def theme_page() -> Section:
 
     landing_desktop = div(
         card_01(),
@@ -74,5 +74,5 @@ def landing_page() -> Section:
     return section(
         div(landing_desktop, class_name="hidden sm:block"),
         div(landing_mobile, class_name="flex sm:hidden"),
-        class_name="mx-auto w-full relative",
+        class_name="theme-nyc-1960 mx-auto w-full relative",
     )

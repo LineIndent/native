@@ -22,13 +22,13 @@ Use `size="sm"` for tighter spacing throughout the card.
 
 ## Spacing
 
-Beyond `size`, use the `--card-spacing` CSS variable directly to control section spacing and inset.
+Beyond `size`, use the `--card-padding` and `--card-gap` CSS variables directly to control the card's inset and section spacing. `--card-padding` sets the padding inside the card (and each section's horizontal inset); `--card-gap` sets the space between header, content, and footer.
 
-**Props used:** `class_name` (setting `--card-spacing` inline) on `card.root`.
+**Props used:** `class_name` (setting `--card-padding` and `--card-gap` inline) on `card.root`.
 
 --DEMO(card_spacing)--
 
-Use negative margins with `-mx-(--card-spacing)` to let content go edge-to-edge while staying aligned with the card's inset. When edge-to-edge content sits above a footer, add `-mb-(--card-spacing)` on `card.content` to remove the section gap.
+Use negative margins with `-mx-(--card-padding)` to let content go edge-to-edge while staying aligned with the card's inset. When edge-to-edge content sits above a footer, add `-mb-(--card-gap)` on `card.content` to remove the section gap.
 
 --DEMO(card_edge_to_edge)--
 
@@ -52,10 +52,10 @@ card.root(
 )
 ```
 
-| Prop         | Type                          | Default     |
-| ------------ | -------------------------------| ----------- |
-| `size`       | `Literal["default", "sm"]`   | `"default"` |
-| `class_name` | `str`                         | `""`         |
+| Prop         | Type                       | Default     |
+| ------------ | -------------------------- | ----------- |
+| `size`       | `Literal["default", "sm"]` | `"default"` |
+| `class_name` | `str`                      | `""`        |
 
 ## card.header
 

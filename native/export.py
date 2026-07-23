@@ -6,6 +6,7 @@ from native.pages.components import components_page
 from native.pages.create import create_page
 from native.pages.docs import docs_page
 from native.pages.landing import landing_page
+from native.pages.themes import theme_page
 from native.pages.typeset import typeset_page
 from native.templates._meta_tags import generate_site_meta_tags
 from native.templates.docpage import docpage
@@ -13,6 +14,18 @@ from native.templates.toc import table_of_content
 
 
 def export(app: App):
+
+    # app.add_page(
+    #     component=theme_page(),
+    #     route="/themes",
+    #     title="Themes - buridan/native",
+    #     meta=generate_site_meta_tags(
+    #         title="Typeset",
+    #         url="/typeset",
+    #         description="A styling system for HTML and rendered markdown, from blog posts to streaming chat. One CSS file you own.",
+    #         social_card="typeset.webp",
+    #     ),
+    # )
 
     app.add_page(
         component=typeset_page(),

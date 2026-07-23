@@ -1,0 +1,95 @@
+.theme-nyc-1960 {
+    /* --- Base Colors (Muted Amber / Cream Sand) --- */
+    --background: oklch(0.92 0.02 55);
+    --foreground: oklch(0.13 0.01 30); /* Near Black */
+    --card: oklch(0.96 0.015 55);
+    --card-foreground: oklch(0.13 0.01 30);
+    --popover: oklch(0.96 0.015 55);
+    --popover-foreground: oklch(0.13 0.01 30);
+
+    /* --- Primary Actions (Subtle Crimson) --- */
+    --primary: oklch(0.48 0.18 22); /* Deep Blood Crimson */
+    --primary-foreground: oklch(0.98 0.005 50);
+
+    /* --- Secondary & Muted (Muted Charcoal / Sand) --- */
+    --secondary: oklch(0.86 0.02 50);
+    --secondary-foreground: oklch(0.16 0.01 30);
+    --muted: oklch(0.88 0.015 50);
+    --muted-foreground: oklch(0.4 0.02 30);
+
+    /* --- Accent (Warm Amber / Burnt Honey) --- */
+    --accent: oklch(0.62 0.15 48); /* Subtle Warm Amber */
+    --accent-foreground: oklch(0.13 0.01 30);
+
+    /* --- Status & Borders --- */
+    --destructive: oklch(0.46 0.19 22);
+    --border: oklch(0.8 0.02 45 / 40%);
+    --input: oklch(0.8 0.02 45 / 50%);
+    --ring: oklch(0.48 0.18 22);
+
+    /* --- Data Viz (Black, Crimson & Amber Palette) --- */
+    --chart-1: oklch(0.48 0.18 22); /* Crimson */
+    --chart-2: oklch(0.62 0.15 48); /* Amber */
+    --chart-3: oklch(0.35 0.08 30); /* Dark Rust */
+    --chart-4: oklch(0.22 0.01 30); /* Soft Charcoal */
+    --chart-5: oklch(0.72 0.1 60); /* Muted Gold */
+
+    --radius: 0.375rem;
+
+    /* --- Sidebar --- */
+    --sidebar: oklch(0.89 0.02 55);
+    --sidebar-foreground: oklch(0.13 0.01 30);
+    --sidebar-primary: oklch(0.48 0.18 22);
+    --sidebar-primary-foreground: oklch(0.98 0.005 50);
+    --sidebar-accent: oklch(0.83 0.02 50);
+    --sidebar-accent-foreground: oklch(0.13 0.01 30);
+    --sidebar-border: oklch(0.8 0.02 45 / 30%);
+    --sidebar-ring: oklch(0.48 0.18 22);
+}
+
+.dark .theme-nyc-1960 {
+    /* --- Base Colors (True Warm Pitch Black & Deep Charcoal) --- */
+    --background: oklch(0.11 0.005 30); /* Pitch Black with a warm undertone */
+    --foreground: oklch(0.88 0.015 50); /* Soft Off-White / Pale Cream */
+    --card: oklch(0.15 0.008 30); /* Deep Obsidian Gray */
+    --card-foreground: oklch(0.88 0.015 50);
+    --popover: oklch(0.15 0.008 30);
+    --popover-foreground: oklch(0.88 0.015 50);
+
+    /* --- Primary Actions (Subtle Crimson Red) --- */
+    --primary: oklch(0.52 0.19 22); /* Muted, glowing Crimson */
+    --primary-foreground: oklch(0.98 0.005 50);
+
+    /* --- Secondary & Muted (Slate Black & Warm Taupe/Gray) --- */
+    --secondary: oklch(0.2 0.01 30); /* Subtle Charcoal Tile */
+    --secondary-foreground: oklch(0.85 0.015 50);
+    --muted: oklch(0.18 0.008 30); /* Dark Muted Layer */
+    --muted-foreground: oklch(0.58 0.02 40); /* Subdued Warm Gray Text */
+
+    /* --- Accent (Subtle Burnt Amber) --- */
+    --accent: oklch(0.58 0.14 45); /* Muted Sunset Amber */
+    --accent-foreground: oklch(0.98 0.005 50);
+
+    /* --- Status & Borders --- */
+    --destructive: oklch(0.48 0.18 22);
+    --border: oklch(0.28 0.02 30 / 40%); /* Subtle Dark Borders */
+    --input: oklch(0.28 0.02 30 / 50%);
+    --ring: oklch(0.52 0.19 22);
+
+    /* --- Data Viz --- */
+    --chart-1: oklch(0.52 0.19 22); /* Crimson */
+    --chart-2: oklch(0.58 0.14 45); /* Burnt Amber */
+    --chart-3: oklch(0.38 0.08 35); /* Muted Mahogany */
+    --chart-4: oklch(0.72 0.1 60); /* Soft Sunset Gold */
+    --chart-5: oklch(0.28 0.01 30); /* Subtle Charcoal */
+
+    /* --- Sidebar --- */
+    --sidebar: oklch(0.1 0.005 30); /* Deepest Pitch Black */
+    --sidebar-foreground: oklch(0.88 0.015 50);
+    --sidebar-primary: oklch(0.52 0.19 22);
+    --sidebar-primary-foreground: oklch(0.98 0.005 50);
+    --sidebar-accent: oklch(0.18 0.008 30);
+    --sidebar-accent-foreground: oklch(0.88 0.015 50);
+    --sidebar-border: oklch(0.28 0.02 30 / 40%);
+    --sidebar-ring: oklch(0.52 0.19 22);
+}

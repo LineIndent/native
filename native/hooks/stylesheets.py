@@ -23,6 +23,7 @@ APP_STYLESHEETS: list[str] = [
     "prism.css",
     "themes.css",
     "typeset.css",
+    "night_in_paradise.css",
     GOOGLE_FONTS_URL,
     # "https://fonts.googleapis.com/css2?family=Oxanium:wght@200..800&display=swap",
 ]

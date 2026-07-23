@@ -8,22 +8,22 @@ selected_card_spacing = ClientStateVar.create("selected_card_spacing", "4")
 
 spacing_options = [
     {
-        "class_name": "[--card-spacing:--spacing(4)]",
+        "class_name": "[--card-padding:--spacing(4)] [--card-gap:--spacing(4)]",
         "label": "16px",
         "value": "4",
     },
     {
-        "class_name": "[--card-spacing:--spacing(5)]",
+        "class_name": "[--card-padding:--spacing(5)] [--card-gap:--spacing(5)]",
         "label": "20px",
         "value": "5",
     },
     {
-        "class_name": "[--card-spacing:--spacing(6)]",
+        "class_name": "[--card-padding:--spacing(6)] [--card-gap:--spacing(6)]",
         "label": "24px",
         "value": "6",
     },
     {
-        "class_name": "[--card-spacing:--spacing(8)]",
+        "class_name": "[--card-padding:--spacing(8)] [--card-gap:--spacing(8)]",
         "label": "32px",
         "value": "8",
     },
@@ -104,7 +104,10 @@ def card_spacing() -> rx.Component:
                 button("Login with Google", variant="outline", class_name="w-full"),
                 class_name="flex-col gap-2",
             ),
-            class_name=f"[--card-spacing:--spacing({selected_card_spacing.value})]",
+            class_name=(
+                f"[--card-padding:--spacing({selected_card_spacing.value})] "
+                f"[--card-gap:--spacing({selected_card_spacing.value})]"
+            ),
         ),
         class_name="mx-auto grid w-full max-w-sm gap-4 my-10",
     )

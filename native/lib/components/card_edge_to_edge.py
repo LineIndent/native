@@ -24,9 +24,9 @@ def card_edge_to_edge() -> rx.Component:
                 rx.el.p(
                     "By continuing, you agree to keep your account credentials secure and to follow your organization's acceptable use policies."
                 ),
-                class_name="-mx-(--card-spacing) max-h-48 space-y-4 overflow-y-scroll border-input border-t bg-muted/50 px-(--card-spacing) py-4 text-sm leading-relaxed",
+                class_name="-mx-(--card-padding) max-h-48 space-y-4 overflow-y-scroll border-input border-t bg-muted/50 px-(--card-padding) py-4 text-sm leading-relaxed",
             ),
-            class_name="-mb-(--card-spacing)",
+            class_name="-mb-(--card-gap)",
         ),
         card.footer(
             button("Decline", variant="outline"),

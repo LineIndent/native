@@ -244,9 +244,9 @@ def card_small() -> rx.Component:
 
 ## Spacing
 
-Beyond `size`, use the `--card-spacing` CSS variable directly to control section spacing and inset.
+Beyond `size`, use the `--card-padding` and `--card-gap` CSS variables directly to control the card's inset and section spacing. `--card-padding` sets the padding inside the card (and each section's horizontal inset); `--card-gap` sets the space between header, content, and footer.
 
-**Props used:** `class_name` (setting `--card-spacing` inline) on `card.root`.
+**Props used:** `class_name` (setting `--card-padding` and `--card-gap` inline) on `card.root`.
 
 ```python
 def card_spacing() -> rx.Component:
@@ -323,13 +323,16 @@ def card_spacing() -> rx.Component:
                 button("Login with Google", variant="outline", class_name="w-full"),
                 class_name="flex-col gap-2",
             ),
-            class_name=f"[--card-spacing:--spacing({selected_card_spacing.value})]",
+            class_name=(
+                f"[--card-padding:--spacing({selected_card_spacing.value})] "
+                f"[--card-gap:--spacing({selected_card_spacing.value})]"
+            ),
         ),
         class_name="mx-auto grid w-full max-w-sm gap-4 my-10",
     )
 ```
 
-Use negative margins with `-mx-(--card-spacing)` to let content go edge-to-edge while staying aligned with the card's inset. When edge-to-edge content sits above a footer, add `-mb-(--card-spacing)` on `card.content` to remove the section gap.
+Use negative margins with `-mx-(--card-padding)` to let content go edge-to-edge while staying aligned with the card's inset. When edge-to-edge content sits above a footer, add `-mb-(--card-gap)` on `card.content` to remove the section gap.
 
 ```python
 def card_edge_to_edge() -> rx.Component:
@@ -352,9 +355,9 @@ def card_edge_to_edge() -> rx.Component:
                 rx.el.p(
                     "By continuing, you agree to keep your account credentials secure and to follow your organization's acceptable use policies."
                 ),
-                class_name="-mx-(--card-spacing) max-h-48 space-y-4 overflow-y-scroll border-input border-t bg-muted/50 px-(--card-spacing) py-4 text-sm leading-relaxed",
+                class_name="-mx-(--card-padding) max-h-48 space-y-4 overflow-y-scroll border-input border-t bg-muted/50 px-(--card-padding) py-4 text-sm leading-relaxed",
             ),
-            class_name="-mb-(--card-spacing)",
+            class_name="-mb-(--card-gap)",
         ),
         card.footer(
             button("Decline", variant="outline"),
@@ -410,10 +413,10 @@ card.root(
 )
 ```
 
-| Prop         | Type                          | Default     |
-| ------------ | -------------------------------| ----------- |
-| `size`       | `Literal["default", "sm"]`   | `"default"` |
-| `class_name` | `str`                         | `""`         |
+| Prop         | Type                       | Default     |
+| ------------ | -------------------------- | ----------- |
+| `size`       | `Literal["default", "sm"]` | `"default"` |
+| `class_name` | `str`                      | `""`        |
 
 ## card.header
 

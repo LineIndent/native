@@ -159,207 +159,210 @@ def _sort_icons() -> list[Component]:
 #   [data-dt-select]                per-row checkbox <input> — must have a
 #                                    unique `value` (e.g. a row id)
 # --------------------------------------------------------------------------
+
+
 DATA_TABLE_JS = r"""
-window.__dataTable = window.__dataTable || {
-  registry: {},
+if (typeof window !== "undefined") {
+  window.__dataTable = window.__dataTable || {
+    registry: {},
 
-  init(tableId, opts) {
-    var root = document.getElementById(tableId);
-    if (!root || root.__dtInitialized) return;
-    root.__dtInitialized = true;
+    init(tableId, opts) {
+      if (typeof document === "undefined") return;
+      var root = document.getElementById(tableId);
+      if (!root || root.__dtInitialized) return;
+      root.__dtInitialized = true;
 
-    var state = {
-      page: 0,
-      pageSize: (opts && opts.pageSize) || 5,
-      sortKey: null,
-      sortDir: 'asc',
-      search: '',
-      selected: new Set(),
-      visibleRows: [],
-    };
+      var state = {
+        page: 0,
+        pageSize: (opts && opts.pageSize) || 5,
+        sortKey: null,
+        sortDir: 'asc',
+        search: '',
+        selected: new Set(),
+        visibleRows: [],
+      };
 
-    var tbody = root.querySelector('tbody');
-    if (!tbody) return;
-    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+      var tbody = root.querySelector('tbody');
+      if (!tbody) return;
+      var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
 
-    // Strict check: the ENTIRE string must be a number, not just a numeric
-    // prefix. parseFloat("2026-06-30") === 2026, which would make every
-    // 2026 date tie under a naive !isNaN(parseFloat(...)) check.
-    var isNumeric = function (v) {
-      return /^-?\d+(\.\d+)?$/.test(v);
-    };
-    var compare = function (av, bv) {
-      if (isNumeric(av) && isNumeric(bv)) return parseFloat(av) - parseFloat(bv);
-      return String(av).localeCompare(String(bv));
-    };
+      // Strict check: the ENTIRE string must be a number, not just a numeric
+      // prefix. parseFloat("2026-06-30") === 2026, which would make every
+      // 2026 date tie under a naive !isNaN(parseFloat(...)) check.
+      var isNumeric = function (v) {
+        return /^-?\d+(\.\d+)?$/.test(v);
+      };
+      var compare = function (av, bv) {
+        if (isNumeric(av) && isNumeric(bv)) return parseFloat(av) - parseFloat(bv);
+        return String(av).localeCompare(String(bv));
+      };
 
-    var getSelectCb = function (row) { return row.querySelector('[data-dt-select]'); };
-    var getSelectAllCb = function () { return root.querySelector('[data-dt-select-all]'); };
+      var getSelectCb = function (row) { return row.querySelector('[data-dt-select]'); };
+      var getSelectAllCb = function () { return root.querySelector('[data-dt-select-all]'); };
 
-    var syncRowCheckboxes = function (pageRows) {
-      pageRows.forEach(function (r) {
-        var cb = getSelectCb(r);
-        if (cb && cb.value) cb.checked = state.selected.has(cb.value);
-      });
-    };
+      var syncRowCheckboxes = function (pageRows) {
+        pageRows.forEach(function (r) {
+          var cb = getSelectCb(r);
+          if (cb && cb.value) cb.checked = state.selected.has(cb.value);
+        });
+      };
 
-    var updateSelectAllState = function () {
-      var selectAll = getSelectAllCb();
-      if (!selectAll) return;
-      var selectableRows = state.visibleRows.filter(function (r) { return !!getSelectCb(r); });
-      var selectedCount = selectableRows.filter(function (r) {
-        var cb = getSelectCb(r);
-        return cb && cb.value && state.selected.has(cb.value);
-      }).length;
-      if (selectableRows.length === 0 || selectedCount === 0) {
-        selectAll.checked = false;
-        selectAll.indeterminate = false;
-      } else if (selectedCount === selectableRows.length) {
-        selectAll.checked = true;
-        selectAll.indeterminate = false;
-      } else {
-        selectAll.checked = false;
-        selectAll.indeterminate = true;
-      }
-    };
+      var updateSelectAllState = function () {
+        var selectAll = getSelectAllCb();
+        if (!selectAll) return;
+        var selectableRows = state.visibleRows.filter(function (r) { return !!getSelectCb(r); });
+        var selectedCount = selectableRows.filter(function (r) {
+          var cb = getSelectCb(r);
+          return cb && cb.value && state.selected.has(cb.value);
+        }).length;
+        if (selectableRows.length === 0 || selectedCount === 0) {
+          selectAll.checked = false;
+          selectAll.indeterminate = false;
+        } else if (selectedCount === selectableRows.length) {
+          selectAll.checked = true;
+          selectAll.indeterminate = false;
+        } else {
+          selectAll.checked = false;
+          selectAll.indeterminate = true;
+        }
+      };
 
-    var dispatchSelectionChange = function () {
-      root.dispatchEvent(
-        new CustomEvent('dt-selection-change', { detail: { selected: Array.from(state.selected) } })
-      );
-    };
+      var dispatchSelectionChange = function () {
+        root.dispatchEvent(
+          new CustomEvent('dt-selection-change', { detail: { selected: Array.from(state.selected) } })
+        );
+      };
 
-    var updateSortIcons = function () {
+      var updateSortIcons = function () {
+        root.querySelectorAll('[data-dt-sort]').forEach(function (btn) {
+          var isActive = btn.getAttribute('data-dt-sort') === state.sortKey;
+          var target = isActive ? state.sortDir : 'none';
+          btn.querySelectorAll('[data-dt-sort-icon]').forEach(function (icon) {
+            icon.style.display = icon.getAttribute('data-dt-sort-icon') === target ? '' : 'none';
+          });
+        });
+      };
+
+      var render = function () {
+        // visibleRows = every row matching the current search, across ALL
+        // pages — this is what "select all" operates on, not just the page.
+        var visible = !state.search ? rows.slice() : rows.filter(function (r) {
+          return r.innerText.toLowerCase().indexOf(state.search.toLowerCase()) !== -1;
+        });
+        state.visibleRows = visible;
+
+        if (state.sortKey) {
+          var headBtn = root.querySelector('[data-dt-sort="' + state.sortKey + '"]');
+          var th = headBtn ? headBtn.closest('th') : null;
+          var colIndex = th ? Array.prototype.indexOf.call(th.parentElement.children, th) : -1;
+          if (colIndex > -1) {
+            visible.sort(function (a, b) {
+              var ac = a.children[colIndex], bc = b.children[colIndex];
+              var av = (ac && (ac.getAttribute('data-sort-value') || ac.innerText)) || '';
+              var bv = (bc && (bc.getAttribute('data-sort-value') || bc.innerText)) || '';
+              var cmp = compare(av, bv);
+              return state.sortDir === 'asc' ? cmp : -cmp;
+            });
+          }
+        }
+
+        // Pagination only kicks in if pagination controls actually exist
+        // in the DOM (i.e. `paginate=True` was passed). Otherwise show all.
+        var hasPagination = !!root.querySelector('[data-dt-prev]');
+        var pageSize = hasPagination ? state.pageSize : (visible.length || 1);
+        var totalPages = Math.max(1, Math.ceil(visible.length / pageSize));
+        state.page = Math.min(state.page, totalPages - 1);
+        var start = state.page * pageSize;
+        var pageRows = visible.slice(start, start + pageSize);
+
+        rows.forEach(function (r) { r.style.display = 'none'; });
+        pageRows.forEach(function (r) {
+          r.style.display = '';
+          tbody.appendChild(r); // re-order into place
+        });
+
+        syncRowCheckboxes(pageRows);
+        updateSelectAllState();
+
+        var info = root.querySelector('[data-dt-info]');
+        if (info) {
+          info.textContent = visible.length === 0
+            ? '0 results'
+            : (start + 1) + '\u2013' + Math.min(start + pageSize, visible.length) + ' of ' + visible.length;
+        }
+        var pageLabel = root.querySelector('[data-dt-page-label]');
+        if (pageLabel) pageLabel.textContent = 'Page ' + (state.page + 1) + ' of ' + totalPages;
+        var prevBtn = root.querySelector('[data-dt-prev]');
+        var nextBtn = root.querySelector('[data-dt-next]');
+        if (prevBtn) prevBtn.disabled = state.page === 0;
+        if (nextBtn) nextBtn.disabled = state.page >= totalPages - 1;
+
+        updateSortIcons();
+      };
+
       root.querySelectorAll('[data-dt-sort]').forEach(function (btn) {
-        var isActive = btn.getAttribute('data-dt-sort') === state.sortKey;
-        var target = isActive ? state.sortDir : 'none';
-        btn.querySelectorAll('[data-dt-sort-icon]').forEach(function (icon) {
-          icon.style.display = icon.getAttribute('data-dt-sort-icon') === target ? '' : 'none';
+        btn.addEventListener('click', function () {
+          var key = btn.getAttribute('data-dt-sort');
+          if (state.sortKey === key) state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+          else { state.sortKey = key; state.sortDir = 'asc'; }
+          render();
         });
       });
-    };
 
-    var render = function () {
-      // visibleRows = every row matching the current search, across ALL
-      // pages — this is what "select all" operates on, not just the page.
-      var visible = !state.search ? rows.slice() : rows.filter(function (r) {
-        return r.innerText.toLowerCase().indexOf(state.search.toLowerCase()) !== -1;
-      });
-      state.visibleRows = visible;
-
-      if (state.sortKey) {
-        var headBtn = root.querySelector('[data-dt-sort="' + state.sortKey + '"]');
-        var th = headBtn ? headBtn.closest('th') : null;
-        var colIndex = th ? Array.prototype.indexOf.call(th.parentElement.children, th) : -1;
-        if (colIndex > -1) {
-          visible.sort(function (a, b) {
-            var ac = a.children[colIndex], bc = b.children[colIndex];
-            var av = (ac && (ac.getAttribute('data-sort-value') || ac.innerText)) || '';
-            var bv = (bc && (bc.getAttribute('data-sort-value') || bc.innerText)) || '';
-            var cmp = compare(av, bv);
-            return state.sortDir === 'asc' ? cmp : -cmp;
-          });
-        }
-      }
-
-      // Pagination only kicks in if pagination controls actually exist
-      // in the DOM (i.e. `paginate=True` was passed). Otherwise show all.
-      var hasPagination = !!root.querySelector('[data-dt-prev]');
-      var pageSize = hasPagination ? state.pageSize : (visible.length || 1);
-      var totalPages = Math.max(1, Math.ceil(visible.length / pageSize));
-      state.page = Math.min(state.page, totalPages - 1);
-      var start = state.page * pageSize;
-      var pageRows = visible.slice(start, start + pageSize);
-
-      rows.forEach(function (r) { r.style.display = 'none'; });
-      pageRows.forEach(function (r) {
-        r.style.display = '';
-        tbody.appendChild(r); // re-order into place
-      });
-
-      syncRowCheckboxes(pageRows);
-      updateSelectAllState();
-
-      var info = root.querySelector('[data-dt-info]');
-      if (info) {
-        info.textContent = visible.length === 0
-          ? '0 results'
-          : (start + 1) + '\u2013' + Math.min(start + pageSize, visible.length) + ' of ' + visible.length;
-      }
-      var pageLabel = root.querySelector('[data-dt-page-label]');
-      if (pageLabel) pageLabel.textContent = 'Page ' + (state.page + 1) + ' of ' + totalPages;
       var prevBtn = root.querySelector('[data-dt-prev]');
       var nextBtn = root.querySelector('[data-dt-next]');
-      if (prevBtn) prevBtn.disabled = state.page === 0;
-      if (nextBtn) nextBtn.disabled = state.page >= totalPages - 1;
+      if (prevBtn) prevBtn.addEventListener('click', function () { state.page = Math.max(0, state.page - 1); render(); });
+      if (nextBtn) nextBtn.addEventListener('click', function () { state.page += 1; render(); });
 
-      updateSortIcons();
-    };
-
-    root.querySelectorAll('[data-dt-sort]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var key = btn.getAttribute('data-dt-sort');
-        if (state.sortKey === key) state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
-        else { state.sortKey = key; state.sortDir = 'asc'; }
-        render();
-      });
-    });
-
-    var prevBtn = root.querySelector('[data-dt-prev]');
-    var nextBtn = root.querySelector('[data-dt-next]');
-    if (prevBtn) prevBtn.addEventListener('click', function () { state.page = Math.max(0, state.page - 1); render(); });
-    if (nextBtn) nextBtn.addEventListener('click', function () { state.page += 1; render(); });
-
-    // Delegated listener catches every row checkbox, including ones that
-    // scroll into view only after pagination/sort re-renders.
-    tbody.addEventListener('change', function (e) {
-      var cb = e.target.closest('[data-dt-select]');
-      if (!cb || !cb.value) return;
-      if (cb.checked) state.selected.add(cb.value); else state.selected.delete(cb.value);
-      dispatchSelectionChange();
-      render();
-    });
-
-    var selectAllCb = getSelectAllCb();
-    if (selectAllCb) {
-      selectAllCb.addEventListener('change', function () {
-        var checked = selectAllCb.checked;
-        state.visibleRows.forEach(function (r) {
-          var cb = getSelectCb(r);
-          if (!cb || !cb.value) return;
-          if (checked) state.selected.add(cb.value); else state.selected.delete(cb.value);
-        });
+      // Delegated listener catches every row checkbox, including ones that
+      // scroll into view only after pagination/sort re-renders.
+      tbody.addEventListener('change', function (e) {
+        var cb = e.target.closest('[data-dt-select]');
+        if (!cb || !cb.value) return;
+        if (cb.checked) state.selected.add(cb.value); else state.selected.delete(cb.value);
         dispatchSelectionChange();
         render();
       });
-    }
 
-    // Exposed so any search input — the built-in toolbar one, or one
-    // placed anywhere else via <TableSearch for_table="..."> — can drive
-    // this table's search state without caring where it's mounted.
-    this.registry[tableId] = {
-      setSearch: function (value) {
-        state.search = value;
-        state.page = 0;
-        render();
-      },
-    };
+      var selectAllCb = getSelectAllCb();
+      if (selectAllCb) {
+        selectAllCb.addEventListener('change', function () {
+          var checked = selectAllCb.checked;
+          state.visibleRows.forEach(function (r) {
+            var cb = getSelectCb(r);
+            if (!cb || !cb.value) return;
+            if (checked) state.selected.add(cb.value); else state.selected.delete(cb.value);
+          });
+          dispatchSelectionChange();
+          render();
+        });
+      }
 
-    render();
-  },
-};
+      // Exposed so any search input — the built-in toolbar one, or one
+      // placed anywhere else via <TableSearch for_table="..."> — can drive
+      // this table's search state without caring where it's mounted.
+      this.registry[tableId] = {
+        setSearch: function (value) {
+          state.search = value;
+          state.page = 0;
+          render();
+        },
+      };
 
-// Single page-wide delegated listener (guarded so it only ever attaches
-// once, even though this whole script block is itself de-duplicated).
-// Delegation means a <TableSearch> can mount before OR after its table.
-if (!window.__dtGlobalSearchListenerAttached) {
-  window.__dtGlobalSearchListenerAttached = true;
-  document.addEventListener('input', function (e) {
-    var input = e.target.closest('[data-dt-search-for]');
-    if (!input) return;
-    var entry = window.__dataTable.registry[input.getAttribute('data-dt-search-for')];
-    if (entry) entry.setSearch(input.value);
-  });
+      render();
+    },
+  };
+
+  // Single page-wide delegated listener
+  if (!window.__dtGlobalSearchListenerAttached && typeof document !== "undefined") {
+    window.__dtGlobalSearchListenerAttached = true;
+    document.addEventListener('input', function (e) {
+      var input = e.target.closest('[data-dt-search-for]');
+      if (!input) return;
+      var entry = window.__dataTable.registry[input.getAttribute('data-dt-search-for')];
+      if (entry) entry.setSearch(input.value);
+    });
+  }
 }
 """
 
