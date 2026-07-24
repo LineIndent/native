@@ -223,7 +223,7 @@ def create_social_card(
     img.save(
         output_path,
         format="WEBP",
-        quality=95,
+        quality=80,
     )
 
 

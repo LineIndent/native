@@ -21,6 +21,7 @@ UTILITY_EXAMPLES = Path("native/lib/utilities")
 UTILITIES = [
     ("Shimmer", "shimmer"),
     ("Scroll Fade", "scroll_fade"),
+    ("Markdown", "markdown"),
 ]
 
 
