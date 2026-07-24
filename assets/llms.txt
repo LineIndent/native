@@ -1,0 +1,55 @@
+# buridan/native
+
+> Native HTML UI components you can copy, paste, and ship in minutes. Production-ready shadcn/ui blocks and components designed for Reflex. Extend, override, and ship without fighting the framework. Open souce, no lock-in.
+
+## Overview
+- [Introduction](https://native.buridan.dev/docs/getting-started/introduction): Introduction page.
+- [Installation](https://native.buridan.dev/docs/getting-started/installation): Installation page.
+- [Skills](https://native.buridan.dev/docs/getting-started/skills): Skills page.
+- [CLI](https://native.buridan.dev/docs/getting-started/cli): CLI page.
+- [dev.py](https://native.buridan.dev/docs/getting-started/dev): dev.py page.
+- [JavaScript](https://native.buridan.dev/docs/getting-started/javascript): JavaScript page.
+- [Changelog](https://native.buridan.dev/docs/getting-started/changelog): Changelog page.
+
+## Resources
+- [Chart](https://native.buridan.dev/docs/resources/chart): Chart page.
+- [Client State Var](https://native.buridan.dev/docs/resources/client-state-var): Client State Var page.
+- [Events & Actions](https://native.buridan.dev/docs/resources/events): Events & Actions page.
+- [State Structure](https://native.buridan.dev/docs/resources/state): State Structure page.
+- [Theming](https://native.buridan.dev/docs/resources/theming): Theming page.
+
+## Components
+- [Accordion](https://native.buridan.dev/docs/components/accordion): The Accordion component.
+- [Attachment](https://native.buridan.dev/docs/components/attachment): The Attachment component.
+- [Avatar](https://native.buridan.dev/docs/components/avatar): The Avatar component.
+- [Badge](https://native.buridan.dev/docs/components/badge): The Badge component.
+- [Bubble](https://native.buridan.dev/docs/components/bubble): The Bubble component.
+- [Button](https://native.buridan.dev/docs/components/button): The Button component.
+- [Button Group](https://native.buridan.dev/docs/components/button-group): The Button Group component.
+- [Card](https://native.buridan.dev/docs/components/card): The Card component.
+- [Checkbox](https://native.buridan.dev/docs/components/checkbox): The Checkbox component.
+- [Dialog](https://native.buridan.dev/docs/components/dialog): The Dialog component.
+- [Field](https://native.buridan.dev/docs/components/field): The Field component.
+- [Frame](https://native.buridan.dev/docs/components/frame): The Frame component.
+- [Input](https://native.buridan.dev/docs/components/input): The Input component.
+- [Input Group](https://native.buridan.dev/docs/components/input-group): The Input Group component.
+- [Marker](https://native.buridan.dev/docs/components/marker): The Marker component.
+- [Menu](https://native.buridan.dev/docs/components/menu): The Menu component.
+- [Message](https://native.buridan.dev/docs/components/message): The Message component.
+- [Select](https://native.buridan.dev/docs/components/select): The Select component.
+- [Separator](https://native.buridan.dev/docs/components/separator): The Separator component.
+- [Spinner](https://native.buridan.dev/docs/components/spinner): The Spinner component.
+- [Switch](https://native.buridan.dev/docs/components/switch): The Switch component.
+- [Table](https://native.buridan.dev/docs/components/table): The Table component.
+- [Tabs](https://native.buridan.dev/docs/components/tabs): The Tabs component.
+- [Textarea](https://native.buridan.dev/docs/components/textarea): The Textarea component.
+
+## Charts
+- [Area Chart](https://native.buridan.dev/docs/charts/area-chart): The Area Chart component.
+- [Bar Chart](https://native.buridan.dev/docs/charts/bar-chart): The Bar Chart component.
+- [Line Chart](https://native.buridan.dev/docs/charts/line-chart): The Line Chart component.
+
+## Utilities
+- [Markdown](https://native.buridan.dev/docs/utilities/markdown): The Markdown component.
+- [Scroll Fade](https://native.buridan.dev/docs/utilities/scroll-fade): The Scroll Fade component.
+- [Shimmer](https://native.buridan.dev/docs/utilities/shimmer): The Shimmer component.

@@ -20,7 +20,7 @@ from native.templates.layout import layout_decorator
 
 @layout_decorator(
     title="Native HTML UI components you can copy, paste, and ship in minutes.",
-    description="Production-ready shadcn/ui blocks and components designed for Reflex. Extend, override, and ship without fighting the framework. Open souce, no lock-in.",
+    description="Production-ready shadcn/ui blocks and components designed for Reflex. Extend, override, and ship without fighting the framework. Open source, no lock-in.",
     ctas=[
         a(
             button("Build Your Own", hi("ArrowRight02Icon", class_name="size-4")),
