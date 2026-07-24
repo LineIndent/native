@@ -1,17 +1,16 @@
 ---
 title: "Chart"
 description: "Beautiful charts. Built using Recharts. Copy and paste into your apps."
-order: 3
+order: 5
 ---
-
 
 # Charts
 
 Beautiful charts. Built using Recharts. Copy and paste into your apps.
 
-A collection of chart components that you can copy and paste into your apps. Charts are designed to look great out of the box. They work well with the other components and are fully customizable to fit your project. 
+A collection of chart components that you can copy and paste into your apps. Charts are designed to look great out of the box. They work well with the other components and are fully customizable to fit your project.
 
-For an overview of whats available, checkout the [Charts](/charts) page. 
+For an overview of whats available, checkout the [Charts](/charts) page.
 
 # Component
 
@@ -34,8 +33,7 @@ We do not wrap Recharts. This means you're not locked into an abstraction. When 
 
 # Installation
 
-buridan/ui provides a custom `chart_tooltip` that can be used to match the overall theme tokens generated. 
-
+buridan/ui provides a custom `chart_tooltip` that can be used to match the overall theme tokens generated.
 
 # Your First Chart
 
@@ -45,7 +43,7 @@ Let's build your first chart. We'll build a bar chart, add a grid, axis, tooltip
 
 The following data represents the number of desktop and mobile users for each month.
 
->**Note:** All of our examples use static data in a specific data structure. You are not limited to either static data or the structure. For dynamic data, use [rx.State](https://reflex.dev/docs/state/overview) instead.
+> **Note:** All of our examples use static data in a specific data structure. You are not limited to either static data or the structure. For dynamic data, use [rx.State](https://reflex.dev/docs/state/overview) instead.
 
 ```python
 data = [
@@ -171,7 +169,7 @@ So far we've only used components from Recharts. They look great out of the box 
 
 To add a tooltip, we'll use the custom `chart_tooltip` and `chart_tooltip_content` components from chart.
 
->**Note**: A small comment regarding the custom tooltip. Because of the way Recharts is composed and the way it's wrapped in Reflex, the custom tooltip, as of now, works only for Area, Bar, and Line charts.
+> **Note**: A small comment regarding the custom tooltip. Because of the way Recharts is composed and the way it's wrapped in Reflex, the custom tooltip, as of now, works only for Area, Bar, and Line charts.
 
 To use the custom tooltip, first import it at the top of your chart file.
 
@@ -181,7 +179,6 @@ from components.charts.chart_tooltip import (
     chart_tooltip_content,
 )
 ```
-
 
 Add the component to your chart and pass in the props.
 
@@ -233,10 +230,9 @@ def chart_example_with_custom_tooltip():
 
 Hover to see the tooltips. Easy, right? Two components, and we've got a beautiful tooltip.
 
-
 ## Add Legend
 
-We'll do the same for the legend. Although there's no API for legends the way we created one for tooltips, the same logic still applies. 
+We'll do the same for the legend. Although there's no API for legends the way we created one for tooltips, the same logic still applies.
 
 Add the component to your chart.
 
@@ -367,21 +363,21 @@ Use the following props to customize the tooltip.
 
 **chart_tooltip()**
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `label` | `"show" \| "hide"` | `"show"` | Whether to render the tooltip label above the items. |
-| `is_animation_active` | `bool` | `False` | Whether to animate the tooltip on appearance. |
-| `separator` | `str` | `""` | String placed between the item name and value. |
-| `cursor` | `bool` | `False` | Whether to show the cursor line/highlight on hover. |
-| `item_style` | `dict` | `{}` | Style overrides merged onto each tooltip item row. |
-| `label_style` | `dict` | `{}` | Style overrides merged onto the label element. |
-| `content_style` | `dict` | `{}` | Style overrides merged onto the tooltip container. |
+| Prop                  | Type               | Default  | Description                                          |
+| :-------------------- | :----------------- | :------- | :--------------------------------------------------- |
+| `label`               | `"show" \| "hide"` | `"show"` | Whether to render the tooltip label above the items. |
+| `is_animation_active` | `bool`             | `False`  | Whether to animate the tooltip on appearance.        |
+| `separator`           | `str`              | `""`     | String placed between the item name and value.       |
+| `cursor`              | `bool`             | `False`  | Whether to show the cursor line/highlight on hover.  |
+| `item_style`          | `dict`             | `{}`     | Style overrides merged onto each tooltip item row.   |
+| `label_style`         | `dict`             | `{}`     | Style overrides merged onto the label element.       |
+| `content_style`       | `dict`             | `{}`     | Style overrides merged onto the tooltip container.   |
 
 **chart_tooltip_content()**
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `chart_colors` | `list[int]` | — | Number of data series in the chart. Must match the number of `rx.recharts.bar` / `line` / `area` components. |
-| `swatch` | `"square" \| "line" \| "border"` | `"square"` | Indicator style per item. `square` = small filled box, `line` = wide pill, `border` = left accent line per series using `--chart-{i}`. |
+| Prop           | Type                             | Default    | Description                                                                                                                            |
+| :------------- | :------------------------------- | :--------- | :------------------------------------------------------------------------------------------------------------------------------------- |
+| `chart_colors` | `list[int]`                      | —          | Number of data series in the chart. Must match the number of `rx.recharts.bar` / `line` / `area` components.                           |
+| `swatch`       | `"square" \| "line" \| "border"` | `"square"` | Indicator style per item. `square` = small filled box, `line` = wide pill, `border` = left accent line per series using `--chart-{i}`. |
 
->**chart_tooltip_content()** returns a string of Tailwind classes and must be passed to the **chart component's** class_name, not to **chart_tooltip()**.
+> **chart_tooltip_content()** returns a string of Tailwind classes and must be passed to the **chart component's** class_name, not to **chart_tooltip()**.

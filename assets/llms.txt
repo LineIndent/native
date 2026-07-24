@@ -1,6 +1,6 @@
 # buridan/native
 
-> Native HTML UI components you can copy, paste, and ship in minutes. Production-ready shadcn/ui blocks and components designed for Reflex. Extend, override, and ship without fighting the framework. Open souce, no lock-in.
+> Native HTML UI components you can copy, paste, and ship in minutes. Production-ready shadcn/ui blocks and components designed for Reflex. Extend, override, and ship without fighting the framework. Open source, no lock-in.
 
 ## Overview
 - [Introduction](https://native.buridan.dev/docs/getting-started/introduction): Introduction page.
@@ -17,6 +17,7 @@
 - [Events & Actions](https://native.buridan.dev/docs/resources/events): Events & Actions page.
 - [State Structure](https://native.buridan.dev/docs/resources/state): State Structure page.
 - [Theming](https://native.buridan.dev/docs/resources/theming): Theming page.
+- [Typeset](https://native.buridan.dev/docs/resources/typeset): Typeset page.
 
 ## Components
 - [Accordion](https://native.buridan.dev/docs/components/accordion): The Accordion component.

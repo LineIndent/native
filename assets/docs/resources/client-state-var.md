@@ -1,7 +1,7 @@
 ---
 title: "Client State Var"
 description: "Frontend client state in Reflex."
-order: 1
+order: 2
 ---
 
 # ClientStateVar Patterns
@@ -18,7 +18,7 @@ is_expanded = ClientStateVar.create("is_expanded", False)
 def toggle_component():
     return rx.vstack(
         rx.button(
-            "Toggle Content", 
+            "Toggle Content",
             on_click=is_expanded.set_value(not is_expanded.value)
         ),
         rx.cond(
@@ -108,10 +108,10 @@ def session_editor(session_id: str, name: str):
 
 This section describes the available methods for interacting with frontend and backend state.
 
-| Method | Context | Description |
-|---------|---------|-------------|
-| .value | Frontend Component | Access the current state value for rendering. |
-| .set_value(v) | Frontend Event | Update the state value from an event handler. |
-| .set | Frontend Event | A property alias for `.set_value()` that returns an event chain. |
-| .retrieve(cb) | Backend Handler | Pull the current client-side value into a backend event handler callback. |
-| .push(v) | Backend Handler | Send a value from the backend to update the client-side state. |
+| Method        | Context            | Description                                                               |
+| ------------- | ------------------ | ------------------------------------------------------------------------- |
+| .value        | Frontend Component | Access the current state value for rendering.                             |
+| .set_value(v) | Frontend Event     | Update the state value from an event handler.                             |
+| .set          | Frontend Event     | A property alias for `.set_value()` that returns an event chain.          |
+| .retrieve(cb) | Backend Handler    | Pull the current client-side value into a backend event handler callback. |
+| .push(v)      | Backend Handler    | Send a value from the backend to update the client-side state.            |
