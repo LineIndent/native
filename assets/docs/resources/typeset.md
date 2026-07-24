@@ -4,9 +4,11 @@ description: A styling system for HTML and rendered markdown, from blog posts to
 order: 6
 ---
 
+# Typeset
+
 You render markdown and get back plain unstyled HTML: headings, paragraphs, lists, and tables. So you style the elements one by one: font sizes, line heights, spacing.
 
-> **Note**: The typeset utility is based on **shadcn/typeset**.
+> **Note**: The typeset utility is based on **shadcn/typeset** and has been adapted to integrate with the Reflex framework.
 
 You do it for your blog. Then you do it again for the docs. Then again for the chat app. Every time you're fighting the same thing: sizing and spacing.
 
@@ -27,20 +29,20 @@ A typeset is just a small preset class. You can have multiple typesets in your a
 
 > Want to build your typeset visually? Use [buridan/typeset](/typeset) to create custom headings, paragraphs, lists, and tables, customize font sizes, line heights, and spacing, and generate your own typeset.
 
-## Principles
+# Principles
 
 We read a lot about type: scale ratios, tracking, kerning, optical sizing, measure, leading, the space above and below every element. We tried exposing all of it, and it was too much. Nobody wants to set a dozen variables to make markdown look right.
 
 So we sat down and condensed everything into three controls: size, leading, and flow. Everything else, heading sizes, list indents, the gap under a heading, the space around a rule, derives from them. Three controls. We called it rhythm.
 
-## Features
+# Features
 
 - **It fits its container.** Put it in a chat bubble and it follows the smaller type around it. Put it in an article and it scales up with the page. On smaller screens, it gets a small bump for readability.
 - **It uses your theme.** Colors, fonts, and radius come from your app. Dark mode follows the same tokens.
 - **It's easy to tune.** Three values control the base size, line height, and space between blocks. Change them in a preset and the whole document follows.
 - **It works well with streaming.** When a new block arrives, Typeset doesn't make earlier blocks switch margins, borders, or styles.
 
-## Building Your Typeset
+# Building Your Typeset
 
 Create your typeset in the [typeset builder](/typeset). Pick your fonts and rhythm, then preview them on docs, chat, articles, and other real content.
 
@@ -63,7 +65,7 @@ rx.el.div(
 
 `typeset` turns the styles on. `typeset-docs` is the preset you created in the builder.
 
-## Custom Typesets
+# Custom Typesets
 
 The file includes defaults, so you can use `typeset` by itself. Most of the reading rhythm comes from three values:
 
@@ -109,7 +111,7 @@ rx.el.div(
 )
 ```
 
-## Custom Themes
+# Custom Themes
 
 A preset can change the whole feel of the content, not just the spacing. You can give readers a serif reading mode, a compact UI mode, or any other style that fits your product.
 
@@ -133,7 +135,7 @@ A preset can change the whole feel of the content, not just the spacing. You can
 }
 ```
 
-## Accessibility and Dark Mode
+# Accessibility and Dark Mode
 
 For readers who prefer larger type and more space, create a roomier typeset and expose it as a setting:
 
@@ -153,7 +155,7 @@ Dark mode already follows your theme colors. If the text feels a little tight on
 }
 ```
 
-## Responsive Table
+# Responsive Table
 
 Tables stay real tables and wrap to fit. To scroll a wide one horizontally instead, wrap it in `typeset-scroll`:
 
@@ -166,7 +168,7 @@ rx.el.div(
 
 Do this in your renderer's table component or a small rehype plugin. It works for any wide block, not just tables.
 
-## Overrides
+# Overrides
 
 Typeset lives in the `components` layer and uses `:where()` for its element selectors. Tailwind utilities on an element win without `!important`:
 
@@ -179,7 +181,7 @@ rx.el.div(
 
 Plain CSS can override Typeset with a normal selector too.
 
-## Opting Out
+# Opting Out
 
 To keep a component out of Typeset, add `not-typeset` or `data-not-typeset`:
 
@@ -193,7 +195,7 @@ rx.el.div(
 
 Both options cover the component and everything inside it. Another `typeset` container inside that subtree stays opted out too.
 
-## Streaming
+# Streaming
 
 Typeset is written so that adding a new block does not change the styles of the blocks already on screen.
 
@@ -203,7 +205,7 @@ Typeset is written so that adding a new block does not change the styles of the 
 
 Text that is still streaming can grow and wrap normally. Typeset just avoids restyling the blocks that came before it.
 
-## Prior Art
+# Prior Art
 
 The `prose` class from `@tailwindcss/typography` is excellent at what it was built for: adding beautiful typographic defaults to plain HTML, including content rendered from Markdown or a CMS.
 
