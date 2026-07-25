@@ -1,39 +1,38 @@
 ---
 title: Introduction
-description: buridan/ui is a set of composable, themeable components designed for Reflex. Extend, override, and ship without fighting the framework. Open source.
+description: buridan/native is a set of composable, themeable components designed for Reflex. Extend, override, and ship without fighting the framework. Open source.
 order: 0
 ---
 
 # Introduction
 
-buridan/ui is a set of composable, themeable components designed for [Reflex](https://reflex.dev/). Extend, override, and ship without fighting the framework. Open source. 
+buridan/native is a production-ready shadcn/ui blocks and components system designed for [Reflex](https://reflex.dev/). Extend, override, and ship without fighting the framework. Open source, no lock-in.
 
-The library is heavily influenced by the popular [shadcn/ui](https://ui.shadcn.com/) library for the React ecosystem. 
+The library is heavily influenced by the popular [shadcn/ui](https://ui.shadcn.com/) library for the React ecosystem.
 
-Much like `shadcn/ui`, buridan/ui aims to provide a way to build your own component library with full control over your themes, styles, and other UI aspects. 
+Much like `shadcn/ui`, buridan/native aims to provide a way to build your own component library with full control over your themes, styles, and other UI aspects.
 
 # Open Source
 
-Everything attributed to buridan/ui is open source. The entire codebase, including this site, can be found on [GitHub](https://github.com/LineIndent/ui). This means you have full control to customize and extend the components to your needs.
+Everything attributed to buridan/native is open source. The entire codebase, including this site, can be found on [GitHub](https://github.com/LineIndent/native). This means you have full control to customize and extend the components to your needs.
 
 - **Full Transparency**: You see exactly how each component is built.
 - **Easy Customization**: Modify any part of a component to fit your design and functionality requirements.
 - **AI Integration**: Access to the code makes it straightforward for LLMs to read, understand, and even improve your components.
 
-
 # Composition
 
-Currently, buridan/ui wraps the new and popular [Base UI](https://base-ui.com/react/overview/quick-start) component library. That means shared APIs and similar anatomies between the two. The only difference is buridan/ui is a UI library for the `Reflex` web framework. 
+Under the hood, buridan/native components are simple native HTML components with Tailwind styling. This means they're lightweight, accessible, easy to customize, and don't require pulling in heavyweight component libraries like Radix UI, Base UI, or similar abstraction layers.
 
-This approach in combination with the open source nature of the library makes it easy for users to adjust, tweak, and refine any part of the component composition. If an API is missing from any of the components, it can easily be integrated into the API by matching it with the API found in `Base UI` documentation. 
+This approach in combination with the open source nature of the library makes it easy for users to adjust, tweak, and refine any part of the component composition. If an API is missing from any of the components, it can easily be integrated into the API by matching it with the API found in `Base UI` documentation.
 
-# Architecture 
+# Architecture
 
-buridan/ui is a three-layered system that does the following. 
+buridan/native is a three-layered system that does the following.
 
 - **Component Schema**: File system that outlines components, what they depend on, and their properties.
 - **CLI**: A command-line tool to install components across projects.
-- **AI Pipeline**: Use your custom schema, theme tokens, and more to easily integrate with Reflex's [AI Builder](https://build.reflex.dev/). 
+- **AI Pipeline**: Use your custom schema, theme tokens, and more to easily integrate with Reflex's [AI Builder](https://build.reflex.dev/).
 
 # Design Consistency
 
