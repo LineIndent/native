@@ -36,10 +36,6 @@ class ClassNames:
         "dark:peer-checked:bg-primary"
     )
 
-    # Props that describe the actual form control (not the label wrapper).
-    # Anything data-* or aria-* is included too, since those attributes are
-    # almost always meant for the real <input> — e.g. JS hooks like
-    # data-dt-select, or accessibility state like aria-label.
     _KNOWN_INPUT_PROPS = (
         "checked",
         "default_checked",
@@ -47,7 +43,6 @@ class ClassNames:
         "required",
         "name",
         "value",
-        "on_change",
         "id",
     )
 
@@ -61,6 +56,7 @@ class CheckboxRoot(CoreComponent):
         for key in list(props.keys()):
             if (
                 key in ClassNames._KNOWN_INPUT_PROPS
+                or key.startswith("on_")
                 or key.startswith("data-")
                 or key.startswith("aria-")
             ):
