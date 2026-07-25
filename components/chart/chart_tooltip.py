@@ -75,8 +75,6 @@ class _ChartTooltipContent:
         """
 
         if swatch == "border":
-            ##
-
             first_color = chart_colors[0]
             base += f"""
                 [&_.recharts-tooltip-label]:!border-l-2
@@ -98,12 +96,12 @@ class _ChartTooltipContent:
                     [&_.recharts-tooltip-item:nth-child({i})]:before:!bg-[var(--chart-{color_idx})]
                     [&_.recharts-tooltip-item:nth-child({i})]:before:!block
                 """)
-            else:  ##
+            else:
                 lines.append(f"""
                     [&_.recharts-tooltip-item:nth-child({i})]:before:!content-['']
                     [&_.recharts-tooltip-item:nth-child({i})]:before:!w-3
                     [&_.recharts-tooltip-item:nth-child({i})]:before:!h-3
-                    [&_.recharts-tooltip-item:nth-child({i})]:before:!rounded-sm
+                    [&_.recharts-tooltip-item:nth-child({i})]:before:!rounded-[3px]
                     [&_.recharts-tooltip-item:nth-child({i})]:before:!flex-shrink-0
                     [&_.recharts-tooltip-item:nth-child({i})]:before:!bg-[var(--chart-{color_idx})]
                     [&_.recharts-tooltip-item:nth-child({i})]:before:!block
