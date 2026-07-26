@@ -1,9 +1,38 @@
 [project]
-name = "native"
-version = "0.1.0"
-description = "Add your description here"
+name = "buridan"
+version = "0.0.1"
+description = "A command line interface (CLI) for adding components and themes to your project."
 requires-python = ">=3.11"
 dependencies = []
+
+readme = "cli/README.md"
+license = "MIT"
+authors = [
+    { name = "LineIndent", email = "line.indent@gmail.com" }
+]
+keywords = [
+    "cli",
+    "ui",
+    "design-system",
+    "reflex",
+    "components",
+    "tailwind",
+    "base-ui"
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Code Generators"
+]
+
+[project.urls]
+Homepage = "https://github.com/LineIndent/native"
+Repository = "https://github.com/LineIndent/native"
+Issues = "https://github.com/LineIndent/native/issues"
 
 [dependency-groups]
 dev = [
@@ -28,3 +57,13 @@ select = ["E", "F", "I", "UP", "B"]
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+
+[project.scripts]
+buridan = "cli.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["native", "cli", "components"]
