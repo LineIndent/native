@@ -1,12 +1,12 @@
-<p align="center">
-  <img src="assets/buridan.webp" alt="@Buridan" height="200">
-</p>
-
 # buridan/native
 
 Native HTML UI components you can copy, paste, and ship in minutes. Built for Reflex. Open Source.
 
 Production-ready shadcn/ui blocks and components designed for Reflex. Extend, override, and ship without fighting the framework. Open source, no lock-in.
+
+<p align="center">
+  <img src="assets/site/github_readme.webp" alt="@Buridan">
+</p>
 
 ## Documentation
 
