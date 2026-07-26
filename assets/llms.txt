@@ -44,6 +44,7 @@
 - [Table](https://native.buridan.dev/docs/components/table): The Table component.
 - [Tabs](https://native.buridan.dev/docs/components/tabs): The Tabs component.
 - [Textarea](https://native.buridan.dev/docs/components/textarea): The Textarea component.
+- [Typography](https://native.buridan.dev/docs/components/typography): The Typography component.
 
 ## Charts
 - [Area Chart](https://native.buridan.dev/docs/charts/area-chart): The Area Chart component.
