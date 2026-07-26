@@ -1,0 +1,37 @@
+name: Docs & Assets
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-generated-assets:
+    name: Generate & Verify Docs and Social Cards
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Install dependencies
+        run: uv sync --group dev
+
+      - name: Generate markdown files
+        run: uv run python scripts/generate_markdown.py
+
+      - name: Check for uncommitted changes
+        run: git diff --exit-code assets/docs
+
+      - name: Run asset verification tests
+        run: uv run pytest tests/test_generated_assets.py
