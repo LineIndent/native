@@ -45,6 +45,7 @@ dev = [
     "markdown>=3.10.2",
     "ruff>=0.15.22",
     "black",
+    "pytest>=9.1.1",
 ]
 
 [tool.ruff]
