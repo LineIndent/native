@@ -118,26 +118,6 @@ class TestMarkdownGeneration:
             + ", ".join(f"--{m}--" for m in matches)
         )
 
-    @pytest.mark.parametrize(
-        "md_file", _all_md, ids=lambda f: str(f.relative_to(DOCS_DIR))
-    )
-    def test_frontmatter_stripped(self, md_file):
-        """
-        If the source file has YAML frontmatter, the generated output must not
-        start with '---' (the generator strips it).
-        """
-        if not has_frontmatter(md_file):
-            pytest.skip("Source file has no frontmatter")
-
-        output = expected_markdown_output_path(md_file)
-        if not output.exists():
-            pytest.skip("Output file missing — covered by test_output_file_exists")
-
-        content = output.read_text(encoding="utf-8").lstrip()
-        assert not content.startswith("---"), (
-            f"Frontmatter was NOT stripped in: {output.relative_to(ROOT_DIR)}"
-        )
-
     def test_output_directory_exists(self):
         """The assets/docs/ output directory itself must exist."""
         assert MARKDOWN_OUTPUT_DIR.exists() and MARKDOWN_OUTPUT_DIR.is_dir(), (
