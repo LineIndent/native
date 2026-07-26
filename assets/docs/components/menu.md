@@ -370,12 +370,6 @@ def menu_destructive() -> rx.Component:
     )
 ```
 
-You have written a fantastic foundation for this markdown file. Your explicit callouts about the **Nested Interactivity Constraint** and **Layout Boundaries (Overflow Hidden)** are highly professional, real-world notes that prevent endless debugging for developers using your library.
-
-Your reference is currently missing the rest of your sub-components (`menu.close`, `menu.separator`, `menu.group_label`, and `menu.shortcut`).
-
-Here is the complete, fully updated API Reference adding the missing components, cleaning up the markdown formatting tables to match your style, and providing explicit composition blocks.
-
 # API Reference
 
 ## menu.root
