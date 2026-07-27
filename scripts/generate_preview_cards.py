@@ -56,7 +56,7 @@ PAGES_CONFIG = [
         "description": "A styling system for HTML and rendered markdown, from blog posts to streaming chat. One CSS file you own.",
     },
     {
-        "route": "dashboard",
+        "route": "dashboards",
         "title": "Dashboard",
         "description": "Build responsive dashboards for analytics, monitoring, and data-driven applications using composable UI components.",
     },
