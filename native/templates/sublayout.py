@@ -46,7 +46,7 @@ def sub_layout_decorator(
                                 class_name="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between",
                             ),
                             page_content,
-                            class_name="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 sm:px-2",
+                            class_name="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 sm:px-2",
                         ),
                         class_name="flex flex-col w-full gap-8",
                     ),

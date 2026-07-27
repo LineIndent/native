@@ -127,4 +127,11 @@ def blocks_page():
             for prefix, title, description in BLOCK_GROUPS
         ],
         class_name="flex flex-col gap-8",
+        on_mount=rx.call_script(
+            """
+            requestAnimationFrame(() => {
+                Prism.highlightAll();
+            });
+            """
+        ),
     )

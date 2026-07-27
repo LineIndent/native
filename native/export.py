@@ -5,6 +5,7 @@ from native.engine.generator import generate_docs_library
 from native.pages.blocks import blocks_page
 from native.pages.components import components_page
 from native.pages.create import create_page
+from native.pages.dashboard import dashboard_page
 from native.pages.docs import docs_page
 from native.pages.landing import landing_page
 from native.pages.typeset import typeset_page
@@ -14,6 +15,18 @@ from native.templates.toc import table_of_content
 
 
 def export(app: App):
+
+    app.add_page(
+        component=dashboard_page(),
+        route="/dashboards",
+        title="Dashboards - buridan/native",
+        meta=generate_site_meta_tags(
+            title="Dashboards",
+            url="/dashboards",
+            description="Build responsive dashboards for analytics, monitoring, and data-driven applications using composable UI components.",
+            social_card="dashboards.webp",
+        ),
+    )
 
     app.add_page(
         component=blocks_page(),

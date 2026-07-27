@@ -100,12 +100,12 @@ def bar_chart_02():
                 ),
                 rx.el.p("$0.7M", class_name="mt-0.5 text-base font-semibold"),
             ),
-            class_name="flex gap-10 px-4",
+            class_name="flex gap-10",
         ),
         rx.el.div(
             rx.el.div(_chart(show_y_axis=False), class_name="sm:hidden"),
             rx.el.div(_chart(show_y_axis=True), class_name="hidden sm:block"),
         ),
         class_name=chart_tooltip_content([1, 2], "square")
-        + " w-full flex flex-col gap-6",
+        + " w-full flex flex-col gap-4",
     )

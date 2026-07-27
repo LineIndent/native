@@ -21,6 +21,12 @@ data = [
         "change": "-4.8%",
         "color": "bg-chart-3",
     },
+    {
+        "name": "Monthly retention",
+        "stat": "82.4%",
+        "change": "+2.7%",
+        "color": "bg-chart-4",
+    },
 ]
 
 
@@ -52,5 +58,5 @@ def _kpi_card(name: str, stat: str, change: str, color: str) -> rx.Component:
 def kpi_card_01():
     return rx.el.dl(
         *[_kpi_card(**item) for item in data],
-        class_name="w-full grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3",
+        class_name="w-full grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4",
     )
