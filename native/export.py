@@ -24,7 +24,7 @@ def export(app: App):
             title="Dashboards",
             url="/dashboards",
             description="Build responsive dashboards for analytics, monitoring, and data-driven applications using composable UI components.",
-            social_card="dashboards.webp",
+            social_card="dashboard.webp",
         ),
     )
 
