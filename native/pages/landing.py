@@ -1,6 +1,7 @@
 from reflex_components_core.el import Section, a, div, img, section
 
 from components.core.hugeicon import hi
+from components.ui.avatar import avatar
 from components.ui.button import button
 from native.lib.examples.card_01 import card_01
 from native.lib.examples.card_02 import card_02
@@ -23,9 +24,31 @@ from native.templates.layout import layout_decorator
     description="Production-ready shadcn/ui blocks and components designed for Reflex. Extend, override, and ship without fighting the framework. Open source, no lock-in.",
     ctas=[
         a(
+            button("Documentation", variant="secondary"),
+            href="/docs",
+        ),
+        a(
             button("Build Your Own", hi("ArrowRight02Icon", class_name="size-4")),
             href="/create",
         ),
+    ],
+    logos=[
+        avatar.group(
+            avatar.root(
+                avatar.image(
+                    src="/avatars/shadcn.webp",
+                    custom_attrs={"alt": "@shadcn"},
+                ),
+                avatar.fallback("SH"),
+            ),
+            avatar.root(
+                avatar.image(
+                    src="/avatars/reflex.webp",
+                    custom_attrs={"alt": "@reflex"},
+                ),
+                avatar.fallback("RD"),
+            ),
+        )
     ],
 )
 def landing_page() -> Section:
@@ -62,11 +85,11 @@ def landing_page() -> Section:
     landing_mobile = div(
         img(
             src="site/landing_ss_dark.webp",
-            class_name="w-[1450px] max-w-none hidden dark:flex",
+            class_name="w-[1800px] max-w-none hidden dark:flex",
         ),
         img(
             src="/site/landing_ss_light.webp",
-            class_name="w-[1450px] max-w-none flex dark:hidden",
+            class_name="w-[1800px] max-w-none flex dark:hidden",
         ),
         class_name="overflow-x-hidden w-full flex justify-center",
     )

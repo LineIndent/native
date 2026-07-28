@@ -46,6 +46,7 @@ _THEME_LOGIC = """
 APP_HEAD_COMPONENTS: list[Component] = [
     link(rel="preconnect", href="https://fonts.googleapis.com"),
     link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin="true"),
+    script(src="/site-bindings.js"),
     script(src="/prism.js"),
     script(src="/theme-preview.js"),
     script(src="/typeset-preview.js"),

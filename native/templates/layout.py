@@ -20,6 +20,10 @@ def layout_decorator(
                     navbar(),
                     div(
                         div(
+                            div(
+                                *(logos if logos else []),
+                                class_name="mx-auto flex justify-center",
+                            ),
                             h1(
                                 title,
                                 class_name="mx-auto max-w-4xl py-4 text-center text-4xl font-bold tracking-tighter text-balance sm:text-5xl md:py-6",
@@ -32,11 +36,7 @@ def layout_decorator(
                                 *(ctas if ctas else []),
                                 class_name="flex w-full items-center justify-center gap-2 pt-8 **:data-[slot=button]:shadow-none",
                             ),
-                            div(
-                                *(logos if logos else []),
-                                class_name="mx-auto mt-10 flex justify-center",
-                            ),
-                            class_name="mx-auto flex flex-1 flex-col",
+                            class_name="mx-auto flex flex-1 flex-col mt-10 mb-16",
                         ),
                         class_name="w-full px-4",
                     ),
