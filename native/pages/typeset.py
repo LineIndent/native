@@ -218,8 +218,8 @@ def source_space():
 
 def typeset_page():
     return rx.el.div(
+        navbar(),
         rx.el.div(
-            navbar(class_name="max-w-full !pl-4 !pr-6"),
             rx.el.main(
                 sidebar(),
                 preview_space(),

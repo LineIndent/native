@@ -342,7 +342,7 @@ def source_space():
 def create_page():
     return rx.el.div(
         rx.el.div(
-            navbar(class_name="max-w-full !pl-4 !pr-6"),
+            navbar(),
             rx.el.main(
                 sidebar(),
                 preview_space(),
