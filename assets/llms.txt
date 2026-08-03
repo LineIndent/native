@@ -29,6 +29,7 @@
 - [Button Group](https://native.buridan.dev/docs/components/button-group): The Button Group component.
 - [Card](https://native.buridan.dev/docs/components/card): The Card component.
 - [Checkbox](https://native.buridan.dev/docs/components/checkbox): The Checkbox component.
+- [Collapsible](https://native.buridan.dev/docs/components/collapsible): The Collapsible component.
 - [Dialog](https://native.buridan.dev/docs/components/dialog): The Dialog component.
 - [Field](https://native.buridan.dev/docs/components/field): The Field component.
 - [Frame](https://native.buridan.dev/docs/components/frame): The Frame component.

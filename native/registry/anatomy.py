@@ -49,6 +49,10 @@ ANATOMY = {
     "checkbox": """checkbox.root(
     checkbox.indicator(),
 )""",
+    "collapsible": """collapsible.root(
+    collapsible.trigger(),
+    collapsible.panel(),
+)""",
     "dialog": """dialog.root(
     dialog.trigger(),
     dialog.popup(

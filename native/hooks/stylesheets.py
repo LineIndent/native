@@ -21,7 +21,6 @@ GOOGLE_FONTS_URL = (
 APP_STYLESHEETS: list[str] = [
     "globals.css",
     "prism.css",
-    "themes.css",
     "typeset.css",
     GOOGLE_FONTS_URL,
 ]
