@@ -9,7 +9,7 @@ order: 0
 
 
 ```python
-from components.ui.attachment import Attachment
+from components.ui.attachment import attachment
 ```
 
 ```python

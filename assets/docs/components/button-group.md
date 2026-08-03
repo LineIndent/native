@@ -8,9 +8,9 @@ order: 3
 ## Button Group, A Container That Groups Related Buttons Together With Consistent Styling.
 
 
-
-> Component `button_group` not found
-
+```python
+from components.ui.button_group import button_group
+```
 
 ```python
 from typing import Any
@@ -323,16 +323,6 @@ def button_group_dropdown() -> rx.Component:
     )
 ```
 
-## Select
-
-Pair with a `select` component.
-
-**Props used:** see the [Select](/docs/components/select) docs for select-specific props.
-
-
-> Component `button_group_select` not found
-
-
 # API Reference
 
 ## button_group.root
@@ -344,10 +334,10 @@ button_group.root(
 )
 ```
 
-| Prop          | Type                                 | Default        |
-| ------------- | -------------------------------------- | -------------- |
-| `orientation` | `Literal["horizontal", "vertical"]`   | `"horizontal"` |
-| `class_name`  | `str`                                  | `""`            |
+| Prop          | Type                                | Default        |
+| ------------- | ----------------------------------- | -------------- |
+| `orientation` | `Literal["horizontal", "vertical"]` | `"horizontal"` |
+| `class_name`  | `str`                               | `""`           |
 
 ## button_group.separator
 
@@ -359,10 +349,10 @@ button_group.root(
 )
 ```
 
-| Prop          | Type                                 | Default      |
-| ------------- | -------------------------------------- | ------------ |
-| `orientation` | `Literal["horizontal", "vertical"]`   | `"vertical"` |
-| `class_name`  | `str`                                  | `""`          |
+| Prop          | Type                                | Default      |
+| ------------- | ----------------------------------- | ------------ |
+| `orientation` | `Literal["horizontal", "vertical"]` | `"vertical"` |
+| `class_name`  | `str`                               | `""`         |
 
 ## button_group.text
 

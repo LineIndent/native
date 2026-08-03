@@ -9,7 +9,7 @@ order: 1
 
 
 ```python
-from components.ui.avatar import Avatar
+from components.ui.avatar import avatar
 ```
 
 ```python

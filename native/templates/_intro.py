@@ -112,11 +112,13 @@ def command_selector():
 def intro(raw_arg):
     intro = raw_arg.strip("[]").strip()
 
+    print(intro)
+
     if "," not in intro:
         raise ValueError(f"Invalid INTRO format: {raw_arg!r}")
 
     title, description = intro.split(",", 1)
-    slug = title.strip().lower().replace(" ", "-")
+    slug = title.strip().lower().replace(" ", "_")
     copy_id = f"copy-command-{slug}"
     command_id = f"command-{slug}"
 
@@ -142,7 +144,7 @@ def intro(raw_arg):
                         class_name="text-muted-foreground command-prefix",
                     ),
                     rx.el.span(
-                        f" {title.strip().lower()}",
+                        f" {slug}",
                         class_name="font-medium text-foreground",
                     ),
                     class_name=(
@@ -188,6 +190,5 @@ def intro(raw_arg):
             ),
             class_name="flex flex-col items-start gap-4 max-w-xl",
         ),
-        # rx.el.button("Open Full Preview"),
         class_name="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between mb-10",
     )

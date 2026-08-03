@@ -8,9 +8,9 @@ order: 0
 ## Frame, Displays Related Content In A Structured Frame.
 
 
-
-> Error processing `usage`: module, class, method, function, traceback, frame, or code object was expected, got Frame
-
+```python
+from components.ui.frame import frame
+```
 
 ```python
 from typing import Any

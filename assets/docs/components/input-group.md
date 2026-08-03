@@ -8,9 +8,9 @@ order: 0
 ## Input Group, Add Addons, Buttons, And Helper Content To Inputs.
 
 
-
-> Component `input_group` not found
-
+```python
+from components.ui.input_group import input_group
+```
 
 ```python
 from typing import Any

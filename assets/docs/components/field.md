@@ -9,7 +9,7 @@ order: 0
 
 
 ```python
-from components.ui.field import Field
+from components.ui.field import field
 ```
 
 ```python

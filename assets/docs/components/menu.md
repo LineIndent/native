@@ -9,7 +9,7 @@ order: 0
 
 
 ```python
-from components.ui.menu import Menu
+from components.ui.menu import menu
 ```
 
 ```python

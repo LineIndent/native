@@ -8,9 +8,9 @@ order: 13
 ## Select, A Styled Native Html Select Element With Consistent Design System Integration.
 
 
-
-> Error processing `usage`: module, class, method, function, traceback, frame, or code object was expected, got NativeSelect
-
+```python
+from components.ui.select import select
+```
 
 ```python
 from typing import Any

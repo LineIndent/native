@@ -82,9 +82,9 @@ class NativeSwitch(CoreComponent):
         )
 
 
-class SwitchNamespace(ComponentNamespace):
+class Switch(ComponentNamespace):
     root = staticmethod(NativeSwitch.create)
     class_names = ClassNames
 
 
-switch = SwitchNamespace()
+switch = Switch()

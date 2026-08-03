@@ -66,14 +66,6 @@ A split button group with a `menu` as the second segment.
 
 --DEMO(button_group_dropdown)--
 
-## Select
-
-Pair with a `select` component.
-
-**Props used:** see the [Select](/docs/components/select) docs for select-specific props.
-
---DEMO(button_group_select)--
-
 # API Reference
 
 ## button_group.root
@@ -85,10 +77,10 @@ button_group.root(
 )
 ```
 
-| Prop          | Type                                 | Default        |
-| ------------- | -------------------------------------- | -------------- |
-| `orientation` | `Literal["horizontal", "vertical"]`   | `"horizontal"` |
-| `class_name`  | `str`                                  | `""`            |
+| Prop          | Type                                | Default        |
+| ------------- | ----------------------------------- | -------------- |
+| `orientation` | `Literal["horizontal", "vertical"]` | `"horizontal"` |
+| `class_name`  | `str`                               | `""`           |
 
 ## button_group.separator
 
@@ -100,10 +92,10 @@ button_group.root(
 )
 ```
 
-| Prop          | Type                                 | Default      |
-| ------------- | -------------------------------------- | ------------ |
-| `orientation` | `Literal["horizontal", "vertical"]`   | `"vertical"` |
-| `class_name`  | `str`                                  | `""`          |
+| Prop          | Type                                | Default      |
+| ------------- | ----------------------------------- | ------------ |
+| `orientation` | `Literal["horizontal", "vertical"]` | `"vertical"` |
+| `class_name`  | `str`                               | `""`         |
 
 ## button_group.text
 

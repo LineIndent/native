@@ -9,7 +9,7 @@ order: 0
 
 
 ```python
-from components.ui.tabs import Tabs
+from components.ui.tabs import tabs
 ```
 
 ```python

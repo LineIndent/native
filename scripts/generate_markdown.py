@@ -10,6 +10,8 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).parent.parent
 sys.path.append(str(ROOT_DIR))
 
+from reflex.components.component import ComponentNamespace
+
 from native.registry.components import COMPONENT_REGISTRY
 
 # ---------------------------------------------------------
@@ -55,11 +57,58 @@ def build_live_registry(dirs: list[str]) -> dict[str, tuple[object, str]]:
                 if name.startswith("_"):
                     continue
 
-                if inspect.isfunction(obj) or inspect.isclass(obj) or callable(obj):
-                    if getattr(obj, "__module__", None) == module_name:
-                        registry[name.lower()] = (obj, name)
+                is_valid_obj = (
+                    inspect.isfunction(obj)
+                    or inspect.isclass(obj)
+                    or callable(obj)
+                    or isinstance(obj, ComponentNamespace)
+                )
+
+                if is_valid_obj:
+                    target_cls = (
+                        type(obj) if isinstance(obj, ComponentNamespace) else obj
+                    )
+                    obj_module = getattr(target_cls, "__module__", None)
+
+                    if obj_module == module_name:
+                        key = name.lower()
+                        # Save both underscore AND hyphenated versions in LIVE_REGISTRY!
+                        registry[key] = (obj, name)
+                        registry[key.replace("_", "-")] = (obj, name)
 
     return registry
+
+
+# def build_live_registry(dirs: list[str]) -> dict[str, tuple[object, str]]:
+#     registry = {}
+
+#     for folder in dirs:
+#         base = ROOT_DIR / folder
+
+#         if not base.exists():
+#             continue
+
+#         for py_file in base.rglob("*.py"):
+#             if py_file.name.startswith("__"):
+#                 continue
+
+#             module_name = ".".join(py_file.relative_to(ROOT_DIR).with_suffix("").parts)
+
+#             try:
+#                 module = importlib.import_module(module_name)
+#             except Exception as e:
+#                 print(f"Could not import {module_name}: {e}")
+#                 continue
+
+#             for name, obj in vars(module).items():
+#                 if name.startswith("_"):
+#                     continue
+
+#                 if inspect.isfunction(obj) or inspect.isclass(obj) or callable(obj):
+#                     if getattr(obj, "__module__", None) == module_name:
+#                         registry[name.lower()] = (obj, name)
+
+#     return registry
 
 
 LIVE_REGISTRY = build_live_registry(DYNAMIC_LOAD_DIRS)
@@ -78,7 +127,9 @@ def get_dependencies(name: str):
     ordered = []
 
     def resolve(component):
-        data = COMPONENT_REGISTRY.get(component.lower())
+        # Normalize key so button-group matches button_group in COMPONENT_REGISTRY
+        comp_key = component.lower().replace("-", "_")
+        data = COMPONENT_REGISTRY.get(comp_key)
 
         if not data:
             return
@@ -87,12 +138,33 @@ def get_dependencies(name: str):
             if dep not in ordered:
                 resolve(dep)
 
-        if component not in ordered:
-            ordered.append(component)
+        if comp_key not in ordered:
+            ordered.append(comp_key)
 
     resolve(name)
 
     return ordered
+
+
+# def get_dependencies(name: str):
+#     ordered = []
+
+#     def resolve(component):
+#         data = COMPONENT_REGISTRY.get(component.lower())
+
+#         if not data:
+#             return
+
+#         for dep in data.get("dependencies", []):
+#             if dep not in ordered:
+#                 resolve(dep)
+
+#         if component not in ordered:
+#             ordered.append(component)
+
+#     resolve(name)
+
+#     return ordered
 
 
 def read_component_files(name: str):
@@ -144,18 +216,35 @@ def convert_to_markdown(content: str):
             # -----------------------------
 
             if cmd == "usage":
-                entry = LIVE_REGISTRY.get(name)
+                entry = LIVE_REGISTRY.get(name) or LIVE_REGISTRY.get(
+                    name.replace("-", "_")
+                )
 
                 if not entry:
                     return f"\n> Component `{name}` not found\n"
 
                 obj, preferred_name = entry
 
-                file = Path(inspect.getfile(obj)).stem
+                target = type(obj) if isinstance(obj, ComponentNamespace) else obj
+                file = Path(inspect.getfile(target)).stem
 
                 return (
                     f"```python\nfrom components.ui.{file} import {preferred_name}\n```"
                 )
+
+            # if cmd == "usage":
+            #     entry = LIVE_REGISTRY.get(name)
+
+            #     if not entry:
+            #         return f"\n> Component `{name}` not found\n"
+
+            #     obj, preferred_name = entry
+
+            #     file = Path(inspect.getfile(obj)).stem
+
+            #     return (
+            #         f"```python\nfrom components.ui.{file} import {preferred_name}\n```"
+            #     )
 
             # -----------------------------
             # DEMO
