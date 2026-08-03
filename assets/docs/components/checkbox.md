@@ -9,7 +9,7 @@ order: 5
 
 
 ```python
-from components.ui.checkbox import Checkbox
+from components.ui.checkbox import checkbox
 ```
 
 ```python

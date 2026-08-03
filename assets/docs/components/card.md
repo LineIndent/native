@@ -9,7 +9,7 @@ order: 0
 
 
 ```python
-from components.ui.card import Card
+from components.ui.card import card
 ```
 
 ```python

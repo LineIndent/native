@@ -35,3 +35,6 @@ jobs:
 
       - name: Run asset verification tests
         run: uv run pytest tests/test_generated_assets.py
+
+      - name: Run docs verification tests
+        run: uv run pytest tests/test_docs_error.py

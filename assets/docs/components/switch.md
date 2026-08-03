@@ -8,9 +8,9 @@ order: 0
 ## Switch, A Control That Allows The User To Toggle Between Checked And Not Checked.
 
 
-
-> Component `switch` not found
-
+```python
+from components.ui.switch import switch
+```
 
 ```python
 from typing import Any
@@ -146,12 +146,12 @@ class NativeSwitch(CoreComponent):
         )
 
 
-class SwitchNamespace(ComponentNamespace):
+class Switch(ComponentNamespace):
     root = staticmethod(NativeSwitch.create)
     class_names = ClassNames
 
 
-switch = SwitchNamespace()
+switch = Switch()
 ```
 
 # Examples

@@ -87,6 +87,9 @@ def _usage_demo(component_name: str):
 
 
 def usage(raw_arg):
+
+    name = raw_arg.replace("_", " ").title()
+
     return div(
         div(
             h1(
@@ -95,7 +98,7 @@ def usage(raw_arg):
             ),
             p(
                 span("Use the following to build the "),
-                strong(raw_arg.capitalize()),
+                strong(name),
                 span(" component."),
                 class_name="text-sm text-muted-foreground",
             ),

@@ -8,9 +8,9 @@ order: 11
 ## Input, A Text Input Component For Forms And User Data Entry With Built-In Styling And Accessibility Features.
 
 
-
-> Error processing `usage`: module, class, method, function, traceback, frame, or code object was expected, got Input
-
+```python
+from components.ui.input import input
+```
 
 ```python
 from typing import Any

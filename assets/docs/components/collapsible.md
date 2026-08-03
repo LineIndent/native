@@ -9,7 +9,7 @@ order: 0
 
 
 ```python
-from components.ui.collapsible import Collapsible
+from components.ui.collapsible import collapsible
 ```
 
 ```python

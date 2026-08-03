@@ -9,7 +9,7 @@ order: 0
 
 
 ```python
-from components.ui.marker import Marker
+from components.ui.marker import marker
 ```
 
 ```python

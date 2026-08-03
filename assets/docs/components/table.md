@@ -8,9 +8,9 @@ order: 0
 ## Table, Powerful Table And Datagrids With Built-In Features.
 
 
-
-> Component `table` not found
-
+```python
+from components.ui.table import table
+```
 
 ```python
 from typing import Any
