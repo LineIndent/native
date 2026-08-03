@@ -67,7 +67,7 @@ def export(app: App):
     app.add_page(
         component=landing_page(),
         route="/",
-        title="The UI Library for Reflex Developers - buridan/native",
+        title="Native HTML UI components you can copy, paste, and ship in minutes - buridan/native",
         meta=generate_site_meta_tags(
             title="Buridan Native",
             url="/",

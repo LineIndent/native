@@ -86,7 +86,7 @@ class NativeAccordionPanel(CoreComponent):
         )
 
 
-class NativeAccordion(ComponentNamespace):
+class Accordion(ComponentNamespace):
     root = staticmethod(NativeAccordionRoot.create)
     item = staticmethod(NativeAccordionItem.create)
     trigger = staticmethod(NativeAccordionTrigger.create)
@@ -94,4 +94,4 @@ class NativeAccordion(ComponentNamespace):
     class_names = ClassNames
 
 
-accordion = NativeAccordion()
+accordion = Accordion()

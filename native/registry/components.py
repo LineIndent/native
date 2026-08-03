@@ -58,6 +58,10 @@ COMPONENT_REGISTRY = {
         "files": ["components/ui/checkbox.py"],
         "dependencies": ["core", "hugeicon"],
     },
+    "collapsible": {
+        "files": ["components/ui/collapsible.py"],
+        "dependencies": ["core"],
+    },
     "dialog": {
         "files": ["components/ui/dialog.py"],
         "dependencies": ["core"],
@@ -108,7 +112,7 @@ COMPONENT_REGISTRY = {
     },
     "table": {
         "files": ["components/ui/table.py"],
-        "dependencies": ["core"],
+        "dependencies": ["core", "input"],
     },
     "tabs": {
         "files": ["components/ui/tabs.py"],
@@ -117,5 +121,55 @@ COMPONENT_REGISTRY = {
     "textarea": {
         "files": ["components/ui/textarea.py"],
         "dependencies": ["core"],
+    },
+
+    # --- native/lib/blocks ---
+    "area_chart_01": {
+        "files": ["native/lib/blocks/area_chart_01.py"],
+        "dependencies": ["chart_tooltip"],
+    },
+    "area_chart_02": {
+        "files": ["native/lib/blocks/area_chart_02.py"],
+        "dependencies": ["chart_tooltip"],
+    },
+    "bar_chart_01": {
+        "files": ["native/lib/blocks/bar_chart_01.py"],
+        "dependencies": ["chart_tooltip", "checkbox", "field"],
+    },
+    "bar_chart_02": {
+        "files": ["native/lib/blocks/bar_chart_02.py"],
+        "dependencies": ["chart_tooltip"],
+    },
+    "bar_chart_03": {
+        "files": ["native/lib/blocks/bar_chart_03.py"],
+        "dependencies": ["chart_tooltip"],
+    },
+    "bar_chart_04": {
+        "files": ["native/lib/blocks/bar_chart_04.py"],
+        "dependencies": ["chart_tooltip"],
+    },
+    "kpi_card_01": {
+        "files": ["native/lib/blocks/kpi_card_01.py"],
+        "dependencies": ["card"],
+    },
+    "kpi_card_02": {
+        "files": ["native/lib/blocks/kpi_card_02.py"],
+        "dependencies": ["card", "chart_tooltip"],
+    },
+    "line_chart_01": {
+        "files": ["native/lib/blocks/line_chart_01.py"],
+        "dependencies": ["card", "chart_tooltip"],
+    },
+    "line_chart_02": {
+        "files": ["native/lib/blocks/line_chart_02.py"],
+        "dependencies": ["card", "chart_tooltip"],
+    },
+    "line_chart_03": {
+        "files": ["native/lib/blocks/line_chart_03.py"],
+        "dependencies": ["card", "chart_tooltip"],
+    },
+    "line_chart_04": {
+        "files": ["native/lib/blocks/line_chart_04.py"],
+        "dependencies": ["card", "chart_tooltip"],
     },
 }

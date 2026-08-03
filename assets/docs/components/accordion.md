@@ -8,9 +8,9 @@ order: 0
 ## Accordion, A Vertically Stacked Set Of Interactive Headings That Each Reveal A Section Of Content.
 
 
-
-> Component `accordion` not found
-
+```python
+from components.ui.accordion import Accordion
+```
 
 ```python
 from typing import Any
@@ -217,7 +217,7 @@ class NativeAccordionPanel(CoreComponent):
         )
 
 
-class NativeAccordion(ComponentNamespace):
+class Accordion(ComponentNamespace):
     root = staticmethod(NativeAccordionRoot.create)
     item = staticmethod(NativeAccordionItem.create)
     trigger = staticmethod(NativeAccordionTrigger.create)
@@ -225,7 +225,7 @@ class NativeAccordion(ComponentNamespace):
     class_names = ClassNames
 
 
-accordion = NativeAccordion()
+accordion = Accordion()
 ```
 
 # Examples
