@@ -1,6 +1,6 @@
 [project]
 name = "buridan"
-version = "0.0.1"
+version = "0.0.2"
 description = "A command line interface (CLI) for adding components and themes to your project."
 requires-python = ">=3.11"
 dependencies = []
@@ -36,7 +36,7 @@ Issues = "https://github.com/LineIndent/native/issues"
 
 [dependency-groups]
 dev = [
-    "reflex==0.9.7",
+    "reflex==0.9.8",
     "pillow>=12.2.0",
     "PyYAML>=6.0.3",
     "questionary>=2.1.1",

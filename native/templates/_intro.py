@@ -112,8 +112,6 @@ def command_selector():
 def intro(raw_arg):
     intro = raw_arg.strip("[]").strip()
 
-    print(intro)
-
     if "," not in intro:
         raise ValueError(f"Invalid INTRO format: {raw_arg!r}")
 
