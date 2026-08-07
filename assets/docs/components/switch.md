@@ -132,11 +132,7 @@ class NativeSwitch(CoreComponent):
         return rx.el.label(
             rx.el.input(type="checkbox", class_name=ClassNames.INPUT, **input_props),
             rx.el.div(
-                rx.el.span(
-                    # Dynamically merge custom thumb classes
-                    class_name=cn(ClassNames.THUMB, thumb_class_name)
-                ),
-                # Dynamically merge custom track classes
+                rx.el.span(class_name=cn(ClassNames.THUMB, thumb_class_name)),
                 class_name=cn(ClassNames.TRACK, track_class_name),
             ),
             rx.el.span(label_text, class_name=ClassNames.LABEL)

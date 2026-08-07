@@ -94,6 +94,10 @@ COMPONENT_REGISTRY = {
         "files": ["components/ui/message.py"],
         "dependencies": ["core"],
     },
+    "radio_group": {
+        "files": ["components/ui/radio_group.py"],
+        "dependencies": ["core"],
+    },
     "select": {
         "files": ["components/ui/select.py"],
         "dependencies": ["core", "hugeicon"],

@@ -193,27 +193,21 @@ class MenuItem(CoreComponent):
         props["data-slot"] = "menu-item"
         cls.set_class_name(ClassNames.ITEM, props)
 
-        # 0. Pop out the variant prop so we can apply the data-variant attribute
         variant = props.pop("variant", "default")
-        props["data-variant"] = (
-            variant  # This maps to your Tailwind: data-[variant=destructive]
-        )
+        props["data-variant"] = variant
 
         item_id = props.get("id") or f"menu-item-{next(_menu_item_counter)}"
         props["id"] = item_id
 
-        # 1. Pop out any existing user on_click triggers
         user_on_click = props.pop("on_click", None)
         click_events = []
 
-        # 2. Append the user's custom event(s) if they provided any
         if user_on_click is not None:
             if isinstance(user_on_click, list):
                 click_events.extend(user_on_click)
             else:
                 click_events.append(user_on_click)
 
-        # 3. If close_on_click is active, append the parent-closing script
         if close_on_click:
             close_script = rx.call_script(
                 f"""
@@ -224,7 +218,6 @@ class MenuItem(CoreComponent):
             )
             click_events.append(close_script)
 
-        # 4. Bind the combined chain back to props if there's anything to execute
         if click_events:
             props["on_click"] = click_events
 

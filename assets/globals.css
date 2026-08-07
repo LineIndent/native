@@ -164,8 +164,8 @@
     prose-h2:scroll-mt-14
     prose-h1:text-2xl
     prose-h1:font-bold
-    prose-h1:tracking-tight
-    prose-h1:mb-3
+    prose-h1:tracking-tighter
+    prose-h1:mb-1
     prose-h2:text-xl
     prose-h2:font-semibold
     prose-h2:tracking-tight
@@ -175,7 +175,7 @@
 
         /* 4. Paragraph Modifiers */
         @apply prose-p:text-muted-foreground
-    prose-p:leading-relaxed;
+    prose-p:leading-relaxed prose-p:text-sm;
 
         /* 5. Preformatted Code Block Modifiers */
         @apply prose-pre:rounded-lg
