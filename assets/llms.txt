@@ -38,6 +38,7 @@
 - [Marker](https://native.buridan.dev/docs/components/marker): The Marker component.
 - [Menu](https://native.buridan.dev/docs/components/menu): The Menu component.
 - [Message](https://native.buridan.dev/docs/components/message): The Message component.
+- [Radio Group](https://native.buridan.dev/docs/components/radio-group): The Radio Group component.
 - [Select](https://native.buridan.dev/docs/components/select): The Select component.
 - [Separator](https://native.buridan.dev/docs/components/separator): The Separator component.
 - [Spinner](https://native.buridan.dev/docs/components/spinner): The Spinner component.

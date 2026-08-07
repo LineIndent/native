@@ -41,6 +41,7 @@ buridan apply --preset <ID>
 ```
 
 Arguments:
+
 - `--preset`: The theme preset ID from the Buridan UI theme builder. Use `b0` for the default theme.
 
 Example:
@@ -85,8 +86,8 @@ buridan list
 # Recommended workflow
 
 ```bash
-buridan create                    # build your theme, copy the preset ID
-buridan init                      # set up utilities and Tailwind config
-buridan apply --preset <ID>       # apply your theme
-buridan add button input select   # add the components you need
+buridan create
+buridan init
+buridan apply --preset <ID>
+buridan add button input select
 ```

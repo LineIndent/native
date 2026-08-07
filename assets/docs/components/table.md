@@ -188,26 +188,6 @@ def _sort_icons() -> list[Component]:
     ]
 
 
-# --------------------------------------------------------------------------
-# Client-side controller. Returned from `add_custom_code`, so Reflex
-# de-duplicates it and injects it once per page no matter how many
-# <TableRoot> instances exist — same idea as the per-instance scripts
-# in dialog.py, just shared instead of inlined per node.
-#
-# Opt-in hooks (all via data-* attributes, none required):
-#   [data-dt-search-for="tableId"]  search input, anywhere on the page —
-#                                    see TableSearch / table.search()
-#   [data-dt-sort="key"]            sortable header button (paired with a
-#                                    `data-sort-value` attr on the matching
-#                                    <td>, or falls back to that cell's text)
-#   [data-dt-prev] / [data-dt-next] / [data-dt-info] / [data-dt-page-label]
-#                                    pagination controls
-#   [data-dt-select-all]            header "select all" checkbox <input>
-#   [data-dt-select]                per-row checkbox <input> — must have a
-#                                    unique `value` (e.g. a row id)
-# --------------------------------------------------------------------------
-
-
 DATA_TABLE_JS = r"""
 if (typeof window !== "undefined") {
   window.__dataTable = window.__dataTable || {

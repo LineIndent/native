@@ -49,7 +49,7 @@ def source(files):
             ),
             div(
                 *[file_codeblock(file[0], file[1]) for file in files],
-                class_name="w-full grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3",
+                class_name="w-full grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3",
             ),
             class_name="w-full flex flex-col items-start gap-4",
         ),

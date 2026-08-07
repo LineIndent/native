@@ -134,7 +134,7 @@ class ClassNames:
 
     FIELD_CONTENT = "group/field-content flex flex-1 flex-col gap-0.5 leading-snug"
 
-    FIELD_LABEL = "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border border-input *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10 has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col"
+    FIELD_LABEL = "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-[:checked]:border-primary/30 has-[:checked]:bg-primary/5 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border border-input *:data-[slot=field]:p-2.5 dark:has-[:checked]:border-primary/20 dark:has-[:checked]:bg-primary/10 has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col"
 
     FIELD_TITLE = "flex w-fit items-center gap-2 text-sm font-medium group-data-[disabled=true]/field:opacity-50"
 
@@ -296,50 +296,49 @@ field = Field()
 
 A single control with label, helper text, and validation.
 
-```python
+```text
 field.root
-├── field.label
-├── Input / Textarea / switch.root / select.root
-├── field.description
-└── field.error
+ |- field.label
+ |- Input / Textarea / switch.root / select.root
+ |- field.description
+ \- field.error
 ```
 
 ## field.group
 
 Related fields in one group. Use `field.separator` between sections when needed.
 
-```python
+```text
 field.group
-├── field.root
-│   ├── field.label
-│   ├── Input / Textarea / switch.root / select.root
-│   ├── field.description
-│   └── field.error
-├── field.separator
-└── field.root
-    ├── field.label
-    └── Input / Textarea / switch.root / select.root
+ |- field.root
+ |   |- field.label
+ |   |- Input / Textarea / switch.root / select.root
+ |   |- field.description
+ |   \- field.error
+ |- field.separator
+ \- field.root
+     |- field.label
+     \- Input / Textarea / switch.root / select.root
 ```
 
 ## field.set
 
 Semantic grouping with a legend and description, usually containing a `field.group`.
 
-```python
+```text
 field.set
-├── field.legend
-├── field.description
-└── field.group
-    ├── field.root
-    │   ├── field.label
-    │   ├── Input / Textarea / switch.root / select.root
-    │   ├── field.description
-    │   └── field.error
-    └── field.root
-        ├── field.label
-        └── Input / Textarea / switch.root / select.root
+ |- field.legend
+ |- field.description
+ \- field.group
+     |- field.root
+     |   |- field.label
+     |   |- Input / Textarea / switch.root / select.root
+     |   |- field.description
+     |   \- field.error
+     \- field.root
+         |- field.label
+         \- Input / Textarea / switch.root / select.root
 ```
-
 
 - `field.root` is the core wrapper for a single field.
 
@@ -501,9 +500,9 @@ def field_demo() -> rx.Component:
 
 # Responsive Layout
 
-- **Vertical fields**: Default orientation stacks label, control, and helper text—ideal for mobile-first layouts.  
+- **Vertical fields**: Default orientation stacks label, control, and helper text—ideal for mobile-first layouts.
 
-- **Horizontal fields**: Set `orientation="horizontal"` on `field.root` to align the label and control side-by-side. Pair with `field.content` to keep descriptions aligned.  
+- **Horizontal fields**: Set `orientation="horizontal"` on `field.root` to align the label and control side-by-side. Pair with `field.content` to keep descriptions aligned.
 
 - **Responsive fields**: Set `orientation="responsive"` for automatic column layouts inside container-aware parents.
 
@@ -530,9 +529,9 @@ field.root(
 
 Container that renders a semantic `fieldset` with spacing presets.
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `class_name` | `str` | |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` |         |
 
 ```python
 field.set(
@@ -545,10 +544,10 @@ field.set(
 
 Legend element for a `field.set`. Switch to the `"label"` variant to align with standard label sizing.
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `variant` | `Literal["legend", "label"]` | `"legend"` |
-| `class_name` | `str` |  |
+| Prop         | Type                         | Default    |
+| ------------ | ---------------------------- | ---------- |
+| `variant`    | `Literal["legend", "label"]` | `"legend"` |
+| `class_name` | `str`                        |            |
 
 ```python
 field.legend("Notification Preferences", variant="label")
@@ -560,9 +559,9 @@ The `field.legend` has two variants: `legend` and `label`. The `label` variant a
 
 Layout wrapper that stacks `field.root` components and enables container queries for responsive orientations.
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `class_name` | `str` |  |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` |         |
 
 ```python
 field.group(
@@ -576,11 +575,11 @@ field.group(
 
 The core wrapper for a single field. Provides orientation control, invalid state styling, and spacing configurations.
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `orientation` | `"vertical" | "horizontal" | "responsive"` | `"vertical"` |
-| `class_name` | `str` |  |
-| `data_invalid` | `str` |  |
+| Prop           | Type        | Default      |
+| -------------- | ----------- | ------------ | ------------- | ------------ |
+| `orientation`  | `"vertical" | "horizontal" | "responsive"` | `"vertical"` |
+| `class_name`   | `str`       |              |
+| `data_invalid` | `str`       |              |
 
 ```python
 field.root(
@@ -594,9 +593,9 @@ field.root(
 
 Flex column that groups control and descriptions when the label sits beside the control. Not required if you have no layout description block.
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `class_name` | `str` |  |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` |         |
 
 ```python
 field.root(
@@ -612,10 +611,10 @@ field.root(
 
 Label styled for both direct inputs and nested `field` child items.
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `html_for` | `str` |  |
-| `class_name` | `str` |  |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `html_for`   | `str` |         |
+| `class_name` | `str` |         |
 
 ```python
 field.label("Email", html_for="email")
@@ -625,9 +624,9 @@ field.label("Email", html_for="email")
 
 Renders a standalone title with matching label typography properties inside a `field.content` node block.
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `class_name` | `str` |  |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` |         |
 
 ```python
 field.content(
@@ -640,9 +639,9 @@ field.content(
 
 Helper text slot that automatically line-balances lengthy strings cleanly when utilized inside horizontal configurations.
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `class_name` | `str` |  |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` |         |
 
 ```python
 field.description("We never share your email with anyone.")
@@ -652,9 +651,9 @@ field.description("We never share your email with anyone.")
 
 Visual divider rule used to separate sections or categories inside a wrapping `field.group` component. Accepts optional inline children contents.
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `class_name` | `str` |  |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` |         |
 
 ```python
 field.separator("Or continue with")
@@ -664,9 +663,9 @@ field.separator("Or continue with")
 
 Accessible error notification typography container block configured automatically with standard application state layout variables (`role="alert"`).
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `class_name` | `str` |  |
+| Prop         | Type  | Default |
+| ------------ | ----- | ------- |
+| `class_name` | `str` |         |
 
 ```python
 field.error("Invalid passcode combination provided.")

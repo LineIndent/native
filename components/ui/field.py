@@ -29,7 +29,7 @@ class ClassNames:
 
     FIELD_CONTENT = "group/field-content flex flex-1 flex-col gap-0.5 leading-snug"
 
-    FIELD_LABEL = "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border border-input *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10 has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col"
+    FIELD_LABEL = "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-[:checked]:border-primary/30 has-[:checked]:bg-primary/5 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border border-input *:data-[slot=field]:p-2.5 dark:has-[:checked]:border-primary/20 dark:has-[:checked]:bg-primary/10 has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col"
 
     FIELD_TITLE = "flex w-fit items-center gap-2 text-sm font-medium group-data-[disabled=true]/field:opacity-50"
 
