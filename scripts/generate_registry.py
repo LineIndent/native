@@ -38,6 +38,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -102,7 +103,15 @@ def build_component_index(
         rel = path.relative_to(repo_root)
         rel_posix = rel.as_posix()
         stem = path.stem
-        name = _unique_name(stem, rel_posix, seen_stems)
+        
+        # Check if the file is a versioned file (e.g. v1, v1_0, v2_0_0)
+        # under a component directory.
+        if re.match(r"^v\d+(?:_\d+)*$", stem) and len(path.parent.name) > 0:
+            component_name = path.parent.name
+            version = stem[1:].replace("_", ".")
+            name = f"{component_name}@{version}"
+        else:
+            name = _unique_name(stem, rel_posix, seen_stems)
 
         module_parts = rel.with_suffix("").parts  # e.g. ('components','ui','button')
         dotted_module = ".".join(module_parts)

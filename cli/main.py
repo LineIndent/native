@@ -1,5 +1,7 @@
 import argparse
 import ast
+import json
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -120,19 +122,66 @@ def get_source_root() -> Path | None:
         return None
 
 
-def resolve_dependencies(component_names: list[str], registry: dict) -> list[str]:
+def parse_component_spec(spec: str) -> tuple[str, str | None]:
+    """Parse component spec like 'button@1.0.0' into ('button', '1.0.0')."""
+    if "@" in spec:
+        name, version = spec.split("@", 1)
+        return name.lower(), version
+    return spec.lower(), None
+
+
+def parse_version_key(version_str: str) -> list[int]:
+    """Helper to sort versions semantically (e.g. '2.0.0' > '1.0.0' > '1')."""
+    return [int(x) for x in re.findall(r"\d+", version_str)]
+
+
+def get_latest_version(component_name: str, registry: dict) -> str | None:
+    """Find the latest registered version of a component."""
+    target = component_name.lower()
+    versions = []
+    
+    for key in registry:
+        if key.startswith(f"{target}@"):
+            version = key.split("@", 1)[1]
+            versions.append(version)
+            
+    if not versions:
+        if target in registry:
+            return target
+        return None
+        
+    versions.sort(key=parse_version_key)
+    return f"{target}@{versions[-1]}"
+
+
+def resolve_dependencies(
+    component_names: list[str], registry: dict
+) -> tuple[list[str], dict[str, str]]:
     required_files: set[str] = set()
     visited: set[str] = set()
+    installed_map: dict[str, str] = {}
 
-    def add(name: str):
-        key = name.lower()
+    def add(spec: str):
+        key = spec.lower()
+        if "@" not in key:
+            resolved_key = get_latest_version(key, registry)
+            if not resolved_key:
+                print(f"Warning: Component '{spec}' not found in registry.")
+                return
+            key = resolved_key
+
         if key in visited:
             return
         visited.add(key)
+
         entry = registry.get(key)
         if not entry:
-            print(f"Warning: Component '{name}' not found in registry.")
+            print(f"Warning: Component '{spec}' not found in registry.")
             return
+
+        name, version = parse_component_spec(key)
+        installed_map[name] = version or "latest"
+
         for f in entry["files"]:
             required_files.add(f)
         for dep in entry.get("dependencies", []):
@@ -141,14 +190,48 @@ def resolve_dependencies(component_names: list[str], registry: dict) -> list[str
     for name in component_names:
         add(name)
 
-    return sorted(required_files)
+    return sorted(required_files), installed_map
+
+
+def update_manifest(target_root: Path, installed_map: dict[str, str]) -> None:
+    """Update the buridan.json manifest with newly installed components."""
+    manifest_path = target_root / "buridan.json"
+    manifest = {"components": {}}
+
+    if manifest_path.exists():
+        try:
+            manifest = json.loads(manifest_path.read_text())
+        except Exception:
+            pass
+
+    if "components" not in manifest:
+        manifest["components"] = {}
+
+    for name, version in installed_map.items():
+        manifest["components"][name] = version
+
+    manifest_path.write_text(json.dumps(manifest, indent=2))
+    print(f"• Updated manifest: {manifest_path.name}")
 
 
 BLOCK_SOURCE_PREFIX = "native/lib/blocks/"
 
 
 def remap_dest(rel: str) -> str:
-    """Remap block source paths to blocks/ in the user's project root."""
+    """Remap block source paths to blocks/ in the user's project root,
+    and flatten versioned component subdirectories.
+    
+    Example: components/ui/button/v1.py -> components/ui/button.py
+    """
+    path = Path(rel)
+    # Detect versioned components like components/ui/button/v1.py
+    if (
+        len(path.parts) >= 4
+        and path.parts[0] == "components"
+        and re.match(r"^v\d+(?:_\d+)*$", path.stem)
+    ):
+        return str(Path(path.parent.parent) / f"{path.parent.name}.py")
+
     if rel.startswith(BLOCK_SOURCE_PREFIX):
         return "blocks/" + Path(rel).name
     return rel
@@ -171,7 +254,7 @@ def add_components_to_project(
         print("Error: Could not locate Buridan source components.")
         return False
 
-    files = resolve_dependencies(component_names, COMPONENT_REGISTRY)
+    files, installed_map = resolve_dependencies(component_names, COMPONENT_REGISTRY)
     if not files:
         print("No files to copy.")
         return False
@@ -198,6 +281,7 @@ def add_components_to_project(
         shutil.copy2(src, dest)
         print(f"✓ Added {remap_dest(rel)}")
 
+    update_manifest(target_root, installed_map)
     return True
 
 
