@@ -14,6 +14,10 @@ Visit the [Introduction](https://native.buridan.dev/docs/getting-started/introdu
 
 Visit the [CLI](https://native.buridan.dev/docs/getting-started/cli) page for information on how to use the CLI tool.
 
+## Dev (CLI)
+
+Visit the [dev](https://native.buridan.dev/docs/getting-started/dev) page for information on how to use the local dev environment when working with this repo.
+
 ## Components
 
 Visit [Components](https://native.buridan.dev/components) section to see all available components.

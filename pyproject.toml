@@ -46,6 +46,7 @@ dev = [
     "ruff>=0.15.22",
     "black",
     "pytest>=9.1.1",
+    "inquirerpy",
 ]
 
 [tool.ruff]
@@ -61,6 +62,7 @@ indent-style = "space"
 
 [project.scripts]
 buridan = "cli.main:main"
+dev = "cli.dev:main"
 
 [build-system]
 requires = ["hatchling"]
