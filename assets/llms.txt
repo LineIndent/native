@@ -7,7 +7,7 @@
 - [Installation](https://native.buridan.dev/docs/getting-started/installation): Installation page.
 - [Skills](https://native.buridan.dev/docs/getting-started/skills): Skills page.
 - [CLI](https://native.buridan.dev/docs/getting-started/cli): CLI page.
-- [dev.py](https://native.buridan.dev/docs/getting-started/dev): dev.py page.
+- [dev](https://native.buridan.dev/docs/getting-started/dev): dev page.
 - [JavaScript](https://native.buridan.dev/docs/getting-started/javascript): JavaScript page.
 - [Changelog](https://native.buridan.dev/docs/getting-started/changelog): Changelog page.
 
