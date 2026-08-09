@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from reflex.event import call_script
-from reflex_components_core.el import Div, Header, a, div, header
+from reflex_components_core.el import Div, Header, a, div, header, p
 
 import native.registry.routes as routes
 from components.core.hugeicon import hi
@@ -92,8 +92,19 @@ def navbar(class_name: str = "") -> Header:
                 theme_toggle_button(),
                 _separator(),
                 github(),
-                _separator(),
-                a(button("New Project"), href="/create"),
+                div(
+                    _separator(),
+                    class_name="hidden lg:flex",
+                ),
+                a(
+                    button(
+                        hi("GitBranchIcon", class_name="shrink-0 size-4"),
+                        p("buridan@0.0.2", class_name="font-medium"),
+                        variant="ghost",
+                    ),
+                    href="https://pypi.org/project/buridan/",
+                    class_name="hidden lg:flex",
+                ),
                 class_name="flex flex-row gap-x-2 items-center",
             ),
             class_name="w-full mx-auto flex flex-row items-center justify-between px-4 md:px-8 "

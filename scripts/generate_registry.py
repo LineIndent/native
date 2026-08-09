@@ -5,33 +5,6 @@ generate_registry.py
 Regenerates `registry/components.py` (COMPONENT_REGISTRY) by scanning the
 actual source tree and parsing real import statements -- instead of
 hand-maintaining the dependency dict.
-
-Why this approach:
-    Your folder structure keeps changing (e.g. twmerge.py / component.py /
-    base_ui.py / others.py all got merged into a single core.py per package).
-    Rather than re-editing a dict by hand every time that happens, this
-    script treats each *file* as a component, and derives its dependencies
-    by literally parsing the `import` statements in that file with Python's
-    `ast` module. If a file imports from another file that is also a known
-    component, that becomes a dependency edge. No guessing, no drift.
-
-Usage:
-    python scripts/generate_registry.py
-    python scripts/generate_registry.py --check        # CI mode: no write, exit 1 on diff
-    python scripts/generate_registry.py --roots components app/www/library/blocks
-    python scripts/generate_registry.py --out registry/components.py
-
-Assumptions (tell me if any of these are wrong and I'll adjust):
-    - Each component == one .py file (excluding __init__.py) under one of
-      the scanned root folders.
-    - The component's registry "name" is the file's stem (e.g. button.py -> "button").
-      If you ever have duplicate stems across folders, the script will
-      warn and disambiguate them (see `_unique_name`).
-    - Dependencies are discovered from relative imports (`from .core import X`,
-      `from ..icons.hugeicon import hi`) and from absolute imports that
-      resolve inside one of the scanned roots (`from components.ui.button import button`).
-    - External/third-party imports (reflex, typing, etc.) are ignored --
-      they're not part of your internal dependency graph.
 """
 
 from __future__ import annotations
@@ -59,8 +32,6 @@ class ComponentFile:
 
 
 def discover_files(repo_root: Path, roots: list[str]) -> list[Path]:
-    """Find every .py file under the given roots, skipping __init__.py,
-    __pycache__, and macOS junk."""
     files: list[Path] = []
     for root in roots:
         root_path = repo_root / root
@@ -77,8 +48,6 @@ def discover_files(repo_root: Path, roots: list[str]) -> list[Path]:
 
 
 def _unique_name(stem: str, rel_path: str, seen: dict[str, str]) -> str:
-    """Return a registry-safe unique name for this file. Warns on collision
-    and disambiguates using the parent folder name."""
     if stem not in seen:
         seen[stem] = rel_path
         return stem
@@ -94,8 +63,6 @@ def _unique_name(stem: str, rel_path: str, seen: dict[str, str]) -> str:
 def build_component_index(
     repo_root: Path, files: list[Path]
 ) -> dict[str, ComponentFile]:
-    """Create the name -> ComponentFile map, and a dotted-module lookup
-    table used later to resolve imports to components."""
     by_name: dict[str, ComponentFile] = {}
     seen_stems: dict[str, str] = {}
 
@@ -103,17 +70,15 @@ def build_component_index(
         rel = path.relative_to(repo_root)
         rel_posix = rel.as_posix()
         stem = path.stem
-        
-        # Check if the file is a versioned file (e.g. v1, v1_0, v2_0_0)
-        # under a component directory.
+
         if re.match(r"^v\d+(?:_\d+)*$", stem) and len(path.parent.name) > 0:
             component_name = path.parent.name
             version = stem[1:].replace("_", ".")
-            name = f"{component_name}@{version}"
+            name = _unique_name(f"{component_name}@{version}", rel_posix, seen_stems)
         else:
             name = _unique_name(stem, rel_posix, seen_stems)
 
-        module_parts = rel.with_suffix("").parts  # e.g. ('components','ui','button')
+        module_parts = rel.with_suffix("").parts
         dotted_module = ".".join(module_parts)
         package_dotted = ".".join(module_parts[:-1])
         group = "/".join(rel.parts[:-1]) or "."
@@ -131,9 +96,6 @@ def build_component_index(
 
 
 def resolve_relative_module(package_dotted: str, level: int, module: str | None) -> str:
-    """Mimic Python's own relative-import resolution.
-    level=1 -> current package. level=2 -> parent package. etc.
-    """
     parts = package_dotted.split(".") if package_dotted else []
     if level > 1:
         parts = parts[: len(parts) - (level - 1)]
@@ -143,7 +105,6 @@ def resolve_relative_module(package_dotted: str, level: int, module: str | None)
 
 
 def find_dependencies(comp: ComponentFile, module_lookup: dict[str, str]) -> set[str]:
-    """Parse the file's AST and match imports against known components."""
     deps: set[str] = set()
     try:
         tree = ast.parse(comp.path.read_text(encoding="utf-8"), filename=str(comp.path))
@@ -160,12 +121,9 @@ def find_dependencies(comp: ComponentFile, module_lookup: dict[str, str]) -> set
             else:
                 base = node.module or ""
 
-            # Case 1: `from .core import cn` -> base itself is the target module
             if base in module_lookup and module_lookup[base] != comp.name:
                 deps.add(module_lookup[base])
 
-            # Case 2: `from . import button` / `from components.ui import button`
-            # -> the imported *name* is actually a submodule
             for alias in node.names:
                 candidate = f"{base}.{alias.name}" if base else alias.name
                 if candidate in module_lookup and module_lookup[candidate] != comp.name:
@@ -182,6 +140,80 @@ def find_dependencies(comp: ComponentFile, module_lookup: dict[str, str]) -> set
     return deps
 
 
+def find_package_aliases(
+    repo_root: Path, roots: list[str], module_lookup: dict[str, str]
+) -> dict[str, str]:
+    """Versioned components (e.g. a `button/` folder containing v1.py/v2.py)
+    need an `__init__.py` that re-exports one version, e.g.:
+
+        # components/ui/button/__init__.py
+        from .v2 import button
+
+    so that sibling files can keep doing `from .button import button` the
+    normal Python way. That package-level dotted path
+    (`components.ui.button`) never appears in `module_lookup` on its own --
+    only the versioned files do (`components.ui.button.v1`, `.v2`) -- because
+    __init__.py files are excluded from being components themselves.
+
+    This scans __init__.py files, follows their own re-export imports, and
+    registers an alias: package dotted path -> whichever versioned
+    component that package's __init__.py actually re-exports. That lets
+    find_dependencies() understand `from .button import button` correctly,
+    instead of silently missing the edge.
+    """
+    aliases: dict[str, str] = {}
+
+    for root in roots:
+        root_path = repo_root / root
+        if not root_path.exists():
+            continue
+
+        for init_path in sorted(root_path.rglob("__init__.py")):
+            rel = init_path.relative_to(repo_root)
+            module_parts = rel.with_suffix("").parts  # (..., "button", "__init__")
+            package_dotted = ".".join(module_parts[:-1])
+            if not package_dotted:
+                continue
+
+            try:
+                tree = ast.parse(
+                    init_path.read_text(encoding="utf-8"), filename=str(init_path)
+                )
+            except SyntaxError as e:
+                print(
+                    f"  WARNING: could not parse {rel.as_posix()}: {e}",
+                    file=sys.stderr,
+                )
+                continue
+
+            for node in ast.walk(tree):
+                if not isinstance(node, ast.ImportFrom):
+                    continue
+
+                if node.level and node.level > 0:
+                    base = resolve_relative_module(
+                        package_dotted, node.level, node.module
+                    )
+                else:
+                    base = node.module or ""
+
+                if base not in module_lookup:
+                    continue
+
+                target = module_lookup[base]
+                if package_dotted in aliases and aliases[package_dotted] != target:
+                    print(
+                        f"  WARNING: {rel.as_posix()} appears to re-export more than "
+                        f"one version ({aliases[package_dotted]} and {target}); "
+                        f"keeping '{aliases[package_dotted]}'.",
+                        file=sys.stderr,
+                    )
+                    continue
+                aliases[package_dotted] = target
+
+    return aliases
+
+
 def build_registry(repo_root: Path, roots: list[str]) -> dict[str, ComponentFile]:
     files = discover_files(repo_root, roots)
     if not files:
@@ -193,6 +225,18 @@ def build_registry(repo_root: Path, roots: list[str]) -> dict[str, ComponentFile
     by_name = build_component_index(repo_root, files)
     module_lookup = {c.dotted_module: c.name for c in by_name.values()}
 
+    aliases = find_package_aliases(repo_root, roots, module_lookup)
+    for package_dotted, target in aliases.items():
+        if package_dotted in module_lookup and module_lookup[package_dotted] != target:
+            print(
+                f"  WARNING: '{package_dotted}' is both a real component "
+                f"({module_lookup[package_dotted]}) and an __init__.py re-export "
+                f"alias ({target}); keeping the real component.",
+                file=sys.stderr,
+            )
+            continue
+        module_lookup[package_dotted] = target
+
     for comp in by_name.values():
         comp.dependencies = find_dependencies(comp, module_lookup)
 
@@ -200,7 +244,6 @@ def build_registry(repo_root: Path, roots: list[str]) -> dict[str, ComponentFile
 
 
 def render_registry(by_name: dict[str, ComponentFile]) -> str:
-    """Render COMPONENT_REGISTRY as nicely grouped, deterministic Python source."""
     groups: dict[str, list[ComponentFile]] = {}
     for comp in by_name.values():
         groups.setdefault(comp.group, []).append(comp)
@@ -236,25 +279,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument(
-        "--roots",
-        nargs="+",
-        default=DEFAULT_ROOTS,
-        help=f"Folders (relative to repo root) to scan for components. Default: {DEFAULT_ROOTS}",
-    )
-    parser.add_argument(
-        "--out",
-        default=DEFAULT_OUT,
-        help=f"Output path for the generated registry (relative to repo root). Default: {DEFAULT_OUT}",
-    )
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="Don't write the file. Exit with code 1 if the generated content would differ from what's on disk.",
-    )
+    parser.add_argument("--roots", nargs="+", default=DEFAULT_ROOTS)
+    parser.add_argument("--out", default=DEFAULT_OUT)
+    parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
-    # repo root = parent of this script's `scripts/` folder
     repo_root = Path(__file__).resolve().parent.parent
 
     print(

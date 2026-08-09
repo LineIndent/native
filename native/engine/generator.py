@@ -69,11 +69,9 @@ def generate_docs_library() -> list[constants.DocDataStruct]:
                 }
             )
 
-        # Create the doc data structure using the new clean root function
         doc = constants.DocDataStruct(
             url=url_path,
             description=md_data.get("description", ""),
-            # 2. Call the function cleanly without an instance lookup wrapper
             component=parse_and_render(md_content),
             table_of_content=toc_data,
         )

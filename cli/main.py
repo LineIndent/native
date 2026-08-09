@@ -139,17 +139,17 @@ def get_latest_version(component_name: str, registry: dict) -> str | None:
     """Find the latest registered version of a component."""
     target = component_name.lower()
     versions = []
-    
+
     for key in registry:
         if key.startswith(f"{target}@"):
             version = key.split("@", 1)[1]
             versions.append(version)
-            
+
     if not versions:
         if target in registry:
             return target
         return None
-        
+
     versions.sort(key=parse_version_key)
     return f"{target}@{versions[-1]}"
 
@@ -157,61 +157,147 @@ def get_latest_version(component_name: str, registry: dict) -> str | None:
 def resolve_dependencies(
     component_names: list[str], registry: dict
 ) -> tuple[list[str], dict[str, str]]:
+    """Resolve a list of top-level component specs (with optional @version)
+    plus their transitive dependencies into a file list and a name->version
+    map suitable for the manifest.
+
+    Components are deduped by NAME, not by name+version — two different
+    versions of the same component are never both queued for copy. If the
+    same component is reachable at two different versions (e.g. pinned
+    explicitly on the command line, but also pulled in unpinned by another
+    component's dependencies), the version resolved from an explicit
+    top-level request always wins; a conflict pulled in purely via
+    dependencies is resolved by first-come and a warning is printed.
+    """
     required_files: set[str] = set()
-    visited: set[str] = set()
-    installed_map: dict[str, str] = {}
+    resolved: dict[str, str] = {}  # component name -> chosen registry key
+    order: list[str] = []  # first-resolved order, for a stable installed_map
+    warned: set[str] = set()
 
-    def add(spec: str):
+    def resolve_key(spec: str) -> str | None:
         key = spec.lower()
-        if "@" not in key:
-            resolved_key = get_latest_version(key, registry)
-            if not resolved_key:
-                print(f"Warning: Component '{spec}' not found in registry.")
-                return
-            key = resolved_key
+        if "@" in key:
+            return key if key in registry else None
+        return get_latest_version(key, registry)
 
-        if key in visited:
-            return
-        visited.add(key)
+    def claim(name: str, key: str) -> bool:
+        """Register `name` as resolved to `key`. Returns True if this call
+        actually claimed it (False if already claimed by something else)."""
+        if name in resolved:
+            if resolved[name] != key and name not in warned:
+                _, existing_version = parse_component_spec(resolved[name])
+                _, new_version = parse_component_spec(key)
+                print(
+                    f"Warning: '{name}' requested at both "
+                    f"{existing_version or 'latest'} and {new_version or 'latest'}; "
+                    f"keeping {existing_version or 'latest'}."
+                )
+                warned.add(name)
+            return False
+        resolved[name] = key
+        order.append(name)
+        return True
 
-        entry = registry.get(key)
-        if not entry:
-            print(f"Warning: Component '{spec}' not found in registry.")
-            return
-
-        name, version = parse_component_spec(key)
-        installed_map[name] = version or "latest"
-
+    def add_files_and_deps(name: str, key: str):
+        entry = registry[key]
         for f in entry["files"]:
             required_files.add(f)
         for dep in entry.get("dependencies", []):
             add(dep)
 
-    for name in component_names:
-        add(name)
+    def add(spec: str):
+        key = resolve_key(spec)
+        if not key:
+            print(f"Warning: Component '{spec}' not found in registry.")
+            return
+        name, _ = parse_component_spec(key)
+        if not claim(name, key):
+            return
+        add_files_and_deps(name, key)
 
+    # First pass: claim every explicitly-requested component up front, so a
+    # pinned version always wins over whatever a dependency graph resolves
+    # to later, regardless of command-line order.
+    explicit_names: list[str] = []
+    for spec in component_names:
+        key = resolve_key(spec)
+        if not key:
+            print(f"Warning: Component '{spec}' not found in registry.")
+            continue
+        name, _ = parse_component_spec(key)
+        claim(name, key)
+        explicit_names.append(name)
+
+    # Second pass: pull in files + dependencies for each explicit component,
+    # using resolved[name] — the version that actually won the claim above —
+    # not whichever key that particular spec happened to resolve to.
+    for name in dict.fromkeys(explicit_names):  # dedupe, keep first-seen order
+        add_files_and_deps(name, resolved[name])
+
+    installed_map = {
+        name: (parse_component_spec(resolved[name])[1] or "latest") for name in order
+    }
     return sorted(required_files), installed_map
 
 
-def update_manifest(target_root: Path, installed_map: dict[str, str]) -> None:
-    """Update the buridan.json manifest with newly installed components."""
-    manifest_path = target_root / "buridan.json"
-    manifest = {"components": {}}
+def load_manifest(target_root: Path) -> dict:
+    """Load components.json, tolerating a missing or corrupt file.
+    Always returns a dict with at least 'components' and 'theme' keys.
+    """
+    manifest_path = target_root / "components.json"
+    manifest: dict = {}
 
     if manifest_path.exists():
         try:
-            manifest = json.loads(manifest_path.read_text())
+            loaded = json.loads(manifest_path.read_text())
+            if isinstance(loaded, dict):
+                manifest = loaded
+            else:
+                print(
+                    "Warning: components.json content was not a JSON object; recreating it."
+                )
         except Exception:
-            pass
+            print("Warning: components.json was unreadable; recreating it.")
 
-    if "components" not in manifest:
-        manifest["components"] = {}
+    manifest.setdefault("components", {})
+    manifest.setdefault("theme", {})
+    return manifest
 
-    for name, version in installed_map.items():
-        manifest["components"][name] = version
 
+def save_manifest(target_root: Path, manifest: dict) -> None:
+    manifest_path = target_root / "components.json"
     manifest_path.write_text(json.dumps(manifest, indent=2))
-    print(f"• Updated manifest: {manifest_path.name}")
+
+
+def update_manifest(target_root: Path, installed_map: dict[str, str]) -> None:
+    """Merge newly installed components into components.json without
+    touching the theme section."""
+    manifest = load_manifest(target_root)
+    manifest["components"].update(installed_map)
+    save_manifest(target_root, manifest)
+    print("• Updated manifest: components.json")
+
+
+def update_manifest_theme(target_root: Path, preset: str, config: dict) -> None:
+    """Record the currently-applied theme preset in components.json without
+    touching the components section."""
+    manifest = load_manifest(target_root)
+
+    theme_data = {
+        "preset": preset,
+        "baseId": config.get("baseId"),
+        "colorId": config.get("colorId"),
+        "chartId": config.get("chartId"),
+        "styleId": config.get("styleId"),
+        "fontId": config.get("fontId"),
+        "radius": config.get("radius"),
+    }
+    # Drop unset fields rather than writing nulls — keeps the file readable
+    # and makes it obvious which parts of the preset were actually specified.
+    manifest["theme"] = {k: v for k, v in theme_data.items() if v is not None}
+
+    save_manifest(target_root, manifest)
+    print("• Updated manifest: components.json (theme)")
 
 
 BLOCK_SOURCE_PREFIX = "native/lib/blocks/"
@@ -220,7 +306,7 @@ BLOCK_SOURCE_PREFIX = "native/lib/blocks/"
 def remap_dest(rel: str) -> str:
     """Remap block source paths to blocks/ in the user's project root,
     and flatten versioned component subdirectories.
-    
+
     Example: components/ui/button/v1.py -> components/ui/button.py
     """
     path = Path(rel)
@@ -481,6 +567,9 @@ def cmd_apply(preset: str):
         css_path.write_text(theme_css)
 
     print(f"✓ Applied preset '{preset}' to globals.css")
+
+    update_manifest_theme(root, preset, config)
+
     print("\nNext steps:")
     print("  Add globals.css to your app stylesheets if you haven't already:")
     print('  app = rx.App(stylesheets=["globals.css"])')
