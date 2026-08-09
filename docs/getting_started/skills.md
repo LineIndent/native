@@ -20,13 +20,9 @@ For example, you can ask your AI assistant:
 
 The skill gives your assistant knowledge about your project's configuration, installed components, CLI workflow, theming system, and recommended architecture patterns.
 
-# Install
+# Using Skills
 
-```bash
-uv add add buridan
-```
-
-This installs the Buridan skill into your project. Once installed, supported AI assistants automatically load Buridan-specific guidance when working with your project.
+Buridan Skills are included with the repository and do not require separate installation. They are located in the `.agents/skills/` directory. When working within the project, your AI assistant automatically loads this guidance.
 
 # What's Included
 
