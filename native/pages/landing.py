@@ -28,7 +28,10 @@ from native.templates.layout import layout_decorator
             href="/docs",
         ),
         a(
-            button("Build Your Own", hi("ArrowRight02Icon", class_name="size-4")),
+            button(
+                "Build Your Own",
+                # hi("ArrowRight02Icon", class_name="size-4"),
+            ),
             href="/create",
         ),
     ],

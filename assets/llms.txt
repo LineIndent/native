@@ -9,6 +9,7 @@
 - [CLI](https://native.buridan.dev/docs/getting-started/cli): CLI page.
 - [dev](https://native.buridan.dev/docs/getting-started/dev): dev page.
 - [JavaScript](https://native.buridan.dev/docs/getting-started/javascript): JavaScript page.
+- [components.json](https://native.buridan.dev/docs/getting-started/components-json): components.json page.
 - [Changelog](https://native.buridan.dev/docs/getting-started/changelog): Changelog page.
 
 ## Resources
