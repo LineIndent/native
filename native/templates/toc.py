@@ -1,4 +1,3 @@
-
 import reflex as rx
 
 from components.core.hugeicon import hi
@@ -67,8 +66,8 @@ def _create_markdown_toc_links(url: str, toc_data: list[dict]) -> rx.Component:
 def _create_external_tool_links(url: str):
     """Create links for viewing documentation in external tools."""
 
-    fmt_url = "https://buridan-ui.reflex.run/" + url
-    prompt = f"""I'm looking at this buridan/ui documentation: {fmt_url}.
+    fmt_url = "https://native.buridan.dev/" + url
+    prompt = f"""I'm looking at this buridan/native documentation: {fmt_url}.
     Help me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.
     """
 

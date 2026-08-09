@@ -8,13 +8,23 @@ order: 3
 
 Use the buridan CLI to add components, apply themes, and manage your Buridan UI project.
 
+All commands must be run from your Reflex project root, where `rxconfig.py` is located.
+
 # Installation
 
-```bash
-pip install buridan-create
+Add `buridan` to your `pyproject.toml`:
+
+```toml
+dependencies = ["buridan=={current version}"]
 ```
 
-All commands must be run from your Reflex project root, where `rxconfig.py` is located.
+Then sync your environment with [uv](https://docs.astral.sh/uv/):
+
+```bash
+uv sync
+```
+
+See the [Installation](/docs/getting-started/installation) page for the full setup guide.
 
 # create
 
