@@ -92,6 +92,7 @@ def area_chart_with_gradient():
                         stroke_width=2,
                         stack_id="1",
                         is_animation_active=False,
+                        active_dot={"fill": f"var({s[2]})", "stroke": f"var({s[2]})"},
                     )
                     for s in series
                 ],

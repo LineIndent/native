@@ -25,6 +25,7 @@ from native.lib.examples.card_11 import card_11
 from native.lib.examples.card_12 import card_12
 from native.lib.examples.card_13 import card_13
 from native.lib.examples.card_14 import card_14
+from native.lib.examples.card_15 import card_15
 from native.registry.colors import COLOR_THEMES
 from native.registry.fonts import FONT_REGISTRY
 from native.registry.radii import RADII_OPTIONS
@@ -102,7 +103,7 @@ def _theme_select(
 def open_preset() -> rx.Component:
     return dialog.root(
         dialog.trigger(
-            button("Open Preset", variant="outline", class_name="justify-start")
+            button("Open Preset", variant="outline", class_name="justify-center")
         ),
         dialog.popup(
             dialog.header(
@@ -211,19 +212,28 @@ def _sidebar_desktop():
                 id="shuffle-button",
                 type="button",
                 variant="outline",
-                class_name="w-full justify-start",
+                class_name="w-full justify-center",
             ),
             button(
-                rx.el.span("--preset ", html_for="preset-code-display"),
+                rx.el.span(
+                    "--preset ",
+                    html_for="preset-code-display",
+                    id="copy-preset-text",
+                ),
                 rx.el.input(
                     id="preset-code-display",
                     default_value="b0",
                     read_only=True,
                     disabled=True,
+                    class_name=(
+                        "w-12 shrink-0 bg-transparent border-none outline-none p-0 "
+                        "text-center disabled:opacity-100 disabled:cursor-default"
+                    ),
                 ),
+                id="copy-preset-button",
                 variant="outline",
                 type="button",
-                class_name="w-full flex flex-row items-center justify-start",
+                class_name="w-full flex flex-row items-center justify-center",
             ),
             open_preset(),
             class_name="p-4 flex flex-col gap-3 bg-card/20",
@@ -285,6 +295,7 @@ def preview_space():
                         masonry_card(
                             lambda: card.root(card.content(line_chart_footer_legend()))
                         )(),
+                        card_15(),
                         class_name=" ".join(
                             [
                                 "preview-theme",

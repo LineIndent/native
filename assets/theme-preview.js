@@ -13,12 +13,14 @@
   var DEFAULT_RADIUS_VALUE = "__default__";
   var MATCH_BASE_VALUE = "__match_base__";
   var PRESET_VERSION = 2;
-  var BASE62_ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  var BASE62_ALPHABET =
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
   var DEFAULT_PRESET_CODE = "b0";
 
   var BITS_V1 = { font: 5, color: 5, base: 4, radius: 4, style: 4 };
   var SHIFT_V1 = (function () {
-    var s = {}, offset = 0;
+    var s = {},
+      offset = 0;
     ["font", "color", "base", "radius", "style"].forEach(function (name) {
       s[name] = offset;
       offset += BITS_V1[name];
@@ -28,11 +30,14 @@
 
   var BITS_V2 = { font: 5, color: 5, chart: 5, base: 4, radius: 4, style: 4 };
   var SHIFT_V2 = (function () {
-    var s = {}, offset = 0;
-    ["font", "color", "chart", "base", "radius", "style"].forEach(function (name) {
-      s[name] = offset;
-      offset += BITS_V2[name];
-    });
+    var s = {},
+      offset = 0;
+    ["font", "color", "chart", "base", "radius", "style"].forEach(
+      function (name) {
+        s[name] = offset;
+        offset += BITS_V2[name];
+      },
+    );
     return s;
   })();
 
@@ -91,11 +96,27 @@
     var styleIdx = plainIndex("style", state.style);
     var baseIdx = plainIndex("base", state.base);
     var fontIdx = plainIndex("font", state.font);
-    var colorIdx = state.color === MATCH_BASE_VALUE ? 0 : inheritableIndex("color", state.color);
-    var radiusIdx = state.radius === DEFAULT_RADIUS_VALUE ? 0 : inheritableIndex("radius", state.radius);
-    var chartIdx = state.chart === MATCH_BASE_VALUE ? 0 : inheritableIndex("color", state.chart);
+    var colorIdx =
+      state.color === MATCH_BASE_VALUE
+        ? 0
+        : inheritableIndex("color", state.color);
+    var radiusIdx =
+      state.radius === DEFAULT_RADIUS_VALUE
+        ? 0
+        : inheritableIndex("radius", state.radius);
+    var chartIdx =
+      state.chart === MATCH_BASE_VALUE
+        ? 0
+        : inheritableIndex("color", state.chart);
 
-    if (styleIdx === 0 && radiusIdx === 0 && baseIdx === 0 && colorIdx === 0 && chartIdx === 0 && fontIdx === 0) {
+    if (
+      styleIdx === 0 &&
+      radiusIdx === 0 &&
+      baseIdx === 0 &&
+      colorIdx === 0 &&
+      chartIdx === 0 &&
+      fontIdx === 0
+    ) {
       return DEFAULT_PRESET_CODE;
     }
 
@@ -238,7 +259,6 @@
     if (codeDisplay) codeDisplay.value = comboToCode();
   }
 
-
   var state = {
     base: null,
     color: MATCH_BASE_VALUE,
@@ -327,7 +347,8 @@
       values = isDark ? entry.dark : entry.light;
     }
     CHART_KEYS.forEach(function (key) {
-      if (values[key] !== undefined) el.style.setProperty("--" + key, values[key]);
+      if (values[key] !== undefined)
+        el.style.setProperty("--" + key, values[key]);
     });
   }
 
@@ -419,7 +440,8 @@
 
   function getThemeCSS() {
     var base = findById("base", state.base);
-    var color = state.color === MATCH_BASE_VALUE ? null : findById("color", state.color);
+    var color =
+      state.color === MATCH_BASE_VALUE ? null : findById("color", state.color);
     var style = findById("style", state.style);
     var font = findById("font", state.font);
     if (!base || !style || !font) return "";
@@ -434,21 +456,41 @@
     // both modes at once since the exported CSS needs both :root and .dark
     // blocks simultaneously (unlike the live apply path, which only ever
     // cares about whichever mode is currently active).
-    var chartSource = state.chart === MATCH_BASE_VALUE ? base : findById("color", state.chart);
-    var chartLight = {}, chartDark = {};
+    var chartSource =
+      state.chart === MATCH_BASE_VALUE ? base : findById("color", state.chart);
+    var chartLight = {},
+      chartDark = {};
     if (chartSource) {
       CHART_KEYS.forEach(function (key) {
-        if (chartSource.light[key] !== undefined) chartLight[key] = chartSource.light[key];
-        if (chartSource.dark[key] !== undefined) chartDark[key] = chartSource.dark[key];
+        if (chartSource.light[key] !== undefined)
+          chartLight[key] = chartSource.light[key];
+        if (chartSource.dark[key] !== undefined)
+          chartDark[key] = chartSource.dark[key];
       });
     }
 
-    var light = Object.assign({}, base.light, color ? color.light : {}, chartLight, style.vars, font.vars, {
-      "--radius": radiusValue,
-    });
-    var dark = Object.assign({}, base.dark, color ? color.dark : {}, chartDark, style.vars, font.vars, {
-      "--radius": radiusValue,
-    });
+    var light = Object.assign(
+      {},
+      base.light,
+      color ? color.light : {},
+      chartLight,
+      style.vars,
+      font.vars,
+      {
+        "--radius": radiusValue,
+      },
+    );
+    var dark = Object.assign(
+      {},
+      base.dark,
+      color ? color.dark : {},
+      chartDark,
+      style.vars,
+      font.vars,
+      {
+        "--radius": radiusValue,
+      },
+    );
 
     function serialize(values) {
       return Object.keys(values)
@@ -459,7 +501,13 @@
         .join("\n");
     }
 
-    return ":root {\n" + serialize(light) + "\n}\n\n.dark {\n" + serialize(dark) + "\n}";
+    return (
+      ":root {\n" +
+      serialize(light) +
+      "\n}\n\n.dark {\n" +
+      serialize(dark) +
+      "\n}"
+    );
   }
 
   window.preview = {
@@ -478,8 +526,10 @@
       // whichever one(s) the user hasn't already manually overridden.
       upsertSyntheticOption(colorSelect, MATCH_BASE_VALUE, baseLabel);
       upsertSyntheticOption(chartSelect, MATCH_BASE_VALUE, baseLabel);
-      if (state.color === MATCH_BASE_VALUE && colorSelect) colorSelect.value = MATCH_BASE_VALUE;
-      if (state.chart === MATCH_BASE_VALUE && chartSelect) chartSelect.value = MATCH_BASE_VALUE;
+      if (state.color === MATCH_BASE_VALUE && colorSelect)
+        colorSelect.value = MATCH_BASE_VALUE;
+      if (state.chart === MATCH_BASE_VALUE && chartSelect)
+        chartSelect.value = MATCH_BASE_VALUE;
 
       applyBase();
       applyColorOverlay();
@@ -532,15 +582,19 @@
       afterStateChange();
     },
 
-
     shuffle: function (seed) {
       var registries = window.__THEME_REGISTRIES__;
       if (!registries) return;
-      var rng = mulberry32(seed === undefined ? (Math.random() * 0xffffffff) >>> 0 : seed);
+      var rng = mulberry32(
+        seed === undefined ? (Math.random() * 0xffffffff) >>> 0 : seed,
+      );
 
-      state.style = registries.style[Math.floor(rng() * registries.style.length)].id;
-      state.base = registries.base[Math.floor(rng() * registries.base.length)].id;
-      state.font = registries.font[Math.floor(rng() * registries.font.length)].id;
+      state.style =
+        registries.style[Math.floor(rng() * registries.style.length)].id;
+      state.base =
+        registries.base[Math.floor(rng() * registries.base.length)].id;
+      state.font =
+        registries.font[Math.floor(rng() * registries.font.length)].id;
       state.color =
         rng() < 0.5
           ? MATCH_BASE_VALUE
@@ -675,8 +729,21 @@
         }
       }
     }
-  });
 
+    // --- 6. COPY PRESET CODE ACTION ---
+    if (e.target.closest && e.target.closest("#copy-preset-button")) {
+      navigator.clipboard.writeText(window.preview.getPresetCode());
+
+      var label = document.getElementById("preset-copy-text");
+      if (label) {
+        var original = label.textContent;
+        label.textContent = "Copied!";
+        setTimeout(function () {
+          label.textContent = original;
+        }, 1000);
+      }
+    }
+  });
 
   // document.addEventListener("click", function (e) {
   //   if (e.target.id === "copy-css-preset") {
@@ -718,8 +785,10 @@
         break;
       }
     }
-  }).observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-
+  }).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
 
   // On first load: if the URL has a valid ?preset= code, apply it.
   // Otherwise fall back to plain defaults (and write "b0" to the URL so
@@ -737,9 +806,13 @@
     upsertSyntheticOption(
       document.getElementById("color-theme-select"),
       MATCH_BASE_VALUE,
-      baseEntry ? baseEntry.label : "Match base"
+      baseEntry ? baseEntry.label : "Match base",
     );
-    upsertSyntheticOption(document.getElementById("radius-select"), DEFAULT_RADIUS_VALUE, "Default");
+    upsertSyntheticOption(
+      document.getElementById("radius-select"),
+      DEFAULT_RADIUS_VALUE,
+      "Default",
+    );
     syncSelectsToState();
     afterStateChange();
   }

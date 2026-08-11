@@ -136,6 +136,10 @@
     }
 }
 
+.preview-theme {
+    font-family: var(--font-family, var(--font-sans));
+}
+
 .toc-link[data-active="true"] {
     color: var(--foreground);
     font-weight: 500;
