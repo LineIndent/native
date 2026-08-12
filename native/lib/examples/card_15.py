@@ -59,4 +59,5 @@ def card_15() -> rx.Component:
                 class_name="flex flex-col gap-y-4",
             ),
         ),
+        class_name="mx-auto w-full max-w-sm",
     )

@@ -141,6 +141,47 @@ def open_preset() -> rx.Component:
     )
 
 
+def reset_confirm() -> rx.Component:
+    return dialog.root(
+        dialog.trigger(
+            button("Reset", type="button", class_name="w-full", variant="destructive")
+        ),
+        dialog.popup(
+            dialog.header(
+                dialog.title("Reset Theme"),
+                dialog.description(
+                    "This will discard your current customizations and return to the default preset."
+                ),
+            ),
+            dialog.footer(
+                rx.el.div(
+                    dialog.close(
+                        button(
+                            "Cancel",
+                            type="button",
+                            variant="outline",
+                            class_name="flex-1",
+                        ),
+                        class_name="flex-1",
+                    ),
+                    dialog.close(
+                        button(
+                            "Reset",
+                            type="button",
+                            variant="destructive",
+                            class_name="flex-1",
+                            id="reset-preset-button",
+                        ),
+                        class_name="flex-1",
+                    ),
+                    class_name="w-full flex flex-row items-center justify-center gap-x-4",
+                ),
+            ),
+            class_name="sm:max-w-sm",
+        ),
+    )
+
+
 def _sidebar_desktop():
     return rx.el.aside(
         rx.el.div(
@@ -215,37 +256,17 @@ def _sidebar_desktop():
                 class_name="w-full justify-center",
             ),
             button(
-                rx.el.span(
-                    "--preset ",
-                    html_for="preset-code-display",
-                    id="copy-preset-text",
-                ),
-                rx.el.input(
-                    id="preset-code-display",
-                    default_value="b0",
-                    read_only=True,
-                    disabled=True,
-                    class_name=(
-                        "w-12 shrink-0 bg-transparent border-none outline-none p-0 "
-                        "text-center disabled:opacity-100 disabled:cursor-default"
-                    ),
-                ),
+                rx.el.span("--preset b0", id="preset-code-display"),
                 id="copy-preset-button",
                 variant="outline",
                 type="button",
-                class_name="w-full flex flex-row items-center justify-center",
+                class_name="w-full flex flex-row items-center justify-center gap-1",
             ),
             open_preset(),
             class_name="p-4 flex flex-col gap-3 bg-card/20",
         ),
         rx.el.div(
-            button(
-                "Reset",
-                id="reset-preset-button",
-                type="button",
-                class_name="w-full",
-                variant="destructive",
-            ),
+            reset_confirm(),
             class_name="p-3 bg-card/20",
         ),
         class_name=(
@@ -273,7 +294,10 @@ def preview_space():
                 rx.el.div(
                     rx.el.div(
                         masonry_card(
-                            lambda: card.root(card.content(area_chart_with_gradient()))
+                            lambda: card.root(
+                                card.content(area_chart_with_gradient()),
+                                class_name="mx-auto w-full max-w-sm",
+                            )
                         )(),
                         card_01(),
                         card_02(),
@@ -283,7 +307,10 @@ def preview_space():
                         card_06(),
                         card_07(),
                         masonry_card(
-                            lambda: card.root(card.content(bar_chart_multiple()))
+                            lambda: card.root(
+                                card.content(bar_chart_multiple()),
+                                class_name="mx-auto w-full max-w-sm",
+                            )
                         )(),
                         card_08(),
                         card_09(),
@@ -293,7 +320,10 @@ def preview_space():
                         card_13(),
                         card_14(),
                         masonry_card(
-                            lambda: card.root(card.content(line_chart_footer_legend()))
+                            lambda: card.root(
+                                card.content(line_chart_footer_legend()),
+                                class_name="mx-auto w-full max-w-sm",
+                            )
                         )(),
                         card_15(),
                         class_name=" ".join(
@@ -375,7 +405,8 @@ def create_page():
                 style: {json.dumps(STYLE_REGISTRY)},
                 font: {json.dumps(FONT_REGISTRY)},
             }};
-            if (window.preview) window.preview.applyAll();
+            // if (window.preview) window.preview.applyAll();
+            if (window.preview) window.preview.syncAll();
             """
             ),
             rx.call_script(

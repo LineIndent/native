@@ -256,7 +256,7 @@
   function afterStateChange() {
     updateUrl(comboToCode());
     var codeDisplay = document.getElementById("preset-code-display");
-    if (codeDisplay) codeDisplay.value = comboToCode();
+    if (codeDisplay) codeDisplay.textContent = "--preset " + comboToCode();
   }
 
   var state = {
@@ -630,6 +630,13 @@
     },
     applyAll: applyAll,
     getThemeCSS: getThemeCSS,
+
+    syncAll: function () {
+      if (!ensureDefaults()) return;
+      syncSelectsToState();
+      applyAll();
+      afterStateChange();
+    },
   };
 
   document.addEventListener("change", function (e) {
@@ -707,8 +714,6 @@
       var target = document.getElementById("get-css-theme");
       if (target) {
         target.textContent = getThemeCSS();
-
-        // Re-run the swatches on the reverted defaults!
         updateThemeSwatches();
       }
     }
@@ -732,14 +737,12 @@
 
     // --- 6. COPY PRESET CODE ACTION ---
     if (e.target.closest && e.target.closest("#copy-preset-button")) {
-      navigator.clipboard.writeText(window.preview.getPresetCode());
-
-      var label = document.getElementById("preset-copy-text");
+      var label = document.getElementById("preset-code-display");
       if (label) {
-        var original = label.textContent;
+        navigator.clipboard.writeText(window.preview.getPresetCode());
         label.textContent = "Copied!";
         setTimeout(function () {
-          label.textContent = original;
+          label.textContent = "--preset " + window.preview.getPresetCode();
         }, 1000);
       }
     }
