@@ -40,6 +40,7 @@ def line_chart_footer_legend():
                     type_="natural",
                     dot=False,
                     is_animation_active=False,
+                    active_dot={"fill": "var(--chart-1)", "stroke": "var(--chart-1)"},
                 ),
                 rx.recharts.line(
                     data_key="mobile",
@@ -48,6 +49,7 @@ def line_chart_footer_legend():
                     type_="natural",
                     dot=False,
                     is_animation_active=False,
+                    active_dot={"fill": "var(--chart-2)", "stroke": "var(--chart-2)"},
                 ),
                 rx.recharts.x_axis(
                     data_key="month",
