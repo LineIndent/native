@@ -1,7 +1,12 @@
 import reflex as rx
+from reflex.experimental import ClientStateVar
 
 from components.core.hugeicon import hi
+from components.ui.field import field
+from components.ui.radio_group import radio_group
 from native.templates._copy_btn import generate_component_id
+
+_selected_env = ClientStateVar.create("_selected_env", "uv")
 
 
 def create_copy_button(url: str) -> rx.Component:
@@ -143,20 +148,10 @@ def table_of_content(url: str, toc_data: list[dict]):
                     _create_external_tool_links(url),
                     class_name="w-full flex flex-col",
                 ),
-                #
                 # rx.el.div(
                 #     rx.el.p(
-                #         "Agent Resources",
+                #         "Package Manager",
                 #         class_name="text-xs text-muted-foreground font-medium pb-2",
-                #     ),
-                #     rx.el.a(
-                #         rx.el.p(
-                #             "llms.txt",
-                #             class_name="text-[0.8rem] text-muted-foreground hover:text-foreground",
-                #         ),
-                #         href="/llms.txt",
-                #         target="_blank",
-                #         rel="noopener noreferrer",
                 #     ),
                 #     class_name="w-full flex flex-col",
                 # ),
