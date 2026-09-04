@@ -36,7 +36,7 @@ Issues = "https://github.com/LineIndent/native/issues"
 
 [dependency-groups]
 dev = [
-    "reflex==0.9.8",
+    "reflex==0.9.10.post1",
     "pillow>=12.2.0",
     "PyYAML>=6.0.3",
     "questionary>=2.1.1",
