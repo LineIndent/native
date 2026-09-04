@@ -60,7 +60,9 @@ Wrap an `input` with buttons on either side.
 
 ## Dropdown Menu
 
-A split button group with a `menu` as the second segment.
+A split button group with a `menu` as the second segment. Since `menu.trigger` renders
+inside an extra `<details>` wrapper, manually add edge classes (e.g.
+`rounded-l-none border-l-0`) so it fuses cleanly with the adjacent button.
 
 **Props used:** see the [Menu](/docs/components/menu) docs for menu-specific props.
 
