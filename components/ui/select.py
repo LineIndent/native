@@ -42,13 +42,22 @@ class NativeSelectComponent(CoreComponent):
         size = props.pop("size", "default")
         wrapper_class_name = props.pop("wrapper_class_name", "")
         data_slot = props.pop("data_slot", "native-select")
+        unstyled = props.pop("unstyled", False)
 
-        select_class_name = cn(ClassNames.SELECT, props.get("class_name", ""))
-        props["class_name"] = select_class_name
+        select_user_class = props.get("class_name", "")
+        props["class_name"] = (
+            select_user_class if unstyled else cn(ClassNames.SELECT, select_user_class)
+        )
         props["data-slot"] = data_slot
         props["data-size"] = size
 
         select_el = rx.el.select(*children, **props)
+
+        wrapper_class = (
+            wrapper_class_name
+            if unstyled
+            else cn(ClassNames.WRAPPER, wrapper_class_name)
+        )
 
         return rx.el.div(
             select_el,
@@ -60,7 +69,7 @@ class NativeSelectComponent(CoreComponent):
             ),
             data_slot="native-select-wrapper",
             data_size=size,
-            class_name=cn(ClassNames.WRAPPER, wrapper_class_name),
+            class_name=wrapper_class,
         )
 
 

@@ -44,7 +44,6 @@ class FrameRoot(CoreComponent):
         spacing: LiteralSpacing = props.pop("spacing", "default")
         stacked: bool = props.pop("stacked", False)
         dense: bool = props.pop("dense", False)
-        class_name: str = props.pop("class_name", "")
 
         stacked_class = (
             "gap-0 *:has-[+[data-slot=frame-panel]]:rounded-b-none *:[[data-slot=frame-panel]+[data-slot=frame-panel]]:rounded-t-none *:[[data-slot=frame-panel]+[data-slot=frame-panel]]:border-t-0"
@@ -61,78 +60,58 @@ class FrameRoot(CoreComponent):
         props["data-slot"] = "frame"
         props["data-spacing"] = spacing
 
-        return rx.el.div(
-            *children,
-            class_name=cn(
+        cls.set_class_name(
+            cn(
                 ClassNames.ROOT,
                 VARIANT_CLASSES.get(variant, ""),
                 SPACING_CLASSES.get(spacing, ""),
                 stacked_class,
                 dense_class,
-                class_name,
             ),
-            **props,
+            props,
         )
+
+        return rx.el.div(*children, **props)
 
 
 class FramePanel(CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> rx.Component:
-        class_name: str = props.pop("class_name", "")
         props["data-slot"] = "frame-panel"
-        return rx.el.div(
-            *children,
-            class_name=cn(ClassNames.PANEL, class_name),
-            **props,
-        )
+        cls.set_class_name(ClassNames.PANEL, props)
+        return rx.el.div(*children, **props)
 
 
 class FrameHeader(CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> rx.Component:
-        class_name: str = props.pop("class_name", "")
         props["data-slot"] = "frame-panel-header"
-        return rx.el.header(
-            *children,
-            class_name=cn(ClassNames.HEADER, class_name),
-            **props,
-        )
+        cls.set_class_name(ClassNames.HEADER, props)
+        return rx.el.header(*children, **props)
 
 
 class FrameTitle(CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> rx.Component:
-        class_name: str = props.pop("class_name", "")
         props["data-slot"] = "frame-panel-title"
-        return rx.el.div(
-            *children,
-            class_name=cn(ClassNames.TITLE, class_name),
-            **props,
-        )
+        cls.set_class_name(ClassNames.TITLE, props)
+        return rx.el.div(*children, **props)
 
 
 class FrameDescription(CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> rx.Component:
-        class_name: str = props.pop("class_name", "")
         props["data-slot"] = "frame-panel-description"
-        return rx.el.div(
-            *children,
-            class_name=cn(ClassNames.DESCRIPTION, class_name),
-            **props,
-        )
+        cls.set_class_name(ClassNames.DESCRIPTION, props)
+        return rx.el.div(*children, **props)
 
 
 class FrameFooter(CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> rx.Component:
-        class_name: str = props.pop("class_name", "")
         props["data-slot"] = "frame-panel-footer"
-        return rx.el.footer(
-            *children,
-            class_name=cn(ClassNames.FOOTER, class_name),
-            **props,
-        )
+        cls.set_class_name(ClassNames.FOOTER, props)
+        return rx.el.footer(*children, **props)
 
 
 class Frame(ComponentNamespace):

@@ -109,18 +109,20 @@ class Button(BaseButton, CoreComponent):
     def create(cls, *children, **props) -> BaseButton:
         variant = props.pop("variant", "default")
         size = props.pop("size", "default")
-        custom_classes = props.pop("class_name", "")
         data_slot = props.pop("data_slot", "button")
+
+        cls.set_class_name(
+            cn(
+                DEFAULT_CLASS_NAME,
+                BUTTON_VARIANTS["variant"].get(variant, ""),
+                BUTTON_VARIANTS["size"].get(size, ""),
+            ),
+            props,
+        )
 
         return super().create(
             *children,
             data_slot=data_slot,
-            class_name=cn(
-                DEFAULT_CLASS_NAME,
-                BUTTON_VARIANTS["variant"].get(variant, ""),
-                BUTTON_VARIANTS["size"].get(size, ""),
-                custom_classes,
-            ),
             **props,
         )
 

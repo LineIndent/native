@@ -1,7 +1,7 @@
 from reflex.components.component import ComponentNamespace
 from reflex_components_core.el import Input as BaseInput
 
-from ..core.core import CoreComponent, cn
+from ..core.core import CoreComponent
 
 
 class ClassNames:
@@ -24,14 +24,12 @@ class InputComponent(BaseInput, CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> BaseInput:
 
-        existing_class = props.get("class_name", "")
-
-        props["class_name"] = cn(ClassNames.INPUT, existing_class)
-
         props.setdefault("data_slot", "input")
 
         if "type" not in props:
             props["type"] = "text"
+
+        cls.set_class_name(ClassNames.INPUT, props)
 
         return super().create(*children, **props)
 

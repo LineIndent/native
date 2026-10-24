@@ -108,13 +108,11 @@ class ClassNames:
 class AvatarRoot(Div, CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> Div:
-        custom_classes = props.pop("class_name", "")
         size = props.pop("size", "default")
         props["data-slot"] = "avatar"
         props["data-size"] = size
-        return super().create(
-            *children, class_name=cn(ClassNames.ROOT, custom_classes), **props
-        )
+        cls.set_class_name(ClassNames.ROOT, props)
+        return super().create(*children, **props)
 
 
 class AvatarImage(CoreComponent):
@@ -156,42 +154,34 @@ class AvatarImage(CoreComponent):
 class AvatarFallback(Span, CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> Span:
-        custom_classes = props.pop("class_name", "")
         props["data-slot"] = "avatar-fallback"
         props["style"] = {"display": "none", **props.get("style", {})}
-        return super().create(
-            *children, class_name=cn(ClassNames.FALLBACK, custom_classes), **props
-        )
+        cls.set_class_name(ClassNames.FALLBACK, props)
+        return super().create(*children, **props)
 
 
 class AvatarBadge(Span, CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> Span:
-        custom_classes = props.pop("class_name", "")
         props["data-slot"] = "avatar-badge"
-        return super().create(
-            *children, class_name=cn(ClassNames.BADGE, custom_classes), **props
-        )
+        cls.set_class_name(ClassNames.BADGE, props)
+        return super().create(*children, **props)
 
 
 class AvatarGroup(Div, CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> Div:
-        custom_classes = props.pop("class_name", "")
         props["data-slot"] = "avatar-group"
-        return super().create(
-            *children, class_name=cn(ClassNames.GROUP, custom_classes), **props
-        )
+        cls.set_class_name(ClassNames.GROUP, props)
+        return super().create(*children, **props)
 
 
 class AvatarGroupCount(Div, CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> Div:
-        custom_classes = props.pop("class_name", "")
         props["data-slot"] = "avatar-group-count"
-        return super().create(
-            *children, class_name=cn(ClassNames.GROUP_COUNT, custom_classes), **props
-        )
+        cls.set_class_name(ClassNames.GROUP_COUNT, props)
+        return super().create(*children, **props)
 
 
 class Avatar(ComponentNamespace):

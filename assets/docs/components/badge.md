@@ -108,16 +108,13 @@ def badge_variants(variant: str = "default") -> Var:
 class BadgeComponent(Span, CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> Span:
-        custom_classes = props.pop("class_name", "")
         variant = props.pop("variant", "default")
         props["data-slot"] = "badge"
         props["data-variant"] = variant
 
-        return super().create(
-            *children,
-            class_name=cn(badge_variants(variant), custom_classes),
-            **props,
-        )
+        cls.set_class_name(badge_variants(variant), props)
+
+        return super().create(*children, **props)
 
 
 class Badge(CoreComponent):
