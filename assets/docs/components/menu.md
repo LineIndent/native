@@ -170,11 +170,18 @@ class MenuContent(CoreComponent):
         props["style"] = {margin_key: f"{side_offset}px", **props.get("style", {})}
 
         position_class = ClassNames.SIDE_OFFSETS.get(side, "top-full")
-        align_class = {
-            "start": "left-0",
-            "end": "right-0",
-            "center": "left-1/2 -translate-x-1/2",
-        }.get(align, "left-0")
+        if side in ("left", "right"):
+            align_class = {
+                "start": "top-0",
+                "end": "bottom-0",
+                "center": "top-1/2 -translate-y-1/2",
+            }.get(align, "top-0")
+        else:
+            align_class = {
+                "start": "left-0",
+                "end": "right-0",
+                "center": "left-1/2 -translate-x-1/2",
+            }.get(align, "left-0")
 
         cls.set_class_name(cn(ClassNames.CONTENT, position_class, align_class), props)
         return rx.el.div(*children, **props)
