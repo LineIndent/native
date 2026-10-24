@@ -79,7 +79,7 @@ The raw preset ID from the [theme builder](/docs/getting-started/cli#create), ex
 ```json
 {
   "theme": {
-    "preset": "b2D0wqNxT"
+    "preset": "b1000"
   }
 }
 ```

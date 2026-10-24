@@ -58,7 +58,7 @@ Example:
 
 ```bash
 buridan apply --preset b0
-buridan apply --preset b2D0wqNxT
+buridan apply --preset b1000
 ```
 
 Re-running `buridan apply` with a different preset overwrites the theme section of `components.json` and the generated CSS variables — it does not touch any components you've already added.

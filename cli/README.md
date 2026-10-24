@@ -34,7 +34,7 @@ Example:
 
 ```bash
 buridan apply --preset b0
-buridan apply --preset b2D0wqNxT
+buridan apply --preset b1000
 ```
 
 ## add
