@@ -15,7 +15,7 @@ def _parse_file_path(file_path: str) -> tuple[str, str]:
 def file_codeblock(file_path: str, source: str) -> rx.Component:
 
     dir_part, file_part = _parse_file_path(file_path)
-    button, btn_id = create_copy_button(content=source)
+    button, copy_script = create_copy_button(content=source)
 
     return div(
         div(
@@ -29,7 +29,7 @@ def file_codeblock(file_path: str, source: str) -> rx.Component:
             button,
             class_name="flex items-center justify-between gap-2",
         ),
-        on_click=rx.call_script(f"document.getElementById('{btn_id}').click();"),
+        on_click=rx.call_script(copy_script),
         class_name="group flex flex-col gap-3 border border-border bg-background p-4 hover:bg-muted/30 focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 focus-visible:outline-none rounded-lg",
     )
 
