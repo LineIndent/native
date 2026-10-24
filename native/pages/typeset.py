@@ -209,7 +209,7 @@ def source_space():
         id="source-space",
         class_name=(
             "hidden max-lg:group-data-[show=true]:flex max-lg:group-data-[show=true]:flex-1 "
-            "max-lg:group-data-[show=true]:min-h-0 xl:flex lg:flex-col lg:gap-y-4 "
+            "max-lg:group-data-[show=true]:min-h-0 lg:flex lg:flex-col lg:gap-y-4 "
             "lg:w-full lg:flex-initial lg:h-auto lg:min-h-0 lg:min-w-0 lg:max-w-full lg:flex-1 "
             "lg:h-full lg:w-sm lg:max-w-sm lg:shrink-0"
         ),
