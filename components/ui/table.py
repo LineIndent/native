@@ -154,7 +154,7 @@ if (typeof window !== "undefined") {
           var isActive = btn.getAttribute('data-dt-sort') === state.sortKey;
           var target = isActive ? state.sortDir : 'none';
           btn.querySelectorAll('[data-dt-sort-icon]').forEach(function (icon) {
-            icon.style.display = icon.getAttribute('data-dt-sort-icon') === target ? '' : 'none';
+            icon.style.display = icon.getAttribute('data-dt-sort-icon') === target ? 'inline' : 'none';
           });
         });
       };
