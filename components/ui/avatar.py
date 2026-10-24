@@ -57,6 +57,7 @@ class AvatarImage(CoreComponent):
     @classmethod
     def create(cls, **props) -> rx.Component:
         custom_classes = props.pop("class_name", "")
+        user_on_mount = props.pop("on_mount", None)
         props["data-slot"] = "avatar-image"
 
         img_id = props.get("id") or f"avatar-img-{uuid.uuid4().hex[:8]}"
@@ -83,7 +84,13 @@ class AvatarImage(CoreComponent):
         }})()
         """
 
-        props["on_mount"] = rx.call_script(js)
+        mount_handlers = [rx.call_script(js)]
+        if user_on_mount is not None:
+            if isinstance(user_on_mount, list):
+                mount_handlers.extend(user_on_mount)
+            else:
+                mount_handlers.append(user_on_mount)
+        props["on_mount"] = mount_handlers
 
         cls.set_class_name(cn(ClassNames.IMAGE, custom_classes), props)
         return rx.el.img(**props)
