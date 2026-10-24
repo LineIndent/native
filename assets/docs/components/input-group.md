@@ -390,7 +390,7 @@ class InputGroupAddon(ElDiv, CoreComponent):
                     if (!addon.onclick) {
                         addon.onclick = (e) => {
                             if (!e.target.closest('button')) {
-                                addon.parentElement?.querySelector('input')?.focus();
+                                addon.parentElement?.querySelector('[data-slot="input-group-control"]')?.focus();
                             }
                         };
                     }
