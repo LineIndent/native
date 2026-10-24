@@ -1,5 +1,3 @@
-import uuid
-
 import reflex as rx
 from reflex.components.component import ComponentNamespace
 from reflex_components_core.el import Div
@@ -33,6 +31,41 @@ class ClassNames:
     CONTENT = "flex-1 text-sm outline-none hidden"
 
 
+GLOBAL_HANDLERS_JS = """
+(function () {
+    if (!window.__tabsGlobalHandlersAttached) {
+        window.__tabsGlobalHandlersAttached = true;
+        document.addEventListener('click', function (e) {
+            var target = e.target;
+            var trigger = target && target.closest
+                ? target.closest('[data-slot="tabs-trigger"]')
+                : null;
+            if (!trigger) return;
+            var root = trigger.closest('[data-slot="tabs"]');
+            if (!root) return;
+            var value = trigger.getAttribute('data-value');
+            root.dataset.value = value;
+            root.querySelectorAll('[data-slot="tabs-trigger"]').forEach(function (t) {
+                if (t.closest('[data-slot="tabs"]') !== root) return;
+                t.setAttribute(
+                    'data-active',
+                    t.getAttribute('data-value') === value ? 'true' : 'false'
+                );
+            });
+        });
+    }
+    document.querySelectorAll('[data-slot="tabs-trigger"]').forEach(function (t) {
+        var root = t.closest('[data-slot="tabs"]');
+        if (!root) return;
+        t.setAttribute(
+            'data-active',
+            t.getAttribute('data-value') === root.dataset.value ? 'true' : 'false'
+        );
+    });
+})();
+"""
+
+
 class TabsRoot(Div, CoreComponent):
     @classmethod
     def create(cls, *children, **props) -> Div:
@@ -43,6 +76,15 @@ class TabsRoot(Div, CoreComponent):
         props["data-slot"] = "tabs"
         props["data-orientation"] = orientation
         props["data-value"] = default_value
+
+        user_on_mount = props.pop("on_mount", None)
+        mount_handlers = [rx.call_script(GLOBAL_HANDLERS_JS)]
+        if user_on_mount is not None:
+            if isinstance(user_on_mount, list):
+                mount_handlers.extend(user_on_mount)
+            else:
+                mount_handlers.append(user_on_mount)
+        props["on_mount"] = mount_handlers
 
         return super().create(
             *children, class_name=cn(ClassNames.ROOT, custom_classes), **props
@@ -72,54 +114,6 @@ class TabsTrigger(CoreComponent):
         props["data-slot"] = "tabs-trigger"
         props["data-value"] = value
         props["type"] = "button"
-
-        trigger_id = props.get("id") or f"tabs-trigger-{uuid.uuid4().hex[:8]}"
-        props["id"] = trigger_id
-
-        user_on_click = props.pop("on_click", None)
-        user_on_mount = props.pop("on_mount", None)
-
-        js_on_click = f"""
-        (function() {{
-            var trigger = document.getElementById('{trigger_id}');
-            if (!trigger) return;
-            var root = trigger.closest('[data-slot="tabs"]');
-            if (!root) return;
-
-            root.dataset.value = '{value}';
-            root.querySelectorAll('[data-slot="tabs-trigger"]').forEach(function(t) {{
-                t.setAttribute('data-active', t.getAttribute('data-value') === '{value}' ? 'true' : 'false');
-            }});
-        }})()
-        """
-
-        js_on_mount = f"""
-        (function() {{
-            var trigger = document.getElementById('{trigger_id}');
-            if (!trigger) return;
-            var root = trigger.closest('[data-slot="tabs"]');
-            if (!root) return;
-
-            var initialValue = root.dataset.value;
-            trigger.setAttribute('data-active', trigger.getAttribute('data-value') === initialValue ? 'true' : 'false');
-        }})()
-        """
-
-        click_handlers = [rx.call_script(js_on_click)]
-        if user_on_click is not None:
-            if isinstance(user_on_click, list):
-                click_handlers.extend(user_on_click)
-            else:
-                click_handlers.append(user_on_click)
-        props["on_click"] = click_handlers
-
-        mount_handlers = [rx.call_script(js_on_mount)]
-        if user_on_mount is not None:
-            if isinstance(user_on_mount, list):
-                mount_handlers.extend(user_on_mount)
-            else:
-                mount_handlers.append(user_on_mount)
-        props["on_mount"] = mount_handlers
 
         cls.set_class_name(cn(ClassNames.TRIGGER, custom_classes), props)
         return rx.el.button(*children, **props)

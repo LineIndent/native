@@ -83,7 +83,7 @@ tabs.list(
 
 ## tabs.trigger
 
-The clickable button elements used to switch active states. They safely merge internal client-side JS actions with optional user-supplied events.
+The clickable button elements used to switch active states. Active-tab highlight is driven by a single delegated click listener that `tabs.root` attaches on mount, so user-supplied `on_click` / `on_mount` handlers are passed through untouched.
 
 ```python
 tabs.trigger(
@@ -97,7 +97,7 @@ tabs.trigger(
 | ------------ | ----------------------------------------- | --------------------- |
 | `value`      | `str`                                     | _Required_            |
 | `class_name` | `str`                                     | `""`                  |
-| `id`         | `str`                                     | _Auto-generated UUID_ |
+| `id`         | `str`                                     | _None_                |
 | `disabled`   | `bool`                                    | `False`               |
 | `on_click`   | `Union[EventHandler, list[EventHandler]]` | `None`                |
 | `on_mount`   | `Union[EventHandler, list[EventHandler]]` | `None`                |
