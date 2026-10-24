@@ -62,6 +62,11 @@ BLOCK_GROUPS = [
         "Filled line charts for showing trends over time.",
     ),
     (
+        "line_chart",
+        "Line Charts",
+        "Line charts for showing trends over time.",
+    ),
+    (
         "bar_chart",
         "Bar Charts",
         "Categorical comparisons across groups.",
