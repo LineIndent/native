@@ -8,6 +8,7 @@ DEPENDENCY_BUCKETS = {
     "components.ui.": "components",
     "components.core.": "components",
     "native.lib.blocks.": "blocks",
+    "native.lib.charts.": "components",
 }
 
 
