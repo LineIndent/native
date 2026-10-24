@@ -4,6 +4,7 @@ import json
 import re
 import shutil
 import sys
+from collections.abc import Sequence
 from pathlib import Path
 
 from cli.preset_codec import decode_seed
@@ -29,6 +30,10 @@ UTILITY_SENTINELS = {
     "shimmer": "/* ── Shimmer utility",
     "scrollbar": "/* ── Scrollbar utilities",
 }
+
+# Sentinel comments delimiting the CLI-managed theme region in globals.css.
+THEME_START_SENTINEL = "/* ── Buridan theme (managed) ── */"
+THEME_END_SENTINEL = "/* ── End Buridan theme ── */"
 
 
 # ── theme rebuilding ──────────────────────────────────────────────────────────
@@ -105,6 +110,140 @@ def generate_theme_css(seed: str) -> str:
         return format_css(rebuild_theme({**decoded, "darkMode": dark}))
 
     return f":root {{\n{build(False)}\n}}\n\n.dark {{\n{build(True)}\n}}"
+
+
+def managed_theme_block(raw_theme: str) -> str:
+    """Wrap a raw ``:root``/``.dark`` theme in CLI-managed sentinels."""
+    return f"{THEME_START_SENTINEL}\n{raw_theme}\n{THEME_END_SENTINEL}"
+
+
+def join_css_around_theme(prefix: str, theme_css: str, suffix: str) -> str:
+    """Join user CSS prefix, the managed theme, and user CSS suffix with a
+    single blank-line separator between each non-empty section.
+    """
+    parts: list[str] = []
+    if prefix.strip():
+        parts.append(prefix.rstrip("\n"))
+    parts.append(theme_css)
+    if suffix.strip():
+        parts.append(suffix.lstrip("\n"))
+    return "\n\n".join(parts)
+
+
+def _block_opens_here(line: str, opener: str) -> bool:
+    """True when ``line`` opens a multi-line ``opener {`` block (i.e. the
+    opener is present and the block does not close on the same line).
+    Excludes one-liners like ``:root { --x: 1; }``.
+    """
+    stripped = line.strip()
+    return stripped.startswith(opener) and line.count("{") > line.count("}")
+
+
+def _find_block_close(lines: Sequence[str], start: int) -> int | None:
+    """Return the index of the line that closes the brace block opened on
+    ``start`` (scanning from ``start``), or None if it never closes.
+    """
+    depth = 0
+    for i in range(start, len(lines)):
+        depth += lines[i].count("{") - lines[i].count("}")
+        if depth == 0 and i > start:
+            return i
+    return None
+
+
+def _find_next_opener(lines: Sequence[str], after: int, opener: str) -> int | None:
+    """Return the index of the next line opening a ``opener {`` block at
+    top level, skipping only blank lines. If any other non-blank content is
+    encountered first, return None (the adjacency is broken).
+    """
+    for i in range(after, len(lines)):
+        if _block_opens_here(lines[i], opener):
+            return i
+        if lines[i].strip() == "":
+            continue
+        return None
+    return None
+
+
+def find_legacy_theme_pair(lines: Sequence[str]) -> tuple[int, int] | None:
+    """Locate a top-level adjacent ``:root { ... }`` / ``.dark { ... }``
+    block pair written by an older CLI version, returning the inclusive
+    ``(start_line, end_line)`` of the whole pair, or None.
+
+    The match is deliberately conservative so user-authored CSS is never
+    mistaken for the CLI-managed region:
+
+    * brace depth is tracked from the top of the file, so a ``:root {``
+      nested inside an at-rule (e.g. ``@media``) is rejected; and
+    * the ``:root {`` and ``.dark {`` lines must each open a multi-line
+      block (one-liners like ``:root { --x: 1; }`` are skipped), and the
+      ``.dark {`` block must immediately follow the ``:root {`` block
+      (only blank lines allowed in between).
+
+    A top-level ``:root {`` that has no adjacent ``.dark {`` (e.g. a
+    user's standalone ``:root`` block) is skipped and scanning continues,
+    so a later CLI pair is still located while the user's block is
+    preserved in the prefix.
+    """
+    depth = 0
+    i = 0
+    while i < len(lines):
+        ln = lines[i]
+        if depth == 0 and _block_opens_here(ln, ":root {"):
+            root_end = _find_block_close(lines, i)
+            if root_end is None:
+                return None
+            dark_line = _find_next_opener(lines, root_end + 1, ".dark {")
+            if dark_line is not None:
+                dark_end = _find_block_close(lines, dark_line)
+                if dark_end is not None:
+                    return (i, dark_end)
+            # This :root has no adjacent .dark (likely a user's standalone
+            # block). Skip past it — depth returns to 0 — and keep
+            # scanning for a later top-level :root + .dark CLI pair.
+            i = root_end + 1
+            continue
+        depth += ln.count("{") - ln.count("}")
+        i += 1
+    return None
+
+
+def splice_theme_block(current: str, theme_css: str) -> str:
+    """Return new globals.css content with ``theme_css`` substituted in place
+    of any existing CLI-managed theme, preserving all other user CSS.
+
+    Replacement strategy (preferred first):
+
+    1. Sentinel-delimited region. If the file already contains both
+       ``THEME_START_SENTINEL`` and ``THEME_END_SENTINEL`` (written by a
+       prior managed apply), replace the text between them — and only that
+       text — with the new theme, leaving the prefix and suffix untouched.
+
+    2. Legacy CLI block. If there are no sentinels but the file contains a
+       top-level adjacent ``:root { ... }`` / ``.dark { ... }`` pair — the
+       exact layout the CLI has always written — replace only that pair,
+       preserving everything before and after. Nested or one-line
+       ``:root`` blocks are never matched (see ``find_legacy_theme_pair``).
+
+    3. Fallback. If neither is found, prepend the new theme, keeping all
+       existing content intact. Nothing the user wrote is ever discarded.
+    """
+    start = current.find(THEME_START_SENTINEL)
+    if start != -1:
+        end = current.find(THEME_END_SENTINEL, start)
+        if end != -1:
+            end += len(THEME_END_SENTINEL)
+            return join_css_around_theme(current[:start], theme_css, current[end:])
+
+    lines = current.splitlines()
+    pair = find_legacy_theme_pair(lines)
+    if pair is not None:
+        start_line, end_line = pair
+        prefix = "\n".join(lines[:start_line])
+        suffix = "\n".join(lines[end_line + 1 :])
+        return join_css_around_theme(prefix, theme_css, suffix)
+
+    return join_css_around_theme("", theme_css, current)
 
 
 # ── component copying ─────────────────────────────────────────────────────────
@@ -521,48 +660,11 @@ def cmd_apply(preset: str):
     assets_dir.mkdir(exist_ok=True)
     css_path = assets_dir / "globals.css"
 
-    theme_css = generate_theme_css(preset)
-    theme_marker = ":root {"
+    theme_css = managed_theme_block(generate_theme_css(preset))
 
     if css_path.exists():
         current = css_path.read_text()
-        if theme_marker in current:
-            lines = current.splitlines()
-            start_line = next(
-                (i for i, l in enumerate(lines) if l.strip().startswith(":root {")),
-                None,
-            )
-            if start_line is not None:
-                brace_depth = 0
-                end_line = start_line
-                in_block = False
-                for i, line in enumerate(lines[start_line:], start_line):
-                    brace_depth += line.count("{") - line.count("}")
-                    if brace_depth > 0:
-                        in_block = True
-                    if in_block and brace_depth == 0:
-                        end_line = i
-                        rest = lines[end_line + 1 :]
-                        for j, l in enumerate(rest):
-                            if l.strip().startswith(".dark {"):
-                                bd = 0
-                                for k, dl in enumerate(
-                                    lines[end_line + 1 + j :], end_line + 1 + j
-                                ):
-                                    bd += dl.count("{") - dl.count("}")
-                                    if bd == 0 and k > end_line + 1 + j:
-                                        end_line = k
-                                        break
-                                break
-                        break
-
-                after = "\n".join(lines[end_line + 1 :]).lstrip("\n")
-                new_css = theme_css + ("\n\n" + after if after else "")
-                css_path.write_text(new_css)
-            else:
-                css_path.write_text(theme_css + "\n\n" + current)
-        else:
-            css_path.write_text(theme_css + "\n\n" + current)
+        css_path.write_text(splice_theme_block(current, theme_css))
     else:
         css_path.write_text(theme_css)
 
