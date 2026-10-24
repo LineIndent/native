@@ -47,22 +47,38 @@ def link_card(name: str, href: str, count: int):
     )
 
 
-def get_links(source_dir: Path, examples_dir: Path, url_prefix: str):
+def get_component_entries(
+    source_dir: Path, examples_dir: Path
+) -> list[tuple[str, str, int]]:
     entries = []
+
+    component_stems = [f.stem for f in source_dir.glob("*.py") if f.stem != "__init__"]
 
     for file in source_dir.glob("*.py"):
         stem = file.stem
+        if stem == "__init__":
+            continue
         name = stem.replace("_", " ").title()
         slug = stem.replace("_", "-")
 
-        example_count = len(list(examples_dir.glob(f"{stem}_*.py")))
+        sibling_prefixes = [f"{s}_" for s in component_stems if s.startswith(f"{stem}_")]
+        example_count = sum(
+            1
+            for p in examples_dir.glob(f"{stem}_*.py")
+            if not any(p.name.startswith(pref) for pref in sibling_prefixes)
+        )
 
         entries.append((name, slug, example_count))
 
     entries.sort(key=lambda x: x[0].lower())
 
+    return entries
+
+
+def get_links(source_dir: Path, examples_dir: Path, url_prefix: str):
     return [
-        link_card(name, f"{url_prefix}/{slug}", count) for name, slug, count in entries
+        link_card(name, f"{url_prefix}/{slug}", count)
+        for name, slug, count in get_component_entries(source_dir, examples_dir)
     ]
 
 
