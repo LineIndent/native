@@ -73,6 +73,28 @@ class ClassNames:
 
     INPUT = "peer sr-only"
 
+    KNOWN_INPUT_PROPS = (
+        "id",
+        "checked",
+        "default_checked",
+        "disabled",
+        "required",
+        "name",
+        "value",
+        "on_change",
+        "auto_focus",
+        "read_only",
+        "tab_index",
+        "access_key",
+        "form",
+        "form_action",
+        "form_enc_type",
+        "form_method",
+        "form_no_validate",
+        "form_target",
+        "custom_attrs",
+    )
+
     TRACK = (
         "relative rounded-full bg-muted "
         "outline-none "
@@ -80,7 +102,7 @@ class ClassNames:
         "group-data-[size=sm]/switch:h-[14px] group-data-[size=sm]/switch:w-[24px] "
         "group-has-[input:checked]/switch:bg-primary "
         "peer-focus-visible:ring-3 peer-focus-visible:ring-ring/50 peer-focus-visible:outline-1 peer-focus-visible:outline-ring "
-        "group-aria-[invalid=true]/switch:border-destructive group-aria-[invalid=true]/switch:ring-3 group-aria-[invalid=true]/switch:ring-destructive/20 "
+        "peer-aria-[invalid=true]:border-destructive peer-aria-[invalid=true]:ring-3 peer-aria-[invalid=true]:ring-destructive/20 "
         "group-has-[:disabled]/switch:opacity-50 group-has-[:disabled]/switch:pointer-events-none group-has-[:disabled]/switch:cursor-not-allowed"
     )
 
@@ -100,32 +122,23 @@ class ClassNames:
 class NativeSwitch(CoreComponent):
     @classmethod
     def create(cls, label_text: str = "", **props) -> rx.Component:
-        props["data-slot"] = "switch"
-
         size = props.pop("size", "default")
-        props["data-size"] = size
-
         invalid = props.pop("invalid", False)
-        if invalid:
-            props["aria-invalid"] = "true"
-
         track_class_name = props.pop("track_class_name", "")
         thumb_class_name = props.pop("thumb_class_name", "")
 
         input_props = {}
-        for key in (
-            "id",
-            "checked",
-            "default_checked",
-            "disabled",
-            "required",
-            "name",
-            "value",
-            "on_change",
-            "custom_attrs",
-        ):
-            if key in props:
+        for key in list(props.keys()):
+            if key in ClassNames.KNOWN_INPUT_PROPS or key.startswith(
+                ("on_", "data-", "data_", "aria-", "aria_"),
+            ):
                 input_props[key] = props.pop(key)
+
+        if invalid:
+            input_props["aria-invalid"] = "true"
+
+        props["data-slot"] = "switch"
+        props["data-size"] = size
 
         cls.set_class_name(ClassNames.ROOT, props)
 
