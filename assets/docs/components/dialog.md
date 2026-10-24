@@ -66,7 +66,10 @@ import uuid
 
 import reflex as rx
 from reflex.components.component import ComponentNamespace
-from reflex_components_core.el import Div
+from reflex_components_core.el import (
+    Dialog as BaseDialog,
+    Div,
+)
 
 from ..core.core import CoreComponent, cn
 
@@ -130,7 +133,10 @@ class DialogTrigger(CoreComponent):
         return rx.el.div(*children, **props)
 
 
-class DialogPopup(Div, CoreComponent):
+class DialogPopup(BaseDialog, CoreComponent):
+    on_close: rx.EventHandler = None
+    on_cancel: rx.EventHandler = None
+
     @classmethod
     def create(
         cls,
@@ -177,7 +183,7 @@ class DialogPopup(Div, CoreComponent):
             else:
                 props["on_mount"] = close_on_backdrop_script
 
-        return rx.el.dialog(*children, **props)
+        return super().create(*children, **props)
 
 
 class DialogClose(CoreComponent):
