@@ -243,8 +243,7 @@ def typeset_page():
                     flow: {json.dumps(FLOW_OPTIONS)},
                 }};
                 if (window.typesetPreview) {{
-                    window.typesetPreview.applyAll();
-                    window.typesetPreview.renderCodeBlocks();
+                    window.typesetPreview.syncAll();
                 }}
                 """
             ),

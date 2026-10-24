@@ -261,6 +261,15 @@ app = rx.App(
     }
   }
 
+  // On SPA re-navigation React remounts the selects at their defaults; pull
+  // the persisted state back into them before re-rendering.
+  function syncAll() {
+    if (!ensureDefaults()) return;
+    syncSelectsToState();
+    applyAll();
+    renderCodeBlocks();
+  }
+
   window.typesetPreview = {
     state: state,
     applyAll: applyAll,
@@ -269,6 +278,7 @@ app = rx.App(
     getThemeTokensCode: getThemeTokensCode,
     getUsageCode: getUsageCode,
     renderCodeBlocks: renderCodeBlocks,
+    syncAll: syncAll,
   };
 
   document.addEventListener("change", function (e) {
