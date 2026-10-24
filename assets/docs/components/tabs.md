@@ -152,6 +152,7 @@ class TabsTrigger(CoreComponent):
 
             root.dataset.value = '{value}';
             root.querySelectorAll('[data-slot="tabs-trigger"]').forEach(function(t) {{
+                if (t.closest('[data-slot="tabs"]') !== root) return;
                 t.setAttribute('data-active', t.getAttribute('data-value') === '{value}' ? 'true' : 'false');
             }});
         }})()
