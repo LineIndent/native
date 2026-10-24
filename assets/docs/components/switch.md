@@ -74,6 +74,7 @@ class ClassNames:
     INPUT = "peer sr-only"
 
     TRACK = (
+        "inline-flex items-center "
         "relative rounded-full bg-muted "
         "outline-none "
         "group-data-[size=default]/switch:h-[18.4px] group-data-[size=default]/switch:w-[32px] "
